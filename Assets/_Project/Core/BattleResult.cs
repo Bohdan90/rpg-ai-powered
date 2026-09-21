@@ -7,7 +7,8 @@ namespace RPG.Core
     {
         None, InvalidCommand, ActorNotFound, ActorInactive, NotCurrentActor, NoAction,
         TargetNotFound, TargetInactive, SelfTarget, FriendlyFireNotConfirmed, OutOfRange,
-        MovementAlreadySpent, InvalidFacing
+        MovementAlreadySpent, InvalidFacing, InvalidPath, InvalidStep, OutOfBounds, SolidCell,
+        OccupiedCell, BlockedCorner, InsufficientMovement, BlockedLineOfSight
     }
 
     public sealed class BattleResult

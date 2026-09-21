@@ -34,6 +34,7 @@ namespace RPG.Tests
         }
         internal static BasicAttackCommand Attack() => new BasicAttackCommand(Attacker, Target);
         internal static string Snapshot(BattleState state) => string.Join("|", new[] {
+            string.Join(";", state.Battlefield.SolidCells.Select(p => p.X + "," + p.Y)),
             state.InitialSeed.ToString(), state.RngState.ToString(), state.Round.ToString(),
             state.CurrentUnitId.ToString(), state.PriorityIndex.ToString(),
             string.Join(",", state.PriorityOrder), string.Join(",", state.ActivationOrder),

@@ -1,0 +1,50 @@
+using System;
+
+namespace RPG.Core
+{
+    public static class LineOfSight
+    {
+        // Center-to-center supercover. Integer cross-products order cell-boundary crossings.
+        // On an exact corner crossing both side cells AND the diagonal cell are visited.
+        public static bool IsClear(BattleState state, GridPosition source, GridPosition target)
+        {
+            if (state == null) throw new ArgumentNullException(nameof(state));
+            if (!state.Battlefield.Contains(source) || !state.Battlefield.Contains(target)) return false;
+            int nx = Math.Abs(target.X - source.X), ny = Math.Abs(target.Y - source.Y);
+            int sx = Math.Sign(target.X - source.X), sy = Math.Sign(target.Y - source.Y);
+            int x = source.X, y = source.Y, ix = 0, iy = 0;
+            while (ix < nx || iy < ny)
+            {
+                int horizontal = (1 + 2 * ix) * ny;
+                int vertical = (1 + 2 * iy) * nx;
+                if (horizontal == vertical)
+                {
+                    if (Blocked(state, new GridPosition(x + sx, y), source, target)
+                        || Blocked(state, new GridPosition(x, y + sy), source, target)) return false;
+                    x += sx; y += sy; ix++; iy++;
+                }
+                else if (horizontal < vertical) { x += sx; ix++; }
+                else { y += sy; iy++; }
+                if (Blocked(state, new GridPosition(x, y), source, target)) return false;
+            }
+            return true;
+        }
+
+        public static bool IsMeleeCornerClear(BattleState state, GridPosition source, GridPosition target)
+        {
+            if (state == null) throw new ArgumentNullException(nameof(state));
+            if (!state.Battlefield.Contains(source) || !state.Battlefield.Contains(target)
+                || source.DistanceTo(target) != 1) return false;
+            if (source.X == target.X || source.Y == target.Y) return true;
+            // Adjacent melee has solid-corner constraints, not ranged unit screening.
+            return !state.Battlefield.IsSolid(new GridPosition(target.X, source.Y))
+                && !state.Battlefield.IsSolid(new GridPosition(source.X, target.Y));
+        }
+
+        private static bool Blocked(BattleState state, GridPosition cell, GridPosition source, GridPosition target)
+        {
+            if (cell == source || cell == target) return false;
+            return state.Battlefield.IsSolid(cell) || state.OccupantAt(cell) != null;
+        }
+    }
+}

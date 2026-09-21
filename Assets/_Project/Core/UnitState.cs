@@ -9,7 +9,7 @@ namespace RPG.Core
         public UnitId Id { get; }
         public Side Side { get; }
         public UnitProfile Profile { get; }
-        public GridPosition Position { get; }
+        public GridPosition Position { get; internal set; }
         public Facing Facing { get; internal set; }
         public int Hp { get; internal set; }
         public int Armor { get; internal set; }

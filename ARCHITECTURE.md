@@ -1,6 +1,6 @@
 # Gate C architecture baseline
 
-The Unity project root is this directory (`My project/`). Milestone 1 implements the pure deterministic combat core; no presentation gameplay is implemented.
+The Unity project root is this directory (`My project/`). Milestones 1 and 2A implement the pure deterministic combat core and battlefield legality; no presentation gameplay is implemented.
 
 | Folder | Purpose / dependency boundary |
 | --- | --- |
@@ -14,7 +14,7 @@ The Unity project root is this directory (`My project/`). Milestone 1 implements
 Core uses `noEngineReferences: true` and disables automatic precompiled references.
 Presentation explicitly references Core. All three assemblies disable automatic
 references from predefined assemblies; future assembly dependencies must be explicit.
-Core contains the Milestone 1 domain model and resolver. Presentation remains a placeholder.
+Core contains the combat model/resolver plus pure grid, movement, pathfinding and LoS. Presentation remains a placeholder.
 Existing template scenes and settings are unchanged.
 
 `CoreArchitectureTests` loads the compiled Core assembly and rejects dependencies
@@ -31,8 +31,9 @@ Test Runner's EditMode tab. Tests are excluded from player builds.
 - URP 17.6.0 is installed, with valid pipeline assets assigned to the PC and Mobile
   quality levels. The empty Graphics default is overridden by those quality settings.
 - Rider integration 3.0.38 and Unity Test Framework 1.8.0 are installed and locked.
-- Milestone 1: **57 passed, 0 failed, 0 skipped**, including the compiled Core
-  dependency test. See `Docs/Prototype/MILESTONE_1_IMPLEMENTATION.md`.
+- Milestone 1 baseline: **57 passed**. After Milestone 2A: **97 passed, 0 failed,
+  0 skipped**, including the compiled Core dependency test. See
+  `Docs/Prototype/MILESTONE_2A_IMPLEMENTATION.md` for current geometry and API details.
 - Rider's `Packages.Rider.Editor.RiderScriptEditor.SyncSolution` completed successfully
   and generated a solution and all three RPG C# projects. The generated Core project
   has no UnityEngine references; Presentation and Tests reference Core.
@@ -47,7 +48,7 @@ Test Runner's EditMode tab. Tests are excluded from player builds.
   Branches and the configured GitHub remote were preserved; no history rewrite or push.
 
 Verification used a temporary copy because the original project was open in Unity.
-After repository cleanup, all 57 tests were rerun successfully. Current test results
+After Milestone 2A, all 97 tests ran successfully. Current test results
 and logs are at `/private/tmp/gate-c-m1-4dkkwcy6/`: `TestResults.xml` and `tests.log`.
 The earlier Rider generation log is at `/private/tmp/gate-c-verify-puaz7w_z/rider-generation.log`.
 To generate the local solution for Rider, select Rider in Unity's External Tools

@@ -5,9 +5,9 @@ namespace RPG.Core
 {
     public static class BattleResolver
     {
-        public static BattleResult StartBattle(IEnumerable<UnitState> units, uint seed)
+        public static BattleResult StartBattle(IEnumerable<UnitState> units, uint seed, Battlefield battlefield = null)
         {
-            var state = new BattleState(units, seed);
+            var state = new BattleState(units, seed, battlefield);
             var events = new List<BattleEvent> { new BattleEvent(BattleEventKind.BattleStarted, 0) };
             StartNextActivation(state, events);
             return new BattleResult(state, CommandError.None, events);
@@ -24,8 +24,9 @@ namespace RPG.Core
             if (command is EndActivationCommand end)
                 return end.FinalFacing.HasValue && !FacingDirections.IsValid(end.FinalFacing.Value)
                     ? CommandError.InvalidFacing : CommandError.None;
-            if (!(command is BasicAttackCommand) && !(command is DefendCommand)) return CommandError.InvalidCommand;
+            if (!(command is BasicAttackCommand) && !(command is DefendCommand) && !(command is MoveCommand)) return CommandError.InvalidCommand;
             if (!actor.ActionAvailable) return CommandError.NoAction;
+            if (command is MoveCommand move) return MovementRules.ValidatePath(state, actor, move);
             if (command is DefendCommand)
                 return actor.MovementSpentThisActivation > 0 ? CommandError.MovementAlreadySpent : CommandError.None;
             var attack = (BasicAttackCommand)command;
@@ -36,7 +37,11 @@ namespace RPG.Core
             if (actor.Side == target.Side && !attack.FriendlyFireConfirmed) return CommandError.FriendlyFireNotConfirmed;
             int range = actor.Profile.Range + (HasSteadyAim(actor) ? 1 : 0);
             if (actor.Position.DistanceTo(target.Position) > range) return CommandError.OutOfRange;
-            // M1 has no board: LoS, occupied screening and solid-corner checks belong to M2.
+            if (actor.Profile.IsArcher)
+            {
+                if (!LineOfSight.IsClear(state, actor.Position, target.Position)) return CommandError.BlockedLineOfSight;
+            }
+            else if (!LineOfSight.IsMeleeCornerClear(state, actor.Position, target.Position)) return CommandError.BlockedCorner;
             return CommandError.None;
         }
 
@@ -68,7 +73,9 @@ namespace RPG.Core
             var next = state.Copy();
             var events = new List<BattleEvent>();
             var actor = next.FindUnit(command.Actor);
-            if (command is BasicAttackCommand attack)
+            if (command is MoveCommand move)
+                Move(next, actor, move, events);
+            else if (command is BasicAttackCommand attack)
                 Attack(next, actor, next.FindUnit(attack.Target), PreviewAttack(state, attack), events);
             else if (command is DefendCommand)
             {
@@ -87,6 +94,24 @@ namespace RPG.Core
                 StartNextActivation(next, events);
             }
             return new BattleResult(next, CommandError.None, events);
+        }
+
+        private static void Move(BattleState state, UnitState actor, MoveCommand command, List<BattleEvent> events)
+        {
+            events.Add(new BattleEvent(BattleEventKind.MovementStarted, state.Round, actor.Id, amount: command.Path.Count));
+            foreach (var step in command.Path)
+            {
+                var from = actor.Position;
+                int before = actor.MovementRemaining;
+                actor.Position = step;
+                actor.MovementRemaining--;
+                actor.MovementSpentThisActivation++;
+                SetFacing(state, actor, FacingDirections.Toward(from, step), events);
+                events.Add(new BattleEvent(BattleEventKind.MovementConsumed, state.Round, actor.Id,
+                    amount: 1, before: before, after: actor.MovementRemaining));
+                events.Add(new BattleEvent(BattleEventKind.StepMoved, state.Round, actor.Id,
+                    amount: 1, from: from, to: step));
+            }
         }
 
         private static bool HasSteadyAim(UnitState actor) => actor.Profile.IsArcher && actor.MovementSpentThisActivation == 0;
