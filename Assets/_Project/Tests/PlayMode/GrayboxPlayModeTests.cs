@@ -140,7 +140,7 @@ namespace RPG.Presentation.Tests
         }
 
         [UnityTest]
-        public IEnumerator RangedPreviewAndResolutionRespectClearObstacleAndUnitLos()
+        public IEnumerator RangedPreviewAndResolutionRespectSolidLosAndUnitCover()
         {
             var units = new[] { Unit(1, UnitProfile.HumanArcherTI, 2, 4), Unit(2, UnitProfile.HumanWarriorTI, 8, 4) };
             presenter.ConfigureBattle(units, Battlefield.BaseMap, 1);
@@ -148,7 +148,12 @@ namespace RPG.Presentation.Tests
             Assert.That(presenter.HudRoot.Q<Button>("confirm-command").enabledSelf, Is.False);
             Assert.That(presenter.Submit(new BasicAttackCommand(One, Two)).Error, Is.EqualTo(CommandError.BlockedLineOfSight));
             presenter.ConfigureBattle(units.Concat(new[] { Unit(3, UnitProfile.HumanWarriorTI, 5, 4) }), Battlefield.ControlMap, 1);
-            Assert.That(presenter.Submit(new BasicAttackCommand(One, Two)).Error, Is.EqualTo(CommandError.BlockedLineOfSight));
+            presenter.SelectCell(P(8, 4));
+            Assert.That(presenter.PreviewText, Does.Contain("Light Cover: -15 pp Accuracy"));
+            Assert.That(presenter.PreviewText, Does.Contain("Contact 65%"));
+            Assert.That(presenter.HudRoot.Q<Button>("confirm-command").enabledSelf, Is.True);
+            presenter.ConfirmPreview();
+            Assert.That(presenter.State.FindUnit(One).ActionAvailable, Is.False);
             presenter.ConfigureBattle(units, Battlefield.ControlMap, 1);
             presenter.SelectCell(P(8, 4)); Assert.That(presenter.PreviewText, Does.Contain("Contact 80%"));
             presenter.ConfirmPreview();

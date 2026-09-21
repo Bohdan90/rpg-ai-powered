@@ -32,10 +32,11 @@ namespace RPG.Tests
 
         [TestCase(Side.West)]
         [TestCase(Side.East)]
-        public void IntermediateActiveUnitBlocksRangedAttack(Side side)
+        public void IntermediateActiveUnitGivesCoverWithoutBlockingRangedAttack(Side side)
         {
             var state = Shot(P(8, 2), blocker: Unit(3, UnitProfile.HumanWarriorTI, side, x: 5, y: 2));
-            AssertRejected(state, Attack(), CommandError.BlockedLineOfSight);
+            Assert.That(BattleResolver.PreviewAttack(state, Attack()).Cover, Is.EqualTo(CoverLevel.Light));
+            Assert.That(BattleResolver.Apply(state, Attack()).IsApplied, Is.True);
         }
 
         [TestCase(UnitStatus.Dead)]
@@ -62,10 +63,10 @@ namespace RPG.Tests
         }
 
         [Test]
-        public void OccupiedCornerTouchBlocksRangedShotButUncoveredCellsDoNot()
+        public void OccupiedCornerTouchDoesNotBlockRangedShot()
         {
             var occupied = Shot(P(4, 4), blocker: Unit(3, UnitProfile.HumanWarriorTI, x: 3, y: 2));
-            AssertRejected(occupied, Attack(), CommandError.BlockedLineOfSight);
+            Assert.That(BattleResolver.Validate(occupied, Attack()), Is.EqualTo(CommandError.None));
             var clear = Shot(P(5, 3), new Battlefield(new[] { P(2, 3), P(4, 4) }));
             Assert.That(LineOfSight.IsClear(clear, P(2, 2), P(5, 3)), Is.True);
             Assert.That(LineOfSight.IsClear(clear, P(5, 3), P(2, 2)), Is.True);
@@ -81,7 +82,7 @@ namespace RPG.Tests
                 Unit(3, UnitProfile.HumanWarriorTI, x: 3, y: 2)
             };
             var state = BattleResolver.StartBattle(units, 1).State;
-            Assert.That(LineOfSight.IsClear(state, P(2, 2), P(3, 3)), Is.False);
+            Assert.That(LineOfSight.IsClear(state, P(2, 2), P(3, 3)), Is.True);
             Assert.That(BattleResolver.Validate(state, Attack()), Is.EqualTo(CommandError.None));
             AssertRejected(state, Move(P(3, 3)), CommandError.OccupiedCell);
             foreach (var corner in new[] { P(3, 2), P(2, 3) })

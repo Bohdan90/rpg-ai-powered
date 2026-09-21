@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace RPG.Core
 {
@@ -10,6 +11,13 @@ namespace RPG.Core
         {
             if (state == null) throw new ArgumentNullException(nameof(state));
             if (!state.Battlefield.Contains(source) || !state.Battlefield.Contains(target)) return false;
+            foreach (var cell in Supercover(source, target))
+                if (Blocked(state, cell, source, target)) return false;
+            return true;
+        }
+
+        internal static IEnumerable<GridPosition> Supercover(GridPosition source, GridPosition target)
+        {
             int nx = Math.Abs(target.X - source.X), ny = Math.Abs(target.Y - source.Y);
             int sx = Math.Sign(target.X - source.X), sy = Math.Sign(target.Y - source.Y);
             int x = source.X, y = source.Y, ix = 0, iy = 0;
@@ -19,15 +27,14 @@ namespace RPG.Core
                 int vertical = (1 + 2 * iy) * nx;
                 if (horizontal == vertical)
                 {
-                    if (Blocked(state, new GridPosition(x + sx, y), source, target)
-                        || Blocked(state, new GridPosition(x, y + sy), source, target)) return false;
+                    yield return new GridPosition(x + sx, y);
+                    yield return new GridPosition(x, y + sy);
                     x += sx; y += sy; ix++; iy++;
                 }
                 else if (horizontal < vertical) { x += sx; ix++; }
                 else { y += sy; iy++; }
-                if (Blocked(state, new GridPosition(x, y), source, target)) return false;
+                yield return new GridPosition(x, y);
             }
-            return true;
         }
 
         public static bool IsMeleeCornerClear(BattleState state, GridPosition source, GridPosition target)
@@ -44,7 +51,7 @@ namespace RPG.Core
         private static bool Blocked(BattleState state, GridPosition cell, GridPosition source, GridPosition target)
         {
             if (cell == source || cell == target) return false;
-            return state.Battlefield.IsSolid(cell) || state.OccupantAt(cell) != null;
+            return state.Battlefield.IsSolid(cell);
         }
     }
 }

@@ -71,13 +71,13 @@ Base Physical Resistance = 0. Ward/Barrier = 0; они не реализуютс
 ## 5. Battlefield и deployment — P/T
 
 - Квадратная сетка **13×9**; координаты x=0…12, y=0…8. Восемь направлений; один шаг, в том числе диагональный, стоит 1 Movement; расстояние Chebyshev.
-- Все клетки ровные. Solid obstacles непроходимы и блокируют LoS. Высоты, cover modifiers и Difficult Terrain — D.
+- Все клетки ровные. Solid obstacles непроходимы и блокируют LoS. Высоты и Difficult Terrain — D. Unit Cover уточнён ниже в поправке Milestone 2B.1.
 - West Retreat Zone: x=0; East: x=12, вся высота. Deployment: x=1…2 и x=10…11, y=1…7. Они не пересекаются с Retreat Zone.
 - Default West: Commander (2,4), Infantry (2,3), HA-Left (1,2), HA-Right (1,6), Flanker (2,5). East — отражение x→12−x. Facing — к противнику.
 - До начала можно переставлять своих юнитов внутри deployment. AI commits свою расстановку до player deployment; противник показывается после подтверждения. Никакого General Staff advantage.
 - Базовая карта содержит obstacles (6,3), (6,4), (6,5), обходы сверху/снизу. Контрольная карта — те же размеры без obstacles. Третий fixture — та же базовая карта с wounded EW: HP=8, Armor=0; это изолированный тест эвакуации, не сравнение равных армий.
 - Обычный Move не проходит через занятые клетки, в том числе союзные. Для диагонали обе прилегающие ортогональные клетки должны быть свободны от препятствий и фигур. Path выбирается и показывается явно; hidden auto-detour через OA нет.
-- Для ranged LoS используется center-to-center supercover: промежуточная solid/occupied клетка блокирует выстрел; клетки стрелка/цели исключаются. Касание заблокированного угла тоже блокирует. Для смежного melee действуют те же проверки непроходимого угла, но не ranged screening.
+- Для ranged LoS используется center-to-center supercover: промежуточная solid клетка блокирует выстрел; клетки стрелка/цели исключаются. Касание solid угла тоже блокирует. Промежуточные активные юниты дают направленный Cover по правилам ниже, но не блокируют LoS. Для смежного melee действуют те же проверки непроходимого угла, но не ranged screening.
 
 ## 6. Активации и facing — P, кроме отмеченных F
 
@@ -95,7 +95,7 @@ Facing: восемь направлений. Успешный шаг ориен�
 
 1. Проверить actor/Action, цель, Range/LoS и наличие живой фигуры; при invalid команде ресурсы/RNG не меняются.
 2. Израсходовать Action. Для HA без потраченного Movement применить Steady Aim.
-3. **P/T:** `contactChance = clamp(Accuracy + Aim − Dodge − FrontalEvasion − DistancePenalty, 5, 95)%`. Для HA DistancePenalty = `5 × max(0, distance−4)` п.п.; для melee = 0. Один seeded roll контакта; отдельного третьего Dodge roll нет.
+3. **P/T:** `contactChance = clamp(Accuracy + Aim − Dodge − FrontalEvasion − DistancePenalty + CoverAccuracyModifier, 5, 95)%`. Для HA DistancePenalty = `5 × max(0, distance−4)` п.п.; для melee = 0. Один seeded roll контакта; отдельного третьего Dodge roll нет.
 4. Если контакт прошёл: один eligible Guard roll **F**. В fixture shield HW даёт 20% против frontal прямых атак **P/T**; других источников Guard нет. Guard не расходует OA и может проверяться при каждой подходящей атаке. Успешный Guard прекращает damage; никакой retaliation.
 5. **P:** `D = floor(BasicDamage × (1 − PhysicalResistance))`; `armorLoss=min(currentArmor,D)`; `hpLoss=min(currentHP,D−armorLoss)`. Результат не уходит ниже нуля. В v0.1 нет penetration, signed layer modifiers, смешанных компонентов или сложного modified spill.
 6. HP=0 → Dead, убрать из активной очереди и освободить клетку **P представления тела**; record unitId и остаточные pools. Corpse/remains gameplay — D.
@@ -194,3 +194,34 @@ Placeholders: круги/квадраты с HW/HA/EW, цвет стороны, 
 ## 15. Что этот контракт не утверждает
 
 Ни один класс не redesign. Выбраны существующие TI kits, без поздних signatures. Ни одно P/T допущение не стало FIXED. Никакой playtest не объявлен пройденным. Drive не обновлялся. Перед production-кодом соответствующего глобального правила прототипное допущение должно быть либо подтверждено, либо заменено owner-решением; для текущего изолированного теста оно имеет явную версию и границы.
+
+
+## 16. Milestone 2B.1 — playtest corrections (2026-09-21)
+
+Эта локальная поправка заменяет прежнюю полную блокировку ranged LoS промежуточными юнитами.
+Light Cover / Strong Cover — существующая лексика проекта; геометрия ниже — **P — PROTOTYPE
+ASSUMPTION**, recovered tactical rule pending validation. Изменений тематических Drive owners нет.
+
+- Применяется тот же center-to-center supercover, включая клетки, лишь затронутые углом.
+  Solid geometry блокирует LoS; живые активные тела сами по себе — нет. Dead/Escaped не дают Cover.
+- **P:** близость определяется проекцией центра клетки screener вдоль направления выстрела:
+  `2 * dot(screen - shooter, target - shooter) >= squaredLength(target - shooter)`.
+  Равенство относится к цели. Это эквивалентно сравнению квадратов евклидовых расстояний
+  до концов, а не Chebyshev distance для Range. Обратный выстрел может менять Cover.
+- Только пересечённые supercover тела на целевой половине дают Cover, независимо от стороны.
+  Shooter/target исключены. Screening size <= target size → Light; больше → Strong.
+  Все текущие профили имеют одинаковый размер (rank 1) и занимают 1×1; новые существа не добавляются.
+  Сравнение иных размеров доступно в чистой классификации; их battlefield execution остаётся D.
+- Cover не суммируется: выбирается None < Light < Strong.
+- **T — PROTOTYPE TUNING:** Light Cover = −15 процентных пунктов Accuracy, до clamp 5…95.
+  Для Strong чисел нет; query численного модификатора возвращает отсутствие значения.
+  Нельзя считать отсутствие значения нулевой защитой; Strong combat behavior остаётся D.
+- Cover применяется только к ranged контакту. Урон/Guard/retaliation/Friendly Fire не меняются;
+  промах не перенаправляется в screener. Preview не расходует RNG и показывает все слагаемые.
+- **P — default path selection:** сначала минимальная стоимость, затем минимум поворотов,
+  затем минимум суммы абсолютных cross products отклонения от прямой start→destination,
+  затем лексикографический порядок направлений N, NE, E, SE, S, SW, W, NW.
+  Первый шаг не считается поворотом относительно исходного facing. BFS даёт минимальную длину;
+  DP по shortest-path edges хранит лучший prefix для каждой клетки/входящего направления.
+  Выбранный explicit path показывается до подтверждения. Стоимость шагов, occupancy и corners
+  не меняются; все ранее легальные explicit paths остаются легальными.

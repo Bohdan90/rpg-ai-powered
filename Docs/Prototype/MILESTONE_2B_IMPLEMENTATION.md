@@ -1,5 +1,8 @@
 # Gate C — Milestone 2B: Thin Unity Graybox / Hotseat
 
+> Historical milestone report. Milestone 2B.1 supersedes unit-blocked ranged LoS and the older
+> path tie-break. See [MILESTONE_2B_1_CORRECTIONS.md](MILESTONE_2B_1_CORRECTIONS.md) for current behavior.
+
 Date: 2026-09-21. Baseline: `fe4a56d`. Pinned editor: **6000.6.2f1**.
 Authority: [contract v0.1](GATE_C_TACTICAL_PROTOTYPE_CONTRACT_v0_1.md), sections 5–7 and 13;
 [M2A report](MILESTONE_2A_IMPLEMENTATION.md). This milestone adds presentation only.

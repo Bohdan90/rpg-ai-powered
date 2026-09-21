@@ -57,8 +57,18 @@ namespace RPG.Core
             preview.TargetFacesAttacker = FacingDirections.IsFrontal(target.Facing, target.Position, actor.Position);
             int evasion = preview.TargetFacesAttacker ? target.Profile.FrontalEvasion : 0;
             int penalty = actor.Profile.IsArcher ? 5 * (int)Math.Max(0, preview.Distance - 4) : 0;
+            preview.BaseAccuracy = actor.Profile.Accuracy;
+            preview.AimModifier = preview.SteadyAim ? 15 : 0;
+            preview.DistanceModifier = -penalty;
+            preview.TargetDodge = target.Profile.Dodge;
+            preview.FrontalEvasion = evasion;
+            preview.Cover = actor.Profile.IsArcher ? Cover.Query(state, actor, target) : CoverLevel.None;
+            // Current profiles can only yield None/Light. Do not silently invent Strong tuning.
+            preview.CoverAccuracyModifier = Cover.AccuracyModifier(preview.Cover)
+                ?? throw new InvalidOperationException("Strong Cover tuning is deferred.");
             preview.ContactChance = Math.Max(5, Math.Min(95,
-                actor.Profile.Accuracy + (preview.SteadyAim ? 15 : 0) - target.Profile.Dodge - evasion - penalty));
+                preview.BaseAccuracy + preview.AimModifier - preview.TargetDodge - preview.FrontalEvasion
+                + preview.DistanceModifier + preview.CoverAccuracyModifier));
             preview.GuardChance = preview.TargetFacesAttacker ? target.Profile.Guard : 0;
             preview.PhysicalDamage = actor.Profile.BasicDamage * (100 - target.PhysicalResistance) / 100;
             preview.ArmorLossOnUnguardedHit = Math.Min(target.Armor, preview.PhysicalDamage);

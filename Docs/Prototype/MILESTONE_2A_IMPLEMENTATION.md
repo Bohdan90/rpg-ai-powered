@@ -1,5 +1,8 @@
 # Gate C — Milestone 2A: Core Grid, Movement, Pathfinding and LoS
 
+> Historical milestone report. Milestone 2B.1 supersedes unit-blocked ranged LoS and the older
+> path tie-break. See [MILESTONE_2B_1_CORRECTIONS.md](MILESTONE_2B_1_CORRECTIONS.md) for current behavior.
+
 Date: 2026-09-21. Baseline: `cd15539`. Pinned Unity: **6000.6.2f1**.
 Authority: [contract v0.1](GATE_C_TACTICAL_PROTOTYPE_CONTRACT_v0_1.md), sections 5–7.
 The contract, package files, editor version, combat tuning and RNG algorithm are unchanged.

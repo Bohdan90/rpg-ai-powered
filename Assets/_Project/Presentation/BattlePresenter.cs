@@ -93,6 +93,10 @@ namespace RPG.Presentation
                 if (preview.IsLegal)
                 {
                     PreviewText += "\nEffective range " + preview.MaximumRange + " | Contact " + preview.ContactChance + "%"
+                        + "\nBase Accuracy " + preview.BaseAccuracy + "% | Aim +" + preview.AimModifier + " pp"
+                        + "\nDistance " + preview.DistanceModifier + " pp | Dodge -" + preview.TargetDodge + " pp"
+                        + " | Frontal Evasion -" + preview.FrontalEvasion + " pp"
+                        + "\n" + preview.Cover + " Cover: " + preview.CoverAccuracyModifier + " pp Accuracy"
                         + "\nGuard " + preview.GuardChance + "% (separate roll)"
                         + "\nPhysical damage on unguarded hit: " + preview.PhysicalDamage
                         + "\nArmor loss " + preview.ArmorLossOnUnguardedHit + " | HP loss " + preview.HpLossOnUnguardedHit

@@ -19,6 +19,7 @@ namespace RPG.Core
         public int Guard { get; }
         public int BasicDamage { get; }
         public int Range { get; }
+        public int CoverSize => 1; // All current profiles are ordinary, same-size bodies.
         public bool IsArcher => Id == UnitProfileId.HumanArcherTI;
         public int FrontalEvasion => Id == UnitProfileId.ElfWarriorTI ? 15 : 0;
 
