@@ -15,7 +15,7 @@ namespace RPG.Core
 
     public static class Pathfinder
     {
-        // Clockwise order is the final tie-break after cost, turns and line deviation.
+        // Clockwise order is the final tie-break after cost, line deviation and turns.
         private static readonly GridPosition[] Directions = {
             new GridPosition(0, 1), new GridPosition(1, 1), new GridPosition(1, 0), new GridPosition(1, -1),
             new GridPosition(0, -1), new GridPosition(-1, -1), new GridPosition(-1, 0), new GridPosition(-1, 1)
@@ -109,9 +109,9 @@ namespace RPG.Core
             public readonly string DirectionOrder;
             public Route(long deviation, int turns, string directionOrder)
             { Deviation = deviation; Turns = turns; DirectionOrder = directionOrder; }
-            public bool IsBetterThan(Route other) => other == null || Turns < other.Turns
-                || (Turns == other.Turns && (Deviation < other.Deviation
-                    || (Deviation == other.Deviation && string.CompareOrdinal(DirectionOrder, other.DirectionOrder) < 0)));
+            public bool IsBetterThan(Route other) => other == null || Deviation < other.Deviation
+                || (Deviation == other.Deviation && (Turns < other.Turns
+                    || (Turns == other.Turns && string.CompareOrdinal(DirectionOrder, other.DirectionOrder) < 0)));
         }
         private static PathResult NotFound() => new PathResult(false, Array.Empty<GridPosition>());
     }

@@ -218,8 +218,8 @@ ASSUMPTION**, recovered tactical rule pending validation. Изменений т�
   Нельзя считать отсутствие значения нулевой защитой; Strong combat behavior остаётся D.
 - Cover применяется только к ranged контакту. Урон/Guard/retaliation/Friendly Fire не меняются;
   промах не перенаправляется в screener. Preview не расходует RNG и показывает все слагаемые.
-- **P — default path selection:** сначала минимальная стоимость, затем минимум поворотов,
-  затем минимум суммы абсолютных cross products отклонения от прямой start→destination,
+- **P — default path selection:** сначала минимальная стоимость, затем минимум суммы абсолютных cross products
+  отклонения от прямой start→destination, затем минимум поворотов,
   затем лексикографический порядок направлений N, NE, E, SE, S, SW, W, NW.
   Первый шаг не считается поворотом относительно исходного facing. BFS даёт минимальную длину;
   DP по shortest-path edges хранит лучший prefix для каждой клетки/входящего направления.

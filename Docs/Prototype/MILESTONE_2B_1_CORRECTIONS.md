@@ -9,21 +9,19 @@ no Drive thematic owners were modified.
 BFS computes minimum Movement cost. Dynamic programming over shortest-path edges keeps the
 best prefix per cell and incoming direction, ranked by:
 
-1. Fewest direction changes (initial facing is not a turn).
-2. Smallest sum of absolute integer cross products of path cells against start→destination.
+1. Smallest sum of absolute integer cross products of path cells against start→destination.
    This is summed perpendicular distance with a query-constant normalization omitted.
+2. Fewest direction changes (initial facing is not a turn).
 3. Ordinal lexicographic direction sequence: N, NE, E, SE, S, SW, W, NW.
 
 Minimum cost dominates all three criteria. No random smoothing, new legal paths or altered
 corner/occupancy behavior. Presentation still previews the exact Core path before confirmation.
-This supersedes the previous follow-up preference for deviation before turns.
+The user subsequently approved restoring deviation before turns to prefer compact wall bypasses.
 
-Observed limitation during this pass: the user supplied a BaseMap screenshot for (2,5)→(8,5).
-The requested turns-first ordering selects NE×3, SE×3 through (5,8), because it has one turn.
-The compact six-step bypass through row 6 has two turns and therefore loses. This is a policy
-tradeoff, not a cost/corner bug. Returning deviation before turns would select a compact bypass;
-that preference was proposed to the user, but is not silently substituted for the explicit 2B.1
-ordering. The existing open-space horizontal route has zero turns and remains straight.
+Follow-up: the user's BaseMap screenshot (2,5)→(8,5) exposed a one-turn triangular route
+through (5,8). With explicit user approval, deviation now precedes turns. A regression test
+requires the compact six-step path (3,5), (4,5), (5,6), (6,6), (7,6), (8,5).
+The original validation below records the initial 2B.1 pass; follow-up tests are recorded separately.
 
 ## Cover implementation and boundaries
 
@@ -87,6 +85,7 @@ reverse,path}-{preview,result}.txt (wall has preview only). These, the desktop h
 probe are not committed. Synthetic fixture labels inherit PrototypeFixture's fixed ID names;
 profile/side state and token colors were used for checking, not these scenario-only labels.
 
-The user screenshot revealed the turns-first wall-detour tradeoff above; this remains a known
-readability limitation, not reported as resolved. Strong Cover gameplay and larger sizes remain
+The turns-first wall-detour issue is resolved by the user-approved compact-path follow-up. Strong Cover gameplay and larger sizes remain
 deferred. No ZoC/OA, Retreat, AI, new units, spells or content were implemented.
+
+Compact-path follow-up validation: 118 EditMode + 11 PlayMode = 129 passed, 0 failed/skipped.

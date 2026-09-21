@@ -37,25 +37,36 @@ namespace RPG.Tests
         }
 
         [Test]
-        public void FewerTurnsWinBeforeClosenessToLine()
+        public void CloserToLineWinsEvenWhenAnotherShortestRouteHasFewerTurns()
         {
             var state = BattleResolver.StartBattle(new[] { Unit(1, UnitProfile.ElfWarriorTI, x: 2, y: 2) }, 1, Battlefield.ControlMap).State;
             var path = Pathfinder.FindPath(state, Attacker, P(6, 3));
-            // NE, E, E, E: deviation 6, one turn beats E, NE, E, E: deviation 4, two turns.
-            Assert.That(path.Steps, Is.EqualTo(new[] { P(3, 3), P(4, 3), P(5, 3), P(6, 3) }));
+            // E, NE, E, E: summed cross-product deviation 4, two turns.
+            // NE, E, E, E: deviation 6, one turn. Closeness has priority.
+            Assert.That(path.Steps, Is.EqualTo(new[] { P(3, 2), P(4, 3), P(5, 3), P(6, 3) }));
             Assert.That(path.Cost, Is.EqualTo(4));
         }
 
         [Test]
-        public void OpenSpacePrefersOneTurnOverStaircaseDeterministically()
+        public void EqualLengthAndDeviationPreferFewerTurnsBeforeDirectionOrder()
         {
             var state = BattleResolver.StartBattle(new[] { Unit(1, UnitProfile.ElfWarriorTI, x: 2, y: 2) }, 1, Battlefield.ControlMap).State;
             var path = Pathfinder.FindPath(state, Attacker, P(6, 4));
-            // NE, NE, E, E is a one-turn shortest route. Stable order resolves its mirrored tie.
-            for (int i = 0; i < 5; i++)
-                Assert.That(Pathfinder.FindPath(state, Attacker, P(6, 4)).Steps, Is.EqualTo(path.Steps));
-            Assert.That(path.Steps, Is.EqualTo(new[] { P(3, 3), P(4, 4), P(5, 4), P(6, 4) }));
+            // NE, E, E, NE has deviation 4 and two turns.
+            // The lexically earlier NE, E, NE, E also has deviation 4, but three turns.
+            Assert.That(path.Steps, Is.EqualTo(new[] { P(3, 3), P(4, 3), P(5, 3), P(6, 4) }));
             Assert.That(path.Cost, Is.EqualTo(4));
+        }
+
+        [Test]
+        public void ScreenshotWallBypassStaysCompactInsteadOfClimbingToTopRow()
+        {
+            var state = BattleResolver.StartBattle(new[] { Unit(1, UnitProfile.ElfWarriorTI, x: 2, y: 5) }, 1, Battlefield.BaseMap).State;
+            var path = Pathfinder.FindPath(state, Attacker, P(8, 5));
+            Assert.That(path.Cost, Is.EqualTo(6));
+            Assert.That(path.Steps, Is.EqualTo(new[] { P(3, 5), P(4, 5), P(5, 6), P(6, 6), P(7, 6), P(8, 5) }));
+            Assert.That(Pathfinder.FindPath(state, Attacker, P(8, 5)).Steps, Is.EqualTo(path.Steps));
+            Assert.That(BattleResolver.Apply(state, new MoveCommand(Attacker, path.Steps)).IsApplied, Is.True);
         }
 
         [Test]
