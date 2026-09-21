@@ -8,6 +8,7 @@ namespace RPG.Tests
     {
         [TestCase(SizeExperimentMap.Field_13x9_Control,13,9)]
         [TestCase(SizeExperimentMap.Field_17x11_Expanded,17,11)]
+        [TestCase(SizeExperimentMap.Field_19x13_ExpandedV2,19,13)]
         [TestCase(SizeExperimentMap.Siege_23x17_Tight,23,17)]
         [TestCase(SizeExperimentMap.Siege_27x21_Roomy,27,21)]
         public void FixturesHaveValidDeterministicDeployment(SizeExperimentMap map,int width,int height)
@@ -25,6 +26,23 @@ namespace RPG.Tests
             Assert.That(path.Found,Is.True);
             CollectionAssert.AreEqual(path.Steps,Pathfinder.FindPath(state,actor.Id,destination).Steps);
             Assert.That(BattleResolver.Apply(state,new MoveCommand(actor.Id,path.Steps)).IsApplied,Is.True);
+        }
+        [Test]
+        public void ExpandedV2KeepsRearDeploymentAndCenteredThreeCellWall()
+        {
+            var map = SizeExperimentMap.Field_19x13_ExpandedV2;
+            var board = SizeExperimentFixture.Board(map);
+            CollectionAssert.AreEqual(new[] { new GridPosition(9,5), new GridPosition(9,6), new GridPosition(9,7) }, board.SolidCells);
+            CollectionAssert.AreEqual(new[] { new GridPosition(2,6), new GridPosition(2,5), new GridPosition(1,4), new GridPosition(1,8), new GridPosition(2,7),
+                new GridPosition(16,6), new GridPosition(16,5), new GridPosition(17,4), new GridPosition(17,8), new GridPosition(16,7) },
+                SizeExperimentFixture.Units(map).Select(u => u.Position));
+            Assert.That(board.EastRetreatUsesPerimeter, Is.False);
+            for (int y = 0; y < board.Rows; y++)
+            {
+                Assert.That(board.IsRetreatZone(Side.West, new GridPosition(0,y)), Is.True);
+                Assert.That(board.IsRetreatZone(Side.East, new GridPosition(18,y)), Is.True);
+            }
+            Assert.That(board.IsRetreatZone(Side.East, new GridPosition(9,0)), Is.False);
         }
         [Test]
         public void ControlPreservesOriginalWallAndProfiles()

@@ -34,7 +34,7 @@ namespace RPG.Tests
         }
 
         [Test]
-        public void ZocHasEightNeighboursButNoSolidCornerOrSolidCell()
+        public void ZocHasEightNeighboursButNoSealedCornerOrSolidCell()
         {
             var unit = Unit(1, UnitProfile.HumanWarriorTI, x: 4, y: 4);
             var open = BattleResolver.StartBattle(new[] { unit }, 2).State;
@@ -43,10 +43,12 @@ namespace RPG.Tests
                 if (ZoneOfControl.Exerts(open, open.FindUnit(Attacker), P(x, y))) count++;
             Assert.That(count, Is.EqualTo(8));
             var wall = BattleResolver.StartBattle(new[] { unit }, 2, new Battlefield(new[] { P(5, 4) })).State;
-            Assert.That(ZoneOfControl.Exerts(wall, wall.FindUnit(Attacker), P(5, 5)), Is.False);
+            Assert.That(ZoneOfControl.Exerts(wall, wall.FindUnit(Attacker), P(5, 5)), Is.True);
             Assert.That(ZoneOfControl.Exerts(wall, wall.FindUnit(Attacker), P(5, 4)), Is.False);
             Assert.That(ZoneOfControl.Exerts(wall, wall.FindUnit(Attacker), P(3, 5)), Is.True);
             Assert.That(ZoneOfControl.Exerts(open, open.FindUnit(Attacker), P(6, 4)), Is.False);
+            var sealedCorner = BattleResolver.StartBattle(new[] { unit }, 2, new Battlefield(new[] { P(5, 4), P(4, 5) })).State;
+            Assert.That(ZoneOfControl.Exerts(sealedCorner, sealedCorner.FindUnit(Attacker), P(5, 5)), Is.False);
         }
 
         [TestCase(1, 2, 2, 2)] // Enter.

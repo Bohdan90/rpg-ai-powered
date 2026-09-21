@@ -225,3 +225,15 @@ ASSUMPTION**, recovered tactical rule pending validation. Изменений т�
   DP по shortest-path edges хранит лучший prefix для каждой клетки/входящего направления.
   Выбранный explicit path показывается до подтверждения. Стоимость шагов, occupancy и corners
   не меняются; все ранее легальные explicit paths остаются легальными.
+
+
+## Local playtest correction — open melee corner / field V2 (2026-09-21)
+
+Explicit user-approved prototype contact rule, superseding the older ambiguous “solid corner” wording for melee only:
+- Diagonal-adjacent melee contact is legal with zero or one solid orthogonal side cell; two solid side cells seal the corner and prohibit contact.
+- Basic melee attack validation/preview and ZoC/OA adjacency use the same Core helper. Occupying units in side cells remain irrelevant to melee corner geometry; no ranged unit screening is added to melee.
+- Movement/pathfinding still prohibit a diagonal step if either orthogonal side cell is solid or occupied. Ranged center-to-center supercover still blocks at a touched solid corner. No wall/LoS weakening outside melee contact.
+- `Field_19x13_ExpandedV2` is an additional comparison fixture, not a final size: obstacles `(9,5),(9,6),(9,7)`; West retreat `x=0`, East `x=18`. Same armies/tuning/seed/rules except this explicitly authorized contact correction, which applies consistently to every fixture.
+- User playtest finding: 13×9 and 23×17 too small; 17×11 still somewhat small; 27×21 likely a lower bound with future exterior siege geometry. Larger siege comparisons remain deferred; no moat/bridge/gate mechanics implemented.
+
+See `FIELD_V2_CORNER_CONTACT.md` for reproduction, exact deployment, tests and integration validation. This local implementation amendment records the user's explicit instruction; it does not claim an edit to the authoritative Drive pack or a final battlefield-size decision.

@@ -88,8 +88,12 @@ namespace RPG.Tests
             foreach (var corner in new[] { P(3, 2), P(2, 3) })
             {
                 var solid = BattleResolver.StartBattle(new[] { units[0], units[1] }, 1, new Battlefield(new[] { corner })).State;
-                AssertRejected(solid, Attack(), CommandError.BlockedCorner);
+                Assert.That(BattleResolver.Validate(solid, Attack()), Is.EqualTo(CommandError.None));
+                Assert.That(LineOfSight.IsClear(solid, P(2, 2), P(3, 3)), Is.False);
             }
+            var sealedCorner = BattleResolver.StartBattle(new[] { units[0], units[1] }, 1,
+                new Battlefield(new[] { P(3, 2), P(2, 3) })).State;
+            AssertRejected(sealedCorner, Attack(), CommandError.BlockedCorner);
         }
 
         [Test]

@@ -43,9 +43,10 @@ namespace RPG.Core
             if (!state.Battlefield.Contains(source) || !state.Battlefield.Contains(target)
                 || source.DistanceTo(target) != 1) return false;
             if (source.X == target.X || source.Y == target.Y) return true;
-            // Adjacent melee has solid-corner constraints, not ranged unit screening.
+            // Melee can reach around one exposed corner; only two solid side cells seal it.
+            // Shared by Basic/preview and ZoC/OA. Movement and ranged supercover stay stricter.
             return !state.Battlefield.IsSolid(new GridPosition(target.X, source.Y))
-                && !state.Battlefield.IsSolid(new GridPosition(source.X, target.Y));
+                || !state.Battlefield.IsSolid(new GridPosition(source.X, target.Y));
         }
 
         private static bool Blocked(BattleState state, GridPosition cell, GridPosition source, GridPosition target)
