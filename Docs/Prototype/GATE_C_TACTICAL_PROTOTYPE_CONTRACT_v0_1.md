@@ -77,7 +77,7 @@ Base Physical Resistance = 0. Ward/Barrier = 0; они не реализуютс
 - До начала можно переставлять своих юнитов внутри deployment. AI commits свою расстановку до player deployment; противник показывается после подтверждения. Никакого General Staff advantage.
 - Базовая карта содержит obstacles (6,3), (6,4), (6,5), обходы сверху/снизу. Контрольная карта — те же размеры без obstacles. Третий fixture — та же базовая карта с wounded EW: HP=8, Armor=0; это изолированный тест эвакуации, не сравнение равных армий.
 - Обычный Move не проходит через занятые клетки, в том числе союзные. Для диагонали обе прилегающие ортогональные клетки должны быть свободны от препятствий и фигур. Path выбирается и показывается явно; hidden auto-detour через OA нет.
-- Для ranged LoS используется center-to-center supercover: промежуточная solid клетка блокирует выстрел; клетки стрелка/цели исключаются. Касание solid угла тоже блокирует. Промежуточные активные юниты дают направленный Cover по правилам ниже, но не блокируют LoS. Для смежного melee действуют те же проверки непроходимого угла, но не ranged screening.
+- Ranged LoS: center-to-center segment блокируется при пересечении внутренности solid клетки или точном прохождении через общий угол двух диагонально соприкасающихся solid клеток (sealed zero-width gap). Касание угла одной стены и движение вдоль её границы сами по себе разрешены. Клетки стрелка/цели исключаются. Промежуточные активные юниты дают направленный Cover по прежнему inclusive supercover, но не блокируют LoS. Для diagonal melee достаточно одного открытого orthogonal бока; два solid бока запрещают контакт. Movement сохраняет отдельный более строгий corner contract. См. последние локальные playtest-поправки ниже.
 
 ## 6. Активации и facing — P, кроме отмеченных F
 
@@ -106,7 +106,7 @@ Facing: восемь направлений. Успешный шаг ориен�
 
 ## 8. ZoC / Opportunity Attack — F наличие, P/T детали
 
-- В v0.1 ZoC создают HW/EW с melee Basic: восемь соседних клеток, кроме недоступных через solid corner. HA не получает придуманной melee-атаки и собственного OA. ZoC визуализирует угрозу; сам по себе не останавливает движение и не добавляет стоимость **P**.
+- В v0.1 ZoC создают HW/EW с melee Basic: восемь соседних клеток, кроме sealed диагонального угла с двумя solid боковыми клетками. HA не получает придуманной melee-атаки и собственного OA. ZoC визуализирует угрозу; сам по себе не останавливает движение и не добавляет стоимость **P**.
 - OA trigger: добровольный шаг из adjacency конкретного врага в клетку вне его adjacency. Вход и переход между клетками, сохраняющими adjacency, не вызывают OA **P**.
 - Один OA на фигуру между началами её собственных активаций; на старте боя один доступен **P/T**. Это отдельная availability, не Action и не общий новый AP pool.
 - OA — один обычный melee Basic [Reaction], damage coefficient 1.0 **T**. Проверки Accuracy/Guard/Armor обычные. Нет автоматической ответной атаки на удар.
@@ -203,7 +203,7 @@ Light Cover / Strong Cover — существующая лексика прое�
 ASSUMPTION**, recovered tactical rule pending validation. Изменений тематических Drive owners нет.
 
 - Применяется тот же center-to-center supercover, включая клетки, лишь затронутые углом.
-  Solid geometry блокирует LoS; живые активные тела сами по себе — нет. Dead/Escaped не дают Cover.
+  Solid geometry проверяется по актуальному ranged-контракту §5 и последней поправке; живые активные тела сами по себе не блокируют LoS. Dead/Escaped не дают Cover.
 - **P:** близость определяется проекцией центра клетки screener вдоль направления выстрела:
   `2 * dot(screen - shooter, target - shooter) >= squaredLength(target - shooter)`.
   Равенство относится к цели. Это эквивалентно сравнению квадратов евклидовых расстояний
@@ -232,8 +232,21 @@ ASSUMPTION**, recovered tactical rule pending validation. Изменений т�
 Explicit user-approved prototype contact rule, superseding the older ambiguous “solid corner” wording for melee only:
 - Diagonal-adjacent melee contact is legal with zero or one solid orthogonal side cell; two solid side cells seal the corner and prohibit contact.
 - Basic melee attack validation/preview and ZoC/OA adjacency use the same Core helper. Occupying units in side cells remain irrelevant to melee corner geometry; no ranged unit screening is added to melee.
-- Movement/pathfinding still prohibit a diagonal step if either orthogonal side cell is solid or occupied. Ranged center-to-center supercover still blocks at a touched solid corner. No wall/LoS weakening outside melee contact.
+- Movement/pathfinding still prohibit a diagonal step if either orthogonal side cell is solid or occupied. At this earlier melee-only checkpoint ranged supercover still blocked every touched solid corner; that historical behavior is superseded by the later ranged correction below.
 - `Field_19x13_ExpandedV2` is an additional comparison fixture, not a final size: obstacles `(9,5),(9,6),(9,7)`; West retreat `x=0`, East `x=18`. Same armies/tuning/seed/rules except this explicitly authorized contact correction, which applies consistently to every fixture.
 - User playtest finding: 13×9 and 23×17 too small; 17×11 still somewhat small; 27×21 likely a lower bound with future exterior siege geometry. Larger siege comparisons remain deferred; no moat/bridge/gate mechanics implemented.
 
 See `FIELD_V2_CORNER_CONTACT.md` for reproduction, exact deployment, tests and integration validation. This local implementation amendment records the user's explicit instruction; it does not claim an edit to the authoritative Drive pack or a final battlefield-size decision.
+
+
+## Local ranged LoS correction — exposed corners and sealed vertices (2026-09-21)
+
+Latest explicit user clarification supersedes the earlier universal solid-supercover blocker rule:
+- A ranged segment entering the open interior of a solid cell is blocked.
+- Touching only a single solid corner or travelling along its boundary does not block the shot.
+- Exception explicitly requested by the user: passing exactly through the shared vertex of two diagonally opposed solid cells is blocked, even with no interior intersection. A zero-width gap is sealed.
+- Basic ranged validation, attack preview and the HUD LoS status use this same Core query. Unit Cover continues to use inclusive supercover and existing directional/size/non-stacking tuning; no numeric wall cover is introduced.
+- Melee remains allowed with one blocked orthogonal side, prohibited with two. Movement/pathfinding remain stricter and reject a diagonal step when either side is solid/occupied.
+- The earlier answer permitting all two-wall pure touches was explicitly retracted by the user; the sealed-vertex exception above is the final instruction.
+
+See `RANGED_CORNER_LOS_CORRECTION.md` for reproduction, algorithm, tests and manual validation. No battlefield dimensions or unit tuning are finalized by this change.

@@ -48,18 +48,19 @@ namespace RPG.Tests
             Assert.That(BattleResolver.Validate(state, Attack()), Is.EqualTo(CommandError.None));
         }
 
-        [TestCase(8, 2, 5, 2)] // Horizontal.
-        [TestCase(2, 8, 2, 5)] // Vertical.
-        [TestCase(4, 4, 3, 2)] // Diagonal touches this side cell only at its corner.
-        [TestCase(4, 4, 2, 3)] // Other side of the same corner.
-        [TestCase(5, 3, 3, 3)] // Shallow slope, exact non-45-degree corner.
-        [TestCase(3, 5, 3, 3)] // Steep slope, transposed traversal.
-        public void SolidSupercoverCellsBlockBothDirections(int tx, int ty, int bx, int by)
+        [TestCase(8, 2, 5, 2, true)] // Horizontal.
+        [TestCase(2, 8, 2, 5, true)] // Vertical.
+        [TestCase(4, 4, 3, 2, false)] // Diagonal touches this side cell only at its corner.
+        [TestCase(4, 4, 2, 3, false)] // Other side of the same corner.
+        [TestCase(5, 3, 3, 3, false)] // Shallow slope, exact non-45-degree corner.
+        [TestCase(3, 5, 3, 3, false)] // Steep slope, transposed traversal.
+        public void OnlySolidInteriorBlocksBothDirections(int tx, int ty, int bx, int by, bool blocked)
         {
             var state = Shot(P(tx, ty), new Battlefield(new[] { P(bx, by) }));
-            Assert.That(LineOfSight.IsClear(state, P(2, 2), P(tx, ty)), Is.False);
-            Assert.That(LineOfSight.IsClear(state, P(tx, ty), P(2, 2)), Is.False);
-            AssertRejected(state, Attack(), CommandError.BlockedLineOfSight);
+            Assert.That(LineOfSight.IsClear(state, P(2, 2), P(tx, ty)), Is.EqualTo(!blocked));
+            Assert.That(LineOfSight.IsClear(state, P(tx, ty), P(2, 2)), Is.EqualTo(!blocked));
+            if (blocked) AssertRejected(state, Attack(), CommandError.BlockedLineOfSight);
+            else Assert.That(BattleResolver.Apply(state, Attack()).IsApplied, Is.True);
         }
 
         [Test]
@@ -89,7 +90,7 @@ namespace RPG.Tests
             {
                 var solid = BattleResolver.StartBattle(new[] { units[0], units[1] }, 1, new Battlefield(new[] { corner })).State;
                 Assert.That(BattleResolver.Validate(solid, Attack()), Is.EqualTo(CommandError.None));
-                Assert.That(LineOfSight.IsClear(solid, P(2, 2), P(3, 3)), Is.False);
+                Assert.That(LineOfSight.IsClear(solid, P(2, 2), P(3, 3)), Is.True);
             }
             var sealedCorner = BattleResolver.StartBattle(new[] { units[0], units[1] }, 1,
                 new Battlefield(new[] { P(3, 2), P(2, 3) })).State;

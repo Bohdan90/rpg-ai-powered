@@ -12,6 +12,35 @@ namespace RPG.Presentation.Tests
     public class SizeExperimentPresentationTests
     {
         [UnityTest]
+        public IEnumerator RangedPreviewAllowsExposedCornersButRejectsInteriorAndSealedVertices()
+        {
+            yield return SceneManager.LoadSceneAsync("TacticalGraybox", LoadSceneMode.Single); yield return null;
+            var presenter = Object.FindAnyObjectByType<BattlePresenter>();
+            for (int geometry = 0; geometry < 3; geometry++)
+            {
+                var walls = geometry == 0 ? new[] { new GridPosition(9,7) }
+                    : geometry == 1 ? new[] { new GridPosition(10,7) }
+                    : new[] { new GridPosition(9,7), new GridPosition(10,8) };
+                var shooter = new UnitState(new UnitId(3), Side.West, UnitProfile.HumanArcherTI, new GridPosition(12,5), Facing.West);
+                var target = new UnitState(new UnitId(10), Side.East, UnitProfile.ElfWarriorTI, new GridPosition(9,8), Facing.West);
+                presenter.ConfigureBattle(new[] { shooter, target }, new Battlefield(19,13,walls), 2);
+                presenter.EndActivation(null); // EW's ordinary first activation.
+                Assert.That(presenter.State.CurrentUnitId, Is.EqualTo(shooter.Id));
+                var before = presenter.State;
+                presenter.SelectCell(target.Position);
+                Assert.That(presenter.State, Is.SameAs(before));
+                Assert.That(presenter.HudRoot.Q<Button>("confirm-command").enabledSelf, Is.EqualTo(geometry == 0));
+                Assert.That(presenter.PreviewText, Does.Contain(geometry != 0 ? "BlockedLineOfSight" : "LoS / corner: clear"));
+                if (geometry == 0)
+                {
+                    presenter.ConfirmPreview();
+                    Assert.That(presenter.State.FindUnit(shooter.Id).ActionAvailable, Is.False);
+                }
+                LogAssert.NoUnexpectedReceived(); yield return null;
+            }
+        }
+
+        [UnityTest]
         public IEnumerator CornerAttackAndOaPreviewReflectSharedCoreRule()
         {
             yield return SceneManager.LoadSceneAsync("TacticalGraybox", LoadSceneMode.Single); yield return null;

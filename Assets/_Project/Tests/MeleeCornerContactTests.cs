@@ -60,13 +60,13 @@ namespace RPG.Tests
         }
 
         [Test]
-        public void OpenMeleeCornerDoesNotRelaxMovementOrRangedSupercover()
+        public void OpenMeleeCornerAndRangedTouchDoNotRelaxMovement()
         {
             var actor = new UnitState(new UnitId(5), Side.West, UnitProfile.ElfWarriorTI, new GridPosition(4,4), Facing.East);
             var state = BattleResolver.StartBattle(new[] { actor }, 2, new Battlefield(new[] { new GridPosition(5,4) })).State;
             var destination = new GridPosition(5,5);
             Assert.That(LineOfSight.IsMeleeCornerClear(state, actor.Position, destination), Is.True);
-            Assert.That(LineOfSight.IsClear(state, actor.Position, destination), Is.False);
+            Assert.That(LineOfSight.IsClear(state, actor.Position, destination), Is.True);
             Assert.That(MovementRules.ValidateStep(state, actor.Id, actor.Position, destination), Is.EqualTo(CommandError.BlockedCorner));
             var path = Pathfinder.FindPath(state, actor.Id, destination);
             Assert.That(path.Found, Is.True); Assert.That(path.Cost, Is.EqualTo(2));
