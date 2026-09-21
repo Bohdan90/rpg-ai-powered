@@ -28,9 +28,6 @@
 *.svd
 *.opendb
 *.VC.db
-*.pidb.meta
-*.pdb.meta
-*.mdb.meta
 sysinfo.txt
 crashlytics-build.properties
 
