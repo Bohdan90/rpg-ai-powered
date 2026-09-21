@@ -8,7 +8,7 @@ namespace RPG.Tests
     public class PathfinderTests
     {
         [Test]
-        public void EqualCostPathsUseClockwiseFifoTieBreakAndDoNotMutateState()
+        public void EqualCostPathsUseClockwiseFinalTieBreakAndDoNotMutateState()
         {
             var state = Grid(); string before = Snapshot(state);
             for (int i = 0; i < 3; i++)
@@ -19,6 +19,43 @@ namespace RPG.Tests
                 Assert.That(path.Cost, Is.EqualTo(2));
             }
             Assert.That(Snapshot(state), Is.EqualTo(before));
+        }
+
+        [TestCase(2, 0)]
+        [TestCase(-2, 0)]
+        [TestCase(0, 2)]
+        [TestCase(0, -2)]
+        [TestCase(2, 2)]
+        public void UnobstructedStraightRoutesDoNotZigzag(int dx, int dy)
+        {
+            var state = BattleResolver.StartBattle(new[] { Unit(1, UnitProfile.ElfWarriorTI, x: 5, y: 4) }, 1, Battlefield.ControlMap).State;
+            var path = Pathfinder.FindPath(state, Attacker, P(5 + dx, 4 + dy));
+            Assert.That(path.Steps, Is.EqualTo(new[] { P(5 + dx / 2, 4 + dy / 2), P(5 + dx, 4 + dy) }));
+            var result = BattleResolver.Apply(state, new MoveCommand(Attacker, path.Steps));
+            Assert.That(result.IsApplied, Is.True);
+            Assert.That(result.State.FindUnit(Attacker).MovementRemaining, Is.EqualTo(4));
+        }
+
+        [Test]
+        public void CloserToLineWinsEvenWhenAnotherShortestRouteHasFewerTurns()
+        {
+            var state = BattleResolver.StartBattle(new[] { Unit(1, UnitProfile.ElfWarriorTI, x: 2, y: 2) }, 1, Battlefield.ControlMap).State;
+            var path = Pathfinder.FindPath(state, Attacker, P(6, 3));
+            // E, NE, E, E: summed cross-product deviation 4, two turns.
+            // NE, E, E, E: deviation 6, one turn. Closeness has priority.
+            Assert.That(path.Steps, Is.EqualTo(new[] { P(3, 2), P(4, 3), P(5, 3), P(6, 3) }));
+            Assert.That(path.Cost, Is.EqualTo(4));
+        }
+
+        [Test]
+        public void EqualLengthAndDeviationPreferFewerTurnsBeforeDirectionOrder()
+        {
+            var state = BattleResolver.StartBattle(new[] { Unit(1, UnitProfile.ElfWarriorTI, x: 2, y: 2) }, 1, Battlefield.ControlMap).State;
+            var path = Pathfinder.FindPath(state, Attacker, P(6, 4));
+            // NE, E, E, NE has deviation 4 and two turns.
+            // The lexically earlier NE, E, NE, E also has deviation 4, but three turns.
+            Assert.That(path.Steps, Is.EqualTo(new[] { P(3, 3), P(4, 3), P(5, 3), P(6, 4) }));
+            Assert.That(path.Cost, Is.EqualTo(4));
         }
 
         [Test]

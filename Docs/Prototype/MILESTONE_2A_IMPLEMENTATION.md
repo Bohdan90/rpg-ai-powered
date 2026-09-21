@@ -144,3 +144,25 @@ preview, submit commands to this resolver, and show structured results/resources
 Include Move, Basic Attack, Defend and End controls and hotseat verification. Presentation
 must never modify Core state or implement its own legality/combat logic. Keep OA, retreat
 and AI deferred to their later milestones.
+
+## Follow-up: direct-route preference (2026-09-21, after Milestone 2B)
+
+The original FIFO tie-break above is superseded by this user-approved path selection rule:
+minimize **step count**, then **summed perpendicular deviation from the start-to-destination line**,
+then **direction changes**, then lexicographic clockwise direction order N, NE, E, SE, S, SW, W, NW.
+Deviation is the sum of absolute integer cross products at path cells; the omitted line-length
+normalizer is constant for a query. The initial facing does not count as a path turn.
+
+BFS first computes minimum distances within the Movement budget. A second pass over shortest-path
+edges retains the best route per cell and incoming direction, so turn minimization remains valid.
+All comparisons are integer/ordinal; queries remain state/RNG independent. For example, (2,4) to
+(4,4) now goes through (3,4), not (3,5). Legal shortest detours still work around blocked corners.
+
+This is a local **P — PROTOTYPE ASSUMPTION** about choosing between equal-cost legal paths, not a
+change to Movement cost, occupancy, range, LoS or combat rules. The chosen path and thus final movement
+facing can differ from previous builds; explicit submitted paths still execute unchanged.
+Presentation automatically uses the new Core path. No presentation-side routing was added.
+
+Validation: 104 EditMode tests and 11 Presentation PlayMode tests passed (115 total, zero failed
+or skipped), including seven added path-selection cases. No compiler warnings/errors were reported
+by these runs. Core remains independent of UnityEngine; the contract and packages are unchanged.
