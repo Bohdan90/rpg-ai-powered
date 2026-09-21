@@ -10,11 +10,13 @@ namespace RPG.Presentation
     {
         private readonly GameObject root;
         private readonly Material material;
-        private readonly Renderer[,] tiles = new Renderer[Battlefield.Width, Battlefield.Height];
+        private Renderer[,] tiles;
         private readonly Dictionary<UnitId, Token> units = new Dictionary<UnitId, Token>();
         private readonly LineRenderer pathLine;
-        private readonly LineRenderer[,] zocBorders = new LineRenderer[Battlefield.Width, Battlefield.Height];
-        private readonly Renderer[,] retreatStripes = new Renderer[Battlefield.Width, Battlefield.Height];
+        private LineRenderer[,] zocBorders;
+        private Renderer[,] retreatStripes;
+        private Renderer[,] eastStripes;
+        private GameObject cellsRoot;
         private readonly List<LineRenderer> riskSegments = new List<LineRenderer>();
         private readonly Color floorA = new Color(.17f, .23f, .28f), floorB = new Color(.20f, .27f, .32f);
         public int ActiveVisualCount => units.Values.Count(u => u.Root.activeSelf);
@@ -24,18 +26,6 @@ namespace RPG.Presentation
         {
             root = new GameObject("Battle views"); root.transform.SetParent(parent, false);
             material = new Material(shader) { name = "Graybox runtime unlit" };
-            for (int x = 0; x < Battlefield.Width; x++)
-            for (int y = 0; y < Battlefield.Height; y++)
-            {
-                tiles[x, y] = Primitive("Cell " + x + "," + y, PrimitiveType.Cube, root.transform,
-                    new Vector3(x, -.12f, y), new Vector3(.95f, .12f, .95f));
-                zocBorders[x, y] = Line("Enemy ZoC " + x + "," + y, .018f);
-                zocBorders[x, y].positionCount = 5;
-                zocBorders[x, y].SetPositions(new[] { new Vector3(x-.43f,.015f,y-.43f), new Vector3(x+.43f,.015f,y-.43f),
-                    new Vector3(x+.43f,.015f,y+.43f), new Vector3(x-.43f,.015f,y+.43f), new Vector3(x-.43f,.015f,y-.43f) });
-                retreatStripes[x, y] = Primitive("Retreat edge " + x + "," + y, PrimitiveType.Cube, root.transform,
-                    new Vector3(x, .02f, y+.35f), new Vector3(.8f,.025f,.1f));
-            }
             var path = new GameObject("Core path preview"); path.transform.SetParent(root.transform, false);
             pathLine = path.AddComponent<LineRenderer>(); pathLine.sharedMaterial = material;
             pathLine.widthMultiplier = .045f; pathLine.useWorldSpace = true;
@@ -43,19 +33,46 @@ namespace RPG.Presentation
             pathLine.positionCount = 0;
         }
 
+        public void Resize(Battlefield board)
+        {
+            if (cellsRoot != null) { cellsRoot.SetActive(false); Object.Destroy(cellsRoot); }
+            cellsRoot = new GameObject("Fixture cells"); cellsRoot.transform.SetParent(root.transform, false);
+            tiles = new Renderer[board.Columns, board.Rows];
+            zocBorders = new LineRenderer[board.Columns, board.Rows];
+            retreatStripes = new Renderer[board.Columns, board.Rows];
+            eastStripes = new Renderer[board.Columns, board.Rows];
+            for (int x = 0; x < board.Columns; x++)
+            for (int y = 0; y < board.Rows; y++)
+            {
+                tiles[x, y] = Primitive("Cell " + x + "," + y, PrimitiveType.Cube, cellsRoot.transform,
+                    new Vector3(x, -.12f, y), new Vector3(.95f, .12f, .95f));
+                zocBorders[x, y] = Line("Enemy ZoC " + x + "," + y, .018f);
+                zocBorders[x, y].transform.SetParent(cellsRoot.transform, false);
+                zocBorders[x, y].positionCount = 5;
+                zocBorders[x, y].SetPositions(new[] { new Vector3(x-.43f,.015f,y-.43f), new Vector3(x+.43f,.015f,y-.43f),
+                    new Vector3(x+.43f,.015f,y+.43f), new Vector3(x-.43f,.015f,y+.43f), new Vector3(x-.43f,.015f,y-.43f) });
+                retreatStripes[x, y] = Primitive("Retreat edge " + x + "," + y, PrimitiveType.Cube, cellsRoot.transform,
+                    new Vector3(x, .02f, y+.35f), new Vector3(.8f,.025f,.1f));
+                eastStripes[x, y] = Primitive("East retreat " + x + "," + y, PrimitiveType.Cube, cellsRoot.transform,
+                    new Vector3(x, .02f, y-.35f), new Vector3(.8f,.025f,.1f));
+            }
+        }
+
         public void Refresh(BattleState state, IReadOnlyCollection<GridPosition> reachable, IReadOnlyList<GridPosition> path,
             IReadOnlyDictionary<GridPosition, IReadOnlyList<UnitId>> threats, OpportunityAttackPreview risk)
         {
             var highlights = new HashSet<GridPosition>(reachable);
             var pathCells = path == null ? new HashSet<GridPosition>() : new HashSet<GridPosition>(path);
-            for (int x = 0; x < Battlefield.Width; x++)
-            for (int y = 0; y < Battlefield.Height; y++)
+            for (int x = 0; x < state.Battlefield.Columns; x++)
+            for (int y = 0; y < state.Battlefield.Rows; y++)
             {
                 var p = new GridPosition(x, y); var tile = tiles[x, y]; bool solid = state.Battlefield.IsSolid(p);
                 bool westRetreat = state.Battlefield.IsRetreatZone(Side.West, p);
                 bool eastRetreat = state.Battlefield.IsRetreatZone(Side.East, p);
-                retreatStripes[x, y].gameObject.SetActive(westRetreat || eastRetreat);
-                Tint(retreatStripes[x, y], westRetreat ? new Color(.30f,.70f,1) : new Color(1,.55f,.30f));
+                retreatStripes[x, y].gameObject.SetActive(westRetreat);
+                eastStripes[x, y].gameObject.SetActive(eastRetreat);
+                Tint(eastStripes[x, y], new Color(1,.55f,.30f));
+                Tint(retreatStripes[x, y], new Color(.30f,.70f,1));
                 bool threatened = threats.TryGetValue(p, out var sources);
                 zocBorders[x, y].gameObject.SetActive(threatened);
                 if (threatened) Tint(zocBorders[x, y], sources.Any(id => state.FindUnit(id).OpportunityAttackAvailable)

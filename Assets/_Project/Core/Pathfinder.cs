@@ -32,9 +32,9 @@ namespace RPG.Core
             if (destination == actor.Position) return new PathResult(true, Array.Empty<GridPosition>());
             if (state.OccupantAt(destination) != null) return NotFound();
             // First find minimum step counts. Secondary preferences must never add a step.
-            var distance = new int[Battlefield.Width, Battlefield.Height];
-            for (int x = 0; x < Battlefield.Width; x++)
-            for (int y = 0; y < Battlefield.Height; y++) distance[x, y] = -1;
+            var distance = new int[state.Battlefield.Columns, state.Battlefield.Rows];
+            for (int x = 0; x < state.Battlefield.Columns; x++)
+            for (int y = 0; y < state.Battlefield.Rows; y++) distance[x, y] = -1;
             var order = new List<GridPosition> { actor.Position };
             distance[actor.Position.X, actor.Position.Y] = 0;
             for (int i = 0; i < order.Count; i++)
@@ -57,7 +57,7 @@ namespace RPG.Core
             // Dynamic programming over shortest-path edges. Keep each incoming direction:
             // equal prefixes can incur different turn counts on their next step.
             const int noDirection = 8;
-            var routes = new Route[Battlefield.Width, Battlefield.Height, 9];
+            var routes = new Route[state.Battlefield.Columns, state.Battlefield.Rows, 9];
             routes[actor.Position.X, actor.Position.Y, noDirection] = new Route(0, 0, "");
             long dx = destination.X - actor.Position.X, dy = destination.Y - actor.Position.Y;
             foreach (var from in order)

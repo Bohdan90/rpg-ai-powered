@@ -14,6 +14,22 @@ namespace RPG.Presentation
         private BattleHud hud;
         private BattleGridView grid;
         private Camera battleCamera;
+        private float zoom = 1;
+        public SizeExperimentMap Fixture { get; private set; }
+        public void Zoom(float factor) { zoom = Mathf.Clamp(zoom * factor, .4f, 1); }
+        public void CenterView(GridPosition cell) { battleCamera.transform.position = new Vector3(cell.X, 20, cell.Y); }
+        public void FitBoard() { zoom = 1; CenterCamera(); }
+        public void FocusActor()
+        {
+            if (State == null) return;
+            CenterView(State.FindUnit(State.CurrentUnitId.Value).Position);
+            zoom = .5f;
+        }
+        private void CenterCamera()
+        {
+            if (State != null) battleCamera.transform.position = new Vector3(
+                (State.Battlefield.Columns - 1) / 2f, 20, (State.Battlefield.Rows - 1) / 2f);
+        }
         private UnitState[] initialUnits;
         private Battlefield initialBoard;
         private uint initialSeed;
@@ -49,16 +65,22 @@ namespace RPG.Presentation
             var document = gameObject.AddComponent<UIDocument>(); document.panelSettings = panelSettings;
             hud = new BattleHud(document, this, battleCamera);
         }
-        private void Start() { if (State == null) ConfigureFixture(false); }
+        private void Start() { if (State == null) ConfigureFixture(SizeExperimentMap.Field_13x9_Control); }
         private void LateUpdate()
         {
-            battleCamera.orthographicSize = Mathf.Max(5.4f, 7.6f / Mathf.Max(.1f, battleCamera.aspect));
+            if (State != null) battleCamera.orthographicSize = zoom * Mathf.Max((State.Battlefield.Rows + 1f) / 1.55f, (State.Battlefield.Columns + 2.2f) / (2 * Mathf.Max(.1f, battleCamera.aspect)));
             if (State != null) hud.PositionLabels(State);
         }
         private void OnDestroy() { grid?.Dispose(); }
 
+        public void ConfigureFixture(SizeExperimentMap map)
+        {
+            Fixture = map;
+            ConfigureBattle(SizeExperimentFixture.Units(map), SizeExperimentFixture.Board(map), PrototypeFixture.Seed);
+        }
         public void ConfigureFixture(bool controlMap)
         {
+            Fixture = SizeExperimentMap.Field_13x9_Control;
             ConfigureBattle(PrototypeFixture.Units(), controlMap ? Battlefield.ControlMap : Battlefield.BaseMap, PrototypeFixture.Seed);
         }
         // An explicit initial fixture seam, also used by PlayMode integration tests; no rule implementation.
@@ -70,6 +92,7 @@ namespace RPG.Presentation
         {
             var result = BattleResolver.StartBattle(initialUnits, initialSeed, initialBoard);
             State = result.State; log.Clear(); Append(result.Events); Message = "Restarted with seed " + initialSeed + ".";
+            grid.Resize(State.Battlefield); hud.Resize(State.Battlefield); FitBoard();
             ClearPreview(); Refresh();
         }
         public BattleResult Submit(BattleCommand command)
@@ -162,6 +185,7 @@ namespace RPG.Presentation
             var path = Pathfinder.FindPath(State, actor.Id, cell);
             var unit = State.OccupantAt(cell);
             string text = "Hover " + Cell(cell) + " " + (unit != null ? PrototypeFixture.Name(unit.Id) + " | " + OaStatus(unit)
+                    + "\nHP " + unit.Hp + " / Armor " + unit.Armor + " | Facing " + unit.Facing + (unit.IsDefending ? " | Defending" : "")
                 : path.Found ? "— Core path cost " + path.Cost : "— no reachable path");
             var sources = ZoneOfControl.Sources(State, actor.Side, cell);
             if (sources.Count > 0) text += "\nEnemy ZoC: " + string.Join(", ", sources.Select(id => PrototypeFixture.Name(id) + " [" + OaStatus(State.FindUnit(id)) + "]"));
@@ -180,8 +204,8 @@ namespace RPG.Presentation
             reachable.Clear(); threats.Clear();
             if (State.Outcome.IsEnded) { ShowViews(); return; }
             var actor = State.FindUnit(State.CurrentUnitId.Value);
-            for (int x = 0; x < Battlefield.Width; x++)
-            for (int y = 0; y < Battlefield.Height; y++)
+            for (int x = 0; x < State.Battlefield.Columns; x++)
+            for (int y = 0; y < State.Battlefield.Rows; y++)
             {
                 var cell = new GridPosition(x, y); var path = Pathfinder.FindPath(State, State.CurrentUnitId.Value, cell);
                 if (path.Found && path.Cost > 0) reachable.Add(cell);

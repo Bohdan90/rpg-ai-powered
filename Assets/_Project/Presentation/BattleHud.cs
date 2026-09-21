@@ -19,7 +19,7 @@ namespace RPG.Presentation
         private readonly ScrollView panel;
         private bool showedOutcome;
         private readonly Label westEdge, eastEdge;
-        private readonly DropdownField finalFacing;
+        private readonly DropdownField finalFacing, map;
         private readonly Toggle friendly;
         private GridPosition? hoveredCell;
         private readonly Dictionary<UnitId, Label> unitLabels = new Dictionary<UnitId, Label>();
@@ -36,20 +36,21 @@ namespace RPG.Presentation
             surface.style.overflow = Overflow.Hidden; Root.Add(surface);
             var title = Text(surface, "GATE C / HOTSEAT", 22); title.style.position = Position.Absolute;
             title.style.left = 20; title.style.top = 16; title.pickingMode = PickingMode.Ignore;
-            var legend = Text(surface, "BLUE West · ORANGE East · GOLD active\nGreen: reachable · Gold: path · Red segment: OA risk\nHW square · HA circle · EW diamond · * Commander\nThin red borders: enemy ZoC ready · Gray: spent", 13);
+            var legend = Text(surface, "BLUE West · ORANGE East · GOLD active\nGreen: reachable · Gold: path · Red segment: OA risk\nHW square · HA circle · EW diamond · * Commander\nThin red borders: enemy ZoC ready · Gray: spent\nWheel: zoom · Right-click: center view", 13);
             legend.style.position = Position.Absolute; legend.style.left = 20; legend.style.bottom = 16; legend.pickingMode = PickingMode.Ignore;
             westEdge = Text(surface, "West Retreat", 13); eastEdge = Text(surface, "East Retreat", 13);
             westEdge.style.position = eastEdge.style.position = Position.Absolute;
             westEdge.style.left = 20; eastEdge.style.right = 20;
             westEdge.style.top = eastEdge.style.top = 49;
             westEdge.pickingMode = eastEdge.pickingMode = PickingMode.Ignore;
-            for (int x = 0; x < Battlefield.Width; x++) Axis(x.ToString(), new Vector3(x, 0, 8.75f));
-            for (int y = 0; y < Battlefield.Height; y++) Axis(y.ToString(), new Vector3(-.8f, 0, y));
+            surface.RegisterCallback<WheelEvent>(e => { presenter.Zoom(e.delta.y > 0 ? 1.12f : .89f); e.StopPropagation(); });
             surface.RegisterCallback<PointerMoveEvent>(e => {
                 if (presenter.State != null && Pick(surface.WorldToLocal(e.position), out var p)) { hoveredCell = p; hover.text = presenter.Hover(p); }
             });
             surface.RegisterCallback<PointerDownEvent>(e => {
-                if (e.button != 0 || presenter.State == null || !Pick(surface.WorldToLocal(e.position), out var p)) return;
+                if (presenter.State == null || !Pick(surface.WorldToLocal(e.position), out var p)) return;
+                if (e.button == 1) { presenter.CenterView(p); e.StopPropagation(); return; }
+                if (e.button != 0) return;
                 friendly.SetValueWithoutNotify(false); presenter.SelectCell(p); e.StopPropagation();
             });
 
@@ -70,8 +71,11 @@ namespace RPG.Presentation
             queue = Text(panel, "", 12); queue.name = "activation-queue";
             retreat = Text(panel, "", 13); retreat.name = "retreat-info";
             escaped = Text(panel, "", 12); escaped.name = "escaped-list";
-            var map = new DropdownField("Map (resets battle)", new List<string> { "BaseMap", "ControlMap" }, 0);
-            map.RegisterValueChangedCallback(e => presenter.ConfigureFixture(e.newValue == "ControlMap")); panel.Add(map);
+            map = new DropdownField("Fixture (resets battle)", new List<string>(Enum.GetNames(typeof(SizeExperimentMap))), 0) { name = "fixture-selector" };
+            map.RegisterValueChangedCallback(e => presenter.ConfigureFixture((SizeExperimentMap)Enum.Parse(typeof(SizeExperimentMap), e.newValue))); panel.Add(map);
+            Text(panel, "Size experiment only · no combat retuning. Siege: static neutral fortress proxy; West attacks, East defends.", 12);
+            AddButton(panel, "Fit whole board", "fit-board", presenter.FitBoard);
+            AddButton(panel, "Focus active unit (wheel to zoom)", "focus-unit", presenter.FocusActor);
             AddButton(panel, "Restart Same Seed", "restart", presenter.RestartSameSeed);
             hover = Text(panel, "Hover the battlefield.", 12);
             cell = Text(panel, "", 12);
@@ -92,6 +96,15 @@ namespace RPG.Presentation
             events = Text(panel, "", 11); events.name = "battle-events";
         }
 
+        public void Resize(Battlefield board)
+        {
+            hoveredCell = null;
+            foreach (var axis in coordinates) axis.label.RemoveFromHierarchy();
+            coordinates.Clear();
+            for (int x = 0; x < board.Columns; x++) Axis(x.ToString(), new Vector3(x, 0, board.Rows - .25f));
+            for (int y = 0; y < board.Rows; y++) Axis(y.ToString(), new Vector3(-.8f, 0, y));
+            map.SetValueWithoutNotify(presenter.Fixture.ToString());
+        }
         public void ResetChoices() { friendly.SetValueWithoutNotify(false); finalFacing.SetValueWithoutNotify("Keep current"); }
         public void Refresh(BattleState state, bool canConfirm, GridPosition? selected)
         {
@@ -122,9 +135,10 @@ namespace RPG.Presentation
             end.SetEnabled(!ended); finalFacing.SetEnabled(!ended); friendly.SetEnabled(!ended);
             surface.SetEnabled(!ended);
             escaped.text = "Escaped/Safe:\n" + Roster(state, UnitStatus.Escaped);
-            retreat.text = ended ? "Retreat edges: West / East" : "Your Retreat Zone: " + actor.Side + " edge. Opponent's edge does NOT escape you.";
+            string eastZone = state.Battlefield.EastRetreatUsesPerimeter ? "full legal outer perimeter" : "East edge";
+            retreat.text = "West: West edge. East: " + eastZone + "." + (ended ? "" : "\nYOUR escape: " + (actor.Side == Side.West ? "West edge" : eastZone));
             westEdge.text = "← West Retreat" + (!ended && actor.Side == Side.West ? " — YOUR ESCAPE" : "");
-            eastEdge.text = "East Retreat →" + (!ended && actor.Side == Side.East ? " — YOUR ESCAPE" : "");
+            eastEdge.text = (state.Battlefield.EastRetreatUsesPerimeter ? "East: ALL outer edges" : "East Retreat →") + (!ended && actor.Side == Side.East ? " — YOUR ESCAPE" : "");
             events.text = string.Join("\n", presenter.RecentEvents);
             foreach (var label in unitLabels.Values) label.style.display = DisplayStyle.None;
             foreach (var unit in state.Units)
@@ -157,7 +171,18 @@ namespace RPG.Presentation
             foreach (var unit in state.Units)
             {
                 if (!unitLabels.TryGetValue(unit.Id, out var label)) continue;
-                Place(label, BattleGridView.World(unit.Position), -38, 10);
+                float cellPixels = surface.contentRect.height / (2 * camera.orthographicSize);
+                bool detailed = cellPixels >= 64;
+                label.style.width = detailed ? 84 : Mathf.Max(30, cellPixels);
+                label.style.height = detailed ? 47 : 16;
+                label.style.fontSize = detailed ? 11 : 10;
+                string profile = unit.Profile.IsArcher ? "HA" : unit.Profile.Id == UnitProfileId.ElfWarriorTI ? "EW" : "HW";
+                bool commander = unit.Id.Value == 1 || unit.Id.Value == 6;
+                label.text = detailed
+                    ? (unit.Side == Side.West ? "W " : "E ") + profile + (commander ? " *" : "")
+                        + (unit.IsDefending ? " DEF" : "") + "\nHP " + unit.Hp + " / A " + unit.Armor + "\n" + BattlePresenter.OaStatus(unit)
+                    : profile + (commander ? "*" : "");
+                Place(label, BattleGridView.World(unit.Position), detailed ? -42 : -Mathf.Max(30, cellPixels) / 2, cellPixels * .30f);
             }
             foreach (var axis in coordinates) Place(axis.label, axis.position, -10, -10);
         }
