@@ -13,6 +13,9 @@ namespace RPG.Presentation
         private readonly Renderer[,] tiles = new Renderer[Battlefield.Width, Battlefield.Height];
         private readonly Dictionary<UnitId, Token> units = new Dictionary<UnitId, Token>();
         private readonly LineRenderer pathLine;
+        private readonly LineRenderer[,] zocBorders = new LineRenderer[Battlefield.Width, Battlefield.Height];
+        private readonly Renderer[,] retreatStripes = new Renderer[Battlefield.Width, Battlefield.Height];
+        private readonly List<LineRenderer> riskSegments = new List<LineRenderer>();
         private readonly Color floorA = new Color(.17f, .23f, .28f), floorB = new Color(.20f, .27f, .32f);
         public int ActiveVisualCount => units.Values.Count(u => u.Root.activeSelf);
         public static Vector3 World(GridPosition p) => new Vector3(p.X, 0, p.Y);
@@ -23,8 +26,16 @@ namespace RPG.Presentation
             material = new Material(shader) { name = "Graybox runtime unlit" };
             for (int x = 0; x < Battlefield.Width; x++)
             for (int y = 0; y < Battlefield.Height; y++)
+            {
                 tiles[x, y] = Primitive("Cell " + x + "," + y, PrimitiveType.Cube, root.transform,
                     new Vector3(x, -.12f, y), new Vector3(.95f, .12f, .95f));
+                zocBorders[x, y] = Line("Enemy ZoC " + x + "," + y, .018f);
+                zocBorders[x, y].positionCount = 5;
+                zocBorders[x, y].SetPositions(new[] { new Vector3(x-.43f,.015f,y-.43f), new Vector3(x+.43f,.015f,y-.43f),
+                    new Vector3(x+.43f,.015f,y+.43f), new Vector3(x-.43f,.015f,y+.43f), new Vector3(x-.43f,.015f,y-.43f) });
+                retreatStripes[x, y] = Primitive("Retreat edge " + x + "," + y, PrimitiveType.Cube, root.transform,
+                    new Vector3(x, .02f, y+.35f), new Vector3(.8f,.025f,.1f));
+            }
             var path = new GameObject("Core path preview"); path.transform.SetParent(root.transform, false);
             pathLine = path.AddComponent<LineRenderer>(); pathLine.sharedMaterial = material;
             pathLine.widthMultiplier = .045f; pathLine.useWorldSpace = true;
@@ -32,7 +43,8 @@ namespace RPG.Presentation
             pathLine.positionCount = 0;
         }
 
-        public void Refresh(BattleState state, IReadOnlyCollection<GridPosition> reachable, IReadOnlyList<GridPosition> path)
+        public void Refresh(BattleState state, IReadOnlyCollection<GridPosition> reachable, IReadOnlyList<GridPosition> path,
+            IReadOnlyDictionary<GridPosition, IReadOnlyList<UnitId>> threats, OpportunityAttackPreview risk)
         {
             var highlights = new HashSet<GridPosition>(reachable);
             var pathCells = path == null ? new HashSet<GridPosition>() : new HashSet<GridPosition>(path);
@@ -40,6 +52,14 @@ namespace RPG.Presentation
             for (int y = 0; y < Battlefield.Height; y++)
             {
                 var p = new GridPosition(x, y); var tile = tiles[x, y]; bool solid = state.Battlefield.IsSolid(p);
+                bool westRetreat = state.Battlefield.IsRetreatZone(Side.West, p);
+                bool eastRetreat = state.Battlefield.IsRetreatZone(Side.East, p);
+                retreatStripes[x, y].gameObject.SetActive(westRetreat || eastRetreat);
+                Tint(retreatStripes[x, y], westRetreat ? new Color(.30f,.70f,1) : new Color(1,.55f,.30f));
+                bool threatened = threats.TryGetValue(p, out var sources);
+                zocBorders[x, y].gameObject.SetActive(threatened);
+                if (threatened) Tint(zocBorders[x, y], sources.Any(id => state.FindUnit(id).OpportunityAttackAvailable)
+                    ? new Color(.8f,.36f,.32f) : new Color(.4f,.43f,.47f));
                 tile.transform.localScale = new Vector3(.95f, solid ? .65f : .12f, .95f);
                 tile.transform.localPosition = new Vector3(x, solid ? .20f : -.12f, y);
                 Tint(tile, solid ? new Color(.40f, .43f, .47f) : pathCells.Contains(p) ? new Color(.72f, .51f, .12f)
@@ -56,8 +76,19 @@ namespace RPG.Presentation
                 token.Root.SetActive(unit.IsActive);
                 token.Root.transform.localPosition = World(unit.Position);
                 token.Facing.localRotation = Quaternion.Euler(0, (int)unit.Facing * 45, 0);
-                token.Active.SetActive(state.CurrentUnitId == unit.Id);
+                token.Active.SetActive(!state.Outcome.IsEnded && state.CurrentUnitId == unit.Id);
                 Tint(token.Body, unit.Side == Side.West ? new Color(.25f, .65f, .96f) : new Color(.98f, .45f, .30f));
+            }
+            foreach (var segment in riskSegments) segment.gameObject.SetActive(false);
+            int riskIndex = 0;
+            if (risk != null)
+            foreach (var exposure in risk.Exposures.Where(e => e.Threats.Any(t => t.WouldReact)))
+            {
+                if (riskIndex == riskSegments.Count) riskSegments.Add(Line("OA risk step", .075f));
+                var segment = riskSegments[riskIndex++]; segment.gameObject.SetActive(true);
+                segment.name = "OA risk step " + (exposure.StepIndex + 1);
+                segment.positionCount = 2; segment.SetPositions(new[] { World(exposure.From)+Vector3.up*.55f, World(exposure.To)+Vector3.up*.55f });
+                Tint(segment, new Color(1,.28f,.20f));
             }
             pathLine.positionCount = path == null || path.Count == 0 ? 0 : path.Count + 1;
             if (pathLine.positionCount > 0)
@@ -72,9 +103,13 @@ namespace RPG.Presentation
             var go = new GameObject(PrototypeFixture.Name(unit.Id)); go.transform.SetParent(root.transform, false);
             var ring = Primitive("Active marker", PrimitiveType.Cylinder, go.transform, new Vector3(0, .02f, 0), new Vector3(.88f, .025f, .88f));
             Tint(ring, new Color(1, .85f, .24f));
-            var type = unit.Profile.Id == UnitProfileId.HumanWarriorTI ? PrimitiveType.Cylinder
-                : unit.Profile.IsArcher ? PrimitiveType.Cube : PrimitiveType.Sphere;
+            var type = unit.Profile.IsArcher ? PrimitiveType.Cylinder : PrimitiveType.Cube;
             var body = Primitive("Unit token", type, go.transform, new Vector3(0, .20f, 0), new Vector3(.57f, .20f, .57f));
+            if (unit.Profile.Id == UnitProfileId.ElfWarriorTI)
+            {
+                body.transform.localRotation = Quaternion.Euler(0, 45, 0);
+                body.transform.localScale = new Vector3(.51f,.20f,.51f);
+            }
             var facing = new GameObject("Facing"); facing.transform.SetParent(go.transform, false);
             var line = facing.AddComponent<LineRenderer>(); line.sharedMaterial = material;
             line.useWorldSpace = false; line.widthMultiplier = .06f;
@@ -82,6 +117,12 @@ namespace RPG.Presentation
             line.SetPositions(new[] { new Vector3(0, .50f, .06f), new Vector3(0, .50f, .44f),
                 new Vector3(-.13f, .50f, .29f), new Vector3(0, .50f, .44f), new Vector3(.13f, .50f, .29f) });
             return new Token { Profile = unit.Profile.Id, Root = go, Body = body, Active = ring.gameObject, Facing = facing.transform };
+        }
+        private LineRenderer Line(string name, float width)
+        {
+            var go = new GameObject(name); go.transform.SetParent(root.transform, false);
+            var line = go.AddComponent<LineRenderer>(); line.sharedMaterial = material;
+            line.useWorldSpace = true; line.widthMultiplier = width; return line;
         }
         private Renderer Primitive(string name, PrimitiveType type, Transform parent, Vector3 position, Vector3 scale)
         {

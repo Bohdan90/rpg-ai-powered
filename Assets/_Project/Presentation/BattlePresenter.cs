@@ -27,6 +27,15 @@ namespace RPG.Presentation
         public string Message { get; private set; } = "Hotseat: both sides are controlled here.";
         public IReadOnlyList<string> RecentEvents => log;
         public VisualElement HudRoot => hud.Root;
+        public OpportunityAttackPreview MovementRisk { get; private set; }
+        public int OpportunityRiskCount => MovementRisk == null ? 0 : MovementRisk.Exposures.Sum(e => e.Threats.Count(t => t.WouldReact));
+        public bool PreviewEscapes { get; private set; }
+        public bool HasMovePreview => pending is MoveCommand;
+        private readonly Dictionary<GridPosition, IReadOnlyList<UnitId>> threats = new Dictionary<GridPosition, IReadOnlyList<UnitId>>();
+        public IReadOnlyDictionary<GridPosition, IReadOnlyList<UnitId>> ThreatCells => threats;
+        public static string Cell(GridPosition p) => "(" + p.X + "," + p.Y + ")";
+        public static string OaStatus(UnitState unit) => !unit.Profile.HasMeleeBasic ? "no OA" : unit.OpportunityAttackAvailable ? "OA ready" : "OA spent";
+        public void CancelPreview() { ClearPreview(); ShowViews(); }
 
         private void Awake()
         {
@@ -78,7 +87,8 @@ namespace RPG.Presentation
 
         public void SelectCell(GridPosition cell, bool friendlyConfirmed = false)
         {
-            selected = cell; pending = null;
+            if (State.Outcome.IsEnded) return;
+            selected = cell; pending = null; MovementRisk = null; PreviewEscapes = false;
             var actor = State.FindUnit(State.CurrentUnitId.Value); var target = State.OccupantAt(cell);
             if (target != null && target.Id != actor.Id)
             {
@@ -112,11 +122,27 @@ namespace RPG.Presentation
                 var path = Pathfinder.FindPath(State, actor.Id, cell);
                 if (path.Found && path.Cost > 0)
                 {
-                    pending = new MoveCommand(actor.Id, path.Steps);
+                    var move = new MoveCommand(actor.Id, path.Steps);
+                    MovementRisk = OpportunityAttackPreview.Query(State, move);
+                    pending = MovementRisk.IsLegal ? move : null;
+                    PreviewEscapes = path.Steps.Any(p => State.Battlefield.IsRetreatZone(actor.Side, p));
                     var previous = path.Cost == 1 ? actor.Position : path.Steps[path.Cost - 2];
                     PreviewText = "Move to (" + cell.X + "," + cell.Y + ")\nCost " + path.Cost + " Movement"
                         + "\nFinal facing: " + FacingDirections.Toward(previous, path.Steps[path.Cost - 1])
                         + "\nPath: " + string.Join(" → ", path.Steps.Select(p => p.X + "," + p.Y));
+                    foreach (var exposure in MovementRisk.Exposures)
+                    {
+                        PreviewText += "\nStep " + (exposure.StepIndex + 1) + " " + Cell(exposure.From) + " → " + Cell(exposure.To);
+                        foreach (var threat in exposure.Threats)
+                            PreviewText += "\n  " + PrototypeFixture.Name(threat.Responder) + ": "
+                                + (threat.WouldReact ? "may make an OA" : threat.AvailableNow ? "OA used earlier on this path" : "OA spent — cannot react");
+                    }
+                    if (OpportunityRiskCount > 0)
+                        PreviewText += "\n" + OpportunityRiskCount + " OA risk(s). Hits/damage are NOT guaranteed; later steps require survival.";
+                    if (PreviewEscapes)
+                        PreviewText += "\nRetreat: " + (OpportunityRiskCount > 0 ? "if the unit survives and reaches its edge, it will Escape/Safe." : "unit will leave battle as Escaped/Safe.")
+                            + "\nCurrent HP " + actor.Hp + " / Armor " + actor.Armor
+                            + (OpportunityRiskCount > 0 ? ". Pools AFTER any OA will be preserved." : " will be preserved.");
                 }
                 else
                 {
@@ -131,27 +157,43 @@ namespace RPG.Presentation
         public void Repreview(bool friendlyConfirmed) { if (selected.HasValue) SelectCell(selected.Value, friendlyConfirmed); }
         public string Hover(GridPosition cell)
         {
-            var path = Pathfinder.FindPath(State, State.CurrentUnitId.Value, cell);
+            if (State.Outcome.IsEnded) return "Battle ended. Restart Same Seed to play again.";
+            var actor = State.FindUnit(State.CurrentUnitId.Value);
+            var path = Pathfinder.FindPath(State, actor.Id, cell);
             var unit = State.OccupantAt(cell);
-            return "Hover (" + cell.X + "," + cell.Y + ") " + (unit != null ? PrototypeFixture.Name(unit.Id)
+            string text = "Hover " + Cell(cell) + " " + (unit != null ? PrototypeFixture.Name(unit.Id) + " | " + OaStatus(unit)
                 : path.Found ? "— Core path cost " + path.Cost : "— no reachable path");
+            var sources = ZoneOfControl.Sources(State, actor.Side, cell);
+            if (sources.Count > 0) text += "\nEnemy ZoC: " + string.Join(", ", sources.Select(id => PrototypeFixture.Name(id) + " [" + OaStatus(State.FindUnit(id)) + "]"));
+            if (path.Found && path.Cost > 0)
+            {
+                var risk = OpportunityAttackPreview.Query(State, new MoveCommand(actor.Id, path.Steps));
+                text += "\nOA risks on Core path: " + risk.Exposures.Sum(e => e.Threats.Count(t => t.WouldReact));
+            }
+            if (State.Battlefield.IsRetreatZone(actor.Side, cell)) text += "\nYour Retreat Zone — Escape/Safe on entry if alive.";
+            else if (State.Battlefield.IsRetreatZone(actor.Side == Side.West ? Side.East : Side.West, cell)) text += "\nOpponent's edge — NOT your escape.";
+            return text;
         }
-        private void ClearPreview() { pending = null; selected = null; PreviewText = "Click a cell or unit, then confirm. Green cells: Core reachable."; hud.ResetChoices(); }
+        private void ClearPreview() { pending = null; selected = null; MovementRisk = null; PreviewEscapes = false; PreviewText = "Click a cell or unit, then confirm. Green cells: Core reachable."; hud.ResetChoices(); }
         private void Refresh()
         {
-            reachable.Clear();
+            reachable.Clear(); threats.Clear();
+            if (State.Outcome.IsEnded) { ShowViews(); return; }
+            var actor = State.FindUnit(State.CurrentUnitId.Value);
             for (int x = 0; x < Battlefield.Width; x++)
             for (int y = 0; y < Battlefield.Height; y++)
             {
                 var cell = new GridPosition(x, y); var path = Pathfinder.FindPath(State, State.CurrentUnitId.Value, cell);
                 if (path.Found && path.Cost > 0) reachable.Add(cell);
+                var sources = ZoneOfControl.Sources(State, actor.Side, cell);
+                if (sources.Count > 0) threats.Add(cell, sources);
             }
             ShowViews();
         }
         private void ShowViews()
         {
-            grid.Refresh(State, reachable, (pending as MoveCommand)?.Path);
-            hud.Refresh(State, pending != null, selected);
+            grid.Refresh(State, reachable, (pending as MoveCommand)?.Path, threats, MovementRisk);
+            hud.Refresh(State, pending != null && !State.Outcome.IsEnded, selected);
         }
         private void Append(IEnumerable<BattleEvent> events)
         {
@@ -163,10 +205,16 @@ namespace RPG.Presentation
                 if (e.Roll >= 0) line += " [" + e.Roll + " < " + e.ChancePercent + ": " + (e.Roll < e.ChancePercent ? "success" : "fail") + "]";
                 if (e.Kind == BattleEventKind.ArmorLost || e.Kind == BattleEventKind.HpLost) line += " " + e.Before + " → " + e.After;
                 if (e.Kind == BattleEventKind.DamageApplied) line += " " + e.Amount;
-                if (e.To.HasValue) line += " (" + e.To.Value.X + "," + e.To.Value.Y + ")";
+                if (e.From.HasValue) line += " " + Cell(e.From.Value) + " →";
+                if (e.To.HasValue) line += " " + Cell(e.To.Value);
+                if (e.Kind == BattleEventKind.MovementInterruptedByDeath) line += " — exit step NOT executed; remaining path cancelled.";
+                if (e.Kind == BattleEventKind.OpportunityAttackTriggered) line += " — BEFORE the exit step.";
+                if (e.Kind == BattleEventKind.OpportunityAttackSpent) line += " — unavailable until own activation.";
+                if (e.Kind == BattleEventKind.UnitEscaped) line += " — SAFE, not Dead.";
+                if (e.Outcome.HasValue) line += " — Winner " + e.Outcome.Value.VictorySide + ", Loser " + e.Outcome.Value.DefeatedSide + ", " + e.Outcome.Value.Reason;
                 AddLog(line);
             }
         }
-        private void AddLog(string line) { log.Add(line); if (log.Count > 24) log.RemoveAt(0); }
+        private void AddLog(string line) { log.Add(line); if (log.Count > 200) log.RemoveAt(0); }
     }
 }

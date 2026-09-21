@@ -13,7 +13,12 @@ namespace RPG.Presentation
         private readonly Camera camera;
         private readonly VisualElement surface;
         private readonly Label active, queue, preview, message, events, hover, cell;
-        private readonly Button confirm;
+        private readonly Button confirm, cancel, defend, end;
+        private readonly Label riskWarning, retreat, escaped, outcomeText;
+        private readonly VisualElement outcomePanel;
+        private readonly ScrollView panel;
+        private bool showedOutcome;
+        private readonly Label westEdge, eastEdge;
         private readonly DropdownField finalFacing;
         private readonly Toggle friendly;
         private GridPosition? hoveredCell;
@@ -31,8 +36,13 @@ namespace RPG.Presentation
             surface.style.overflow = Overflow.Hidden; Root.Add(surface);
             var title = Text(surface, "GATE C / HOTSEAT", 22); title.style.position = Position.Absolute;
             title.style.left = 20; title.style.top = 16; title.pickingMode = PickingMode.Ignore;
-            var legend = Text(surface, "BLUE West · ORANGE East · GOLD active\nGreen: reachable · Gold line: selected Core path\nClick a destination or target; confirm in the panel.", 13);
+            var legend = Text(surface, "BLUE West · ORANGE East · GOLD active\nGreen: reachable · Gold: path · Red segment: OA risk\nHW square · HA circle · EW diamond · * Commander\nThin red borders: enemy ZoC ready · Gray: spent", 13);
             legend.style.position = Position.Absolute; legend.style.left = 20; legend.style.bottom = 16; legend.pickingMode = PickingMode.Ignore;
+            westEdge = Text(surface, "West Retreat", 13); eastEdge = Text(surface, "East Retreat", 13);
+            westEdge.style.position = eastEdge.style.position = Position.Absolute;
+            westEdge.style.left = 20; eastEdge.style.right = 20;
+            westEdge.style.top = eastEdge.style.top = 49;
+            westEdge.pickingMode = eastEdge.pickingMode = PickingMode.Ignore;
             for (int x = 0; x < Battlefield.Width; x++) Axis(x.ToString(), new Vector3(x, 0, 8.75f));
             for (int y = 0; y < Battlefield.Height; y++) Axis(y.ToString(), new Vector3(-.8f, 0, y));
             surface.RegisterCallback<PointerMoveEvent>(e => {
@@ -43,15 +53,23 @@ namespace RPG.Presentation
                 friendly.SetValueWithoutNotify(false); presenter.SelectCell(p); e.StopPropagation();
             });
 
-            var panel = new ScrollView { name = "battle-panel" };
+            panel = new ScrollView { name = "battle-panel" };
             panel.style.width = Length.Percent(30); panel.style.height = Length.Percent(100);
             panel.style.backgroundColor = new Color(.075f, .105f, .14f);
             panel.style.paddingLeft = panel.style.paddingRight = 14;
             panel.style.paddingTop = panel.style.paddingBottom = 12; Root.Add(panel);
             Text(panel, "TACTICAL GRAYBOX", 20);
-            Text(panel, "Pre-OA prototype · same user plays both sides", 12);
+            Text(panel, "Hotseat · ZoC / OA / physical Retreat", 12);
+            outcomePanel = new VisualElement { name = "outcome-panel" };
+            outcomePanel.style.backgroundColor = new Color(.16f, .23f, .26f);
+            outcomePanel.style.paddingLeft = outcomePanel.style.paddingRight = 8;
+            outcomePanel.style.paddingTop = 8; panel.Add(outcomePanel);
+            outcomeText = Text(outcomePanel, "", 15); outcomeText.name = "outcome-summary";
+            AddButton(outcomePanel, "Restart Same Seed", "outcome-restart", presenter.RestartSameSeed);
             active = Text(panel, "", 16); active.name = "active-unit";
-            queue = Text(panel, "", 12);
+            queue = Text(panel, "", 12); queue.name = "activation-queue";
+            retreat = Text(panel, "", 13); retreat.name = "retreat-info";
+            escaped = Text(panel, "", 12); escaped.name = "escaped-list";
             var map = new DropdownField("Map (resets battle)", new List<string> { "BaseMap", "ControlMap" }, 0);
             map.RegisterValueChangedCallback(e => presenter.ConfigureFixture(e.newValue == "ControlMap")); panel.Add(map);
             AddButton(panel, "Restart Same Seed", "restart", presenter.RestartSameSeed);
@@ -60,12 +78,15 @@ namespace RPG.Presentation
             preview = Text(panel, "", 14); preview.name = "command-preview";
             friendly = new Toggle("Explicitly confirm allied target");
             friendly.RegisterValueChangedCallback(e => presenter.Repreview(e.newValue)); panel.Add(friendly);
+            riskWarning = Text(panel, "", 14); riskWarning.name = "oa-warning";
+            riskWarning.style.color = new Color(1, .68f, .4f);
             confirm = AddButton(panel, "Confirm selected Move / Attack", "confirm-command", presenter.ConfirmPreview);
-            AddButton(panel, "Defend", "defend", presenter.Defend);
+            cancel = AddButton(panel, "Cancel preview", "cancel-preview", presenter.CancelPreview);
+            defend = AddButton(panel, "Defend", "defend", presenter.Defend);
             finalFacing = new DropdownField("End facing", new List<string> { "Keep current", "North", "NorthEast", "East", "SouthEast", "South", "SouthWest", "West", "NorthWest" }, 0);
             panel.Add(finalFacing);
             map.labelElement.style.color = friendly.labelElement.style.color = finalFacing.labelElement.style.color = new Color(.89f, .93f, .97f);
-            AddButton(panel, "End Activation", "end-activation", () => presenter.EndActivation(finalFacing.index == 0 ? (Facing?)null : (Facing)(finalFacing.index - 1)));
+            end = AddButton(panel, "End Activation", "end-activation", () => presenter.EndActivation(finalFacing.index == 0 ? (Facing?)null : (Facing)(finalFacing.index - 1)));
             message = Text(panel, "", 14); message.name = "battle-message"; message.style.color = new Color(1, .8f, .35f);
             Text(panel, "RECENT CORE EVENTS", 14);
             events = Text(panel, "", 11); events.name = "battle-events";
@@ -76,22 +97,42 @@ namespace RPG.Presentation
         {
             var actor = state.FindUnit(state.CurrentUnitId.Value);
             if (hoveredCell.HasValue) hover.text = presenter.Hover(hoveredCell.Value);
-            active.text = "ROUND " + state.Round + " · " + PrototypeFixture.Name(actor.Id) + "\n" + actor.Side
+            bool ended = state.Outcome.IsEnded;
+            if (ended != showedOutcome) panel.schedule.Execute(() => panel.scrollOffset = Vector2.zero);
+            showedOutcome = ended;
+            outcomePanel.style.display = ended ? DisplayStyle.Flex : DisplayStyle.None;
+            outcomeText.text = ended ? "BATTLE ENDED\nWinner: " + state.Outcome.VictorySide + "\nLoser: " + state.Outcome.DefeatedSide
+                + "\nResult: " + state.Outcome.Reason + "\n\nDead:\n" + Roster(state, UnitStatus.Dead)
+                + "\n\nEscaped/Safe:\n" + Roster(state, UnitStatus.Escaped)
+                + "\n\nSurviving active units:\n" + Roster(state, UnitStatus.Active) : "";
+            active.text = ended ? "No active turn — battle completed." : "ROUND " + state.Round + " · " + PrototypeFixture.Name(actor.Id) + "\n" + actor.Side
                 + " | HP " + actor.Hp + " / Armor " + actor.Armor + "\nMovement " + actor.MovementRemaining
                 + " | Action " + (actor.ActionAvailable ? "available" : "spent")
-                + "\nFacing " + actor.Facing + " | Defending " + (actor.IsDefending ? "yes" : "no");
-            queue.text = "Initiative order (► current):\n" + string.Join("\n", state.ActivationOrder.Select(id =>
-                (id == actor.Id ? "► " : "   ") + PrototypeFixture.Name(id) + " [" + state.FindUnit(id).Profile.Initiative + "]"));
+                + "\nFacing " + actor.Facing + " | Defending " + (actor.IsDefending ? "yes" : "no") + " | " + BattlePresenter.OaStatus(actor);
+            queue.text = ended ? "" : "Initiative order (► current):\n" + string.Join("\n", state.ActivationOrder.Select(id =>
+                (id == actor.Id ? "► " : "   ") + PrototypeFixture.Name(id) + " [" + state.FindUnit(id).Profile.Initiative + "] " + BattlePresenter.OaStatus(state.FindUnit(id))));
             cell.text = selected.HasValue ? "Selected (" + selected.Value.X + "," + selected.Value.Y + ")" : "No destination / target selected.";
             preview.text = presenter.PreviewText; confirm.SetEnabled(canConfirm); message.text = presenter.Message;
-            events.text = string.Join("\n", presenter.RecentEvents.Reverse());
+            int risks = presenter.OpportunityRiskCount;
+            riskWarning.text = risks > 0 ? "This path may trigger " + risks + " Opportunity Attack(s). Confirm to accept the risk, or Cancel." : "";
+            riskWarning.style.display = risks > 0 ? DisplayStyle.Flex : DisplayStyle.None;
+            confirm.text = presenter.HasMovePreview ? (risks > 0 ? "Confirm Move — accept " + risks + " OA risk(s)" : "Confirm Move") : "Confirm Attack";
+            cancel.SetEnabled(canConfirm);
+            defend.SetEnabled(!ended && BattleResolver.Validate(state, new DefendCommand(actor.Id)) == CommandError.None);
+            end.SetEnabled(!ended); finalFacing.SetEnabled(!ended); friendly.SetEnabled(!ended);
+            surface.SetEnabled(!ended);
+            escaped.text = "Escaped/Safe:\n" + Roster(state, UnitStatus.Escaped);
+            retreat.text = ended ? "Retreat edges: West / East" : "Your Retreat Zone: " + actor.Side + " edge. Opponent's edge does NOT escape you.";
+            westEdge.text = "← West Retreat" + (!ended && actor.Side == Side.West ? " — YOUR ESCAPE" : "");
+            eastEdge.text = "East Retreat →" + (!ended && actor.Side == Side.East ? " — YOUR ESCAPE" : "");
+            events.text = string.Join("\n", presenter.RecentEvents);
             foreach (var label in unitLabels.Values) label.style.display = DisplayStyle.None;
             foreach (var unit in state.Units)
             {
                 if (!unitLabels.TryGetValue(unit.Id, out var label))
                 {
                     label = Text(surface, "", 11); label.pickingMode = PickingMode.Ignore;
-                    label.style.position = Position.Absolute; label.style.width = 76; label.style.height = 34;
+                    label.style.position = Position.Absolute; label.style.width = 84; label.style.height = 47;
                     label.style.unityTextAlign = TextAnchor.MiddleCenter;
                     label.style.backgroundColor = new Color(.025f, .04f, .06f, .88f);
                     unitLabels.Add(unit.Id, label);
@@ -100,10 +141,16 @@ namespace RPG.Presentation
                 string profile = unit.Profile.IsArcher ? "HA" : unit.Profile.Id == UnitProfileId.ElfWarriorTI ? "EW" : "HW";
                 bool commander = unit.Id.Value == 1 || unit.Id.Value == 6;
                 label.text = (unit.Side == Side.West ? "W " : "E ") + profile + (commander ? " *" : "")
-                    + (unit.IsDefending ? " DEF" : "") + "\nHP " + unit.Hp + " / A " + unit.Armor;
-                label.style.color = state.CurrentUnitId == unit.Id ? new Color(1, .86f, .3f) : Color.white;
+                    + (unit.IsDefending ? " DEF" : "") + "\nHP " + unit.Hp + " / A " + unit.Armor + "\n" + BattlePresenter.OaStatus(unit);
+                label.style.color = !ended && state.CurrentUnitId == unit.Id ? new Color(1, .86f, .3f) : Color.white;
             }
             PositionLabels(state);
+        }
+        private static string Roster(BattleState state, UnitStatus status)
+        {
+            var units = state.Units.Where(u => u.Status == status).ToArray();
+            return units.Length == 0 ? "None" : string.Join("\n", units.Select(u => PrototypeFixture.Name(u.Id)
+                + " (" + u.Side + ") HP " + u.Hp + " / Armor " + u.Armor));
         }
         public void PositionLabels(BattleState state)
         {
