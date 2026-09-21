@@ -98,26 +98,26 @@ namespace RPG.Tests
         }
 
         [Test]
-        public void ArcherAfterMovingHasRangeSixAndUnchangedDistancePenalty()
+        public void ArcherAfterMovingHasRangeTenAndUnchangedDistancePenalty()
         {
             var state = Shot(P(8, 3));
             state = BattleResolver.Apply(state, Move(P(2, 3))).State;
             var preview = BattleResolver.PreviewAttack(state, Attack());
             Assert.That(preview.IsLegal, Is.True);
-            Assert.That(preview.MaximumRange, Is.EqualTo(6));
+            Assert.That(preview.MaximumRange, Is.EqualTo(10));
             Assert.That(preview.ContactChance, Is.EqualTo(65));
             Assert.That(preview.SteadyAim, Is.False);
-            var far = Shot(P(9, 3)); far = BattleResolver.Apply(far, Move(P(2, 3))).State;
+            var far = Shot(P(13, 3), new Battlefield(19,13)); far = BattleResolver.Apply(far, Move(P(2, 3))).State;
             AssertRejected(far, Attack(), CommandError.OutOfRange);
         }
 
         [Test]
-        public void SteadyAimExtendsRangeToSevenButNeverEight()
+        public void SteadyAimKeepsRangeTenAndRejectsEleven()
         {
-            var state = Shot(P(9, 2));
-            Assert.That(BattleResolver.PreviewAttack(state, Attack()).MaximumRange, Is.EqualTo(7));
+            var state = Shot(P(12, 2));
+            Assert.That(BattleResolver.PreviewAttack(state, Attack()).MaximumRange, Is.EqualTo(10));
             Assert.That(BattleResolver.Validate(state, Attack()), Is.EqualTo(CommandError.None));
-            AssertRejected(Shot(P(10, 2)), Attack(), CommandError.OutOfRange);
+            AssertRejected(Shot(P(13, 2), new Battlefield(19,13)), Attack(), CommandError.OutOfRange);
         }
 
         [Test]

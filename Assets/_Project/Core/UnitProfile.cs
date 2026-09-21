@@ -6,7 +6,7 @@ namespace RPG.Core
     public sealed class UnitProfile
     {
         public static readonly UnitProfile HumanWarriorTI = new UnitProfile(UnitProfileId.HumanWarriorTI, 40, 16, 4, 10, 85, 5, 20, 12, 1);
-        public static readonly UnitProfile HumanArcherTI = new UnitProfile(UnitProfileId.HumanArcherTI, 28, 4, 4, 12, 80, 5, 0, 10, 6);
+        public static readonly UnitProfile HumanArcherTI = new UnitProfile(UnitProfileId.HumanArcherTI, 28, 4, 4, 12, 80, 5, 0, 10, 10);
         public static readonly UnitProfile ElfWarriorTI = new UnitProfile(UnitProfileId.ElfWarriorTI, 32, 6, 6, 14, 85, 10, 0, 11, 1);
 
         public UnitProfileId Id { get; }

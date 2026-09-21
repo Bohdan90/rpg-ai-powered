@@ -59,12 +59,12 @@ Fixture: Human Commander Rank I, Capacity 32; подчинённые HW + HA + H
 | Профиль | HP | Armor | Movement | Initiative | Accuracy, % | Dodge, п.п. | Guard, % | Basic damage | Range |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | HW TI | 40 | 16 | 4 | 10 | 85 | 5 | 20 | 12 | 1 |
-| HA TI | 28 | 4 | 4 | 12 | 80 | 5 | 0 | 10 | 6 |
+| HA TI | 28 | 4 | 4 | 12 | 80 | 5 | 0 | 10 | 10 |
 | EW TI | 32 | 6 | 6 | 14 | 85 | 10 | 0 | 11 | 1 |
 
 Base Physical Resistance = 0. Ward/Barrier = 0; они не реализуются. Все фигуры 1×1. Нет случайного разброса damage и Crit.
 
-- Steady Aim: **+15 п.п. Accuracy, +1 max Range**, при отсутствии потраченного Movement перед выстрелом; оставшееся Movement обнуляется. Никакого дополнительного Crit/AP. T чисел, F поведения.
+- Steady Aim: **+15 п.п. Accuracy, без увеличения Range (максимум bow всегда 10)**, при отсутствии потраченного Movement перед выстрелом; оставшееся Movement обнуляется. Никакого дополнительного Crit/AP. T чисел, F поведения.
 - Frontal Evasion: **+15 п.п. Dodge** против eligible прямой фронтальной атаки. T числа, F ограничения.
 - Defending: **25% Physical Resistance** вместо базовых 0. **P** выбора конкретного defensive benefit, **T** величины; не новый pool и не добавочная Guard-проверка.
 
@@ -250,3 +250,14 @@ Latest explicit user clarification supersedes the earlier universal solid-superc
 - The earlier answer permitting all two-wall pure touches was explicitly retracted by the user; the sealed-vertex exception above is the final instruction.
 
 See `RANGED_CORNER_LOS_CORRECTION.md` for reproduction, algorithm, tests and manual validation. No battlefield dimensions or unit tuning are finalized by this change.
+
+## Local bow envelope tuning — 2026-09-21
+
+**T — PROTOTYPE TUNING**, not final global canon: Human Archer TI Bow Range is always 10,
+with or without Steady Aim. Steady Aim retains +15 pp Accuracy when no Movement has been
+spent before the shot and still commits remaining Movement, but no longer adds range.
+Distance penalty stays `5 × max(0, distance − 4)` pp: distances 4/5/7/8/9/10 give
+0/−5/−15/−20/−25/−30 pp. It stacks normally with Dodge, Frontal Evasion and unit Cover.
+Working distance around 7 (1.75 × baseline Movement 4) and maximum 10 (2.5 × baseline)
+are experimental reference points only. No minimum range or adjacent-shot penalty is added.
+Field_19x13_ExpandedV2 and all other combat/fixture tuning remain unchanged.

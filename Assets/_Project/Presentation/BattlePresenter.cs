@@ -126,7 +126,7 @@ namespace RPG.Presentation
                 if (preview.IsLegal)
                 {
                     PreviewText += "\nEffective range " + preview.MaximumRange + " | Contact " + preview.ContactChance + "%"
-                        + "\nBase Accuracy " + preview.BaseAccuracy + "% | Aim +" + preview.AimModifier + " pp"
+                        + "\nBase Accuracy " + preview.BaseAccuracy + "% | Steady Aim +" + preview.AimModifier + " pp"
                         + "\nDistance " + preview.DistanceModifier + " pp | Dodge -" + preview.TargetDodge + " pp"
                         + " | Frontal Evasion -" + preview.FrontalEvasion + " pp"
                         + "\n" + preview.Cover + " Cover: " + preview.CoverAccuracyModifier + " pp Accuracy"
@@ -134,7 +134,7 @@ namespace RPG.Presentation
                         + "\nPhysical damage on unguarded hit: " + preview.PhysicalDamage
                         + "\nArmor loss " + preview.ArmorLossOnUnguardedHit + " | HP loss " + preview.HpLossOnUnguardedHit
                         + "\nFrontal Evasion: " + (preview.TargetFacesAttacker && target.Profile.FrontalEvasion > 0 ? "applies" : "does not apply")
-                        + "\nSteady Aim: " + (preview.SteadyAim ? "active" : "inactive");
+                        + "\nSteady Aim: " + (preview.SteadyAim ? "active (Accuracy only; no range bonus)" : "inactive");
                     pending = command;
                 }
                 else PreviewText += "\nProfile range " + actor.Profile.Range + " | Core: " + preview.Error

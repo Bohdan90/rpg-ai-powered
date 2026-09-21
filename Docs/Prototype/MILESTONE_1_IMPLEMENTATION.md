@@ -1,3 +1,5 @@
+> Historical milestone report: bow range / Steady Aim range values below are superseded by [the 2026-09-21 bow tuning](ARCHER_RANGE_TUNING.md). Current range is 10; Steady Aim adds Accuracy only.
+
 # Gate C — Implementation Milestone 1
 
 Date: 2026-09-21. Scope: pure deterministic combat kernel and automated tests only.

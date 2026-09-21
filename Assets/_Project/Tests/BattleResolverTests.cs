@@ -154,12 +154,12 @@ namespace RPG.Tests
         }
 
         [Test]
-        public void SteadyAimExtendsRangeAppliesDistancePenaltyAndConsumesMovement()
+        public void SteadyAimAppliesDistancePenaltyAndConsumesMovementWithoutExtendingRange()
         {
             var state = Duel(attacker: UnitProfile.HumanArcherTI, targetX: 7);
             var preview = BattleResolver.PreviewAttack(state, Attack());
             Assert.That(preview.IsLegal, Is.True);
-            Assert.That(preview.MaximumRange, Is.EqualTo(7));
+            Assert.That(preview.MaximumRange, Is.EqualTo(10));
             Assert.That(preview.ContactChance, Is.EqualTo(75)); // 80 + 15 - 5 - 15.
             var result = BattleResolver.Apply(state, Attack());
             Assert.That(result.State.FindUnit(Attacker).MovementRemaining, Is.Zero);
@@ -168,16 +168,16 @@ namespace RPG.Tests
         }
 
         [Test]
-        public void SpentMovementDisablesSteadyAimRangeAndAccuracy()
+        public void SpentMovementDisablesSteadyAimAccuracyButNotBaseRange()
         {
             var state = Duel(attacker: UnitProfile.HumanArcherTI, targetX: 6);
             state.FindUnit(Attacker).MovementSpentThisActivation = 1;
             state.FindUnit(Attacker).MovementRemaining = 3;
             var preview = BattleResolver.PreviewAttack(state, Attack());
-            Assert.That(preview.MaximumRange, Is.EqualTo(6));
+            Assert.That(preview.MaximumRange, Is.EqualTo(10));
             Assert.That(preview.ContactChance, Is.EqualTo(65));
             Assert.That(preview.SteadyAim, Is.False);
-            var far = Duel(attacker: UnitProfile.HumanArcherTI, targetX: 7);
+            var far = Duel(attacker: UnitProfile.HumanArcherTI, targetX: 11);
             far.FindUnit(Attacker).MovementSpentThisActivation = 1;
             Assert.That(BattleResolver.Validate(far, Attack()), Is.EqualTo(CommandError.OutOfRange));
         }
@@ -188,7 +188,7 @@ namespace RPG.Tests
             var profiles = new[] { UnitProfile.HumanWarriorTI, UnitProfile.HumanArcherTI, UnitProfile.ElfWarriorTI };
             var expected = new[] {
                 new[] { 40, 16, 4, 10, 85, 5, 20, 12, 1 },
-                new[] { 28, 4, 4, 12, 80, 5, 0, 10, 6 },
+                new[] { 28, 4, 4, 12, 80, 5, 0, 10, 10 },
                 new[] { 32, 6, 6, 14, 85, 10, 0, 11, 1 }
             };
             for (int i = 0; i < profiles.Length; i++)

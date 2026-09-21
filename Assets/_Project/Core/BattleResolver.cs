@@ -36,7 +36,7 @@ namespace RPG.Core
             if (!target.IsActive) return CommandError.TargetInactive;
             if (actor.Id == target.Id) return CommandError.SelfTarget;
             if (actor.Side == target.Side && !attack.FriendlyFireConfirmed) return CommandError.FriendlyFireNotConfirmed;
-            int range = actor.Profile.Range + (HasSteadyAim(actor) ? 1 : 0);
+            int range = actor.Profile.Range;
             if (actor.Position.DistanceTo(target.Position) > range) return CommandError.OutOfRange;
             if (actor.Profile.IsArcher)
             {
@@ -58,7 +58,7 @@ namespace RPG.Core
             var preview = new AttackPreview();
             preview.Distance = actor.Position.DistanceTo(target.Position);
             preview.SteadyAim = HasSteadyAim(actor);
-            preview.MaximumRange = actor.Profile.Range + (preview.SteadyAim ? 1 : 0);
+            preview.MaximumRange = actor.Profile.Range;
             preview.TargetFacesAttacker = FacingDirections.IsFrontal(target.Facing, target.Position, actor.Position);
             int evasion = preview.TargetFacesAttacker ? target.Profile.FrontalEvasion : 0;
             int penalty = actor.Profile.IsArcher ? 5 * (int)Math.Max(0, preview.Distance - 4) : 0;

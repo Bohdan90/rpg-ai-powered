@@ -12,6 +12,35 @@ namespace RPG.Presentation.Tests
     public class SizeExperimentPresentationTests
     {
         [UnityTest]
+        public IEnumerator ArcherHudUsesRangeTenAndAccuracyOnlyAim()
+        {
+            yield return SceneManager.LoadSceneAsync("TacticalGraybox", LoadSceneMode.Single); yield return null;
+            var presenter = Object.FindAnyObjectByType<BattlePresenter>();
+            foreach (int distance in new[] { 10, 11 })
+            {
+                var shooter = new UnitState(new UnitId(3), Side.West, UnitProfile.HumanArcherTI, new GridPosition(2,2), Facing.East);
+                var target = new UnitState(new UnitId(7), Side.East, UnitProfile.HumanWarriorTI, new GridPosition(2+distance,2), Facing.East);
+                presenter.ConfigureBattle(new[] { shooter, target }, new Battlefield(19,13), 1);
+                presenter.SelectCell(target.Position);
+                Assert.That(presenter.HudRoot.Q<Button>("confirm-command").enabledSelf, Is.EqualTo(distance == 10));
+                if (distance == 10)
+                {
+                    Assert.That(presenter.PreviewText, Does.Contain("Effective range 10"));
+                    Assert.That(presenter.PreviewText, Does.Contain("Steady Aim +15 pp"));
+                    Assert.That(presenter.PreviewText, Does.Contain("Distance -30 pp"));
+                    presenter.SelectCell(new GridPosition(2,3)); presenter.ConfirmPreview();
+                    presenter.SelectCell(target.Position);
+                    Assert.That(presenter.PreviewText, Does.Contain("Effective range 10"));
+                    Assert.That(presenter.PreviewText, Does.Contain("Steady Aim +0 pp"));
+                    presenter.ConfirmPreview();
+                    Assert.That(presenter.State.FindUnit(shooter.Id).ActionAvailable, Is.False);
+                }
+                else Assert.That(presenter.PreviewText, Does.Contain("OutOfRange"));
+                LogAssert.NoUnexpectedReceived();
+            }
+        }
+
+        [UnityTest]
         public IEnumerator RangedPreviewAllowsExposedCornersButRejectsInteriorAndSealedVertices()
         {
             yield return SceneManager.LoadSceneAsync("TacticalGraybox", LoadSceneMode.Single); yield return null;
