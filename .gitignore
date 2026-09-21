@@ -1,0 +1,39 @@
+# Unity-generated directories (keep Assets, Packages and ProjectSettings).
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+/[Bb]uild/
+/[Bb]uilds/
+/[Mm]emoryCaptures/
+/[Rr]ecordings/
+/[Tt]est[Rr]esults/
+/Assets/AssetStoreTools*
+
+# IDE state and generated solutions/projects.
+.idea/
+.vs/
+.vscode/
+.gradle/
+*.csproj
+*.unityproj
+*.sln
+*.slnx
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.opendb
+*.VC.db
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+sysinfo.txt
+crashlytics-build.properties
+
+# OS metadata.
+.DS_Store
+Thumbs.db
