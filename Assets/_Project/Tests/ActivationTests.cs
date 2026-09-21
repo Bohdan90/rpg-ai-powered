@@ -96,10 +96,16 @@ namespace RPG.Tests
         [Test]
         public void UnitKilledBeforeItsTurnDoesNotReceiveAnActivation()
         {
-            var state = Duel(attacker: UnitProfile.ElfWarriorTI, target: UnitProfile.HumanWarriorTI, targetHp: 1, targetArmor: 0);
+            var state = BattleResolver.StartBattle(new[] {
+                Unit(1, UnitProfile.ElfWarriorTI, x: 2, y: 2),
+                Unit(2, UnitProfile.HumanWarriorTI, Side.East, x: 3, y: 2, hp: 1, armor: 0),
+                Unit(3, UnitProfile.HumanArcherTI, Side.East, x: 10, y: 7)
+            }, 2).State;
             state = BattleResolver.Apply(state, Attack()).State;
             Assert.That(state.FindUnit(Target).Status, Is.EqualTo(UnitStatus.Dead));
             var result = BattleResolver.Apply(state, new EndActivationCommand(Attacker));
+            Assert.That(result.State.CurrentUnitId, Is.EqualTo(new UnitId(3)));
+            result = BattleResolver.Apply(result.State, new EndActivationCommand(new UnitId(3)));
             Assert.That(result.State.Round, Is.EqualTo(2));
             Assert.That(result.State.CurrentUnitId, Is.EqualTo(Attacker));
             Assert.That(result.Events.Any(e => e.Actor == Target && e.Kind == BattleEventKind.ActivationStarted), Is.False);

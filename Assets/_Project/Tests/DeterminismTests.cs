@@ -100,7 +100,7 @@ namespace RPG.Tests
             var recordedEvents = new List<BattleEvent>();
             var state = first.State;
             // Build a short command log, then replay those exact objects against a fresh state.
-            for (int turn = 0; turn < 8; turn++)
+            for (int turn = 0; turn < 8 && !state.Outcome.IsEnded; turn++)
             {
                 UnitId actor = state.CurrentUnitId.Value;
                 UnitId target = actor == Attacker ? Target : Attacker;
@@ -109,6 +109,7 @@ namespace RPG.Tests
                 var result = BattleResolver.Apply(state, action);
                 Assert.That(result.IsApplied, Is.True);
                 commands.Add(action); recordedEvents.AddRange(result.Events); state = result.State;
+                if (state.Outcome.IsEnded) break;
                 var end = new EndActivationCommand(actor, Facing.East);
                 result = BattleResolver.Apply(state, end);
                 commands.Add(end); recordedEvents.AddRange(result.Events); state = result.State;

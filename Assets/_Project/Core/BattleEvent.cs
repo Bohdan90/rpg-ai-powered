@@ -5,7 +5,9 @@ namespace RPG.Core
         BattleStarted, RoundStarted, ActivationStarted, ActivationEnded,
         ActionConsumed, MovementConsumed, FacingChanged, SteadyAimApplied,
         ContactRolled, AttackMissed, GuardRolled, GuardSucceeded,
-        DamageApplied, ArmorLost, HpLost, DefendApplied, DefendExpired, UnitDied, MovementStarted, StepMoved
+        DamageApplied, ArmorLost, HpLost, DefendApplied, DefendExpired, UnitDied, MovementStarted, StepMoved,
+        ZoCExitDetected, OpportunityAttackTriggered, OpportunityAttackSpent, OpportunityAttackResolved,
+        MovementInterruptedByDeath, UnitEscaped, BattleEnded
     }
 
     // A small value record for this resolver, not an event bus or persistence format.
@@ -23,12 +25,13 @@ namespace RPG.Core
         public int Roll { get; }
         public GridPosition? From { get; }
         public GridPosition? To { get; }
+        public BattleOutcome? Outcome { get; }
         public BattleEvent(BattleEventKind kind, int round, UnitId? actor = null, UnitId? target = null,
             int amount = 0, int before = 0, int after = 0, int chancePercent = 0, int roll = -1,
-            GridPosition? from = null, GridPosition? to = null)
+            GridPosition? from = null, GridPosition? to = null, BattleOutcome? outcome = null)
         {
             Kind = kind; Round = round; Actor = actor; Target = target; Amount = amount;
-            Before = before; After = after; ChancePercent = chancePercent; Roll = roll; From = from; To = to;
+            Before = before; After = after; ChancePercent = chancePercent; Roll = roll; From = from; To = to; Outcome = outcome;
         }
     }
 }

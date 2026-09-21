@@ -37,10 +37,11 @@ namespace RPG.Tests
             string.Join(";", state.Battlefield.SolidCells.Select(p => p.X + "," + p.Y)),
             state.InitialSeed.ToString(), state.RngState.ToString(), state.Round.ToString(),
             state.CurrentUnitId.ToString(), state.PriorityIndex.ToString(),
+            state.Outcome.Reason.ToString(), state.Outcome.VictorySide.ToString(), state.Outcome.DefeatedSide.ToString(),
             string.Join(",", state.PriorityOrder), string.Join(",", state.ActivationOrder),
             string.Join(";", state.Units.Select(u => string.Join(",", new object[] {
                 u.Id, u.Side, u.Profile.Id, u.Position.X, u.Position.Y, u.Facing, u.Hp, u.Armor,
-                u.Status, u.ActionAvailable, u.MovementRemaining, u.MovementSpentThisActivation,
+                u.Status, u.ActionAvailable, u.OpportunityAttackAvailable, u.MovementRemaining, u.MovementSpentThisActivation,
                 u.IsDefending, u.PhysicalResistance, u.TieKey
             })))
         });

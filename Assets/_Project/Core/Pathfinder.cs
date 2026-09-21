@@ -27,7 +27,7 @@ namespace RPG.Core
         {
             if (state == null) throw new ArgumentNullException(nameof(state));
             var actor = state.FindUnit(actorId);
-            if (actor == null || !actor.IsActive || state.CurrentUnitId != actorId || !actor.ActionAvailable
+            if (state.Outcome.IsEnded || actor == null || !actor.IsActive || state.CurrentUnitId != actorId || !actor.ActionAvailable
                 || !state.Battlefield.IsWalkable(destination)) return NotFound();
             if (destination == actor.Position) return new PathResult(true, Array.Empty<GridPosition>());
             if (state.OccupantAt(destination) != null) return NotFound();
@@ -41,7 +41,7 @@ namespace RPG.Core
             {
                 var from = order[i];
                 int cost = distance[from.X, from.Y];
-                if (cost >= actor.MovementRemaining) continue;
+                if (cost >= actor.MovementRemaining || (from != actor.Position && state.Battlefield.IsRetreatZone(actor.Side, from))) continue;
                 foreach (var direction in Directions)
                 {
                     var next = new GridPosition(from.X + direction.X, from.Y + direction.Y);
@@ -63,7 +63,7 @@ namespace RPG.Core
             foreach (var from in order)
             {
                 int cost = distance[from.X, from.Y];
-                if (cost >= length) continue;
+                if (cost >= length || (from != actor.Position && state.Battlefield.IsRetreatZone(actor.Side, from))) continue;
                 for (int direction = 0; direction < Directions.Length; direction++)
                 {
                     var next = new GridPosition(from.X + Directions[direction].X, from.Y + Directions[direction].Y);

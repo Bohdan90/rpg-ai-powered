@@ -16,6 +16,7 @@ namespace RPG.Core
         public UnitStatus Status { get; internal set; }
         public bool IsActive => Status == UnitStatus.Active;
         public bool ActionAvailable { get; internal set; }
+        public bool OpportunityAttackAvailable { get; internal set; }
         public int MovementRemaining { get; internal set; }
         // Historical spend, distinct from MovementRemaining (Defend/End also clear remaining).
         public int MovementSpentThisActivation { get; internal set; }

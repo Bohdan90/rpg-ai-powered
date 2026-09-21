@@ -29,6 +29,8 @@ namespace RPG.Core
             SolidCells = cells.AsReadOnly();
         }
         public bool Contains(GridPosition cell) => cell.X >= 0 && cell.X < Width && cell.Y >= 0 && cell.Y < Height;
+        public bool IsRetreatZone(Side side, GridPosition cell) => Contains(cell)
+            && (side == Side.West ? cell.X == 0 : side == Side.East && cell.X == Width - 1);
         public bool IsSolid(GridPosition cell) => Contains(cell) && solids[cell.X, cell.Y];
         public bool IsWalkable(GridPosition cell) => Contains(cell) && !IsSolid(cell);
     }

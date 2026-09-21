@@ -16,6 +16,7 @@ namespace RPG.Core
         public Battlefield Battlefield { get; }
         public uint RngState => Random.State;
         public int Round { get; internal set; }
+        public BattleOutcome Outcome { get; internal set; } = BattleOutcome.Ongoing;
         public UnitId? CurrentUnitId { get; internal set; }
         // Full live priority for a round; already-activated units are not reinserted mid-round.
         public IReadOnlyList<UnitId> ActivationOrder => PriorityOrder.Where(id => FindUnit(id).IsActive).ToList().AsReadOnly();
@@ -34,7 +35,11 @@ namespace RPG.Core
             units = input.OrderBy(u => u.Id).Select(u => u.Copy()).ToList();
             Units = units.AsReadOnly(); InitialSeed = seed; Random = new CombatRandom(seed);
             // P: assign keys in ascending numeric ID order, independent of collection enumeration.
-            foreach (var unit in units) unit.TieKey = Random.NextUInt();
+            foreach (var unit in units)
+            {
+                unit.TieKey = Random.NextUInt();
+                unit.OpportunityAttackAvailable = unit.IsActive && unit.Profile.HasMeleeBasic;
+            }
             PriorityOrder = units.OrderByDescending(u => u.Profile.Initiative)
                 .ThenBy(u => u.TieKey).ThenBy(u => u.Id).Select(u => u.Id).ToList();
         }
@@ -44,7 +49,7 @@ namespace RPG.Core
             units = source.units.Select(u => u.Copy()).ToList(); Units = units.AsReadOnly();
             PriorityOrder = new List<UnitId>(source.PriorityOrder);
             Battlefield = source.Battlefield; InitialSeed = source.InitialSeed; Random = source.Random; Round = source.Round;
-            PriorityIndex = source.PriorityIndex; CurrentUnitId = source.CurrentUnitId;
+            PriorityIndex = source.PriorityIndex; CurrentUnitId = source.CurrentUnitId; Outcome = source.Outcome;
         }
         public UnitState FindUnit(UnitId id) => units.Find(u => u.Id == id);
         public UnitState OccupantAt(GridPosition cell) => units.Find(u => u.IsActive && u.Position == cell);
