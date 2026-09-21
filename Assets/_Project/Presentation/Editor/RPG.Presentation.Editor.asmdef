@@ -1,0 +1,7 @@
+{
+    "name": "RPG.Presentation.Editor",
+    "rootNamespace": "RPG.Presentation.Editor",
+    "references": ["RPG.Presentation"],
+    "includePlatforms": ["Editor"],
+    "autoReferenced": false
+}

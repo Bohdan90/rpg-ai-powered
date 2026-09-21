@@ -1,0 +1,151 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using RPG.Core;
+using UnityEngine;
+using UnityEngine.UIElements;
+
+namespace RPG.Presentation
+{
+    public sealed class BattleHud
+    {
+        private readonly BattlePresenter presenter;
+        private readonly Camera camera;
+        private readonly VisualElement surface;
+        private readonly Label active, queue, preview, message, events, hover, cell;
+        private readonly Button confirm;
+        private readonly DropdownField finalFacing;
+        private readonly Toggle friendly;
+        private GridPosition? hoveredCell;
+        private readonly Dictionary<UnitId, Label> unitLabels = new Dictionary<UnitId, Label>();
+        private readonly List<(Label label, Vector3 position)> coordinates = new List<(Label, Vector3)>();
+        public VisualElement Root { get; }
+
+        public BattleHud(UIDocument document, BattlePresenter presenter, Camera camera)
+        {
+            this.presenter = presenter; this.camera = camera;
+            Root = document.rootVisualElement; Root.name = "graybox-root";
+            Root.style.flexDirection = FlexDirection.Row; Root.style.flexGrow = 1;
+            surface = new VisualElement { name = "board-input" };
+            surface.style.width = Length.Percent(70); surface.style.height = Length.Percent(100);
+            surface.style.overflow = Overflow.Hidden; Root.Add(surface);
+            var title = Text(surface, "GATE C / HOTSEAT", 22); title.style.position = Position.Absolute;
+            title.style.left = 20; title.style.top = 16; title.pickingMode = PickingMode.Ignore;
+            var legend = Text(surface, "BLUE West · ORANGE East · GOLD active\nGreen: reachable · Gold line: selected Core path\nClick a destination or target; confirm in the panel.", 13);
+            legend.style.position = Position.Absolute; legend.style.left = 20; legend.style.bottom = 16; legend.pickingMode = PickingMode.Ignore;
+            for (int x = 0; x < Battlefield.Width; x++) Axis(x.ToString(), new Vector3(x, 0, 8.75f));
+            for (int y = 0; y < Battlefield.Height; y++) Axis(y.ToString(), new Vector3(-.8f, 0, y));
+            surface.RegisterCallback<PointerMoveEvent>(e => {
+                if (presenter.State != null && Pick(surface.WorldToLocal(e.position), out var p)) { hoveredCell = p; hover.text = presenter.Hover(p); }
+            });
+            surface.RegisterCallback<PointerDownEvent>(e => {
+                if (e.button != 0 || presenter.State == null || !Pick(surface.WorldToLocal(e.position), out var p)) return;
+                friendly.SetValueWithoutNotify(false); presenter.SelectCell(p); e.StopPropagation();
+            });
+
+            var panel = new ScrollView { name = "battle-panel" };
+            panel.style.width = Length.Percent(30); panel.style.height = Length.Percent(100);
+            panel.style.backgroundColor = new Color(.075f, .105f, .14f);
+            panel.style.paddingLeft = panel.style.paddingRight = 14;
+            panel.style.paddingTop = panel.style.paddingBottom = 12; Root.Add(panel);
+            Text(panel, "TACTICAL GRAYBOX", 20);
+            Text(panel, "Pre-OA prototype · same user plays both sides", 12);
+            active = Text(panel, "", 16); active.name = "active-unit";
+            queue = Text(panel, "", 12);
+            var map = new DropdownField("Map (resets battle)", new List<string> { "BaseMap", "ControlMap" }, 0);
+            map.RegisterValueChangedCallback(e => presenter.ConfigureFixture(e.newValue == "ControlMap")); panel.Add(map);
+            AddButton(panel, "Restart Same Seed", "restart", presenter.RestartSameSeed);
+            hover = Text(panel, "Hover the battlefield.", 12);
+            cell = Text(panel, "", 12);
+            preview = Text(panel, "", 14); preview.name = "command-preview";
+            friendly = new Toggle("Explicitly confirm allied target");
+            friendly.RegisterValueChangedCallback(e => presenter.Repreview(e.newValue)); panel.Add(friendly);
+            confirm = AddButton(panel, "Confirm selected Move / Attack", "confirm-command", presenter.ConfirmPreview);
+            AddButton(panel, "Defend", "defend", presenter.Defend);
+            finalFacing = new DropdownField("End facing", new List<string> { "Keep current", "North", "NorthEast", "East", "SouthEast", "South", "SouthWest", "West", "NorthWest" }, 0);
+            panel.Add(finalFacing);
+            map.labelElement.style.color = friendly.labelElement.style.color = finalFacing.labelElement.style.color = new Color(.89f, .93f, .97f);
+            AddButton(panel, "End Activation", "end-activation", () => presenter.EndActivation(finalFacing.index == 0 ? (Facing?)null : (Facing)(finalFacing.index - 1)));
+            message = Text(panel, "", 14); message.name = "battle-message"; message.style.color = new Color(1, .8f, .35f);
+            Text(panel, "RECENT CORE EVENTS", 14);
+            events = Text(panel, "", 11); events.name = "battle-events";
+        }
+
+        public void ResetChoices() { friendly.SetValueWithoutNotify(false); finalFacing.SetValueWithoutNotify("Keep current"); }
+        public void Refresh(BattleState state, bool canConfirm, GridPosition? selected)
+        {
+            var actor = state.FindUnit(state.CurrentUnitId.Value);
+            if (hoveredCell.HasValue) hover.text = presenter.Hover(hoveredCell.Value);
+            active.text = "ROUND " + state.Round + " · " + PrototypeFixture.Name(actor.Id) + "\n" + actor.Side
+                + " | HP " + actor.Hp + " / Armor " + actor.Armor + "\nMovement " + actor.MovementRemaining
+                + " | Action " + (actor.ActionAvailable ? "available" : "spent")
+                + "\nFacing " + actor.Facing + " | Defending " + (actor.IsDefending ? "yes" : "no");
+            queue.text = "Initiative order (► current):\n" + string.Join("\n", state.ActivationOrder.Select(id =>
+                (id == actor.Id ? "► " : "   ") + PrototypeFixture.Name(id) + " [" + state.FindUnit(id).Profile.Initiative + "]"));
+            cell.text = selected.HasValue ? "Selected (" + selected.Value.X + "," + selected.Value.Y + ")" : "No destination / target selected.";
+            preview.text = presenter.PreviewText; confirm.SetEnabled(canConfirm); message.text = presenter.Message;
+            events.text = string.Join("\n", presenter.RecentEvents.Reverse());
+            foreach (var label in unitLabels.Values) label.style.display = DisplayStyle.None;
+            foreach (var unit in state.Units)
+            {
+                if (!unitLabels.TryGetValue(unit.Id, out var label))
+                {
+                    label = Text(surface, "", 11); label.pickingMode = PickingMode.Ignore;
+                    label.style.position = Position.Absolute; label.style.width = 76; label.style.height = 34;
+                    label.style.unityTextAlign = TextAnchor.MiddleCenter;
+                    label.style.backgroundColor = new Color(.025f, .04f, .06f, .88f);
+                    unitLabels.Add(unit.Id, label);
+                }
+                label.style.display = unit.IsActive ? DisplayStyle.Flex : DisplayStyle.None;
+                string profile = unit.Profile.IsArcher ? "HA" : unit.Profile.Id == UnitProfileId.ElfWarriorTI ? "EW" : "HW";
+                bool commander = unit.Id.Value == 1 || unit.Id.Value == 6;
+                label.text = (unit.Side == Side.West ? "W " : "E ") + profile + (commander ? " *" : "")
+                    + (unit.IsDefending ? " DEF" : "") + "\nHP " + unit.Hp + " / A " + unit.Armor;
+                label.style.color = state.CurrentUnitId == unit.Id ? new Color(1, .86f, .3f) : Color.white;
+            }
+            PositionLabels(state);
+        }
+        public void PositionLabels(BattleState state)
+        {
+            foreach (var unit in state.Units)
+            {
+                if (!unitLabels.TryGetValue(unit.Id, out var label)) continue;
+                Place(label, BattleGridView.World(unit.Position), -38, 10);
+            }
+            foreach (var axis in coordinates) Place(axis.label, axis.position, -10, -10);
+        }
+        private void Place(VisualElement element, Vector3 position, float dx, float dy)
+        {
+            var point = camera.WorldToViewportPoint(position);
+            element.style.left = point.x * surface.contentRect.width + dx;
+            element.style.top = (1 - point.y) * surface.contentRect.height + dy;
+        }
+        private bool Pick(Vector2 local, out GridPosition cellPosition)
+        {
+            cellPosition = default;
+            if (surface.contentRect.width <= 0 || surface.contentRect.height <= 0) return false;
+            var ray = camera.ViewportPointToRay(new Vector3(local.x / surface.contentRect.width, 1 - local.y / surface.contentRect.height, 0));
+            if (!new Plane(Vector3.up, Vector3.zero).Raycast(ray, out float distance)) return false;
+            var point = ray.GetPoint(distance);
+            cellPosition = new GridPosition(Mathf.FloorToInt(point.x + .5f), Mathf.FloorToInt(point.z + .5f));
+            return presenter.State.Battlefield.Contains(cellPosition);
+        }
+        private void Axis(string text, Vector3 position)
+        {
+            var label = Text(surface, text, 12); label.style.position = Position.Absolute;
+            label.style.width = 20; label.style.height = 20; label.style.unityTextAlign = TextAnchor.MiddleCenter;
+            label.pickingMode = PickingMode.Ignore; coordinates.Add((label, position));
+        }
+        private static Label Text(VisualElement parent, string value, int size)
+        {
+            var label = new Label(value); label.style.whiteSpace = WhiteSpace.Normal; label.style.fontSize = size;
+            label.style.color = new Color(.89f, .93f, .97f); label.style.marginBottom = 7;
+            parent.Add(label); return label;
+        }
+        private static Button AddButton(VisualElement parent, string text, string name, Action action)
+        {
+            var button = new Button(action) { text = text, name = name };
+            button.style.minHeight = 31; button.style.marginBottom = 5; parent.Add(button); return button;
+        }
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "name": "RPG.Presentation.Tests",
+    "rootNamespace": "RPG.Presentation.Tests",
+    "references": ["RPG.Core", "RPG.Presentation"],
+    "optionalUnityReferences": ["TestAssemblies"],
+    "autoReferenced": false
+}

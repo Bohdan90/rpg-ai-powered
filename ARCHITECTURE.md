@@ -1,6 +1,6 @@
 # Gate C architecture baseline
 
-The Unity project root is this directory (`My project/`). Milestones 1 and 2A implement the pure deterministic combat core and battlefield legality; no presentation gameplay is implemented.
+The Unity project root is this directory (`My project/`). Milestones 1 and 2A implement the pure deterministic combat core and battlefield legality; Milestone 2B adds a thin Unity hotseat presentation.
 
 | Folder | Purpose / dependency boundary |
 | --- | --- |
@@ -8,14 +8,16 @@ The Unity project root is this directory (`My project/`). Milestones 1 and 2A im
 | `Assets/_Project/Presentation` | `RPG.Presentation`: Unity-facing C#; explicitly references Core. |
 | `Assets/_Project/Tests` | `RPG.Tests`: Editor-only NUnit tests; explicitly references Core. |
 | `Assets/_Project/Data` | Reserved for project data assets. |
-| `Assets/_Project/Scenes` | Reserved for project scenes. |
-| `Assets/_Project/UI` | Reserved for UI assets; put Unity-facing C# in Presentation. |
+| `Assets/_Project/Scenes` | TacticalGraybox scene with one BattlePresenter bootstrap. |
+| `Assets/_Project/UI` | UI Toolkit panel/theme assets; Unity-facing C# lives in Presentation. |
 
 Core uses `noEngineReferences: true` and disables automatic precompiled references.
-Presentation explicitly references Core. All three assemblies disable automatic
+Presentation explicitly references Core. The original three assemblies disable automatic
 references from predefined assemblies; future assembly dependencies must be explicit.
-Core contains the combat model/resolver plus pure grid, movement, pathfinding and LoS. Presentation remains a placeholder.
-Existing template scenes and settings are unchanged.
+Core contains the combat model/resolver plus pure grid, movement, pathfinding and LoS. Presentation uses BattlePresenter as the single command/state boundary, with disposable BattleGridView and runtime UI Toolkit BattleHud. Views never mutate Core state. PrototypeFixture supplies the contract deployment.
+RPG.Presentation.Editor references Presentation for native scene creation/Play controls.
+RPG.Presentation.Tests is a separate PlayMode test assembly referencing Core and Presentation.
+The template scene remains intact; TacticalGraybox is appended to Build Settings.
 
 `CoreArchitectureTests` loads the compiled Core assembly and rejects dependencies
 whose names start with `Unity`, or equal `RPG.Presentation`. Run it in the Unity
@@ -56,3 +58,7 @@ preferences and use Regenerate project files. Generated IDE files stay ignored.
 
 No ECS, dependency injection, service locator, ability, save, campaign, networking,
 or other gameplay framework is included.
+
+## Milestone 2B
+
+Validation: **97 EditMode + 11 PlayMode passed, 0 failed, 0 skipped**. See [the implementation report](Docs/Prototype/MILESTONE_2B_IMPLEMENTATION.md) for scene launch, dependency flow, live mouse-driven validation, assumptions and limitations. Core, original tests, package versions and editor version remain unchanged.
