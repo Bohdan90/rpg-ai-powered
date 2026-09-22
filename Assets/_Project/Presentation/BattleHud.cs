@@ -69,6 +69,7 @@ namespace RPG.Presentation
             outcomeText = Text(outcomePanel, "", 15); outcomeText.name = "outcome-summary";
             AddButton(outcomePanel, "Restart Same Seed", "outcome-restart", presenter.RestartSameSeed);
             var control = new DropdownField("Controller",new List<string>{"Hotseat","Player West vs AI East"},0) { name="controller-mode" };
+            control.labelElement.style.color=new Color(.89f,.93f,.97f);
             control.RegisterValueChangedCallback(e=>presenter.SetPlayerVsAi(control.index==1));panel.Add(control);
             aiInfo=Text(panel,"",12);aiInfo.name="ai-info";
             active = Text(panel, "", 16); active.name = "active-unit";
@@ -96,6 +97,11 @@ namespace RPG.Presentation
             map.labelElement.style.color = friendly.labelElement.style.color = finalFacing.labelElement.style.color = new Color(.89f, .93f, .97f);
             end = AddButton(panel, "End Activation", "end-activation", () => presenter.EndActivation(finalFacing.index == 0 ? (Facing?)null : (Facing)(finalFacing.index - 1)));
             message = Text(panel, "", 14); message.name = "battle-message"; message.style.color = new Color(1, .8f, .35f);
+            Text(panel,"LOCAL REPLAY / TELEMETRY",14);
+            var replayPath=new TextField("Replay file") { name="replay-path" };
+            replayPath.labelElement.style.color=new Color(.89f,.93f,.97f);panel.Add(replayPath);
+            AddButton(panel,"Export battle + session","export-replay",()=> { var path=presenter.ExportReplay();if(path!=null)replayPath.value=path; });
+            AddButton(panel,"Load / verify replay file","verify-replay",()=>presenter.VerifyReplay(replayPath.value));
             Text(panel, "RECENT CORE EVENTS", 14);
             events = Text(panel, "", 11); events.name = "battle-events";
         }
@@ -116,6 +122,7 @@ namespace RPG.Presentation
             if (hoveredCell.HasValue) hover.text = presenter.Hover(hoveredCell.Value);
             bool ended = state.Outcome.IsEnded;
             bool playerTurn = !presenter.IsAiTurn;
+            Root.Q<DropdownField>("controller-mode").SetValueWithoutNotify(presenter.PlayerVsAi?"Player West vs AI East":"Hotseat");
             aiInfo.text=presenter.PlayerVsAi?presenter.AiExplanation:"Hotseat";
             if (ended != showedOutcome) panel.schedule.Execute(() => panel.scrollOffset = Vector2.zero);
             showedOutcome = ended;

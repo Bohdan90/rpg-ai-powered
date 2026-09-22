@@ -51,6 +51,19 @@ namespace RPG.Presentation
         private uint initialSeed;
         private readonly List<GridPosition> reachable = new List<GridPosition>();
         private readonly List<string> log = new List<string>();
+        public BattleJournal Journal { get; private set; }
+        public string LastReplayPath { get; private set; }
+        public string ExportReplay(string directory=null)
+        {
+            try {
+                LastReplayPath=ReplayFiles.Export(Journal,directory??System.IO.Path.Combine(Application.persistentDataPath,"GateC","Replays"));
+                Message="Exported replay + session: "+LastReplayPath;Refresh();return LastReplayPath;
+            } catch(Exception e) { Message="Export failed: "+e.Message;Refresh();return null; }
+        }
+        public ReplayVerification VerifyReplay(string path)
+        {
+            var result=ReplayFiles.Verify(path);Message=result.Message;AddLog(Message);Refresh();return result;
+        }
         private BattleCommand pending;
         private GridPosition? selected;
         public BattleState State { get; private set; }
@@ -67,7 +80,7 @@ namespace RPG.Presentation
         public IReadOnlyDictionary<GridPosition, IReadOnlyList<UnitId>> ThreatCells => threats;
         public static string Cell(GridPosition p) => "(" + p.X + "," + p.Y + ")";
         public static string OaStatus(UnitState unit) => !unit.Profile.HasMeleeBasic ? "no OA" : unit.OpportunityAttackAvailable ? "OA ready" : "OA spent";
-        public void CancelPreview() { ClearPreview(); ShowViews(); }
+        public void CancelPreview() { if(pending!=null && Journal!=null)Journal.Session.cancelledPreviews++;ClearPreview(); ShowViews(); }
 
         private void Awake()
         {
@@ -107,14 +120,14 @@ namespace RPG.Presentation
         public void RestartSameSeed()
         {
             var result = BattleResolver.StartBattle(initialUnits, initialSeed, initialBoard);
-            State = result.State; log.Clear(); Append(result.Events); Message = "Restarted with seed " + initialSeed + ".";
+            State = result.State; Journal=new BattleJournal(State,Fixture.ToString(),Application.version+" / Unity "+Application.unityVersion,"Player",PlayerVsAi?"AI":"Player"); AiExplanation="No AI decision yet."; nextAiTime=Time.unscaledTime+.4f; log.Clear(); Append(result.Events); Message = "Restarted with seed " + initialSeed + ".";
             grid.Resize(State.Battlefield); hud.Resize(State.Battlefield); FitBoard();
             ClearPreview(); Refresh();
         }
         public BattleResult Submit(BattleCommand command)
         {
             // No UI guard can bypass this boundary: Core validates every submitted command.
-            var result = BattleResolver.Apply(State, command);
+            var result = Journal.Apply(command,IsAiTurn?"AI":"Player",IsAiTurn?AiExplanation:null);
             State = result.State;
             Message = result.IsApplied ? command.GetType().Name + " applied." : "Rejected by Core: " + result.Error;
             if (result.IsApplied) Append(result.Events); else AddLog(Message);
