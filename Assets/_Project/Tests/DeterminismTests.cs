@@ -105,7 +105,7 @@ namespace RPG.Tests
                 UnitId actor = state.CurrentUnitId.Value;
                 UnitId target = actor == Attacker ? Target : Attacker;
                 BattleCommand action = turn % 3 == 0 || !state.FindUnit(target).IsActive
-                    ? (BattleCommand)new DefendCommand(actor) : new BasicAttackCommand(actor, target);
+                    ? (BattleCommand)new DefendCommand(actor) : new BasicAttackCommand(actor, target, kind: BattleResolver.AvailableBasicAttack(state, actor));
                 var result = BattleResolver.Apply(state, action);
                 Assert.That(result.IsApplied, Is.True);
                 commands.Add(action); recordedEvents.AddRange(result.Events); state = result.State;

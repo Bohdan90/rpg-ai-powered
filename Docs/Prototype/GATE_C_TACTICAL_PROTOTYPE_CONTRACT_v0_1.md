@@ -94,7 +94,7 @@ Facing: восемь направлений. Успешный шаг ориен�
 ## 7. Attack и damage — исполняемая версия
 
 1. Проверить actor/Action, цель, Range/LoS и наличие живой фигуры; при invalid команде ресурсы/RNG не меняются.
-2. Израсходовать Action. Для HA без потраченного Movement применить Steady Aim.
+2. Израсходовать Action. Для Bow Shot HA без потраченного Movement применить Steady Aim; Melee Strike не получает Aim.
 3. **P/T:** `contactChance = clamp(Accuracy + Aim − Dodge − FrontalEvasion − DistancePenalty + CoverAccuracyModifier, 5, 95)%`. Для HA DistancePenalty = `5 × max(0, distance−4)` п.п.; для melee = 0. Один seeded roll контакта; отдельного третьего Dodge roll нет.
 4. Если контакт прошёл: один eligible Guard roll **F**. В fixture shield HW даёт 20% против frontal прямых атак **P/T**; других источников Guard нет. Guard не расходует OA и может проверяться при каждой подходящей атаке. Успешный Guard прекращает damage; никакой retaliation.
 5. **P:** `D = floor(BasicDamage × (1 − PhysicalResistance))`; `armorLoss=min(currentArmor,D)`; `hpLoss=min(currentHP,D−armorLoss)`. Результат не уходит ниже нуля. В v0.1 нет penetration, signed layer modifiers, смешанных компонентов или сложного modified spill.
@@ -106,7 +106,7 @@ Facing: восемь направлений. Успешный шаг ориен�
 
 ## 8. ZoC / Opportunity Attack — F наличие, P/T детали
 
-- В v0.1 ZoC создают HW/EW с melee Basic: восемь соседних клеток, кроме sealed диагонального угла с двумя solid боковыми клетками. HA не получает придуманной melee-атаки и собственного OA. ZoC визуализирует угрозу; сам по себе не останавливает движение и не добавляет стоимость **P**.
+- В v0.1 ZoC создают HW/EW с melee Basic: восемь соседних клеток, кроме sealed диагонального угла с двумя solid боковыми клетками. HA не создаёт ZoC/OA; новый Action-only Melee Strike не меняет это правило. ZoC визуализирует угрозу; сам по себе не останавливает движение и не добавляет стоимость **P**.
 - OA trigger: добровольный шаг из adjacency конкретного врага в клетку вне его adjacency. Вход и переход между клетками, сохраняющими adjacency, не вызывают OA **P**.
 - Один OA на фигуру между началами её собственных активаций; на старте боя один доступен **P/T**. Это отдельная availability, не Action и не общий новый AP pool.
 - OA — один обычный melee Basic [Reaction], damage coefficient 1.0 **T**. Проверки Accuracy/Guard/Armor обычные. Нет автоматической ответной атаки на удар.
@@ -261,3 +261,17 @@ Distance penalty stays `5 × max(0, distance − 4)` pp: distances 4/5/7/8/9/10 
 Working distance around 7 (1.75 × baseline Movement 4) and maximum 10 (2.5 × baseline)
 are experimental reference points only. No minimum range or adjacent-shot penalty is added.
 Field_19x13_ExpandedV2 and all other combat/fixture tuning remain unchanged.
+
+## Local HA engagement fallback — P/T, 2026-09-21
+
+User-approved Gate C experiment, not final class canon or weapon identity. Any hostile
+active HW/EW whose existing Core ZoC reaches HA locks Bow Shot (Engaged), regardless
+of whether that source has already spent OA. Adjacent HA, allies, Dead/Escaped bodies
+and sealed corners do not independently lock the bow.
+While engaged, HA may use Melee Strike: Range 1, Physical damage 5, Accuracy 80,
+normal Action/Guard/Resistance/Armor→HP and facing rules. No Steady Aim, ranged
+Cover/distance modifiers, special effects or penetration. It grants no ZoC/OA.
+The fallback is available only while engaged; targeting and friendly-fire confirmation
+otherwise retain existing Basic rules. Movement out uses ordinary OA; a surviving HA
+outside every hostile ZoC regains Bow Shot, without Aim after spending Movement.
+See [ARCHER_ENGAGEMENT_FALLBACK.md](ARCHER_ENGAGEMENT_FALLBACK.md).

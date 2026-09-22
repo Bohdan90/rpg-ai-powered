@@ -12,6 +12,34 @@ namespace RPG.Presentation.Tests
     public class SizeExperimentPresentationTests
     {
         [UnityTest]
+        public IEnumerator EngagedArcherHudShowsFallbackAndDisengagementRestoresBow()
+        {
+            yield return SceneManager.LoadSceneAsync("TacticalGraybox", LoadSceneMode.Single); yield return null;
+            var presenter=Object.FindAnyObjectByType<BattlePresenter>();
+            var archer=new UnitState(new UnitId(3),Side.West,UnitProfile.HumanArcherTI,new GridPosition(4,4),Facing.East);
+            var elf=new UnitState(new UnitId(10),Side.East,UnitProfile.ElfWarriorTI,new GridPosition(5,4),Facing.East);
+            presenter.ConfigureBattle(new[]{archer,elf},new Battlefield(19,13),2);
+            presenter.EndActivation(null);
+            presenter.SelectCell(elf.Position);
+            Assert.That(presenter.PreviewText,Does.Contain("Bow Shot — unavailable: Engaged"));
+            Assert.That(presenter.PreviewText,Does.Contain("Melee Strike"));
+            Assert.That(presenter.PreviewText,Does.Contain("unguarded hit: 5"));
+            presenter.ConfirmPreview();
+            Assert.That(presenter.State.FindUnit(elf.Id).Armor,Is.EqualTo(1));
+            Assert.That(presenter.State.FindUnit(archer.Id).OpportunityAttackAvailable,Is.False);
+            presenter.RestartSameSeed();presenter.EndActivation(null);
+            presenter.SelectCell(new GridPosition(3,4));
+            Assert.That(presenter.OpportunityRiskCount,Is.EqualTo(1));
+            presenter.ConfirmPreview();presenter.SelectCell(elf.Position);
+            Assert.That(presenter.PreviewText,Does.Contain("Bow Shot"));
+            Assert.That(presenter.PreviewText,Does.Not.Contain("unavailable: Engaged"));
+            Assert.That(presenter.PreviewText,Does.Contain("Steady Aim +0 pp"));
+            presenter.ConfirmPreview();
+            Assert.That(presenter.State.FindUnit(archer.Id).ActionAvailable,Is.False);
+            LogAssert.NoUnexpectedReceived();
+        }
+
+        [UnityTest]
         public IEnumerator ArcherHudUsesRangeTenAndAccuracyOnlyAim()
         {
             yield return SceneManager.LoadSceneAsync("TacticalGraybox", LoadSceneMode.Single); yield return null;

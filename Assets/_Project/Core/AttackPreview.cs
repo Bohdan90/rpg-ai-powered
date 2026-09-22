@@ -4,6 +4,7 @@ namespace RPG.Core
     public sealed class AttackPreview
     {
         public CommandError Error { get; internal set; }
+        public BasicAttackKind Kind { get; internal set; }
         public bool IsLegal => Error == CommandError.None;
         public long Distance { get; internal set; }
         public int MaximumRange { get; internal set; }

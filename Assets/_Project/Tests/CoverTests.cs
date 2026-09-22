@@ -41,7 +41,7 @@ namespace RPG.Tests
         [Test]
         public void ReverseShotChangesCoverOwnership()
         {
-            var state = Shot(Unit(3, UnitProfile.HumanWarriorTI, x: 7, y: 2));
+            var state = Shot(Unit(3, UnitProfile.HumanWarriorTI, x: 6, y: 2));
             Assert.That(Cover.Query(state, state.FindUnit(Attacker), state.FindUnit(Target)), Is.EqualTo(CoverLevel.Light));
             state = ToActor(state, Target);
             var reverse = BattleResolver.PreviewAttack(state, new BasicAttackCommand(Target, Attacker));

@@ -5,12 +5,12 @@ priority for canon. Follow repository `AGENTS.md` and the efficiency protocol.
 
 ## Baseline
 
-- Current implementation HEAD: **3bb1164** (Archer tuning). Observed repository HEAD before this documentation update: **f5835ac**; it changed documentation only. Live HEAD: `git rev-parse --short HEAD` (includes this documentation commit).
-- Gate C: Milestones 1–3B implemented; post-3B battlefield/geometry corrections and bow-envelope tuning complete. No next gameplay task authorized here.
+- Implementation: Part A Archer engagement fallback, committed with this checkpoint delta. Previous HEAD **0009533** (documentation after gameplay **3bb1164**). Live HEAD: `git rev-parse --short HEAD`.
+- Gate C: Milestones 1–3B implemented; post-3B battlefield/geometry corrections and bow-envelope tuning and Part A engagement fallback complete. Part B siege-scale V2 is the current authorized next implementation.
 - Unity **6000.6.2f1**, C#, URP, Rider; no editor/package upgrade authorized.
 - RPG.Core is pure C#, independent of UnityEngine/Presentation. Core owns combat truth; views consume queries/results.
 - Deterministic explicit RNG; same state/seed/commands replay identically. Queries/invalid commands do not mutate state/RNG. Movement costs and legality remain Core-owned.
-- Last full tests: **214 EditMode + 24 PlayMode = 238 passed; 0 failed; 0 skipped**.
+- Last full tests: **227 EditMode + 25 PlayMode = 252 passed; 0 failed; 0 skipped**.
 - No push performed. Check actual Git status before work.
 - Launch: **Gate C → Play Tactical Graybox → Fixture → Field_19x13_ExpandedV2**.
 
@@ -27,7 +27,7 @@ Escaped/Safe, Withdrawal/Eliminated and outcome HUD.
 | HA | 28 | 4 | 4 | 12 | 80 | 5 | 0 | 10 | 10 |
 | EW | 32 | 6 | 6 | 14 | 85 | 10 | 0 | 11 | 1 |
 
-- HA distance penalty: `5 × max(0, distance − 4)` pp. Steady Aim: **+15 pp Accuracy**, no Range increase; requires no prior Movement and consumes remaining Movement. Range always 10.
+- HA distance penalty: `5 × max(0, distance − 4)` pp. Steady Aim: **+15 pp Accuracy**, no Range increase; requires no prior Movement and consumes remaining Movement. Bow Range always 10 when available. Hostile existing HW/EW ZoC locks Bow even if OA spent; engaged HA gets Action-only Melee Strike (Range 1, damage 5, Accuracy 80), no Aim and no HA ZoC/OA. Surviving exit restores bow without Aim after Movement.
 - EW Frontal Evasion +15 pp Dodge. Defend: 25% Physical Resistance, before Movement only; consumes Action/remaining Movement, expires at next own activation.
 - Light Cover −15 pp Accuracy, directional/nonstacking; unit bodies do not hard-block LoS. Strong classification exists; numeric tuning deferred.
 - Movement precedes Action, may be split; after Action no further Movement. HW/EW exert ZoC, HA does not; one OA between own activation starts, resolved before exit step, no responder rotation.
@@ -47,7 +47,7 @@ Escaped/Safe, Withdrawal/Eliminated and outcome HUD.
 - Field 13×9 too small; 17×11 still somewhat small; **19×13 currently feels good as a provisional successful size candidate, NOT final canon**.
 - Siege 23×17 too small; 27×21 probably still somewhat small considering future moat/bridges/exterior terrain. No larger siege experiment implemented by latest tuning.
 - Latest mouse checks: ranges 7/8/10 legal, 11 illegal; Aim before/after Movement, long-range Cover, wall-corner cases, 19×13 framing. EW starting at distance 10 remains distance 4 after six steps, outside melee range.
-- OPEN: user evaluation of new bow envelope; point-blank Archer behavior needs a separate design decision. No minimum range, adjacent penalty, sidearm or bow-in-ZoC restriction added.
+- User reports Range 10 substantially better. Point-blank decision now explicitly prototyped: engagement locks Bow and enables weak Melee Strike; no weapon identity canonized. OPEN: user evaluation of fallback.
 - OPEN: next siege-size experiment remains a separate decision. No final size/balance chosen.
 - Existing HUD: nonadjacent melee can say `corner: blocked` alongside correct `OutOfRange`; long fixture name clips in selector; detailed preview requires scrolling (zoom/focus available).
 - No AI, real siege, campaign or other deferred systems authorized here.
@@ -55,7 +55,7 @@ Escaped/Safe, Withdrawal/Eliminated and outcome HUD.
 ## Detail references (read only when relevant)
 
 [Contract](GATE_C_TACTICAL_PROTOTYPE_CONTRACT_v0_1.md) ·
-[Bow tuning](ARCHER_RANGE_TUNING.md) · [Ranged geometry](RANGED_CORNER_LOS_CORRECTION.md) ·
+[Archer fallback](ARCHER_ENGAGEMENT_FALLBACK.md) · [Bow tuning](ARCHER_RANGE_TUNING.md) · [Ranged geometry](RANGED_CORNER_LOS_CORRECTION.md) ·
 [Field V2/melee](FIELD_V2_CORNER_CONTACT.md) · [Size experiment](BATTLEFIELD_SIZE_EXPERIMENT.md) ·
 [Path/Cover corrections](MILESTONE_2B_1_CORRECTIONS.md) ·
 [3A Core](MILESTONE_3A_IMPLEMENTATION.md) · [3B Presentation](MILESTONE_3B_IMPLEMENTATION.md).

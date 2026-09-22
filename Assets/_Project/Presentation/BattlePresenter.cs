@@ -115,14 +115,19 @@ namespace RPG.Presentation
             var actor = State.FindUnit(State.CurrentUnitId.Value); var target = State.OccupantAt(cell);
             if (target != null && target.Id != actor.Id)
             {
-                var command = new BasicAttackCommand(actor.Id, target.Id, friendlyConfirmed);
+                var kind = BattleResolver.AvailableBasicAttack(State, actor.Id);
+                bool meleeStrike = kind == BasicAttackKind.MeleeStrike;
+                var command = new BasicAttackCommand(actor.Id, target.Id, friendlyConfirmed, kind);
                 var preview = BattleResolver.PreviewAttack(State, command);
-                bool sight = actor.Profile.IsArcher ? LineOfSight.IsClear(State, actor.Position, target.Position)
+                bool sight = actor.Profile.IsArcher && !meleeStrike ? LineOfSight.IsClear(State, actor.Position, target.Position)
                     : LineOfSight.IsMeleeCornerClear(State, actor.Position, target.Position);
                 PreviewText = PrototypeFixture.Name(actor.Id) + " → " + PrototypeFixture.Name(target.Id)
                     + "\nTarget HP " + target.Hp + " / Armor " + target.Armor
                     + "\nDistance " + actor.Position.DistanceTo(target.Position)
                     + " | LoS / corner: " + (sight ? "clear" : "blocked");
+                if (actor.Profile.IsArcher)
+                    PreviewText += meleeStrike ? "\nBow Shot — unavailable: Engaged\nMelee Strike"
+                        : "\nBow Shot";
                 if (preview.IsLegal)
                 {
                     PreviewText += "\nEffective range " + preview.MaximumRange + " | Contact " + preview.ContactChance + "%"
@@ -137,7 +142,7 @@ namespace RPG.Presentation
                         + "\nSteady Aim: " + (preview.SteadyAim ? "active (Accuracy only; no range bonus)" : "inactive");
                     pending = command;
                 }
-                else PreviewText += "\nProfile range " + actor.Profile.Range + " | Core: " + preview.Error
+                else PreviewText += "\nCore: " + preview.Error
                     + "\nContact / Guard / damage preview unavailable for this illegal attack.";
             }
             else

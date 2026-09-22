@@ -13,6 +13,17 @@ namespace RPG.Core
             return new BattleResult(state, CommandError.None, events);
         }
 
+        // Engagement follows threat geometry, even when the source has spent its OA.
+        public static bool IsArcherEngaged(BattleState state, UnitId actorId)
+        {
+            var actor = state.FindUnit(actorId);
+            return actor != null && actor.IsActive && actor.Profile.IsArcher
+                && ZoneOfControl.Sources(state, actor.Side, actor.Position).Count > 0;
+        }
+
+        public static BasicAttackKind AvailableBasicAttack(BattleState state, UnitId actorId) =>
+            IsArcherEngaged(state, actorId) ? BasicAttackKind.MeleeStrike : BasicAttackKind.ProfileBasic;
+
         public static CommandError Validate(BattleState state, BattleCommand command)
         {
             if (state == null) throw new ArgumentNullException(nameof(state));
@@ -36,9 +47,15 @@ namespace RPG.Core
             if (!target.IsActive) return CommandError.TargetInactive;
             if (actor.Id == target.Id) return CommandError.SelfTarget;
             if (actor.Side == target.Side && !attack.FriendlyFireConfirmed) return CommandError.FriendlyFireNotConfirmed;
-            int range = actor.Profile.Range;
+            if (attack.Kind != BasicAttackKind.ProfileBasic && attack.Kind != BasicAttackKind.MeleeStrike)
+                return CommandError.InvalidCommand;
+            bool meleeStrike = attack.Kind == BasicAttackKind.MeleeStrike;
+            bool engaged = IsArcherEngaged(state, actor.Id);
+            if (meleeStrike && !engaged) return CommandError.MeleeStrikeUnavailable;
+            if (!meleeStrike && engaged) return CommandError.Engaged;
+            int range = meleeStrike ? 1 : actor.Profile.Range;
             if (actor.Position.DistanceTo(target.Position) > range) return CommandError.OutOfRange;
-            if (actor.Profile.IsArcher)
+            if (actor.Profile.IsArcher && !meleeStrike)
             {
                 if (!LineOfSight.IsClear(state, actor.Position, target.Position)) return CommandError.BlockedLineOfSight;
             }
@@ -50,24 +67,27 @@ namespace RPG.Core
         {
             var preview = new AttackPreview { Error = Validate(state, command) };
             if (!preview.IsLegal) return preview;
-            return CalculateAttack(state, state.FindUnit(command.Actor), state.FindUnit(command.Target));
+            return CalculateAttack(state, state.FindUnit(command.Actor), state.FindUnit(command.Target), command.Kind);
         }
 
-        private static AttackPreview CalculateAttack(BattleState state, UnitState actor, UnitState target)
+        private static AttackPreview CalculateAttack(BattleState state, UnitState actor, UnitState target,
+            BasicAttackKind kind = BasicAttackKind.ProfileBasic)
         {
-            var preview = new AttackPreview();
+            bool meleeStrike = kind == BasicAttackKind.MeleeStrike;
+            bool ranged = actor.Profile.IsArcher && !meleeStrike;
+            var preview = new AttackPreview { Kind = kind };
             preview.Distance = actor.Position.DistanceTo(target.Position);
-            preview.SteadyAim = HasSteadyAim(actor);
-            preview.MaximumRange = actor.Profile.Range;
+            preview.SteadyAim = ranged && HasSteadyAim(actor);
+            preview.MaximumRange = meleeStrike ? 1 : actor.Profile.Range;
             preview.TargetFacesAttacker = FacingDirections.IsFrontal(target.Facing, target.Position, actor.Position);
             int evasion = preview.TargetFacesAttacker ? target.Profile.FrontalEvasion : 0;
-            int penalty = actor.Profile.IsArcher ? 5 * (int)Math.Max(0, preview.Distance - 4) : 0;
+            int penalty = ranged ? 5 * (int)Math.Max(0, preview.Distance - 4) : 0;
             preview.BaseAccuracy = actor.Profile.Accuracy;
             preview.AimModifier = preview.SteadyAim ? 15 : 0;
             preview.DistanceModifier = -penalty;
             preview.TargetDodge = target.Profile.Dodge;
             preview.FrontalEvasion = evasion;
-            preview.Cover = actor.Profile.IsArcher ? Cover.Query(state, actor, target) : CoverLevel.None;
+            preview.Cover = ranged ? Cover.Query(state, actor, target) : CoverLevel.None;
             // Current profiles can only yield None/Light. Do not silently invent Strong tuning.
             preview.CoverAccuracyModifier = Cover.AccuracyModifier(preview.Cover)
                 ?? throw new InvalidOperationException("Strong Cover tuning is deferred.");
@@ -75,7 +95,7 @@ namespace RPG.Core
                 preview.BaseAccuracy + preview.AimModifier - preview.TargetDodge - preview.FrontalEvasion
                 + preview.DistanceModifier + preview.CoverAccuracyModifier));
             preview.GuardChance = preview.TargetFacesAttacker ? target.Profile.Guard : 0;
-            preview.PhysicalDamage = actor.Profile.BasicDamage * (100 - target.PhysicalResistance) / 100;
+            preview.PhysicalDamage = (meleeStrike ? 5 : actor.Profile.BasicDamage) * (100 - target.PhysicalResistance) / 100;
             preview.ArmorLossOnUnguardedHit = Math.Min(target.Armor, preview.PhysicalDamage);
             preview.HpLossOnUnguardedHit = Math.Min(target.Hp, preview.PhysicalDamage - preview.ArmorLossOnUnguardedHit);
             return preview;

@@ -5,12 +5,16 @@ namespace RPG.Core
         public UnitId Actor { get; }
         protected BattleCommand(UnitId actor) { Actor = actor; }
     }
+    public enum BasicAttackKind { ProfileBasic, MeleeStrike }
+
     public sealed class BasicAttackCommand : BattleCommand
     {
         public UnitId Target { get; }
         public bool FriendlyFireConfirmed { get; }
-        public BasicAttackCommand(UnitId actor, UnitId target, bool friendlyFireConfirmed = false) : base(actor)
-        { Target = target; FriendlyFireConfirmed = friendlyFireConfirmed; }
+        public BasicAttackKind Kind { get; }
+        public BasicAttackCommand(UnitId actor, UnitId target, bool friendlyFireConfirmed = false,
+            BasicAttackKind kind = BasicAttackKind.ProfileBasic) : base(actor)
+        { Target = target; FriendlyFireConfirmed = friendlyFireConfirmed; Kind = kind; }
     }
     public sealed class DefendCommand : BattleCommand
     {
