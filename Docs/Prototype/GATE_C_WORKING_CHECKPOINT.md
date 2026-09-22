@@ -6,7 +6,7 @@ priority for canon. Follow repository `AGENTS.md` and the efficiency protocol.
 ## Baseline
 
 - Implementation: final user-playtested siege baseline 41×39, validation/documentation committed with this checkpoint delta; geometry **462bd87**; ranged reach **25c57bd**; directional siege **7bed17e**; telemetry/replay **ec19d0b**; minimal AI **926e28c**; density fixtures **fb95710**; prior siege-scale V2 **18088fe**. Part A fallback: **5aff414**; prior bow baseline **3bb1164**. Live HEAD: `git rev-parse --short HEAD`.
-- Gate C: Milestones 1–3B implemented; post-3B battlefield/geometry corrections and bow-envelope tuning, Part A engagement fallback, Part B siege-scale V2 and 9v9 density fixtures implemented. Minimal AI and local telemetry/replay implemented; next step is user closure playtest, no further combat features authorized.
+- Gate C: **PASS for the current prototype scope**. User completed a Player-vs-AI field battle, lost normally to the AI, found its behavior normal and reported no critical tactical-loop blocker. Technical DoD/replay, field 23×17, siege 41×39 and physical Retreat are accepted. Persistence Slice v0.1 is the next authorized work; do not reopen tactical redesign unless persistence exposes a direct Core defect.
 - Unity **6000.6.2f1**, C#, URP, Rider; no editor/package upgrade authorized.
 - RPG.Core is pure C#, independent of UnityEngine/Presentation. Core owns combat truth; views consume queries/results.
 - Deterministic explicit RNG; same state/seed/commands replay identically. Queries/invalid commands do not mutate state/RNG. Movement costs and legality remain Core-owned.
@@ -63,7 +63,7 @@ Escaped/Safe, Withdrawal/Eliminated and outcome HUD.
 - Minimal one-ply AI now selectable: Hotseat / Player West vs AI East / Player East vs AI West. Same resolver/previews; no evaluation RNG. Contract weights, expected OA-safe routing, low-HP physical evacuation. No strategic AI or real siege/campaign systems.
 - AI mouse smoke: both 9v9 boards, ranged attacks, melee/crossing movement, ordinary OA and low-HP field/siege escape passed in prepared 18-unit states.
 - Replay: HUD Export battle + session / Load-verify file; local JSONL + separate session metrics under persistentDataPath/GateC/Replays. Core snapshots/commands/SHA-256; regenerated RNG, first divergent sequence. Mouse Field/OA/Escape/Player-vs-AI exports all verified. Optional decision-time metric omitted.
-- OPEN: full fixture completion/stalemate observation and Gate C user decision; no automatic Gate C PASS.
+- Watch item for later content playtests, not a Gate C blocker: the deliberately minimal roster gives every unit limited intrinsic incentive to advance. Ranged asymmetry already creates approach pressure; future classes, magic, objectives and richer kits may add more. Do not add anti-stalemate combat rules now. Retreat was not behaviorally attractive in the final isolated battle because it had no persistent consequence; persistence now supplies that incentive.
 
 ## Detail references (read only when relevant)
 

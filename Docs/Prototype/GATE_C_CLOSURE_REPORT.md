@@ -1,6 +1,10 @@
 # Gate C — closure preparation
 
-Status: implementation capabilities ready for user evaluation; **NOT a Gate C PASS**.
+Status: **Gate C PASS for the current prototype scope** after user Player-vs-AI field
+playtest. The user lost a normal engagement, considered AI behavior normal and reported
+no critical tactical-loop blocker. Deterministic replay/technical DoD, field 23×17,
+siege 41×39 and physical Retreat are accepted. This does not claim final balance or
+close later content playtests.
 AI commit: `926e28c`. Telemetry/replay committed with this report; live hash from Git.
 Baseline before this task: `fb95710`. No push.
 
