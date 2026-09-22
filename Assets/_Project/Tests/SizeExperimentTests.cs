@@ -52,7 +52,7 @@ namespace RPG.Tests
             CollectionAssert.AreEqual(Battlefield.BaseMap.SolidCells,SizeExperimentFixture.Board(SizeExperimentMap.Field_13x9_Control).SolidCells);
             var baseline=SizeExperimentFixture.Units(SizeExperimentMap.Field_13x9_Control);
             foreach(SizeExperimentMap map in System.Enum.GetValues(typeof(SizeExperimentMap)))
-                CollectionAssert.AreEqual(baseline.Select(u=>u.Profile),SizeExperimentFixture.Units(map).Select(u=>u.Profile));
+                CollectionAssert.AreEqual(baseline.Select(u=>u.Profile),SizeExperimentFixture.Units(map).Where(u=>u.Id.Value<=10).Select(u=>u.Profile));
         }
         [Test]
         public void SiegeProxyIsIdenticalAndHasFourThreeCellOpenings()

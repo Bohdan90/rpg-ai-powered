@@ -12,6 +12,24 @@ namespace RPG.Presentation.Tests
     public class SizeExperimentPresentationTests
     {
         [UnityTest]
+        public IEnumerator DensityNamesAndViewsResetWithoutGhosts()
+        {
+            yield return SceneManager.LoadSceneAsync("TacticalGraybox",LoadSceneMode.Single);yield return null;
+            var p=Object.FindAnyObjectByType<BattlePresenter>();
+            foreach(var map in new[]{SizeExperimentMap.Field_23x17_Full_9v9,SizeExperimentMap.Siege_35x27_Full_9v9})
+            {
+                p.ConfigureFixture(map);yield return null;
+                Assert.That(p.VisualUnitCount,Is.EqualTo(18));
+                Assert.That(p.State.Units.Count(u=>PrototypeFixture.Name(u.Id).Contains("Commander")),Is.EqualTo(2));
+                Assert.That(p.State.Units.Select(u=>PrototypeFixture.Name(u.Id)).Distinct().Count(),Is.EqualTo(18));
+                p.RestartSameSeed();Assert.That(p.VisualUnitCount,Is.EqualTo(18));
+                p.ConfigureFixture(SizeExperimentMap.Field_13x9_Control);yield return null;
+                Assert.That(p.VisualUnitCount,Is.EqualTo(10));
+            }
+            LogAssert.NoUnexpectedReceived();
+        }
+
+        [UnityTest]
         public IEnumerator LargerSiegeFixturesLoadFrameAndUseCoreCrossingPreview()
         {
             yield return SceneManager.LoadSceneAsync("TacticalGraybox",LoadSceneMode.Single);yield return null;
@@ -169,12 +187,12 @@ namespace RPG.Presentation.Tests
             yield return SceneManager.LoadSceneAsync("TacticalGraybox",LoadSceneMode.Single); yield return null;
             var p=Object.FindAnyObjectByType<BattlePresenter>();
             var selector=p.HudRoot.Q<DropdownField>("fixture-selector");
-            Assert.That(selector.choices.Count,Is.EqualTo(7));
+            Assert.That(selector.choices.Count,Is.EqualTo(9));
             foreach(SizeExperimentMap map in System.Enum.GetValues(typeof(SizeExperimentMap)))
             {
                 selector.value=map.ToString(); yield return null;
                 var board=SizeExperimentFixture.Board(map);
-                Assert.That(p.State.Battlefield.Columns,Is.EqualTo(board.Columns)); Assert.That(p.VisualUnitCount,Is.EqualTo(10));
+                Assert.That(p.State.Battlefield.Columns,Is.EqualTo(board.Columns)); Assert.That(p.VisualUnitCount,Is.EqualTo(SizeExperimentFixture.IsDensity(map) ? 18 : 10));
                 CollectionAssert.AreEqual(SizeExperimentFixture.Units(map).Select(u=>u.Position),p.State.Units.Select(u=>u.Position));
                 var rng=p.State.RngState;
                 var actor=p.State.FindUnit(p.State.CurrentUnitId.Value);

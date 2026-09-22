@@ -5,14 +5,14 @@ priority for canon. Follow repository `AGENTS.md` and the efficiency protocol.
 
 ## Baseline
 
-- Implementation: Part B siege-scale V2, committed with this checkpoint delta. Part A fallback: **5aff414**; prior bow baseline **3bb1164**. Live HEAD: `git rev-parse --short HEAD`.
-- Gate C: Milestones 1–3B implemented; post-3B battlefield/geometry corrections and bow-envelope tuning, Part A engagement fallback and Part B siege-scale V2 implemented. Next step: user playtest; no further gameplay work authorized here.
+- Implementation: 9v9 density fixtures, committed with this checkpoint delta; prior siege-scale V2 **18088fe**. Part A fallback: **5aff414**; prior bow baseline **3bb1164**. Live HEAD: `git rev-parse --short HEAD`.
+- Gate C: Milestones 1–3B implemented; post-3B battlefield/geometry corrections and bow-envelope tuning, Part A engagement fallback, Part B siege-scale V2 and 9v9 density fixtures implemented. Next step: user density playtest; no further gameplay work authorized here.
 - Unity **6000.6.2f1**, C#, URP, Rider; no editor/package upgrade authorized.
 - RPG.Core is pure C#, independent of UnityEngine/Presentation. Core owns combat truth; views consume queries/results.
 - Deterministic explicit RNG; same state/seed/commands replay identically. Queries/invalid commands do not mutate state/RNG. Movement costs and legality remain Core-owned.
-- Last full tests: **240 EditMode + 26 PlayMode = 266 passed; 0 failed; 0 skipped**.
+- Last full tests: **248 EditMode + 27 PlayMode = 275 passed; 0 failed; 0 skipped**.
 - No push performed. Check actual Git status before work.
-- Launch: **Gate C → Play Tactical Graybox → Fixture → Field_19x13_ExpandedV2**.
+- Launch: **Gate C → Play Tactical Graybox → Fixture → Field_23x17_Full_9v9 / Siege_35x27_Full_9v9**.
 
 ## Implemented systems and T — PROTOTYPE TUNING
 
@@ -38,23 +38,25 @@ Escaped/Safe, Withdrawal/Eliminated and outcome HUD.
 - Melee diagonal: one open orthogonal side permits contact; two solid sides seal it. Basic/preview/ZoC/OA share this rule.
 - Ranged: single-wall corner/boundary-only touch legal; shared vertex of two diagonal solid cells blocked; solid interior intersection blocked.
 - Movement stricter: either orthogonal side solid/occupied blocks diagonal steps. Eight directions, each cost 1; Chebyshev attack distance.
-- Fixtures: `Field_13x9_Control`, `Field_17x11_Expanded`, `Field_19x13_ExpandedV2`, `Siege_23x17_Tight`, `Siege_27x21_Roomy`, **`Siege_31x25_Medium`**, **`Siege_35x27_Large`**.
-- Same 5v5 composition: HW-Commander, HW-Infantry, HA-Left, HA-Right, EW-Flanker per side. Static siege proxy only, no real siege mechanics. New maps share identical centered 11×9 fortress (24 solids) + one-cell solid/opaque moat proxy (32 solids; 13×11 outer envelope), with four three-cell crossings. West deployment unchanged at x=1/2; East inside; no combat retuning between maps.
+- Fixtures: `Field_13x9_Control`, `Field_17x11_Expanded`, `Field_19x13_ExpandedV2`, `Siege_23x17_Tight`, `Siege_27x21_Roomy`, **`Siege_31x25_Medium`**, **`Siege_35x27_Large`**, `Field_23x17_Full_9v9`, `Siege_35x27_Full_9v9`.
+- Original comparisons retain 5v5 composition: HW-Commander, HW-Infantry, HA-Left, HA-Right, EW-Flanker per side. Static siege proxy only, no real siege mechanics. 31×25/35×27 siege maps share identical centered 11×9 fortress (24 solids) + one-cell solid/opaque moat proxy (32 solids; 13×11 outer envelope), with four three-cell crossings. West deployment unchanged at x=1/2; East inside; no combat retuning between maps.
+- Density fixtures: 1 HW Commander + 3 HW Infantry + 3 HA + 2 EW per side; synthetic tactical roster, no strategic Capacity legality claim. Field uses center wall (11,7..9); siege reuses existing 35×27 geometry exactly. Several deployment columns, same profiles/seed/tuning.
 - 19×13 solids (9,5)/(9,6)/(9,7); West/East retreat edges x=0/18. Ordinary field retreat rear edge; siege defender retreat full legal outer perimeter.
 
 ## Playtest findings, limitations, OPEN
 
-- Field 13×9 too small; 17×11 still somewhat small; **19×13 currently feels good as a provisional successful size candidate, NOT final canon**.
-- Siege 23×17 too small; 27×21 probably still somewhat small considering future moat/bridges/exterior terrain. 31×25 and 35×27 now available for comparison; no user verdict yet.
-- Latest mouse checks: Part A fallback/engagement, no HA OA, risky HA exit restoring Bow; Part B both maps approach/crossings/flanks, ranged/Cover/blocked LoS, OA, physical defender escape, attacker non-escape and framing/focus passed. Earlier range 7/8/10 vs 11 and corner checks preserved.
+- Latest user/Drive 43 closure supersedes earlier 19×13 preference: **ordinary field 23×17; full siege 35×27** are provisional Gate C baselines, NOT final universal canon. Keep older comparisons; do not iterate dimensions without new playtest evidence.
+- Earlier findings retained: field 13×9 too small, 17×11 somewhat small; siege 23×17 too small and 27×21 probably small considering moat/bridges/exterior terrain.
+- Previous mouse checks: Part A fallback/engagement, no HA OA, risky HA exit restoring Bow; Part B both maps approach/crossings/flanks, ranged/Cover/blocked LoS, OA, physical defender escape, attacker non-escape and framing/focus passed. Earlier range 7/8/10 vs 11 and corner checks preserved.
+- Latest density mouse checks: both 18-unit deployments/approach, prepared contact/OA/Cover, siege crossing/exterior flank and escape, initial field retreat, focus/fit passed. No full-battle timing verdict. Queue 18 readable but needs HUD scrolling; siege detail needs zoom. Full interior-to-perimeter route passed Core test.
 - User reports Range 10 substantially better. Point-blank decision now explicitly prototyped: engagement locks Bow and enables weak Melee Strike; no weapon identity canonized. OPEN: user evaluation of fallback.
-- OPEN: user comparison of 31×25 vs 35×27 with static moat footprint. No final size/balance chosen; proxy opacity is not a canon rule for real moats.
+- OPEN: user 9v9 density evaluation: congestion, flank routes, ranged/ZoC pressure, retreat and battle duration. No full 9v9 battle-length verdict yet; proxy opacity is not a canon rule for real moats.
 - Existing HUD: nonadjacent melee can say `corner: blocked` alongside correct `OutOfRange`; long fixture name clips in selector; detailed preview requires scrolling (zoom/focus available). Hover text may persist across fixture reset until next cell hover.
 - No AI, real siege, campaign or other deferred systems authorized here.
 
 ## Detail references (read only when relevant)
 
-[Contract](GATE_C_TACTICAL_PROTOTYPE_CONTRACT_v0_1.md) ·
+[Density validation](ARMY_DENSITY_VALIDATION.md) · [Contract](GATE_C_TACTICAL_PROTOTYPE_CONTRACT_v0_1.md) ·
 [Archer fallback](ARCHER_ENGAGEMENT_FALLBACK.md) · [Bow tuning](ARCHER_RANGE_TUNING.md) · [Ranged geometry](RANGED_CORNER_LOS_CORRECTION.md) ·
 [Field V2/melee](FIELD_V2_CORNER_CONTACT.md) · [Siege V2](SIEGE_SCALE_V2_EXPERIMENT.md) · [Size experiment](BATTLEFIELD_SIZE_EXPERIMENT.md) ·
 [Path/Cover corrections](MILESTONE_2B_1_CORRECTIONS.md) ·
