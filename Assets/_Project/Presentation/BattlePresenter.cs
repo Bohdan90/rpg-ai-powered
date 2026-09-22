@@ -15,6 +15,22 @@ namespace RPG.Presentation
         private BattleGridView grid;
         private Camera battleCamera;
         private float zoom = 1;
+        public bool PlayerVsAi { get; private set; }
+        public bool IsAiTurn => PlayerVsAi && State != null && !State.Outcome.IsEnded && State.FindUnit(State.CurrentUnitId.Value).Side == Side.East;
+        public string AiExplanation { get; private set; } = "Hotseat";
+        private float nextAiTime;
+        public void SetPlayerVsAi(bool enabled) { PlayerVsAi=enabled; nextAiTime=Time.unscaledTime+.4f; ClearPreview(); Refresh(); }
+        public BattleResult StepAi()
+        {
+            if(!IsAiTurn)return null;
+            var decision=TacticalAi.Choose(State);
+            AiExplanation="AI S="+decision.Score.ToString("F2",System.Globalization.CultureInfo.InvariantCulture)+" · "+decision.Explanation;
+            var result=Submit(decision.Command);AddLog(AiExplanation);return result;
+        }
+        private void Update()
+        {
+            if(IsAiTurn && Time.unscaledTime>=nextAiTime) { StepAi();nextAiTime=Time.unscaledTime+.4f; }
+        }
         public SizeExperimentMap Fixture { get; private set; }
         public void Zoom(float factor) { zoom = Mathf.Clamp(zoom * factor, .4f, 1); }
         public void CenterView(GridPosition cell) { battleCamera.transform.position = new Vector3(cell.X, 20, cell.Y); }
@@ -104,13 +120,13 @@ namespace RPG.Presentation
             if (result.IsApplied) Append(result.Events); else AddLog(Message);
             ClearPreview(); Refresh(); return result;
         }
-        public void Defend() => Submit(new DefendCommand(State.CurrentUnitId.Value));
-        public void EndActivation(Facing? facing) => Submit(new EndActivationCommand(State.CurrentUnitId.Value, facing));
-        public void ConfirmPreview() { if (pending != null) Submit(pending); }
+        public void Defend() { if(!IsAiTurn) Submit(new DefendCommand(State.CurrentUnitId.Value)); }
+        public void EndActivation(Facing? facing) { if(!IsAiTurn) Submit(new EndActivationCommand(State.CurrentUnitId.Value, facing)); }
+        public void ConfirmPreview() { if (!IsAiTurn && pending != null) Submit(pending); }
 
         public void SelectCell(GridPosition cell, bool friendlyConfirmed = false)
         {
-            if (State.Outcome.IsEnded) return;
+            if (State.Outcome.IsEnded || IsAiTurn) return;
             selected = cell; pending = null; MovementRisk = null; PreviewEscapes = false;
             var actor = State.FindUnit(State.CurrentUnitId.Value); var target = State.OccupantAt(cell);
             if (target != null && target.Id != actor.Id)

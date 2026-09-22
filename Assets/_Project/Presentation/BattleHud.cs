@@ -12,6 +12,7 @@ namespace RPG.Presentation
         private readonly BattlePresenter presenter;
         private readonly Camera camera;
         private readonly VisualElement surface;
+        private readonly Label aiInfo;
         private readonly Label active, queue, preview, message, events, hover, cell;
         private readonly Button confirm, cancel, defend, end;
         private readonly Label riskWarning, retreat, escaped, outcomeText;
@@ -67,6 +68,9 @@ namespace RPG.Presentation
             outcomePanel.style.paddingTop = 8; panel.Add(outcomePanel);
             outcomeText = Text(outcomePanel, "", 15); outcomeText.name = "outcome-summary";
             AddButton(outcomePanel, "Restart Same Seed", "outcome-restart", presenter.RestartSameSeed);
+            var control = new DropdownField("Controller",new List<string>{"Hotseat","Player West vs AI East"},0) { name="controller-mode" };
+            control.RegisterValueChangedCallback(e=>presenter.SetPlayerVsAi(control.index==1));panel.Add(control);
+            aiInfo=Text(panel,"",12);aiInfo.name="ai-info";
             active = Text(panel, "", 16); active.name = "active-unit";
             queue = Text(panel, "", 12); queue.name = "activation-queue";
             retreat = Text(panel, "", 13); retreat.name = "retreat-info";
@@ -111,6 +115,8 @@ namespace RPG.Presentation
             var actor = state.FindUnit(state.CurrentUnitId.Value);
             if (hoveredCell.HasValue) hover.text = presenter.Hover(hoveredCell.Value);
             bool ended = state.Outcome.IsEnded;
+            bool playerTurn = !presenter.IsAiTurn;
+            aiInfo.text=presenter.PlayerVsAi?presenter.AiExplanation:"Hotseat";
             if (ended != showedOutcome) panel.schedule.Execute(() => panel.scrollOffset = Vector2.zero);
             showedOutcome = ended;
             outcomePanel.style.display = ended ? DisplayStyle.Flex : DisplayStyle.None;
@@ -125,15 +131,15 @@ namespace RPG.Presentation
             queue.text = ended ? "" : "Initiative order (► current):\n" + string.Join("\n", state.ActivationOrder.Select(id =>
                 (id == actor.Id ? "► " : "   ") + PrototypeFixture.Name(id) + " [" + state.FindUnit(id).Profile.Initiative + "] " + BattlePresenter.OaStatus(state.FindUnit(id))));
             cell.text = selected.HasValue ? "Selected (" + selected.Value.X + "," + selected.Value.Y + ")" : "No destination / target selected.";
-            preview.text = presenter.PreviewText; confirm.SetEnabled(canConfirm); message.text = presenter.Message;
+            preview.text = presenter.PreviewText; confirm.SetEnabled(canConfirm && playerTurn); message.text = presenter.Message;
             int risks = presenter.OpportunityRiskCount;
             riskWarning.text = risks > 0 ? "This path may trigger " + risks + " Opportunity Attack(s). Confirm to accept the risk, or Cancel." : "";
             riskWarning.style.display = risks > 0 ? DisplayStyle.Flex : DisplayStyle.None;
             confirm.text = presenter.HasMovePreview ? (risks > 0 ? "Confirm Move — accept " + risks + " OA risk(s)" : "Confirm Move") : "Confirm Attack";
             cancel.SetEnabled(canConfirm);
-            defend.SetEnabled(!ended && BattleResolver.Validate(state, new DefendCommand(actor.Id)) == CommandError.None);
-            end.SetEnabled(!ended); finalFacing.SetEnabled(!ended); friendly.SetEnabled(!ended);
-            surface.SetEnabled(!ended);
+            defend.SetEnabled(playerTurn && !ended && BattleResolver.Validate(state, new DefendCommand(actor.Id)) == CommandError.None);
+            end.SetEnabled(!ended && playerTurn); finalFacing.SetEnabled(!ended); friendly.SetEnabled(!ended);
+            surface.SetEnabled(!ended && playerTurn);
             escaped.text = "Escaped/Safe:\n" + Roster(state, UnitStatus.Escaped);
             string eastZone = state.Battlefield.EastRetreatUsesPerimeter ? "full legal outer perimeter" : "East edge";
             retreat.text = "West: West edge. East: " + eastZone + "." + (ended ? "" : "\nYOUR escape: " + (actor.Side == Side.West ? "West edge" : eastZone));

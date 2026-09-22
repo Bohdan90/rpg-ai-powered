@@ -70,6 +70,16 @@ namespace RPG.Core
             return CalculateAttack(state, state.FindUnit(command.Actor), state.FindUnit(command.Target), command.Kind);
         }
 
+        // Pure OA math query; does not spend availability or rotate either unit.
+        public static AttackPreview PreviewOpportunityAttack(BattleState state, UnitId responderId, UnitId moverId)
+        {
+            var responder = state.FindUnit(responderId); var mover = state.FindUnit(moverId);
+            if (responder == null || mover == null || !mover.IsActive || responder.Side == mover.Side
+                || !responder.OpportunityAttackAvailable || !ZoneOfControl.Exerts(state, responder, mover.Position))
+                return new AttackPreview { Error = CommandError.InvalidCommand };
+            return CalculateAttack(state, responder, mover);
+        }
+
         private static AttackPreview CalculateAttack(BattleState state, UnitState actor, UnitState target,
             BasicAttackKind kind = BasicAttackKind.ProfileBasic)
         {
