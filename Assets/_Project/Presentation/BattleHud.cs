@@ -80,7 +80,7 @@ namespace RPG.Presentation
             escaped = Text(panel, "", 12); escaped.name = "escaped-list";
             map = new DropdownField("Fixture (resets battle)", new List<string>(Enum.GetNames(typeof(SizeExperimentMap))), 0) { name = "fixture-selector" };
             map.RegisterValueChangedCallback(e => presenter.ConfigureFixture((SizeExperimentMap)Enum.Parse(typeof(SizeExperimentMap), e.newValue))); panel.Add(map);
-            Text(panel, "Size/density experiment · no combat retuning. 9v9 = synthetic tactical roster, not strategic Capacity validation. Siege: static fortress; moat proxy has fixed crossings. 39×37 preserves each attacker approach; West = attacker coalition, East = defenders. No real siege mechanics.", 12);
+            Text(panel, "Size/density experiment · no combat retuning. 9v9 = synthetic tactical roster, not strategic Capacity validation. Siege: static fortress; moat proxy has fixed crossings. 41×39 preserves each attacker approach; West = attacker coalition, East = defenders. No real siege mechanics.", 12);
             AddButton(panel, "Fit whole board", "fit-board", presenter.FitBoard);
             AddButton(panel, "Focus active unit (wheel to zoom)", "focus-unit", presenter.FocusActor);
             AddButton(panel, "Restart Same Seed", "restart", presenter.RestartSameSeed);

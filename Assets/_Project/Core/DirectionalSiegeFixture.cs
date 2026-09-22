@@ -8,21 +8,21 @@ namespace RPG.Core
         public static RetreatEdge[] Approaches(SizeExperimentMap map)
         {
             switch(map) {
-                case SizeExperimentMap.Siege_39x37_East_9v9:return new[]{RetreatEdge.East};
-                case SizeExperimentMap.Siege_39x37_North_9v9:return new[]{RetreatEdge.North};
-                case SizeExperimentMap.Siege_39x37_South_9v9:return new[]{RetreatEdge.South};
-                case SizeExperimentMap.Siege_39x37_WestEast_18v9:return new[]{RetreatEdge.West,RetreatEdge.East};
-                case SizeExperimentMap.Siege_39x37_NorthSouth_18v9:return new[]{RetreatEdge.North,RetreatEdge.South};
+                case SizeExperimentMap.Siege_41x39_East_9v9:return new[]{RetreatEdge.East};
+                case SizeExperimentMap.Siege_41x39_North_9v9:return new[]{RetreatEdge.North};
+                case SizeExperimentMap.Siege_41x39_South_9v9:return new[]{RetreatEdge.South};
+                case SizeExperimentMap.Siege_41x39_WestEast_18v9:return new[]{RetreatEdge.West,RetreatEdge.East};
+                case SizeExperimentMap.Siege_41x39_NorthSouth_18v9:return new[]{RetreatEdge.North,RetreatEdge.South};
                 default:return new[]{RetreatEdge.West};
             }
         }
         private static GridPosition Place(RetreatEdge edge,int depth,int lateral)
         {
             switch(edge) {
-                case RetreatEdge.West:return new GridPosition(depth,18+lateral);
-                case RetreatEdge.East:return new GridPosition(38-depth,18+lateral);
-                case RetreatEdge.North:return new GridPosition(19+lateral,36-depth);
-                default:return new GridPosition(19+lateral,depth);
+                case RetreatEdge.West:return new GridPosition(depth,19+lateral);
+                case RetreatEdge.East:return new GridPosition(40-depth,19+lateral);
+                case RetreatEdge.North:return new GridPosition(20+lateral,38-depth);
+                default:return new GridPosition(20+lateral,depth);
             }
         }
         public static IEnumerable<GridPosition> DeploymentCells(RetreatEdge edge)
@@ -30,13 +30,13 @@ namespace RPG.Core
         // Conservative measurement includes every perimeter center, including openings.
         // These are reference points, NOT standable platforms introduced into combat.
         public static IEnumerable<GridPosition> WallReferenceCells()
-        { for(int x=14;x<=24;x++)for(int y=14;y<=22;y++)if(x==14||x==24||y==14||y==22)yield return new GridPosition(x,y); }
+        { for(int x=15;x<=25;x++)for(int y=15;y<=23;y++)if(x==15||x==25||y==15||y==23)yield return new GridPosition(x,y); }
         public static long MinimumWallSeparation(RetreatEdge edge)=>DeploymentCells(edge).Min(p=>WallReferenceCells().Min(w=>p.DistanceTo(w)));
         public static UnitState[] Units(SizeExperimentMap map)
         {
             var baseline=SizeExperimentFixture.Units(SizeExperimentMap.Siege_35x27_Full_9v9);
             var units=new List<UnitState>();
-            foreach(var u in baseline.Where(u=>u.Side==Side.East))units.Add(new UnitState(u.Id,u.Side,u.Profile,new GridPosition(u.Position.X+2,u.Position.Y+5),u.Facing));
+            foreach(var u in baseline.Where(u=>u.Side==Side.East))units.Add(new UnitState(u.Id,u.Side,u.Profile,new GridPosition(u.Position.X+3,u.Position.Y+6),u.Facing));
             var army=baseline.Where(u=>u.Side==Side.West).ToArray();int armyIndex=0;
             foreach(var edge in Approaches(map))
             {

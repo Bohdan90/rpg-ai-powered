@@ -5,14 +5,14 @@ priority for canon. Follow repository `AGENTS.md` and the efficiency protocol.
 
 ## Baseline
 
-- Implementation: ranged reach presentation, committed with this checkpoint delta; directional siege **7bed17e**; telemetry/replay **ec19d0b**; minimal AI **926e28c**; density fixtures **fb95710**; prior siege-scale V2 **18088fe**. Part A fallback: **5aff414**; prior bow baseline **3bb1164**. Live HEAD: `git rev-parse --short HEAD`.
+- Implementation: user-requested siege expansion to 41×39, committed with this checkpoint delta; ranged reach **25c57bd**; directional siege **7bed17e**; telemetry/replay **ec19d0b**; minimal AI **926e28c**; density fixtures **fb95710**; prior siege-scale V2 **18088fe**. Part A fallback: **5aff414**; prior bow baseline **3bb1164**. Live HEAD: `git rev-parse --short HEAD`.
 - Gate C: Milestones 1–3B implemented; post-3B battlefield/geometry corrections and bow-envelope tuning, Part A engagement fallback, Part B siege-scale V2 and 9v9 density fixtures implemented. Minimal AI and local telemetry/replay implemented; next step is user closure playtest, no further combat features authorized.
 - Unity **6000.6.2f1**, C#, URP, Rider; no editor/package upgrade authorized.
 - RPG.Core is pure C#, independent of UnityEngine/Presentation. Core owns combat truth; views consume queries/results.
 - Deterministic explicit RNG; same state/seed/commands replay identically. Queries/invalid commands do not mutate state/RNG. Movement costs and legality remain Core-owned.
 - Last full tests: **280 EditMode + 33 PlayMode = 313 passed; 0 failed; 0 skipped**.
 - No push performed. Check actual Git status before work.
-- Launch: **Gate C → Play Tactical Graybox → Fixture → Field_23x17_Full_9v9 / Siege_39x37_West_9v9**.
+- Launch: **Gate C → Play Tactical Graybox → Fixture → Field_23x17_Full_9v9 / Siege_41x39_West_9v9**.
 
 ## Implemented systems and T — PROTOTYPE TUNING
 
@@ -43,9 +43,10 @@ Escaped/Safe, Withdrawal/Eliminated and outcome HUD.
 - Density fixtures: 1 HW Commander + 3 HW Infantry + 3 HA + 2 EW per side; synthetic tactical roster, no strategic Capacity legality claim. Field uses center wall (11,7..9); siege reuses existing 35×27 geometry exactly. Several deployment columns, same profiles/seed/tuning.
 - 19×13 solids (9,5)/(9,6)/(9,7); West/East retreat edges x=0/18. Ordinary field retreat rear edge; siege defender retreat full legal outer perimeter.
 
-- Directional correction: **39×37** siege proxy, four single-army fixtures and W+E/N+S 18v9 capacity fixtures; old comparisons retained. Centered fortress 11×9/moat/crossings unchanged; each attacking sector is 3 deep ×9 wide, minimum Chebyshev wall separation **11**. Per-unit own Retreat edge preserves each approach; defender all-perimeter unchanged. No combat retuning/real siege systems. Geometry/coordinates and validation: closure report.
-- Latest finding: 35×27 fails ordinary Range-10 deployment buffer (W/E 9, N/S 6). 39×37 is the smallest centered odd envelope under the authored 3-cell depth + rear retreat-cell + 11-cell separation constraints; not final canon or a playtest PASS.
-- Mouse: all six directional deployments + attacker AI moves; W+E/N+S 27 views; prepared crossing and N+S export/replay passed. Existing zoom needed for unit detail; no full-battle timing verdict.
+- Directional correction: **41×39** siege proxy, four single-army fixtures and W+E/N+S 18v9 capacity fixtures; old comparisons retained. Centered fortress 11×9/moat/crossings unchanged; each attacking sector is 3 deep ×9 wide, minimum Chebyshev wall separation **12**. Per-unit own Retreat edge preserves each approach; defender all-perimeter unchanged. No combat retuning/real siege systems. Geometry/coordinates and validation: closure report.
+- Latest finding: 35×27 fails ordinary Range-10 deployment buffer (W/E 9, N/S 6). 39×37 was the smallest centered odd envelope under the authored 3-cell depth + rear retreat-cell + 11-cell separation constraints. User requested 41×39, now applied to all six directional fixtures; not final canon or a playtest PASS.
+- 41×39 validation: 14 focused cases and full 313 tests passed; selector/deployment/movement/reset checked in PlayMode. No new mouse-driven or full-battle playtest.
+- Previous 39×37 mouse checks: all six directional deployments + attacker AI moves; W+E/N+S 27 views; prepared crossing and N+S export/replay passed. Existing zoom needed for unit detail; no full-battle timing verdict.
 - Mouse range10/11, Cover, engaged fallback/OA exit, Action-spent hiding and export/replay passed; all four corrected crossings traversed. No full-battle verdict.
 - Ranged reach: active player HA shows cyan cell-corner marks from current position using Profile.Range/Core Chebyshev distance; green Movement remains. Hidden with explicit HUD reason while engaged/Action spent, also hidden on AI turns and for melee units. Geometric reach is not LoS/target legality; preview/resolver unchanged.
 - Replay v2 snapshots/hashes include own Retreat edge; v1 exports are explicitly unsupported.

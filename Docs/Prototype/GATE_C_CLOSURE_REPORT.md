@@ -167,3 +167,19 @@ the initial occupied target. Final HUD review corrected attacker rear-edge label
 defender turns to list actual approach edges, covered by the existing fixture test.
 Manual scenarios were short integration checks, not Gate C PASS or battle-duration
 validation. New format v2 cannot load old v1 logs; new exports replay with matching hashes.
+
+## User-requested 41×39 expansion
+
+All six directional siege fixtures now use `Siege_41x39_*` names and a 41×39
+board, replacing their 39×37 versions at the same selector indices. Center (20,19);
+fortress x15..25/y15..23, moat envelope x14..26/y14..24. Fortress, crossings,
+rosters and combat tuning retain their existing shape/values. Defenders shift
+(+1,+1); attacking sectors retain their depth from their own board edge:
+West x1..3/y15..23, East x37..39/y15..23, North x16..24/y35..37,
+South x16..24/y1..3. Minimum wall separation is now 12 on every approach.
+Earlier 39×37 validation above is historical; full-battle user evaluation remains open.
+
+Validation: 14 focused geometry/AI/retreat/replay cases passed, then full
+280 EditMode + 33 PlayMode = 313 passed, zero failures/skips, in an isolated
+Unity project copy. PlayMode exercised selector loading, deployment, movement
+and reset across all fixtures. No new mouse-driven or completed-battle playtest.
