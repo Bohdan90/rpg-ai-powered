@@ -5,6 +5,14 @@ playtest. The user lost a normal engagement, considered AI behavior normal and r
 no critical tactical-loop blocker. Deterministic replay/technical DoD, field 23×17,
 siege 41×39 and physical Retreat are accepted. This does not claim final balance or
 close later content playtests.
+
+Persistence follow-up: Gate C remains closed for its accepted prototype scope. The
+only retained watch item is later-content passive/stalemate behavior: the deliberately
+minimal roster has limited intrinsic reason for every unit to advance, while ranged
+asymmetry already supplies some approach pressure. Future classes, magic, objectives
+and richer kits should be playtested before adding any anti-stalemate rule. Retreat was
+not attractive in the isolated Gate C finale because no persistent consequence followed
+it; Persistence Slice v0.1 supplies the first reason to preserve damaged veterans.
 AI commit: `926e28c`. Telemetry/replay committed with this report; live hash from Git.
 Baseline before this task: `fb95710`. No push.
 

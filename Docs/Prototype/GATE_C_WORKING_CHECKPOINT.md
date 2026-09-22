@@ -10,7 +10,7 @@ priority for canon. Follow repository `AGENTS.md` and the efficiency protocol.
 - Unity **6000.6.2f1**, C#, URP, Rider; no editor/package upgrade authorized.
 - RPG.Core is pure C#, independent of UnityEngine/Presentation. Core owns combat truth; views consume queries/results.
 - Deterministic explicit RNG; same state/seed/commands replay identically. Queries/invalid commands do not mutate state/RNG. Movement costs and legality remain Core-owned.
-- Last full tests: **280 EditMode + 34 PlayMode = 314 passed; 0 failed; 0 skipped**.
+- Last Persistence Slice v0.1 full tests: **289 EditMode + 36 PlayMode = 325 passed; 0 failed; 0 skipped** on Unity 6000.6.2f1 in an isolated project copy. Gate C pre-slice result was 280 + 34 = 314.
 - No push performed. Check actual Git status before work.
 - Launch: **Gate C → Play Tactical Graybox → Fixture → Field_23x17_Full_9v9 / Siege_41x39_West_9v9**.
 
@@ -50,6 +50,8 @@ Escaped/Safe, Withdrawal/Eliminated and outcome HUD.
 - Mouse range10/11, Cover, engaged fallback/OA exit, Action-spent hiding and export/replay passed; all four corrected crossings traversed. No full-battle verdict.
 - Ranged reach: active player HA shows cyan cell-corner marks from current position using Profile.Range/Core Chebyshev distance; green Movement remains. Hidden with explicit HUD reason while engaged/Action spent, also hidden on AI turns and for melee units. Geometric reach is not LoS/target legality; preview/resolver unchanged.
 - Replay v2 snapshots/hashes include own Retreat edge; v1 exports are explicitly unsupported.
+- Persistence Slice v0.1: `PersistentCharacter`/`PersistentFormation` in Core carry stable ID, profile, Commander flag, current HP/Armor, Alive/Escaped-Safe/Dead, Personal XP/Level, Command XP/Level/Rank and Commanderless/roster lock. Dead slots stay empty; Safe returns unchanged; field refresh is +15% Max HP with deterministic fractional carry and no Armor repair. `625ff80`.
+- Developer harness: `Start Persistence Slice v0.1` runs the nine-figure 23×17 field sequence Battle 1 → 0 Refresh → Battle 2 → 1 field Refresh → Battle 3; HUD exposes the persistent roster/result/Commander state. East is a fresh deterministic scenario opponent each battle, intentionally not an enemy campaign framework. Focused persistence checks: 9 EditMode + 2 PlayMode; full result 289 + 36 = 325. Part B commit to be recorded with final validation.
 
 ## Playtest findings, limitations, OPEN
 

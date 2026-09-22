@@ -16,6 +16,8 @@ namespace RPG.Presentation
         private readonly Label active, queue, preview, message, events, hover, cell;
         private readonly Button confirm, cancel, defend, end;
         private readonly Label riskWarning, retreat, escaped, outcomeText;
+        private readonly Label persistence;
+        private readonly Button persistenceContinue;
         private readonly VisualElement outcomePanel;
         private readonly ScrollView panel;
         private bool showedOutcome;
@@ -80,6 +82,9 @@ namespace RPG.Presentation
             escaped = Text(panel, "", 12); escaped.name = "escaped-list";
             map = new DropdownField("Fixture (resets battle)", new List<string>(Enum.GetNames(typeof(SizeExperimentMap))), 0) { name = "fixture-selector" };
             map.RegisterValueChangedCallback(e => presenter.ConfigureFixture((SizeExperimentMap)Enum.Parse(typeof(SizeExperimentMap), e.newValue))); panel.Add(map);
+            AddButton(panel,"Start Persistence Slice v0.1","persistence-start",presenter.StartPersistenceSlice);
+            persistence=Text(panel,"",12);persistence.name="persistence-summary";
+            persistenceContinue=AddButton(panel,"Continue Persistence Battle","persistence-continue",presenter.ContinuePersistenceSlice);
             Text(panel, "Size/density experiment · no combat retuning. 9v9 = synthetic tactical roster, not strategic Capacity validation. Siege: static fortress; moat proxy has fixed crossings. 41×39 preserves each attacker approach; West = attacker coalition, East = defenders. No real siege mechanics.", 12);
             AddButton(panel, "Fit whole board", "fit-board", presenter.FitBoard);
             AddButton(panel, "Focus active unit (wheel to zoom)", "focus-unit", presenter.FocusActor);
@@ -135,6 +140,10 @@ namespace RPG.Presentation
                 + "\nResult: " + state.Outcome.Reason + "\n\nDead:\n" + Roster(state, UnitStatus.Dead)
                 + "\n\nEscaped/Safe:\n" + Roster(state, UnitStatus.Escaped)
                 + "\n\nSurviving active units:\n" + Roster(state, UnitStatus.Active) : "";
+            persistence.text=presenter.PersistenceSummary;
+            persistence.style.display=presenter.PersistenceActive?DisplayStyle.Flex:DisplayStyle.None;
+            persistenceContinue.style.display=presenter.PersistenceActive?DisplayStyle.Flex:DisplayStyle.None;
+            persistenceContinue.SetEnabled(presenter.CanContinuePersistence);
             active.text = ended ? "No active turn — battle completed." : "ROUND " + state.Round + " · " + PrototypeFixture.Name(actor.Id) + "\n" + actor.Side + (actor.OwnRetreatEdge.HasValue?" · "+actor.OwnRetreatEdge+" approach":"")
                 + " | HP " + actor.Hp + " / Armor " + actor.Armor + "\nMovement " + actor.MovementRemaining
                 + " | Action " + (actor.ActionAvailable ? "available" : "spent")

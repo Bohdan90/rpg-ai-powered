@@ -33,6 +33,30 @@ namespace RPG.Presentation
             if(IsAiTurn && Time.unscaledTime>=nextAiTime) { StepAi();nextAiTime=Time.unscaledTime+.4f; }
         }
         public SizeExperimentMap Fixture { get; private set; }
+        private PersistenceSliceScenario persistence;
+        private bool persistenceResolved;
+        public bool PersistenceActive => persistence != null;
+        public bool CanContinuePersistence => persistence != null && persistenceResolved && persistence.BattleNumber < 3;
+        public string PersistenceSummary => persistence == null ? "" : persistence.Summary();
+        public void StartPersistenceSlice()
+        {
+            persistence = new PersistenceSliceScenario(); persistenceResolved = false;
+            LoadPersistenceBattle(persistence.StartFirstBattle());
+        }
+        public void ContinuePersistenceSlice()
+        {
+            if (!CanContinuePersistence) return;
+            persistenceResolved = false; LoadPersistenceBattle(persistence.StartNextBattle());
+        }
+        private void LoadPersistenceBattle(PersistentBattle battle)
+        {
+            Fixture = SizeExperimentMap.Field_23x17_Full_9v9;
+            initialUnits = battle.State.Units.ToArray(); initialBoard = battle.State.Battlefield; initialSeed = battle.State.InitialSeed;
+            State = battle.State; Journal = new BattleJournal(State,"Persistence_Battle_"+persistence.BattleNumber,Application.version+" / Unity "+Application.unityVersion,
+                PlayerVsAi&&AiSide==Side.West?"AI":"Player",PlayerVsAi&&AiSide==Side.East?"AI":"Player");
+            AiExplanation="No AI decision yet.";nextAiTime=Time.unscaledTime+.4f;log.Clear();Message="Persistence Battle "+persistence.BattleNumber+" started.";
+            grid.Resize(State.Battlefield);hud.Resize(State.Battlefield);FitBoard();ClearPreview();Refresh();
+        }
         public void Zoom(float factor) { zoom = Mathf.Clamp(zoom * factor, .4f, 1); }
         public void CenterView(GridPosition cell) { battleCamera.transform.position = new Vector3(cell.X, 20, cell.Y); }
         public void FitBoard() { zoom = 1; CenterCamera(); }
@@ -110,17 +134,20 @@ namespace RPG.Presentation
 
         public void ConfigureFixture(SizeExperimentMap map)
         {
+            persistence=null;
             Fixture = map;
             ConfigureBattle(SizeExperimentFixture.Units(map), SizeExperimentFixture.Board(map), PrototypeFixture.Seed);
         }
         public void ConfigureFixture(bool controlMap)
         {
+            persistence=null;
             Fixture = SizeExperimentMap.Field_13x9_Control;
             ConfigureBattle(PrototypeFixture.Units(), controlMap ? Battlefield.ControlMap : Battlefield.BaseMap, PrototypeFixture.Seed);
         }
         // An explicit initial fixture seam, also used by PlayMode integration tests; no rule implementation.
         public void ConfigureBattle(IEnumerable<UnitState> units, Battlefield board, uint seed)
         {
+            persistence=null;
             initialUnits = units.ToArray(); initialBoard = board; initialSeed = seed; RestartSameSeed();
         }
         public void RestartSameSeed()
@@ -137,6 +164,11 @@ namespace RPG.Presentation
             State = result.State;
             Message = result.IsApplied ? command.GetType().Name + " applied." : "Rejected by Core: " + result.Error;
             if (result.IsApplied) Append(result.Events); else AddLog(Message);
+            if (result.IsApplied && State.Outcome.IsEnded && persistence != null && !persistenceResolved)
+            {
+                persistence.Resolve(State); persistenceResolved=true;
+                Message="Persistence Battle "+persistence.BattleNumber+" resolved. "+(CanContinuePersistence?"Continue to next battle when ready.":"Three-battle slice complete.");
+            }
             ClearPreview(); Refresh(); return result;
         }
         public void Defend() { if(!IsAiTurn) Submit(new DefendCommand(State.CurrentUnitId.Value)); }
