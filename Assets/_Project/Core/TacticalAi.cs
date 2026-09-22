@@ -33,7 +33,7 @@ namespace RPG.Core
             }
             // No alternate OA routing needed when no enemy has a reaction available.
             if(routes.Any(r=>r.Spent.Count>0))routes.AddRange(TacticalAiPaths.SafeRoutes(state,actor));
-            var exits=routes.Where(r=>r.Steps.Count>0&&state.Battlefield.IsRetreatZone(actor.Side,r.Position))
+            var exits=routes.Where(r=>r.Steps.Count>0&&state.Battlefield.IsRetreatZone(actor,r.Position))
                 .OrderBy(r=>r.HpLoss(actor)).ThenBy(r=>r.Steps.Count).ToArray();
             if(actor.Hp*4<=actor.Profile.MaxHp&&exits.Length>0&&exits[0].HpLoss(actor)<actor.Hp)
                 return Decision(new MoveCommand(actor.Id,exits[0].Steps),-exits[0].HpLoss(actor),"HP <=25%; physical Retreat, minimum expected OA HP loss");
@@ -42,7 +42,7 @@ namespace RPG.Core
             foreach(var r in routes.OrderBy(r=>r.Steps.Count).ThenBy(r=>r.Position.X).ThenBy(r=>r.Position.Y))
             {
                 // Healthy units do not evacuate as an accidental positional candidate.
-                if(r.Steps.Count>0&&state.Battlefield.IsRetreatZone(actor.Side,r.Position))continue;
+                if(r.Steps.Count>0&&state.Battlefield.IsRetreatZone(actor,r.Position))continue;
                 var projected=state.Copy();var mover=projected.FindUnit(actor.Id);
                 mover.Position=r.Position;mover.Facing=r.Facing;mover.MovementRemaining-=r.Steps.Count;mover.MovementSpentThisActivation+=r.Steps.Count;
                 double approach=Math.Max(-2,Math.Min(2,enemies.Min(e=>actor.Position.DistanceTo(e.Position))-enemies.Min(e=>r.Position.DistanceTo(e.Position))));
@@ -92,7 +92,7 @@ namespace RPG.Core
                 var endpoints=TacticalAiPaths.Reachable(query,attacker,attacker.MovementRemaining);double best=0;
                 foreach(var end in endpoints)
                 {
-                    if(query.Battlefield.IsRetreatZone(enemy.Side,end.position)&&end.cost>0)continue;
+                    if(query.Battlefield.IsRetreatZone(enemy,end.position)&&end.cost>0)continue;
                     if(end.position.DistanceTo(target.Position)>attacker.Profile.Range)continue;
                     attacker.Position=end.position;attacker.MovementSpentThisActivation=end.cost;
                     var attack=new BasicAttackCommand(enemy.Id,target.Id,kind:BattleResolver.AvailableBasicAttack(query,enemy.Id));

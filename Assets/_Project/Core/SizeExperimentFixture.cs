@@ -3,16 +3,18 @@ using System.Collections.Generic;
 
 namespace RPG.Core
 {
-    public enum SizeExperimentMap { Field_13x9_Control, Field_17x11_Expanded, Siege_23x17_Tight, Siege_27x21_Roomy, Field_19x13_ExpandedV2, Siege_31x25_Medium, Siege_35x27_Large, Field_23x17_Full_9v9, Siege_35x27_Full_9v9 }
+    public enum SizeExperimentMap { Field_13x9_Control, Field_17x11_Expanded, Siege_23x17_Tight, Siege_27x21_Roomy, Field_19x13_ExpandedV2, Siege_31x25_Medium, Siege_35x27_Large, Field_23x17_Full_9v9, Siege_35x27_Full_9v9, Siege_39x37_West_9v9, Siege_39x37_East_9v9, Siege_39x37_North_9v9, Siege_39x37_South_9v9, Siege_39x37_WestEast_18v9, Siege_39x37_NorthSouth_18v9 }
 
     // Experimental geometry only: no siege mechanics or new profile tuning.
     public static class SizeExperimentFixture
     {
         public static bool IsSiege(SizeExperimentMap map) => map == SizeExperimentMap.Siege_23x17_Tight || map == SizeExperimentMap.Siege_27x21_Roomy || HasMoatProxy(map);
 
-        public static bool HasMoatProxy(SizeExperimentMap map) => map == SizeExperimentMap.Siege_31x25_Medium || map == SizeExperimentMap.Siege_35x27_Large || map == SizeExperimentMap.Siege_35x27_Full_9v9;
+        public static bool HasMoatProxy(SizeExperimentMap map) => map == SizeExperimentMap.Siege_31x25_Medium || map == SizeExperimentMap.Siege_35x27_Large || map == SizeExperimentMap.Siege_35x27_Full_9v9 || IsDirectionalSiege(map);
 
-        public static bool IsDensity(SizeExperimentMap map) => map == SizeExperimentMap.Field_23x17_Full_9v9 || map == SizeExperimentMap.Siege_35x27_Full_9v9;
+        public static bool IsDensity(SizeExperimentMap map) => map == SizeExperimentMap.Field_23x17_Full_9v9 || map == SizeExperimentMap.Siege_35x27_Full_9v9 || IsDirectionalSiege(map);
+
+        public static bool IsDirectionalSiege(SizeExperimentMap map) => map >= SizeExperimentMap.Siege_39x37_West_9v9 && map <= SizeExperimentMap.Siege_39x37_NorthSouth_18v9;
 
         public static Battlefield Board(SizeExperimentMap map)
         {
@@ -39,6 +41,7 @@ namespace RPG.Core
         public static UnitState[] Units(SizeExperimentMap map)
         {
             Dimensions(map, out int width, out int height);
+            if (IsDirectionalSiege(map)) return DirectionalSiegeFixture.Units(map);
             if (IsDensity(map)) return DensityUnits(map, width, height);
             int cy = height / 2;
             var positions = new[] { new GridPosition(2, cy), new GridPosition(2, cy - 1),
@@ -85,6 +88,7 @@ namespace RPG.Core
         }
         private static void Dimensions(SizeExperimentMap map, out int width, out int height)
         {
+            if (IsDirectionalSiege(map)) { width=39; height=37; return; }
             switch (map)
             {
                 case SizeExperimentMap.Field_13x9_Control: width = 13; height = 9; break;

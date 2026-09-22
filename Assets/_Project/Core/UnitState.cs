@@ -2,10 +2,12 @@ using System;
 
 namespace RPG.Core
 {
+    public enum RetreatEdge { West, East, North, South }
     public enum UnitStatus { Active, Dead, Escaped }
 
     public sealed class UnitState
     {
+        public RetreatEdge? OwnRetreatEdge { get; }
         public UnitId Id { get; }
         public Side Side { get; }
         public UnitProfile Profile { get; }
@@ -25,7 +27,7 @@ namespace RPG.Core
         public uint TieKey { get; internal set; }
 
         public UnitState(UnitId id, Side side, UnitProfile profile, GridPosition position, Facing facing,
-            int? hp = null, int? armor = null, UnitStatus status = UnitStatus.Active)
+            int? hp = null, int? armor = null, UnitStatus status = UnitStatus.Active, RetreatEdge? ownRetreatEdge = null)
         {
             if (id.Value <= 0) throw new ArgumentOutOfRangeException(nameof(id));
             if (side != Side.West && side != Side.East) throw new ArgumentOutOfRangeException(nameof(side));
@@ -37,6 +39,8 @@ namespace RPG.Core
             if (status < UnitStatus.Active || status > UnitStatus.Escaped) throw new ArgumentOutOfRangeException(nameof(status));
             if (status == UnitStatus.Dead && initialHp != 0) throw new ArgumentException("Dead units must have zero HP.");
             if (status == UnitStatus.Escaped && initialHp == 0) throw new ArgumentException("Escaped units must be alive.");
+            if (ownRetreatEdge.HasValue && (ownRetreatEdge < RetreatEdge.West || ownRetreatEdge > RetreatEdge.South)) throw new ArgumentOutOfRangeException(nameof(ownRetreatEdge));
+            OwnRetreatEdge=ownRetreatEdge;
             Id = id; Side = side; Position = position; Facing = facing; Hp = initialHp; Armor = initialArmor;
             Status = initialHp == 0 ? UnitStatus.Dead : status;
         }

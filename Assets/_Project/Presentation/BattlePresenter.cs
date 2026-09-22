@@ -15,11 +15,12 @@ namespace RPG.Presentation
         private BattleGridView grid;
         private Camera battleCamera;
         private float zoom = 1;
+        public Side AiSide { get; private set; } = Side.East;
         public bool PlayerVsAi { get; private set; }
-        public bool IsAiTurn => PlayerVsAi && State != null && !State.Outcome.IsEnded && State.FindUnit(State.CurrentUnitId.Value).Side == Side.East;
+        public bool IsAiTurn => PlayerVsAi && State != null && !State.Outcome.IsEnded && State.FindUnit(State.CurrentUnitId.Value).Side == AiSide;
         public string AiExplanation { get; private set; } = "Hotseat";
         private float nextAiTime;
-        public void SetPlayerVsAi(bool enabled) { PlayerVsAi=enabled; nextAiTime=Time.unscaledTime+.4f; ClearPreview(); Refresh(); }
+        public void SetPlayerVsAi(bool enabled, Side side=Side.East) { AiSide=side; PlayerVsAi=enabled; nextAiTime=Time.unscaledTime+.4f; ClearPreview(); Refresh(); }
         public BattleResult StepAi()
         {
             if(!IsAiTurn)return null;
@@ -120,7 +121,7 @@ namespace RPG.Presentation
         public void RestartSameSeed()
         {
             var result = BattleResolver.StartBattle(initialUnits, initialSeed, initialBoard);
-            State = result.State; Journal=new BattleJournal(State,Fixture.ToString(),Application.version+" / Unity "+Application.unityVersion,"Player",PlayerVsAi?"AI":"Player"); AiExplanation="No AI decision yet."; nextAiTime=Time.unscaledTime+.4f; log.Clear(); Append(result.Events); Message = "Restarted with seed " + initialSeed + ".";
+            State = result.State; Journal=new BattleJournal(State,Fixture.ToString(),Application.version+" / Unity "+Application.unityVersion,PlayerVsAi&&AiSide==Side.West?"AI":"Player",PlayerVsAi&&AiSide==Side.East?"AI":"Player"); AiExplanation="No AI decision yet."; nextAiTime=Time.unscaledTime+.4f; log.Clear(); Append(result.Events); Message = "Restarted with seed " + initialSeed + ".";
             grid.Resize(State.Battlefield); hud.Resize(State.Battlefield); FitBoard();
             ClearPreview(); Refresh();
         }
@@ -182,7 +183,7 @@ namespace RPG.Presentation
                     var move = new MoveCommand(actor.Id, path.Steps);
                     MovementRisk = OpportunityAttackPreview.Query(State, move);
                     pending = MovementRisk.IsLegal ? move : null;
-                    PreviewEscapes = path.Steps.Any(p => State.Battlefield.IsRetreatZone(actor.Side, p));
+                    PreviewEscapes = path.Steps.Any(p => State.Battlefield.IsRetreatZone(actor, p));
                     var previous = path.Cost == 1 ? actor.Position : path.Steps[path.Cost - 2];
                     PreviewText = "Move to (" + cell.X + "," + cell.Y + ")\nCost " + path.Cost + " Movement"
                         + "\nFinal facing: " + FacingDirections.Toward(previous, path.Steps[path.Cost - 1])
@@ -228,7 +229,7 @@ namespace RPG.Presentation
                 var risk = OpportunityAttackPreview.Query(State, new MoveCommand(actor.Id, path.Steps));
                 text += "\nOA risks on Core path: " + risk.Exposures.Sum(e => e.Threats.Count(t => t.WouldReact));
             }
-            if (State.Battlefield.IsRetreatZone(actor.Side, cell)) text += "\nYour Retreat Zone — Escape/Safe on entry if alive.";
+            if (State.Battlefield.IsRetreatZone(actor, cell)) text += "\nYour Retreat Zone — Escape/Safe on entry if alive.";
             else if (State.Battlefield.IsRetreatZone(actor.Side == Side.West ? Side.East : Side.West, cell)) text += "\nOpponent's edge — NOT your escape.";
             return text;
         }

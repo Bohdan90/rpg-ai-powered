@@ -7,7 +7,7 @@ Baseline before this task: `fb95710`. No push.
 ## Implemented scope and evidence
 
 - Player and minimal one-ply AI use the same Core resolver, legality and preview math.
-  AI controls East only; Hotseat remains available. Evaluation does not read future
+  AI can control either selected side; Hotseat remains available. Evaluation does not read future
   rolls or advance RNG. Legal commands, deterministic decisions, kill/Defend/Retreat,
   engaged Archer fallback, safer OA routes and multiple activations are tested.
 - Local JSONL export contains initial state/seed/deployment, config/controllers,
@@ -22,7 +22,7 @@ Baseline before this task: `fb95710`. No push.
   retreat. Existing corner/cover/action rules and all previous tests remain green.
   No real siege mechanism was introduced.
 
-Final full tests: **266 EditMode + 30 PlayMode = 296 passed; 0 failed; 0 skipped**.
+Previous full tests: **266 EditMode + 30 PlayMode = 296 passed; 0 failed; 0 skipped**.
 Part A checkpoint: 257 + 28 = 285 passed. Part B adds nine Core replay cases and two
 PlayMode transport tests. Test runner used Unity 6000.6.2f1 in an isolated project copy
 with the same project sources/packages; generated logs and probes stay outside Git.
@@ -82,7 +82,7 @@ fresh Editor launch; fresh-launch integration was used for validation.
 
 Real Gates, Wall Platforms, elevation, ladders, Siege Towers, breaches, Structure HP,
 real moat/bridge mechanics, racial siege systems; strategic AI, coordinated multi-ply
-AI, reinforcements/reserves/multi-army participation, deployment/roster editors, new
+AI, reinforcements/reserves/strategic multi-army systems, deployment/roster editors, new
 classes/tiers, spells/Ward/Barrier/Living Armor, Morale/surrender/capture, campaign,
 persistence, economy, production art/animation/audio and production replay UI.
 
@@ -92,3 +92,51 @@ No automatic new combat features or progression to persistence.
 
 Details: [AI](MINIMAL_TACTICAL_AI.md), [Replay/telemetry](TELEMETRY_REPLAY.md),
 [Density geometry](ARMY_DENSITY_VALIDATION.md), [working checkpoint](GATE_C_WORKING_CHECKPOINT.md).
+
+## Directional siege approach correction (after ec19d0b)
+
+New user evidence invalidates 35×27 as an already-validated approach envelope.
+Selected proxy: **39×37**, center (19,18), same fortress x14..24/y14..22;
+moat outer envelope x13..25/y13..23. Four existing three-cell crossings unchanged.
+All coordinates refer to cell centers, using Core Chebyshev distance.
+
+| Deployment | Legal sector (3 deep ×9 wide) | Minimum wall separation |
+|---|---|---:|
+| West | x1..3, y14..22 | 11 |
+| East | x35..37, y14..22 | 11 |
+| North | x15..23, y33..35 | 11 |
+| South | x15..23, y1..3 | 11 |
+
+Reference firing cells are every fortress perimeter cell center, including openings;
+these conservative measurement points do not introduce real Wall Platforms. Smaller
+centered candidates 35×33 and 37×35 give minimum 9 and 10 respectively. 39×37 is the
+smallest centered odd envelope satisfying the authored sector depth, rear retreat
+cell and one-cell Range-10 buffer. This is an experimental authoring choice, not canon.
+
+Deployment formation (depth from own edge, lateral offset from sector center):
+Commander (2,0); Infantry (3,-2),(3,0),(3,2); HA (1,-3),(1,3),(1,0);
+EW (3,4),(3,-4). Rotate by approach. Existing defender formation translated (+2,+5)
+from 35×27 unchanged. Six selectable fixtures: Siege_39x37_{West,East,North,South}_9v9,
+Siege_39x37_WestEast_18v9 and Siege_39x37_NorthSouth_18v9. Paired formations do not
+overlap; all 27 figures deploy simultaneously. No reserves or strategic roster logic.
+Side.West denotes the attacker coalition, not its deployment direction; HUD queue
+labels each approach, Army 2 has distinct IDs/names. Each attacker keeps its own
+RetreatEdge; Core resolver, pathfinder, OA preview and AI use the same unit-aware query.
+Defenders retain full legal perimeter. Replay v2 includes this field/hash and explicitly
+rejects old v1 exports. AI scoring/combat rules unchanged; controller may select either
+side to validate attacker AI.
+
+Automated: **280 EditMode +30 PlayMode =310 passed; 0 failed/skipped**. Fourteen focused
+Core cases cover all sectors/pairs, clearance, old proxy identity, deterministic spawn,
+physical direction-specific escape + replay, crossings and legal AI approaches.
+Existing PlayMode fixture/reset test now covers all fifteen fixtures, including 27 views.
+
+Mouse validation: all six original directional deployments loaded; legal approach moves
+and attacker-coalition AI advances executed in each. W+E and N+S displayed 27 figures,
+kept distinct sectors/queue approach labels; N+S export/load regenerated matching replay.
+Prepared west crossing traversed moat/opening (12,18)→(16,18); all four crossings and
+directional physical retreat/replay also pass Core tests. Fit/Focus were exercised.
+Overview is readable for formation geometry; individual labels require existing zoom.
+A 27-unit queue requires scrolling. No completed-battle duration/empty-turn verdict;
+that remains user playtest evidence, not inferred from this smoke check. Unity Editor
+Search indexing/AI subscription messages occurred outside project runtime code.

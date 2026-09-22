@@ -52,7 +52,7 @@ namespace RPG.Core
                     threats.Add(new OpportunityThreat(id, available, wouldReact));
                 }
                 if (threats.Count > 0) exposures.Add(new OpportunityExposure(i, from, to, threats));
-                if (state.Battlefield.IsRetreatZone(mover.Side, to)) break;
+                if (state.Battlefield.IsRetreatZone(mover, to)) break;
                 from = to;
             }
             return new OpportunityAttackPreview(CommandError.None, exposures);

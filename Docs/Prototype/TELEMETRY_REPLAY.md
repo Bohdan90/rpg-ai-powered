@@ -14,7 +14,9 @@ In Play Mode, scroll HUD to **LOCAL REPLAY / TELEMETRY**:
    Verification does not replace/mutate the current live battle or advance its RNG.
 3. Restart Same Seed starts a new journal/session. Existing exported files remain.
 
-## Format v1
+## Format v2
+
+v2 includes per-unit directional retreat edges in snapshots/hashes; older v1 exports are explicitly rejected as unsupported, not silently reinterpreted.
 
 Header: format/config/build version, fixture ID, seed, initial controllers, complete
 initial snapshot and SHA-256 hash. Snapshot includes deployment, profile IDs, board

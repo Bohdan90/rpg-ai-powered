@@ -15,10 +15,11 @@ namespace RPG.Core
     }
     [Serializable] public sealed class ReplayUnit
     {
+        public int retreatEdge=-1;
         public int id,side,profile,x,y,facing,hp,armor,status,movement,spent;
         public bool action,oa,defending;
         public uint tie;
-        public static ReplayUnit Capture(UnitState u)=>new ReplayUnit { id=u.Id.Value,side=(int)u.Side,profile=(int)u.Profile.Id,
+        public static ReplayUnit Capture(UnitState u)=>new ReplayUnit { retreatEdge=u.OwnRetreatEdge.HasValue?(int)u.OwnRetreatEdge.Value:-1,id=u.Id.Value,side=(int)u.Side,profile=(int)u.Profile.Id,
             x=u.Position.X,y=u.Position.Y,facing=(int)u.Facing,hp=u.Hp,armor=u.Armor,status=(int)u.Status,
             movement=u.MovementRemaining,spent=u.MovementSpentThisActivation,action=u.ActionAvailable,oa=u.OpportunityAttackAvailable,
             defending=u.IsDefending,tie=u.TieKey };
@@ -28,7 +29,7 @@ namespace RPG.Core
             switch((UnitProfileId)profile) { case UnitProfileId.HumanWarriorTI:p=UnitProfile.HumanWarriorTI;break;
                 case UnitProfileId.HumanArcherTI:p=UnitProfile.HumanArcherTI;break;case UnitProfileId.ElfWarriorTI:p=UnitProfile.ElfWarriorTI;break;
                 default:throw new InvalidDataException("Unknown profile"); }
-            return new UnitState(new UnitId(id),(Side)side,p,new GridPosition(x,y),(Facing)facing,hp,armor,(UnitStatus)status) {
+            return new UnitState(new UnitId(id),(Side)side,p,new GridPosition(x,y),(Facing)facing,hp,armor,(UnitStatus)status,retreatEdge<0?(RetreatEdge?)null:(RetreatEdge)retreatEdge) {
                 MovementRemaining=movement,MovementSpentThisActivation=spent,ActionAvailable=action,OpportunityAttackAvailable=oa,IsDefending=defending,TieKey=tie };
         }
     }
@@ -65,14 +66,14 @@ namespace RPG.Core
             using(var stream=new MemoryStream())
             using(var w=new BinaryWriter(stream))
             {
-                w.Write(1);w.Write(s.columns);w.Write(s.rows);w.Write(s.eastPerimeter);w.Write(s.solids.Length);
+                w.Write(2);w.Write(s.columns);w.Write(s.rows);w.Write(s.eastPerimeter);w.Write(s.solids.Length);
                 foreach(var p in s.solids){w.Write(p.x);w.Write(p.y);}
                 w.Write(s.seed);w.Write(s.rng);w.Write(s.round);w.Write(s.currentActor);w.Write(s.priorityIndex);
                 w.Write(s.winner);w.Write(s.loser);w.Write(s.outcome);w.Write(s.priority.Length);foreach(var id in s.priority)w.Write(id);
                 w.Write(s.units.Length);
                 foreach(var u in s.units.OrderBy(u=>u.id))
                 {
-                    foreach(int v in new[]{u.id,u.side,u.profile,u.x,u.y,u.facing,u.hp,u.armor,u.status,u.movement,u.spent})w.Write(v);
+                    foreach(int v in new[]{u.id,u.side,u.profile,u.x,u.y,u.facing,u.hp,u.armor,u.status,u.movement,u.spent,u.retreatEdge})w.Write(v);
                     w.Write(u.action);w.Write(u.oa);w.Write(u.defending);w.Write(u.tie);
                     var p=state.FindUnit(new UnitId(u.id)).Profile;
                     foreach(int v in new[]{p.MaxHp,p.MaxArmor,p.Movement,p.Initiative,p.Accuracy,p.Dodge,p.Guard,p.BasicDamage,p.Range,p.FrontalEvasion,p.CoverSize})w.Write(v);
@@ -120,8 +121,8 @@ namespace RPG.Core
     [Serializable] public sealed class ReplayChange { public ReplayUnit before,after;public int hpDelta,armorDelta; }
     [Serializable] public sealed class ReplayHeader
     {
-        public string type="header",configVersion="GateC-v0.1-HA10-fallback5-AI1",buildVersion,fixture,westController,eastController,initialHash;
-        public int formatVersion=1;
+        public string type="header",configVersion="GateC-v0.1-HA10-fallback5-AI1-directional-retreat",buildVersion,fixture,westController,eastController,initialHash;
+        public int formatVersion=2;
         public uint seed;
         public ReplaySnapshot initial;
     }
@@ -207,7 +208,7 @@ namespace RPG.Core
             var result=new ReplayVerification();int sequence=0,successful=0;
             try
             {
-                if(header.formatVersion!=1||header.configVersion!=new ReplayHeader().configVersion)throw new InvalidDataException("Unsupported replay/config version");
+                if(header.formatVersion!=2||header.configVersion!=new ReplayHeader().configVersion)throw new InvalidDataException("Unsupported replay/config version");
                 var state=header.initial.Restore();result.State=state;
                 if(header.seed!=state.InitialSeed||BattleStateHash.Compute(state)!=header.initialHash)throw new InvalidDataException("Initial state/config hash mismatch");
                 foreach(var record in records)

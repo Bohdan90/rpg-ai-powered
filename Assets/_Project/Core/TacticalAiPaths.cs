@@ -50,7 +50,7 @@ namespace RPG.Core
                 var groups=new SortedDictionary<string,List<Route>>(StringComparer.Ordinal);
                 foreach(var r in layer)
                 {
-                    if(r.Steps.Count>0 && state.Battlefield.IsRetreatZone(actor.Side,r.Position))continue;
+                    if(r.Steps.Count>0 && state.Battlefield.IsRetreatZone(actor,r.Position))continue;
                     foreach(var delta in Directions)
                     {
                         var next=new GridPosition(r.Position.X+delta.X,r.Position.Y+delta.Y);
@@ -77,7 +77,7 @@ namespace RPG.Core
             for(int i=0;i<result.Count;i++)
             {
                 var (from,cost,facing)=result[i];
-                if(cost>=budget || cost>0&&state.Battlefield.IsRetreatZone(u.Side,from))continue;
+                if(cost>=budget || cost>0&&state.Battlefield.IsRetreatZone(u,from))continue;
                 foreach(var d in Directions)
                 {
                     var p=new GridPosition(from.X+d.X,from.Y+d.Y);

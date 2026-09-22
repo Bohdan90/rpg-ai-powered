@@ -203,7 +203,7 @@ namespace RPG.Core
                     amount: 1, before: before, after: actor.MovementRemaining));
                 events.Add(new BattleEvent(BattleEventKind.StepMoved, state.Round, actor.Id,
                     amount: 1, from: from, to: step));
-                if (state.Battlefield.IsRetreatZone(actor.Side, step))
+                if (state.Battlefield.IsRetreatZone(actor, step))
                 {
                     actor.Status = UnitStatus.Escaped;
                     actor.ActionAvailable = false;

@@ -67,7 +67,8 @@ namespace RPG.Presentation
             for (int y = 0; y < state.Battlefield.Rows; y++)
             {
                 var p = new GridPosition(x, y); var tile = tiles[x, y]; bool solid = state.Battlefield.IsSolid(p);
-                bool westRetreat = state.Battlefield.IsRetreatZone(Side.West, p);
+                var selectedActor=state.CurrentUnitId.HasValue ? state.FindUnit(state.CurrentUnitId.Value) : null;
+                bool westRetreat = selectedActor!=null && selectedActor.Side==Side.West ? state.Battlefield.IsRetreatZone(selectedActor,p) : state.Units.Any(u=>u.Side==Side.West && state.Battlefield.IsRetreatZone(u,p));
                 bool eastRetreat = state.Battlefield.IsRetreatZone(Side.East, p);
                 retreatStripes[x, y].gameObject.SetActive(westRetreat);
                 eastStripes[x, y].gameObject.SetActive(eastRetreat);

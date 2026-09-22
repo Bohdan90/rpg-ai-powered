@@ -187,16 +187,17 @@ namespace RPG.Presentation.Tests
             yield return SceneManager.LoadSceneAsync("TacticalGraybox",LoadSceneMode.Single); yield return null;
             var p=Object.FindAnyObjectByType<BattlePresenter>();
             var selector=p.HudRoot.Q<DropdownField>("fixture-selector");
-            Assert.That(selector.choices.Count,Is.EqualTo(9));
+            Assert.That(selector.choices.Count,Is.EqualTo(15));
             foreach(SizeExperimentMap map in System.Enum.GetValues(typeof(SizeExperimentMap)))
             {
                 selector.value=map.ToString(); yield return null;
                 var board=SizeExperimentFixture.Board(map);
-                Assert.That(p.State.Battlefield.Columns,Is.EqualTo(board.Columns)); Assert.That(p.VisualUnitCount,Is.EqualTo(SizeExperimentFixture.IsDensity(map) ? 18 : 10));
+                Assert.That(p.State.Battlefield.Columns,Is.EqualTo(board.Columns)); Assert.That(p.VisualUnitCount,Is.EqualTo(SizeExperimentFixture.Units(map).Length));
                 CollectionAssert.AreEqual(SizeExperimentFixture.Units(map).Select(u=>u.Position),p.State.Units.Select(u=>u.Position));
                 var rng=p.State.RngState;
                 var actor=p.State.FindUnit(p.State.CurrentUnitId.Value);
-                p.SelectCell(new GridPosition(actor.Position.X+1,actor.Position.Y+1));
+                var destination=(from x in Enumerable.Range(0,board.Columns) from y in Enumerable.Range(0,board.Rows) let cell=new GridPosition(x,y) where cell!=actor.Position && !board.IsRetreatZone(actor,cell) && Pathfinder.FindPath(p.State,actor.Id,cell).Found select cell).First();
+                p.SelectCell(destination);
                 Assert.That(p.HasMovePreview,Is.True); p.ConfirmPreview();
                 Assert.That(p.State.FindUnit(actor.Id).Position,Is.Not.EqualTo(actor.Position));
                 p.RestartSameSeed(); yield return null;

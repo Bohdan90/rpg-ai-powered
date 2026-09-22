@@ -42,6 +42,17 @@ namespace RPG.Core
         public bool IsRetreatZone(Side side, GridPosition cell) => IsWalkable(cell)
             && (side == Side.West ? cell.X == 0 : side == Side.East && (cell.X == Columns - 1
                 || (EastRetreatUsesPerimeter && (cell.X == 0 || cell.Y == 0 || cell.Y == Rows - 1))));
+        public bool IsRetreatZone(UnitState unit, GridPosition cell)
+        {
+            if(!unit.OwnRetreatEdge.HasValue)return IsRetreatZone(unit.Side,cell);
+            if(!IsWalkable(cell))return false;
+            switch(unit.OwnRetreatEdge.Value) {
+                case RetreatEdge.West:return cell.X==0;
+                case RetreatEdge.East:return cell.X==Columns-1;
+                case RetreatEdge.North:return cell.Y==Rows-1;
+                default:return cell.Y==0;
+            }
+        }
         public bool IsSolid(GridPosition cell) => Contains(cell) && solids[cell.X, cell.Y];
         public bool IsWalkable(GridPosition cell) => Contains(cell) && !IsSolid(cell);
     }
