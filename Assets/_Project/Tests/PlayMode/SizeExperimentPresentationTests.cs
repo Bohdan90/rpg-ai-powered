@@ -12,6 +12,37 @@ namespace RPG.Presentation.Tests
     public class SizeExperimentPresentationTests
     {
         [UnityTest]
+        public IEnumerator LargerSiegeFixturesLoadFrameAndUseCoreCrossingPreview()
+        {
+            yield return SceneManager.LoadSceneAsync("TacticalGraybox",LoadSceneMode.Single);yield return null;
+            var presenter=Object.FindAnyObjectByType<BattlePresenter>();
+            foreach(var map in new[]{SizeExperimentMap.Siege_31x25_Medium,SizeExperimentMap.Siege_35x27_Large})
+            {
+                presenter.HudRoot.Q<DropdownField>("fixture-selector").value=map.ToString();yield return null;
+                Assert.That(presenter.Fixture,Is.EqualTo(map));Assert.That(presenter.VisualUnitCount,Is.EqualTo(10));
+                var b=presenter.State.Battlefield;int cx=b.Columns/2,cy=b.Rows/2;
+                presenter.FitBoard();
+                var camera=presenter.GetComponentInChildren<Camera>();
+                foreach(var pos in new[]{new Vector3(0,0,0),new Vector3(b.Columns-1,0,b.Rows-1)})
+                {
+                    var v=camera.WorldToViewportPoint(pos);
+                    Assert.That(v.x,Is.InRange(0f,1f));Assert.That(v.y,Is.InRange(0f,1f));
+                }
+                presenter.SelectCell(new GridPosition(8,cy));presenter.ConfirmPreview();
+                Assert.That(presenter.State.FindUnit(new UnitId(5)).Position,Is.EqualTo(new GridPosition(8,cy)));
+                presenter.RestartSameSeed();Assert.That(presenter.VisualUnitCount,Is.EqualTo(10));
+                presenter.ConfigureBattle(new[]{
+                    new UnitState(new UnitId(5),Side.West,UnitProfile.ElfWarriorTI,new GridPosition(cx-7,cy),Facing.East),
+                    new UnitState(new UnitId(7),Side.East,UnitProfile.HumanWarriorTI,new GridPosition(cx+2,cy),Facing.West)
+                },b,2);
+                presenter.SelectCell(new GridPosition(cx-4,cy));
+                Assert.That(presenter.HudRoot.Q<Button>("confirm-command").enabledSelf,Is.True);
+                presenter.ConfirmPreview();Assert.That(presenter.State.FindUnit(new UnitId(5)).Position,Is.EqualTo(new GridPosition(cx-4,cy)));
+                LogAssert.NoUnexpectedReceived();
+            }
+        }
+
+        [UnityTest]
         public IEnumerator EngagedArcherHudShowsFallbackAndDisengagementRestoresBow()
         {
             yield return SceneManager.LoadSceneAsync("TacticalGraybox", LoadSceneMode.Single); yield return null;
@@ -138,7 +169,7 @@ namespace RPG.Presentation.Tests
             yield return SceneManager.LoadSceneAsync("TacticalGraybox",LoadSceneMode.Single); yield return null;
             var p=Object.FindAnyObjectByType<BattlePresenter>();
             var selector=p.HudRoot.Q<DropdownField>("fixture-selector");
-            Assert.That(selector.choices.Count,Is.EqualTo(5));
+            Assert.That(selector.choices.Count,Is.EqualTo(7));
             foreach(SizeExperimentMap map in System.Enum.GetValues(typeof(SizeExperimentMap)))
             {
                 selector.value=map.ToString(); yield return null;

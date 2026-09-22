@@ -275,3 +275,15 @@ The fallback is available only while engaged; targeting and friendly-fire confir
 otherwise retain existing Basic rules. Movement out uses ordinary OA; a surviving HA
 outside every hostile ZoC regains Bow Shot, without Aim after spending Movement.
 See [ARCHER_ENGAGEMENT_FALLBACK.md](ARCHER_ENGAGEMENT_FALLBACK.md).
+
+## Siege scale V2 — P/T static geometry experiment, 2026-09-21
+
+Adds Siege_31x25_Medium and Siege_35x27_Large; previous fixtures retained.
+Same central 11×9 fortress / 24 solids, plus identical one-cell outer solid proxy ring
+(32 additional solids, 13×11 envelope), with four fixed three-cell-wide crossings.
+Proxy solids retain ordinary opaque/blocked behavior; this is not final moat visibility,
+bridge count/width or fortification mechanics. West deploys at the unchanged western
+formation offsets; East inside. All units/tuning/Part A engagement rules are shared.
+East Retreat = full legal outer perimeter; West = rear x=0. Openings/crossings are routes,
+not escape endpoints. No final siege dimension or racial fortress design is declared.
+Exact coordinates and validation: [SIEGE_SCALE_V2_EXPERIMENT.md](SIEGE_SCALE_V2_EXPERIMENT.md).

@@ -3,12 +3,14 @@ using System.Collections.Generic;
 
 namespace RPG.Core
 {
-    public enum SizeExperimentMap { Field_13x9_Control, Field_17x11_Expanded, Siege_23x17_Tight, Siege_27x21_Roomy, Field_19x13_ExpandedV2 }
+    public enum SizeExperimentMap { Field_13x9_Control, Field_17x11_Expanded, Siege_23x17_Tight, Siege_27x21_Roomy, Field_19x13_ExpandedV2, Siege_31x25_Medium, Siege_35x27_Large }
 
     // Experimental geometry only: no siege mechanics or new profile tuning.
     public static class SizeExperimentFixture
     {
-        public static bool IsSiege(SizeExperimentMap map) => map == SizeExperimentMap.Siege_23x17_Tight || map == SizeExperimentMap.Siege_27x21_Roomy;
+        public static bool IsSiege(SizeExperimentMap map) => map == SizeExperimentMap.Siege_23x17_Tight || map == SizeExperimentMap.Siege_27x21_Roomy || HasMoatProxy(map);
+
+        public static bool HasMoatProxy(SizeExperimentMap map) => map == SizeExperimentMap.Siege_31x25_Medium || map == SizeExperimentMap.Siege_35x27_Large;
 
         public static Battlefield Board(SizeExperimentMap map)
         {
@@ -21,6 +23,13 @@ namespace RPG.Core
                 for (int x = -5; x <= 5; x++)
                 for (int y = -4; y <= 4; y++)
                     if ((Math.Abs(x) == 5 && Math.Abs(y) > 1) || (Math.Abs(y) == 4 && Math.Abs(x) > 1))
+                        solids.Add(new GridPosition(cx + x, cy + y));
+            // P: static solid/opaque spatial proxy only, not a real moat mechanic.
+            // Identical one-cell outer ring, with four three-cell crossings aligned to openings.
+            if (HasMoatProxy(map))
+                for (int x = -6; x <= 6; x++)
+                for (int y = -5; y <= 5; y++)
+                    if ((Math.Abs(x) == 6 && Math.Abs(y) > 1) || (Math.Abs(y) == 5 && Math.Abs(x) > 1))
                         solids.Add(new GridPosition(cx + x, cy + y));
             return new Battlefield(width, height, solids, IsSiege(map));
         }
@@ -54,6 +63,8 @@ namespace RPG.Core
                 case SizeExperimentMap.Siege_23x17_Tight: width = 23; height = 17; break;
                 case SizeExperimentMap.Siege_27x21_Roomy: width = 27; height = 21; break;
                 case SizeExperimentMap.Field_19x13_ExpandedV2: width = 19; height = 13; break;
+                case SizeExperimentMap.Siege_31x25_Medium: width = 31; height = 25; break;
+                case SizeExperimentMap.Siege_35x27_Large: width = 35; height = 27; break;
                 default: throw new ArgumentOutOfRangeException(nameof(map));
             }
         }

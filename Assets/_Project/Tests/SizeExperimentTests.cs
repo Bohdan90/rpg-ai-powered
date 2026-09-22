@@ -11,6 +11,8 @@ namespace RPG.Tests
         [TestCase(SizeExperimentMap.Field_19x13_ExpandedV2,19,13)]
         [TestCase(SizeExperimentMap.Siege_23x17_Tight,23,17)]
         [TestCase(SizeExperimentMap.Siege_27x21_Roomy,27,21)]
+        [TestCase(SizeExperimentMap.Siege_31x25_Medium,31,25)]
+        [TestCase(SizeExperimentMap.Siege_35x27_Large,35,27)]
         public void FixturesHaveValidDeterministicDeployment(SizeExperimentMap map,int width,int height)
         {
             var board=SizeExperimentFixture.Board(map); var units=SizeExperimentFixture.Units(map);
@@ -67,6 +69,8 @@ namespace RPG.Tests
         }
         [TestCase(SizeExperimentMap.Siege_23x17_Tight)]
         [TestCase(SizeExperimentMap.Siege_27x21_Roomy)]
+        [TestCase(SizeExperimentMap.Siege_31x25_Medium)]
+        [TestCase(SizeExperimentMap.Siege_35x27_Large)]
         public void DefenderCanEscapeEveryOuterEdgeWhileAttackerOnlyWest(SizeExperimentMap map)
         {
             var b=SizeExperimentFixture.Board(map);
