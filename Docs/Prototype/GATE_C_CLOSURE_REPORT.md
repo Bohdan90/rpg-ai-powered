@@ -183,3 +183,70 @@ Validation: 14 focused geometry/AI/retreat/replay cases passed, then full
 280 EditMode + 33 PlayMode = 313 passed, zero failures/skips, in an isolated
 Unity project copy. PlayMode exercised selector loading, deployment, movement
 and reset across all fixtures. No new mouse-driven or completed-battle playtest.
+
+
+## Final selected Gate C siege baseline — 41×39
+
+Starting HEAD: `462bd87` (the geometry expansion was already implemented).
+The user selected **41×39 from manual playtest**, superseding **39×37** for the
+Gate C siege spatial baseline. Ordinary field remains **23×17**. 43×41 was discussed
+but was not selected. Battlefield-size exploration is closed again; this delta
+validates the selected size and does not compare alternative maps.
+
+Actual fixture measurements use `GridPosition.DistanceTo` (Core Chebyshev distance)
+from every deployment-sector cell to the existing conservative fortress-perimeter
+reference cells, including openings. Runtime probe and focused Core tests agree:
+
+| Approach | Sector (3 deep ×9 wide) | Minimum wall separation |
+|---|---|---:|
+| West | x1..3, y15..23 | 12 |
+| East | x37..39, y15..23 | 12 |
+| North | x16..24, y35..37 | 12 |
+| South | x16..24, y1..3 | 12 |
+
+Each sector holds its original nine-unit army. W+E and N+S each hold 18 attackers
+plus nine defenders simultaneously, with distinct cells and no sector overlap.
+All spawns are walkable, outside retreat zones and outside the fortress/moat proxy
+for attackers; defenders retain their legal interior formation. Minimum separation
+**12 > Bow Range 10** on every approach; no real wall firing mechanic is implied.
+
+Only validation and documentation changed in this finalization. Accepted cyan/blue
+ranged reach and green Movement visuals are unchanged, including engagement/spent
+Action hiding. Combat tuning, Range 10, Movement, AI weights, geometry semantics,
+Retreat edges, moat/crossings and simultaneous army support are unchanged. No real
+siege mechanics, reserves or reinforcement waves were added.
+
+
+Mouse validation in a fresh isolated Unity Editor: all four single approaches and
+both paired deployments loaded with 18/27 unit views respectively. Physical mouse
+movement/confirmation and attacker AI advances succeeded in all six variants.
+W+E and N+S retain separate, visually understandable formations on opposite sides;
+nine-unit detail is readable with zoom. All four crossings executed in prepared
+full-roster states: W (13,19)→(17,19), E (27,19)→(23,19), N (20,25)→(20,22),
+S (20,13)→(20,16). North/South stop at free interior cells before defenders.
+
+On the actual 41×39 board, prepared Range-10 preview/fire succeeded; Range 11 was
+rejected, and engagement/spent Action hid the reach marks. Preview preserved the
+runtime state hash and RNG. Cyan reach and green Movement were also visually
+inspected on the full W+E roster: the initial archer's reach ends short of the
+fortress. Focus, wheel zoom and Fit worked. N+S movement and prepared archer-fire
+Export/Load-verify each reported matching replay (one successful command each).
+Automated cases additionally cover directional physical Retreat and deterministic
+replay. Temporary probes/scripts/screenshots/logs remain outside Git.
+
+The technical mouse checks found no new map implementation problem. Overall
+approach-distance/emptiness preference is established by the user's selection;
+this short smoke check does not independently establish battle pacing or a
+completed-battle result. Existing limitations remain: overview labels need zoom,
+27-unit queues need HUD scrolling, long fixture names clip, and hover text can
+persist across reset. Unity Editor Search indexing and AI account/subscription
+messages occurred outside project runtime code. No new runtime exception observed.
+
+Final verification: **14 focused EditMode + 4 focused PlayMode passed**; then
+**280 EditMode + 34 PlayMode = 314 passed, 0 failed, 0 skipped**. The added
+PlayMode regression covers all six selected siege fixtures, Range-10 cell sets,
+Movement coexistence, preview/selection state/RNG/hash purity and replay after
+accepted movement. Production code is unchanged from `462bd87`.
+
+Return control to the coordinator for final Gate C playtest / PASS-FAIL decision.
+This baseline finalization does **not** declare Gate C PASS. No push.

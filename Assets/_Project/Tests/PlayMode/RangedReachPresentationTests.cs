@@ -20,6 +20,43 @@ namespace RPG.Presentation.Tests
         { yield return SceneManager.LoadSceneAsync("TacticalGraybox",LoadSceneMode.Single);yield return null; }
 
         [UnityTest]
+        public IEnumerator SelectedSiegeFixturesPreserveRangeTenAndPreviewDeterminism()
+        {
+            yield return Load();var p=Object.FindAnyObjectByType<BattlePresenter>();
+            foreach(SizeExperimentMap map in Enum.GetValues(typeof(SizeExperimentMap)))
+            {
+                if(!SizeExperimentFixture.IsDirectionalSiege(map))continue;
+                p.ConfigureFixture(map);
+                for(int i=0;i<27 && p.State.FindUnit(p.State.CurrentUnitId.Value).Profile.Id!=UnitProfileId.HumanArcherTI;i++)
+                    p.EndActivation(null);
+                var actor=p.State.FindUnit(p.State.CurrentUnitId.Value);
+                Assert.That(actor.Profile.Id,Is.EqualTo(UnitProfileId.HumanArcherTI));
+                Assert.That(actor.Profile.Range,Is.EqualTo(10));
+                var board=p.State.Battlefield;
+                Assert.That(board.Columns,Is.EqualTo(41));Assert.That(board.Rows,Is.EqualTo(39));
+                var expected=(from x in Enumerable.Range(0,board.Columns)
+                              from y in Enumerable.Range(0,board.Rows)
+                              let cell=new GridPosition(x,y)
+                              where actor.Position.DistanceTo(cell)<=10 && cell!=actor.Position
+                              select cell).ToArray();
+                CollectionAssert.AreEquivalent(expected,p.RangedReach);
+                Assert.That(p.RangedVisualCount,Is.EqualTo(expected.Length));
+                Assert.That(p.ReachableCells.Count,Is.GreaterThan(0));
+                var before=p.State;var hash=BattleStateHash.Compute(before);var rng=before.RngState;
+                var destination=p.ReachableCells.First(c=>c!=actor.Position);
+                p.SelectCell(destination);p.Hover(expected.Last());p.CancelPreview();
+                Assert.That(p.State,Is.SameAs(before));Assert.That(p.State.RngState,Is.EqualTo(rng));
+                Assert.That(BattleStateHash.Compute(p.State),Is.EqualTo(hash));
+                Assert.That(ReplayVerification.Verify(p.Journal.Header,p.Journal.Records,p.Journal.Footer()).Matches,Is.True);
+                p.SelectCell(destination);p.ConfirmPreview();
+                Assert.That(p.State.FindUnit(actor.Id).Position,Is.EqualTo(destination));
+                Assert.That(ReplayVerification.Verify(p.Journal.Header,p.Journal.Records,p.Journal.Footer()).Matches,Is.True);
+                yield return null;
+                LogAssert.NoUnexpectedReceived();
+            }
+        }
+
+        [UnityTest]
         public IEnumerator ReachIsGeometricPreservesMovementAndSelectionCannotChangeReplay()
         {
             yield return Load();var p=Object.FindAnyObjectByType<BattlePresenter>();
