@@ -51,6 +51,11 @@ namespace RPG.Presentation
         private Battlefield initialBoard;
         private uint initialSeed;
         private readonly List<GridPosition> reachable = new List<GridPosition>();
+        private readonly List<GridPosition> rangedReach = new List<GridPosition>();
+        public IReadOnlyCollection<GridPosition> RangedReach => rangedReach.AsReadOnly();
+        public IReadOnlyCollection<GridPosition> ReachableCells => reachable.AsReadOnly();
+        public int RangedVisualCount => grid.RangedVisualCount;
+        public string RangedReachMessage { get; private set; } = "";
         private readonly List<string> log = new List<string>();
         public BattleJournal Journal { get; private set; }
         public string LastReplayPath { get; private set; }
@@ -236,14 +241,24 @@ namespace RPG.Presentation
         private void ClearPreview() { pending = null; selected = null; MovementRisk = null; PreviewEscapes = false; PreviewText = "Click a cell or unit, then confirm. Green cells: Core reachable."; hud.ResetChoices(); }
         private void Refresh()
         {
-            reachable.Clear(); threats.Clear();
+            reachable.Clear(); rangedReach.Clear(); RangedReachMessage=""; threats.Clear();
             if (State.Outcome.IsEnded) { ShowViews(); return; }
             var actor = State.FindUnit(State.CurrentUnitId.Value);
+            bool showRange = actor.Profile.IsArcher && !IsAiTurn;
+            if (showRange)
+            {
+                bool engaged = BattleResolver.IsArcherEngaged(State, actor.Id);
+                RangedReachMessage = engaged ? "Bow unavailable: Engaged — reach hidden."
+                    : !actor.ActionAvailable ? "Bow unavailable: Action spent — reach hidden."
+                    : "Cyan marks: Bow geometric reach " + actor.Profile.Range + " from current cell. LoS/target legality checked separately.";
+                showRange = !engaged && actor.ActionAvailable;
+            }
             for (int x = 0; x < State.Battlefield.Columns; x++)
             for (int y = 0; y < State.Battlefield.Rows; y++)
             {
                 var cell = new GridPosition(x, y); var path = Pathfinder.FindPath(State, State.CurrentUnitId.Value, cell);
                 if (path.Found && path.Cost > 0) reachable.Add(cell);
+                if (showRange && cell != actor.Position && actor.Position.DistanceTo(cell) <= actor.Profile.Range) rangedReach.Add(cell);
                 var sources = ZoneOfControl.Sources(State, actor.Side, cell);
                 if (sources.Count > 0) threats.Add(cell, sources);
             }
@@ -251,7 +266,7 @@ namespace RPG.Presentation
         }
         private void ShowViews()
         {
-            grid.Refresh(State, reachable, (pending as MoveCommand)?.Path, threats, MovementRisk);
+            grid.Refresh(State, reachable, (pending as MoveCommand)?.Path, threats, MovementRisk, rangedReach);
             hud.Refresh(State, pending != null && !State.Outcome.IsEnded, selected);
         }
         private void Append(IEnumerable<BattleEvent> events)

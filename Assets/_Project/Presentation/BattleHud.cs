@@ -12,7 +12,7 @@ namespace RPG.Presentation
         private readonly BattlePresenter presenter;
         private readonly Camera camera;
         private readonly VisualElement surface;
-        private readonly Label aiInfo;
+        private readonly Label aiInfo, rangeInfo;
         private readonly Label active, queue, preview, message, events, hover, cell;
         private readonly Button confirm, cancel, defend, end;
         private readonly Label riskWarning, retreat, escaped, outcomeText;
@@ -73,12 +73,14 @@ namespace RPG.Presentation
             control.RegisterValueChangedCallback(e=>presenter.SetPlayerVsAi(control.index!=0,control.index==2?Side.West:Side.East));panel.Add(control);
             aiInfo=Text(panel,"",12);aiInfo.name="ai-info";
             active = Text(panel, "", 16); active.name = "active-unit";
+            rangeInfo = Text(panel, "", 12); rangeInfo.name="ranged-reach-info";
+            rangeInfo.style.color=new Color(.3f,.85f,1f);
             queue = Text(panel, "", 12); queue.name = "activation-queue";
             retreat = Text(panel, "", 13); retreat.name = "retreat-info";
             escaped = Text(panel, "", 12); escaped.name = "escaped-list";
             map = new DropdownField("Fixture (resets battle)", new List<string>(Enum.GetNames(typeof(SizeExperimentMap))), 0) { name = "fixture-selector" };
             map.RegisterValueChangedCallback(e => presenter.ConfigureFixture((SizeExperimentMap)Enum.Parse(typeof(SizeExperimentMap), e.newValue))); panel.Add(map);
-            Text(panel, "Size/density experiment · no combat retuning. 9v9 = synthetic tactical roster, not strategic Capacity validation. Siege: static fortress; 31×25 / 35×27 add a solid moat proxy with fixed crossings. West attacks, East defends.", 12);
+            Text(panel, "Size/density experiment · no combat retuning. 9v9 = synthetic tactical roster, not strategic Capacity validation. Siege: static fortress; moat proxy has fixed crossings. 39×37 preserves each attacker approach; West = attacker coalition, East = defenders. No real siege mechanics.", 12);
             AddButton(panel, "Fit whole board", "fit-board", presenter.FitBoard);
             AddButton(panel, "Focus active unit (wheel to zoom)", "focus-unit", presenter.FocusActor);
             AddButton(panel, "Restart Same Seed", "restart", presenter.RestartSameSeed);
@@ -124,6 +126,8 @@ namespace RPG.Presentation
             bool playerTurn = !presenter.IsAiTurn;
             Root.Q<DropdownField>("controller-mode").SetValueWithoutNotify(presenter.PlayerVsAi?(presenter.AiSide==Side.East?"Player West vs AI East":"Player East vs AI West"):"Hotseat");
             aiInfo.text=presenter.PlayerVsAi?presenter.AiExplanation:"Hotseat";
+            rangeInfo.text=presenter.RangedReachMessage;
+            rangeInfo.style.display=rangeInfo.text.Length>0?DisplayStyle.Flex:DisplayStyle.None;
             if (ended != showedOutcome) panel.schedule.Execute(() => panel.scrollOffset = Vector2.zero);
             showedOutcome = ended;
             outcomePanel.style.display = ended ? DisplayStyle.Flex : DisplayStyle.None;
@@ -150,10 +154,12 @@ namespace RPG.Presentation
             escaped.text = "Escaped/Safe:\n" + Roster(state, UnitStatus.Escaped);
             string eastZone = state.Battlefield.EastRetreatUsesPerimeter ? "full legal outer perimeter" : "East edge";
             retreat.text = "West: West edge. East: " + eastZone + "." + (ended ? "" : "\nYOUR escape: " + (actor.Side == Side.West ? "West edge" : eastZone));
-            if(actor.OwnRetreatEdge.HasValue) retreat.text="Attacker approaches are unit-specific. Defender: full legal outer perimeter.\nYOUR Retreat: "+actor.OwnRetreatEdge+" edge.";
+            string approachEdges = string.Join(" / ",state.Units.Where(u=>u.Side==Side.West && u.OwnRetreatEdge.HasValue).Select(u=>u.OwnRetreatEdge.Value).Distinct());
+            if(approachEdges.Length>0) retreat.text="Attacker rear edges (per army): "+approachEdges+". Defender: full legal outer perimeter."
+                +(ended?"":"\nYOUR Retreat: "+(actor.OwnRetreatEdge.HasValue?actor.OwnRetreatEdge+" edge":eastZone));
             westEdge.text = "← West Retreat" + (!ended && actor.Side == Side.West ? " — YOUR ESCAPE" : "");
             eastEdge.text = (state.Battlefield.EastRetreatUsesPerimeter ? "East: ALL outer edges" : "East Retreat →") + (!ended && actor.Side == Side.East ? " — YOUR ESCAPE" : "");
-            if(actor.OwnRetreatEdge.HasValue)westEdge.text="Attacker coalition · YOUR retreat: "+actor.OwnRetreatEdge;
+            if(approachEdges.Length>0)westEdge.text=actor.OwnRetreatEdge.HasValue?"Attacker coalition · YOUR retreat: "+actor.OwnRetreatEdge:"Attacker retreat: "+approachEdges;
             events.text = string.Join("\n", presenter.RecentEvents);
             foreach (var label in unitLabels.Values) label.style.display = DisplayStyle.None;
             foreach (var unit in state.Units)

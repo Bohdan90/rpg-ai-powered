@@ -53,8 +53,8 @@ Distance penalty `5×max(0,d−4)` pp; Steady Aim +15 Accuracy only without prio
 committing remaining Movement. Valid hostile melee ZoC locks Bow; HA gains no ZoC/OA.
 EW frontal evasion +15 Dodge; Light Cover −15 Accuracy; Defend 25% Physical Resistance.
 AI weights/25%-HP evacuation are contract prototype tuning, not Morale or final canon.
-Ordinary 23×17 and siege 35×27 remain provisional, with no further size iteration absent
-new user playtest evidence. Synthetic 9v9 roster makes no strategic Capacity claim.
+Ordinary 23×17 remains provisional; new approach-buffer evidence supersedes siege
+35×27 with the targeted 39×37 candidate described below. Neither is universal canon. Synthetic 9v9 roster makes no strategic Capacity claim.
 
 ## DoD and remaining evidence
 
@@ -140,3 +140,30 @@ Overview is readable for formation geometry; individual labels require existing 
 A 27-unit queue requires scrolling. No completed-battle duration/empty-turn verdict;
 that remains user playtest evidence, not inferred from this smoke check. Unity Editor
 Search indexing/AI subscription messages occurred outside project runtime code.
+
+## Ranged reach presentation correction
+
+Cyan inset L marks show the active player's geometric Bow reach from its actual cell,
+derived from UnitProfile.Range and Core GridPosition.DistanceTo. Green movement fill,
+red ZoC borders and gold path remain independent. Solids inside reach can be marked:
+this deliberately does not claim clear LoS or a legal target. Core preview and resolver
+still decide eligibility. Engaged/Action-spent HA hides marks with a HUD reason; melee
+units/AI turns show no Bow overlay. No destination planner or enemy threat map added.
+
+Three focused PlayMode scenarios test range10/11, synthetic profile range7 (test-only
+construction, no production tuning API), movement coexistence/update, solid LoS rejection,
+state/RNG/hash purity, selection/cancel replay, engagement/fallback, spent Action, reset,
+melee and AI visibility. Full final suite: **280 EditMode +33 PlayMode =313 passed;
+0 failed; 0 skipped**. Part B modifies only Presentation/tests/docs; Core combat tuning
+and real siege mechanics remain unchanged.
+
+Final mouse checks: range10 preview/execution, range11 rejection, Cover + distance
+penalty, Action-spent hiding, engaged Melee Strike, OA disengagement restoring Bow
+marks, and post-selection/attack/OA export/replay all passed. Cyan marks were visually
+inspected alongside movement and ZoC on field and siege boards. Prepared full-roster
+west/east/north/south crossings all executed by mouse; north/south used free interior
+cells (19,21)/(19,15), since deeper cells contain defenders. Core correctly rejected
+the initial occupied target. Final HUD review corrected attacker rear-edge labels on
+defender turns to list actual approach edges, covered by the existing fixture test.
+Manual scenarios were short integration checks, not Gate C PASS or battle-duration
+validation. New format v2 cannot load old v1 logs; new exports replay with matching hashes.

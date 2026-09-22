@@ -14,6 +14,8 @@ namespace RPG.Presentation
         private readonly Dictionary<UnitId, Token> units = new Dictionary<UnitId, Token>();
         private readonly LineRenderer pathLine;
         private LineRenderer[,] zocBorders;
+        private LineRenderer[,] rangeMarks;
+        public int RangedVisualCount { get; private set; }
         private Renderer[,] retreatStripes;
         private Renderer[,] eastStripes;
         private GameObject cellsRoot;
@@ -39,6 +41,7 @@ namespace RPG.Presentation
             cellsRoot = new GameObject("Fixture cells"); cellsRoot.transform.SetParent(root.transform, false);
             tiles = new Renderer[board.Columns, board.Rows];
             zocBorders = new LineRenderer[board.Columns, board.Rows];
+            rangeMarks = new LineRenderer[board.Columns, board.Rows];
             retreatStripes = new Renderer[board.Columns, board.Rows];
             eastStripes = new Renderer[board.Columns, board.Rows];
             for (int x = 0; x < board.Columns; x++)
@@ -51,6 +54,13 @@ namespace RPG.Presentation
                 zocBorders[x, y].positionCount = 5;
                 zocBorders[x, y].SetPositions(new[] { new Vector3(x-.43f,.015f,y-.43f), new Vector3(x+.43f,.015f,y-.43f),
                     new Vector3(x+.43f,.015f,y+.43f), new Vector3(x-.43f,.015f,y+.43f), new Vector3(x-.43f,.015f,y-.43f) });
+                rangeMarks[x,y] = Line("Geometric ranged reach " + x + "," + y, .035f);
+                rangeMarks[x,y].transform.SetParent(cellsRoot.transform, false);
+                rangeMarks[x,y].positionCount = 3;
+                // Small inset L markers preserve movement fill, ZoC borders and path readability.
+                rangeMarks[x,y].SetPositions(new[] { new Vector3(x-.35f,.56f,y+.1f),
+                    new Vector3(x-.35f,.56f,y+.35f), new Vector3(x-.1f,.56f,y+.35f) });
+                Tint(rangeMarks[x,y],new Color(.3f,.85f,1f));
                 retreatStripes[x, y] = Primitive("Retreat edge " + x + "," + y, PrimitiveType.Cube, cellsRoot.transform,
                     new Vector3(x, .02f, y+.35f), new Vector3(.8f,.025f,.1f));
                 eastStripes[x, y] = Primitive("East retreat " + x + "," + y, PrimitiveType.Cube, cellsRoot.transform,
@@ -59,14 +69,19 @@ namespace RPG.Presentation
         }
 
         public void Refresh(BattleState state, IReadOnlyCollection<GridPosition> reachable, IReadOnlyList<GridPosition> path,
-            IReadOnlyDictionary<GridPosition, IReadOnlyList<UnitId>> threats, OpportunityAttackPreview risk)
+            IReadOnlyDictionary<GridPosition, IReadOnlyList<UnitId>> threats, OpportunityAttackPreview risk, IReadOnlyCollection<GridPosition> rangedReach)
         {
             var highlights = new HashSet<GridPosition>(reachable);
+            var rangeCells = new HashSet<GridPosition>(rangedReach);
+            RangedVisualCount = 0;
             var pathCells = path == null ? new HashSet<GridPosition>() : new HashSet<GridPosition>(path);
             for (int x = 0; x < state.Battlefield.Columns; x++)
             for (int y = 0; y < state.Battlefield.Rows; y++)
             {
-                var p = new GridPosition(x, y); var tile = tiles[x, y]; bool solid = state.Battlefield.IsSolid(p);
+                var p = new GridPosition(x, y);
+                bool inRange = rangeCells.Contains(p); rangeMarks[x,y].gameObject.SetActive(inRange);
+                if (inRange) RangedVisualCount++;
+                var tile = tiles[x, y]; bool solid = state.Battlefield.IsSolid(p);
                 var selectedActor=state.CurrentUnitId.HasValue ? state.FindUnit(state.CurrentUnitId.Value) : null;
                 bool westRetreat = selectedActor!=null && selectedActor.Side==Side.West ? state.Battlefield.IsRetreatZone(selectedActor,p) : state.Units.Any(u=>u.Side==Side.West && state.Battlefield.IsRetreatZone(u,p));
                 bool eastRetreat = state.Battlefield.IsRetreatZone(Side.East, p);

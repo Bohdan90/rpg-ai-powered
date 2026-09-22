@@ -204,6 +204,12 @@ namespace RPG.Presentation.Tests
                 Assert.That(p.Fixture,Is.EqualTo(map)); Assert.That(p.State.RngState,Is.EqualTo(rng));
                 Assert.That(p.State.FindUnit(actor.Id).Position,Is.EqualTo(actor.Position));
                 Assert.That(p.HudRoot.Q<Label>("retreat-info").text,Does.Contain(SizeExperimentFixture.IsSiege(map) ? "full legal outer perimeter" : "East edge"));
+                if(map==SizeExperimentMap.Siege_39x37_NorthSouth_18v9)
+                {
+                    for(int i=0;i<27 && p.State.FindUnit(p.State.CurrentUnitId.Value).Side!=Side.East;i++)p.EndActivation(null);
+                    var text=p.HudRoot.Q<Label>("retreat-info").text;
+                    Assert.That(text,Does.Contain("North / South"));Assert.That(text,Does.Not.Contain("West edge"));
+                }
                 LogAssert.NoUnexpectedReceived();
             }
         }
