@@ -31,7 +31,11 @@ namespace RPG.Tests
             else if(route=="North")
             {
                 Move(s,5);s.EndActivation();Move(s,6,10);s.Attack(StrategicActorKind.AreaGuard);Battle(s);s.EndActivation();Move(s,10);
-                s.InteractPortal();Move(s,8,3);Battle(s);s.EndActivation();Battle(s);Move(s,1);
+                // WP-03E: the repaired AI defeats the old optional-bridge return script.
+                // Keep the northern outward route; use existing southern edges to avoid
+                // that extra fight, then intercept B. No graph, timing or tuning change.
+                s.InteractPortal();Move(s,17,14);s.EndActivation();Move(s,13);
+                Assert.That(s.Attack(StrategicActorKind.IncursionB),Is.True);Battle(s);s.EndActivation();Move(s,1);
             }
             else
             {

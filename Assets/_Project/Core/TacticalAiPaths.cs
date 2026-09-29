@@ -40,6 +40,34 @@ namespace RPG.Core
             }
             r.Steps.Add(next);return r;
         }
+        // Multi-source reverse BFS is a distance query only. Submitted routes still use
+        // Pathfinder/current Movement, with the same blockers and diagonal-corner rules.
+        internal static Dictionary<GridPosition,int> GoalDistances(BattleState state,UnitState actor,IEnumerable<GridPosition> goals)
+        {
+            var distances=new Dictionary<GridPosition,int>();var queue=new Queue<GridPosition>();
+            foreach(var p in goals)
+            {
+                var occupant=state.OccupantAt(p);
+                if(!state.Battlefield.IsWalkable(p)||occupant!=null&&occupant.Id!=actor.Id||distances.ContainsKey(p))continue;
+                distances[p]=0;queue.Enqueue(p);
+            }
+            while(queue.Count>0)
+            {
+                var to=queue.Dequeue();
+                foreach(var delta in Directions)
+                {
+                    var from=new GridPosition(to.X+delta.X,to.Y+delta.Y);
+                    if(distances.ContainsKey(from)||!state.Battlefield.IsWalkable(from))continue;
+                    var occupant=state.OccupantAt(from);
+                    if(occupant!=null&&occupant.Id!=actor.Id)continue;
+                    // Entering an own exit terminates movement; it is never a transit cell.
+                    if(from!=actor.Position&&state.Battlefield.IsRetreatZone(actor,from))continue;
+                    if(MovementRules.ValidateStep(state,actor.Id,from,to)!=CommandError.None)continue;
+                    distances[from]=distances[to]+1;queue.Enqueue(from);
+                }
+            }
+            return distances;
+        }
         // Retain non-dominated damage distributions per cell/facing/spent-responder set/cost.
         // This keeps safe detours even when longer than the ordinary readable shortest path.
         internal static List<Route> SafeRoutes(BattleState state, UnitState actor)

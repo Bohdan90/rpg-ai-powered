@@ -3,6 +3,16 @@
 Updated 2026-09-29. Single implementation handoff; Google Drive thematic owners retain
 priority for canon. Follow repository `AGENTS.md` and the efficiency protocol.
 
+## WP-03E — tactical AI retreat / wall stall
+
+- From `develop` / `e7036eb15a8ae2b929d3c5f06514512cfe61d2f5`. User accepts current graybox combat, Provisions and threat readability; only tactical AI defect addressed.
+- Reproduction-first: **D confirmed**, healthy Warrior indefinitely Defend/End behind a wall despite safe detour; straight-line approach scoring penalized the necessary detour. Also confirmed missing multi-activation low-HP retreat approach (AI approached the enemy when exit was beyond current Movement). Original user replay unavailable; these are controlled analogues.
+- **A legal**: Movement exhaustion one cell short now explicitly explained; next activation evacuates. **B not reproduced** (adjacent safe reachable exit already worked); **C stale target not reproduced** (stateless AI), actual blocked target/alternate exit verified.
+- Two Core AI files only: pure legal goal-distance query; existing <=25% HP retreat preference continues over current-budget route prefixes/replans each command. Wall approach potential applies only when all enemies are occluded and no useful attack is reachable; existing risk scoring and weights remain. No combat/Movement/Retreat canon, strategic state/tuning, map, persistence or replay-format change.
+- Controlled Unity mouse retreat, damage-to-retreat transition, blocked exit, healthy wall detour and useful archer cover **PASS**; all five exported replays match. Healthy Warrior reaches attack by R4; exhausted Warrior escapes next activation. Screenshots/traces and limitations in [TACTICAL_AI_RETREAT_STALL_01.md](TACTICAL_AI_RETREAT_STALL_01.md).
+- AI command/casualty changes alter some old seed outcomes: former North optional-Bridge return loses final B fight; existing southern return succeeds R6/5 Provisions. Recovery regression now uses a real third battle to retain actual Keep-healing coverage; withdrawn-intel coverage has an independent fixture. No compensating balance changes.
+- Final automated validation: **21 focused EditMode +16 focused PlayMode PASS; full371 EditMode +52 PlayMode =423 PASS, 0 failed/skipped**. Replay/preview/invalid/RNG regression green. Own commit title `AI: complete retreat approaches and escape wall stalls`; starting scene/settings diffs and six untracked persistence `.meta` are preserved. NO PUSH. Stop for coordinator/player review; no further systems authorized.
+
 ## WP-03D — player-feedback Provisions / essential readability
 
 - From `develop` / `2e8c454`. First integrated user playtest: combat feels acceptable for graybox; Central being easier is explicitly not a blocker. Only supply/readability adjusted; combat profiles, topology/edge Tempo, enemy compositions/timing/AI, recovery and XP unchanged.

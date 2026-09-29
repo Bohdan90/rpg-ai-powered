@@ -40,6 +40,15 @@ namespace RPG.Presentation.Tests
             }
             LogAssert.NoUnexpectedReceived();
         }
+        [Test] public void WithdrawnForceReportsActualSurvivorsIndependentlyOfAiSeedOutcome()
+        {
+            var d=new StrategicScenario().CaptureSave();var a=d.actors[(int)StrategicActorKind.HardGuard];
+            a.objective=(int)StrategicObjective.Withdraw;
+            foreach(var c in a.formation.members.Skip(1)){c.hp=0;c.status=(int)PersistentCharacterStatus.Dead;}
+            d.checksum=d.ComputeHash();var actor=d.Restore().Actor(StrategicActorKind.HardGuard);
+            Assert.That(Mission01Intel.Force(actor),Is.EqualTo("Old Bridge Guard · 1 unit\n1 HW"));
+            Assert.That(Mission01Intel.Intent(actor),Does.Contain("Observed withdrawing"));
+        }
         [UnityTest] public IEnumerator KnownIntelUsesActualRosterHidesDormantAndRemovedAndSurvivesLoad()
         {
             yield return SceneManager.LoadSceneAsync("TacticalGraybox",LoadSceneMode.Single);yield return null;
@@ -50,7 +59,7 @@ namespace RPG.Presentation.Tests
             Assert.That(p.HudRoot.Q<Button>("world-node-11").text,Does.Not.Contain("Incursion B"));
             p.MoveOnWorld(3);p.MoveOnWorld(8);
             for(int i=0;i<2500&&!p.State.Outcome.IsEnded;i++)p.Submit(TacticalAi.Choose(p.State).Command);
-            p.ReturnToWorld();Assert.That(p.World.BridgeGuardDefeated,Is.True);Assert.That(info.text,Does.Contain("Old Bridge Guard · 1 unit\n1 HW").And.Contain("Observed withdrawing"));
+            p.ReturnToWorld();Assert.That(p.World.BridgeGuardDefeated,Is.True);Assert.That(info.text,Does.Not.Contain("Old Bridge Guard"));
             p.World.EndActivation();p.World.EndActivation();p.World.EndActivation();p.WorldChanged();
             Assert.That(info.text,Does.Not.Contain("Old Bridge Guard"));
             Assert.That(info.text,Does.Contain("Incursion B · 3 units\n1 HW · 1 EW · 1 HA"));

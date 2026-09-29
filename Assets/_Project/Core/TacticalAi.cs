@@ -37,6 +37,42 @@ namespace RPG.Core
                 .OrderBy(r=>r.HpLoss(actor)).ThenBy(r=>r.Steps.Count).ToArray();
             if(actor.Hp*4<=actor.Profile.MaxHp&&exits.Length>0&&exits[0].HpLoss(actor)<actor.Hp)
                 return Decision(new MoveCommand(actor.Id,exits[0].Steps),-exits[0].HpLoss(actor),"HP <=25%; physical Retreat, minimum expected OA HP loss");
+            if(actor.Hp*4<=actor.Profile.MaxHp&&actor.MovementRemaining>0)
+            {
+                var distance=TacticalAiPaths.GoalDistances(state,actor,Cells(state).Where(p=>state.Battlefield.IsRetreatZone(actor,p)));
+                if(distance.TryGetValue(actor.Position,out int start))
+                {
+                    var progress=routes.Where(r=>r.Steps.Count>0&&distance.TryGetValue(r.Position,out int remaining)&&remaining<start&&r.HpLoss(actor)<actor.Hp)
+                        .OrderBy(r=>distance[r.Position]).ThenBy(r=>r.HpLoss(actor)).ThenBy(r=>r.Steps.Count).ThenBy(r=>r.Position.X).ThenBy(r=>r.Position.Y).FirstOrDefault();
+                    if(progress!=null)return Decision(new MoveCommand(actor.Id,progress.Steps),-progress.HpLoss(actor),
+                        "HP <=25%; Retreat approach: "+start+" → "+distance[progress.Position]+" legal steps to exit; replan after each command");
+                }
+            }
+            // Wall-occluded setup turns need a route-to-attack potential. Open approaches,
+            // immediate attacks and defensive risk scoring retain the existing policy.
+            Dictionary<GridPosition,int> setupDistance=null;
+            if(actor.MovementRemaining>0&&enemies.All(e=>!LineOfSight.IsClear(state,actor.Position,e.Position)))
+            {
+                var query=state.Copy();var mover=query.FindUnit(actor.Id);
+                bool UsefulAttack(GridPosition position,int steps)
+                {
+                    mover.Position=position;mover.MovementRemaining=0;mover.MovementSpentThisActivation=actor.MovementSpentThisActivation+steps;
+                    foreach(var enemy in enemies)
+                    {
+                        if(position.DistanceTo(enemy.Position)>actor.Profile.Range)continue;
+                        var attack=new BasicAttackCommand(actor.Id,enemy.Id,kind:BattleResolver.AvailableBasicAttack(query,actor.Id));
+                        var preview=BattleResolver.PreviewAttack(query,attack);
+                        if(preview.IsLegal&&preview.ContactChance>0&&preview.GuardChance<100&&(preview.HpLossOnUnguardedHit>0||preview.ArmorLossOnUnguardedHit>0))return true;
+                    }
+                    return false;
+                }
+                if(!routes.Any(r=>(r.Steps.Count==0||!state.Battlefield.IsRetreatZone(actor,r.Position))&&UsefulAttack(r.Position,r.Steps.Count)))
+                {
+                    var goals=Cells(state).Where(p=>state.Battlefield.IsWalkable(p)&&(p==actor.Position||!state.Battlefield.IsRetreatZone(actor,p))
+                        &&(state.OccupantAt(p)==null||p==actor.Position)&&UsefulAttack(p,1)).ToArray();
+                    setupDistance=TacticalAiPaths.GoalDistances(state,actor,goals);
+                }
+            }
             TacticalAiDecision best=null;int bestCost=int.MaxValue;
             var incomingCache=new Dictionary<string,double>();
             foreach(var r in routes.OrderBy(r=>r.Steps.Count).ThenBy(r=>r.Position.X).ThenBy(r=>r.Position.Y))
@@ -46,6 +82,9 @@ namespace RPG.Core
                 var projected=state.Copy();var mover=projected.FindUnit(actor.Id);
                 mover.Position=r.Position;mover.Facing=r.Facing;mover.MovementRemaining-=r.Steps.Count;mover.MovementSpentThisActivation+=r.Steps.Count;
                 double approach=Math.Max(-2,Math.Min(2,enemies.Min(e=>actor.Position.DistanceTo(e.Position))-enemies.Min(e=>r.Position.DistanceTo(e.Position))));
+                if(setupDistance!=null)
+                    approach=setupDistance.TryGetValue(actor.Position,out int start)&&setupDistance.TryGetValue(r.Position,out int remaining)
+                        ?Math.Max(-2,Math.Min(2,start-remaining)):0;
                 var actions=new List<BattleCommand>();
                 foreach(var enemy in enemies)
                 {
@@ -78,8 +117,12 @@ namespace RPG.Core
                     bestCost=r.Steps.Count;
                 }
             }
+            if(best?.Command is EndActivationCommand&&actor.Hp*4<=actor.Profile.MaxHp&&actor.MovementRemaining==0)
+                best.Explanation+="; Movement exhausted; re-evaluate Retreat next activation";
             return best??Decision(new EndActivationCommand(actor.Id),0,"End");
         }
+        private static IEnumerable<GridPosition> Cells(BattleState state)
+        {for(int x=0;x<state.Battlefield.Columns;x++)for(int y=0;y<state.Battlefield.Rows;y++)yield return new GridPosition(x,y);}
         private static TacticalAiDecision Decision(BattleCommand c,double score,string why)=>new TacticalAiDecision{Command=c,Score=score,Explanation=why};
         private static double Incoming(BattleState projected,UnitState target)
         {
