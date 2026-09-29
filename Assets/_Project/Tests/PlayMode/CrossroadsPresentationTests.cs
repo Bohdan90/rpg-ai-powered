@@ -48,6 +48,32 @@ namespace RPG.Presentation.Tests
             Assert.That(s.East.Formation.Members.Select(c=>c.CharacterId),Is.EqualTo(ids));Assert.That(p.SaveDuel(path),Is.True);
             Assert.That(p.HudRoot.Q("duel-world").style.display.value,Is.EqualTo(DisplayStyle.Flex));LogAssert.NoUnexpectedReceived();
         }
+        [UnityTest] public IEnumerator EconomicPendingSaveRecreateCompletesOnceAndRecruitEntersBattle()
+        {
+            yield return SceneManager.LoadSceneAsync("TacticalGraybox",LoadSceneMode.Single);yield return null;
+            var p=Object.FindAnyObjectByType<BattlePresenter>();var data=new CrossroadsScenario(economy:true).CaptureSave();
+            var dead=data.west.formation.members[1];dead.hp=0;dead.status=(int)PersistentCharacterStatus.Dead;
+            data.west.provisions=13;data.owners[0]=(int)Side.West;data.checksum=data.ComputeHash();File.WriteAllText(path,JsonUtility.ToJson(data));
+            Assert.That(p.LoadDuel(path),Is.True);Assert.That(p.HudRoot.Q<Button>("duel-recruit-hw").enabledInHierarchy,Is.True);
+            Assert.That(p.Duel.Recruit(Side.West,UnitProfileId.HumanWarriorTI),Is.True);p.DuelChanged();var original=p.Duel;
+            Assert.That(p.SaveDuel(path),Is.True);yield return SceneManager.LoadSceneAsync("TacticalGraybox",LoadSceneMode.Single);yield return null;
+            p=Object.FindAnyObjectByType<BattlePresenter>();Assert.That(p.LoadDuel(path),Is.True,p.DuelSaveMessage);
+            foreach(var s in new[]{original,p.Duel}){s.ContinueHandoff(Side.East);s.EndActivation(Side.East);s.ContinueHandoff(Side.West);}
+            p.DuelChanged();Assert.That(p.Duel.CaptureSave().checksum,Is.EqualTo(original.CaptureSave().checksum));
+            Assert.That(p.HudRoot.Q<Label>("duel-economy").text,Does.Contain("Gold 275").And.Contain("Keep Food 30"));
+            Assert.That(p.Duel.West.Formation.Members.Last().CharacterId,Is.EqualTo("duel-West-recruit-1"));
+            p.Duel.Move(Side.West,7);p.Duel.EndActivation(Side.West);p.Duel.ContinueHandoff(Side.East);p.Duel.Move(Side.East,11);p.Duel.Attack(Side.East);p.DuelChanged();
+            Assert.That(p.Duel.Encounter.Ids.Values,Does.Contain("duel-West-recruit-1"));Assert.That(p.PlayerVsAi,Is.False);
+            Assert.That(p.Duel.West.Gold,Is.EqualTo(275));Assert.That(p.Duel.West.KeepFood,Is.EqualTo(30));LogAssert.NoUnexpectedReceived();
+        }
+        [UnityTest] public IEnumerator IncompatiblePartASaveAndTamperedEconomyLeaveLiveScenarioUnchanged()
+        {
+            yield return SceneManager.LoadSceneAsync("TacticalGraybox",LoadSceneMode.Single);yield return null;
+            var p=Object.FindAnyObjectByType<BattlePresenter>();p.StartDuel();var original=p.Duel;string hash=original.CaptureSave().checksum;
+            var d=original.CaptureSave();d.version=1;File.WriteAllText(path,JsonUtility.ToJson(d));Assert.That(p.LoadDuel(path),Is.False);
+            d=original.CaptureSave();d.west.gold++;File.WriteAllText(path,JsonUtility.ToJson(d));Assert.That(p.LoadDuel(path),Is.False);
+            Assert.That(p.Duel,Is.SameAs(original));Assert.That(p.Duel.CaptureSave().checksum,Is.EqualTo(hash));LogAssert.NoUnexpectedReceived();
+        }
         [UnityTest] public IEnumerator InvalidDiskSaveCannotReplaceLiveStateAndMissionSlotRemainsCompatible()
         {
             yield return SceneManager.LoadSceneAsync("TacticalGraybox",LoadSceneMode.Single);yield return null;

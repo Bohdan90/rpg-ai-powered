@@ -88,8 +88,8 @@ namespace RPG.Presentation
             AddButton(panel,"Start Persistence Slice v0.1","persistence-start",presenter.StartPersistenceSlice);
             AddButton(panel,"Start Connected Mission 01","world-start",presenter.StartStrategicScenario);
             AddButton(panel,"Load saved Mission 01","world-load",()=>presenter.LoadStrategic());
-            AddButton(panel,"Crossroads Hotseat · West first","duel-start-west",()=>presenter.StartDuel(Side.West));
-            AddButton(panel,"Crossroads Hotseat · East first","duel-start-east",()=>presenter.StartDuel(Side.East));
+            AddButton(panel,"Crossroads economy Hotseat · West first","duel-start-west",()=>presenter.StartDuel(Side.West));
+            AddButton(panel,"Crossroads economy Hotseat · East first","duel-start-east",()=>presenter.StartDuel(Side.East));
             AddButton(panel,"Load Crossroads Hotseat","duel-load",()=>presenter.LoadDuel());
             persistence=Text(panel,"",12);persistence.name="persistence-summary";
             persistenceContinue=AddButton(panel,"Continue Persistence Battle","persistence-continue",presenter.ContinuePersistenceSlice);

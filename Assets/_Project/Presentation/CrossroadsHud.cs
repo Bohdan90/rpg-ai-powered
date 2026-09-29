@@ -12,7 +12,8 @@ namespace RPG.Presentation
         private readonly BattlePresenter p;
         private readonly VisualElement map,handoff,content;
         private readonly Label status,roster,preview,history,pass,saveStatus;
-        private readonly Button move,attack,withdraw,end,accept;
+        private readonly Button move,attack,withdraw,end,accept,recruitWarrior,recruitArcher;
+        private readonly Label economy;
         private int selected;
         public CrossroadsHud(VisualElement parent,BattlePresenter presenter)
         {
@@ -36,7 +37,11 @@ namespace RPG.Presentation
             var right=new ScrollView();right.style.flexGrow=1;right.style.paddingLeft=12;content.Add(right);
             status=Text(right,"",16);status.name="duel-status";
             Button(right,"Save Crossroads","duel-save",()=>p.SaveDuel());Button(right,"Load Crossroads","duel-load-slot",()=>p.LoadDuel());
-            saveStatus=Text(right,"",12);roster=Text(right,"",13);roster.name="duel-roster";
+            saveStatus=Text(right,"",12);
+            economy=Text(right,"",14);economy.name="duel-economy";
+            recruitWarrior=Button(right,"Recruit L1 HW · 100 Gold","duel-recruit-hw",()=>Act(()=>p.Duel.Recruit(p.Duel.ActiveSide,UnitProfileId.HumanWarriorTI)));
+            recruitArcher=Button(right,"Recruit L1 HA · 100 Gold","duel-recruit-ha",()=>Act(()=>p.Duel.Recruit(p.Duel.ActiveSide,UnitProfileId.HumanArcherTI)));
+            roster=Text(right,"",13);roster.name="duel-roster";
             handoff=new VisualElement {name="duel-handoff"};handoff.style.position=Position.Absolute;handoff.style.left=handoff.style.right=handoff.style.top=handoff.style.bottom=0;
             handoff.style.backgroundColor=new Color(.06f,.09f,.12f);handoff.style.justifyContent=Justify.Center;handoff.style.alignItems=Align.Center;Root.Add(handoff);
             pass=Text(handoff,"",26);accept=Button(handoff,"Continue","duel-continue",()=>Act(()=>p.Duel.ContinueHandoff(p.Duel.ActiveSide)));
@@ -57,6 +62,14 @@ namespace RPG.Presentation
                 +"\nEnemy @ "+enemy.Node+": "+enemy.Consumption+" units · "+string.Join(" · ",enemy.Formation.LivingMembers.GroupBy(c=>c.Profile.Id).Select(g=>g.Count()+" "+g.Key))
                 +"\nNext Refresh here: +"+s.RecoveryPercent(s.ActiveSide)+"% Max HP. Own Keep: supply up to 6; HP40%. Field HP15%. Armor NOT repaired."
                 +"\nObjectives: "+string.Join("; ",new[]{6,7,8}.Select(n=>CrossroadsScenario.Map.Node(n).Name+"="+(s.Owner(n)?.ToString()??"Neutral")));
+            economy.style.display=s.Economy?DisplayStyle.Flex:DisplayStyle.None;
+            economy.text="Gold "+f.Gold+" · Own Keep Food "+f.KeepFood+" · free capacity "+f.FreeCapacity+" / "+f.Capacity+" (Native unit6)"
+                +"\nNorth Mine +75 Gold / Refresh. Central Beacon: position + Pressure only."
+                +"\nSouth Waystation Food "+s.WaystationFood+" /24 · controlling formation here: supply<=6. No regeneration."
+                +"\nOwn Keep supply<=6 costs actual Food. HP recovery costs time, not Gold/Food. No Armor repair."
+                +"\n"+(f.PendingRecruit.HasValue?"PAID PENDING: "+f.PendingRecruitId+" / "+f.PendingRecruit:"Recruit: "+(s.RecruitBlocker(s.ActiveSide,UnitProfileId.HumanWarriorTI)??"legal · ends activation; joins at global Refresh end"));
+            recruitWarrior.style.display=recruitArcher.style.display=s.Economy?DisplayStyle.Flex:DisplayStyle.None;
+            recruitWarrior.SetEnabled(s.RecruitBlocker(s.ActiveSide,UnitProfileId.HumanWarriorTI)==null);recruitArcher.SetEnabled(s.RecruitBlocker(s.ActiveSide,UnitProfileId.HumanArcherTI)==null);
             roster.text=(f.Formation.Commanderless?"COMMANDERLESS · roster locked":"COMMANDER-LED")+"\n"+string.Join("\n",f.Formation.Members.Select(c=>c.CharacterId+(c.IsCommander?" *":"")+" · "+c.Profile.Id+" · "+c.Status+"\nHP "+c.Hp+"/"+c.Profile.MaxHp+" Armor "+c.Armor+"/"+c.Profile.MaxArmor+" · XP "+c.PersonalXp.ToString("0.##")+" L"+c.PersonalLevel+(c.IsCommander?" · Command "+c.CommandXp.ToString("0.##")+" L"+c.CommandLevel+" Rank "+c.CommandRank:"")));
             history.text=string.Join("\n",s.Events.Reverse().Take(8));saveStatus.text=p.DuelSaveMessage;
             foreach(var n in CrossroadsScenario.Map.Nodes){var b=map.Q<Button>("duel-node-"+n.Id);b.text=n.Id+" "+n.Name+(s.Owner(n.Id).HasValue?"\n"+s.Owner(n.Id):"")+(s.West.Continues&&s.West.Node==n.Id?"\n◆ WEST":"")+(s.East.Continues&&s.East.Node==n.Id?"\n◆ EAST":"");b.tooltip="Edges: "+string.Join(", ",CrossroadsScenario.Map.Neighbors(n.Id).Select(v=>v+" cost "+CrossroadsScenario.Map.Cost(n.Id,v)));}

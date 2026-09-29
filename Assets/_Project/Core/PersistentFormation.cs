@@ -100,6 +100,12 @@ namespace RPG.Core
             if (members.Count(c => c.IsCommander) > 1) throw new ArgumentException("Slice supports at most one Commander.");
             FormationId = formationId; Side = side; Members = members.AsReadOnly(); RefreshCommanderState();
         }
+        internal void AddRecruit(PersistentCharacter recruit)
+        {
+            if(RosterLocked||Commander==null||recruit==null||recruit.IsCommander||members.Any(c=>c.CharacterId==recruit.CharacterId))
+                throw new InvalidOperationException("Invalid persistent recruit addition.");
+            members.Add(recruit);
+        }
         internal void RefreshCommanderState() { Commanderless = Commander != null && Commander.Status == PersistentCharacterStatus.Dead; }
         public void ReturnSafeMembersForNextBattle() { foreach (var member in members) member.ReturnFromSafety(); }
         public void ApplyOneFieldStrategicRefresh() { foreach (var member in members) member.ApplyHpRefresh(PersistentCharacter.FieldRecoveryPercent); }

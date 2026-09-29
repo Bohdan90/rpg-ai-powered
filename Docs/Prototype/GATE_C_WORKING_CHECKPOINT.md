@@ -3,6 +3,16 @@
 Updated 2026-09-29. Single implementation handoff; Google Drive thematic owners retain
 priority for canon. Follow repository `AGENTS.md` and the efficiency protocol.
 
+## Connected Playable 03 — economy/recruitment extension (document47 Part B)
+
+- Continues green Part A commit `d3dd271`; same Crossroads graph/Pressure/human Hotseat, no combat or Mission01 changes. Start from tactical screen **Crossroads economy Hotseat · West first / East first**; separate Crossroads load button/slot.
+- Prototype-only: Gold300/side, ownKeep Food36, shared Waystation Food24, Mine75Gold/Refresh; Beacon position/Pressure only. Provisions30/30, body cost1, supplies<=6 limited by actual Food and physical ownership; fieldHP15/ownKeep40, Armor unchanged.
+- HW/HA replacement100Gold, L1/XP0/full baseline pools, free Native capacity6, Commander-led at ownKeep; one order/side/Refresh ends activation. Paid pending retained if completion illegal; joins once after current Refresh supply/recovery, consumes next Refresh. Stable new IDs; Dead records retained. Rank capacities32/38/44/50, Commander exempt. No resurrection/research/reorganization.
+- Crossroads schema2 includes both sides' economy/queue/ID sequence; internal Part-A schema1 safely rejected, Mission01 unchanged. Mid-Refresh queued save/recreate/load exact, no duplicated income/charge/supply/recruit.
+- Controlled mouse economic match PASS: West8:East6 afterR6, Mine income450; Waystation supplied18; real death and Commander16HP/0Armor -> field22 -> Keep38; paid `duel-West-recruit-1` deploys in second battle. East Retreat debt85 blocks100-cost return, legal two-activation return used. Replays175 and12 commands match; both-seat human controller, no tactical AI. East-first economic smokePASS.
+- Focused38 EditMode +5 PlayMode PASS; full409 EditMode +57 PlayMode =466 PASS, 0 failed/skipped. Source/evidence/observations: [STRATEGIC_CONNECTED_PLAYABLE_02_03.md](STRATEGIC_CONNECTED_PLAYABLE_02_03.md). First-mover severity/Mine necessity/excessive turtling remain player watch items; no retuning. Local Part-B commit title `Strategy: add Crossroads economy and persistent replacements`.
+- **STOP after this batch for integrated user playtest.** No Civilization Depth, Cities, Research, Dominion/Convergence, full Siege or broader systems. Unrelated scene/settings/six.meta preserved; NO PUSH.
+
 ## Connected Playable 02 — Crossroads Hotseat (document47 Part A)
 
 - Starting `develop` / `55a269a`. Coordinator accepts Gate-C connected single-player slice **KEEP**. Latest Drive44/46 authorize document47 Part A → Part B autonomously; prior stop notices below are historical.

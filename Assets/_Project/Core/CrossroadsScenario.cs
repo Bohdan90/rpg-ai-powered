@@ -12,6 +12,15 @@ namespace RPG.Core
         public int Tempo { get; internal set; }=100;
         public int Provisions { get; internal set; }=30;
         public int Pressure { get; internal set; }
+        public int Gold { get; internal set; }
+        public int KeepFood { get; internal set; }
+        public int NextRecruit { get; internal set; }=1;
+        public UnitProfileId? PendingRecruit { get; internal set; }
+        public string PendingRecruitId { get; internal set; }="";
+        public int LastRecruitRefresh { get; internal set; }
+        public int Capacity => Formation.Commanderless||Formation.Commander==null?0:32+6*(int)Formation.Commander.CommandRank;
+        public int UsedCapacity => Formation.LivingMembers.Count(c=>!c.IsCommander)*6;
+        public int FreeCapacity => Math.Max(0,Capacity-UsedCapacity);
         public bool Hungry => Provisions==0;
         public int Consumption => Formation.LivingMembers.Count();
         public bool Continues => Consumption>0;
@@ -39,7 +48,7 @@ namespace RPG.Core
                 foreach(var c in f.Formation.LivingMembers)
                 {
                     var id=new UnitId((w?1:101)+index);ids.Add(id,c.CharacterId);
-                    deployments.Add(new PersistentDeployment(c.CharacterId,id,new GridPosition(w?(c.Profile.IsArcher?1:3):(c.Profile.IsArcher?21:19),1+index*2),w?Facing.East:Facing.West,
+                    deployments.Add(new PersistentDeployment(c.CharacterId,id,new GridPosition(w?(c.Profile.IsArcher?1:3):(c.Profile.IsArcher?21:19),index*2),w?Facing.East:Facing.West,
                         f.Tempo<0?RetreatEdge.Unavailable:w?RetreatEdge.West:RetreatEdge.East));index++;
                 }
             }
@@ -67,13 +76,15 @@ namespace RPG.Core
         public Side? Winner { get; private set; }
         public DuelEncounter Encounter { get; private set; }
         public uint Seed { get; }
+        public bool Economy { get; }
+        public int WaystationFood { get; private set; }
         private int battleNumber;
         private readonly Side?[] owners=new Side?[3];
         private readonly List<string> events=new List<string>();
         public IReadOnlyList<string> Events=>events.AsReadOnly();
         public bool CanSave=>Encounter==null;
-        public CrossroadsScenario(Side startingSide=Side.West,uint seed=20260929)
-        {if(!ValidSide(startingSide))throw new ArgumentOutOfRangeException(nameof(startingSide));StartingSide=ActiveSide=startingSide;Seed=seed;}
+        public CrossroadsScenario(Side startingSide=Side.West,uint seed=20260929,bool economy=false)
+        {if(!ValidSide(startingSide))throw new ArgumentOutOfRangeException(nameof(startingSide));StartingSide=ActiveSide=startingSide;Seed=seed;Economy=economy;if(economy){West.Gold=East.Gold=300;West.KeepFood=East.KeepFood=36;WaystationFood=24;}}
         internal static bool ValidSide(Side side)=>side==Side.West||side==Side.East;
         public static Side Other(Side side)=>side==Side.West?Side.East:Side.West;
         public DuelForce Force(Side side)=>side==Side.West?West:side==Side.East?East:throw new ArgumentOutOfRangeException(nameof(side));
@@ -140,9 +151,19 @@ namespace RPG.Core
             foreach(var side in new[]{Side.West,Side.East})
             {
                 var f=Force(side);int used=f.Consumption;f.Provisions=Math.Max(0,f.Provisions-used);
-                int supplied=f.Node==OwnKeep(side)&&KeepAvailable(side)?Math.Min(6,MaxProvisions-f.Provisions):0;f.Provisions+=supplied;
+                int supplied=0;
+                if(f.Node==OwnKeep(side)&&KeepAvailable(side))
+                {supplied=Math.Min(6,MaxProvisions-f.Provisions);if(Economy){supplied=Math.Min(supplied,f.KeepFood);f.KeepFood-=supplied;}}
+                else if(Economy&&f.Node==8&&Owner(8)==side)
+                {supplied=Math.Min(Math.Min(6,WaystationFood),MaxProvisions-f.Provisions);WaystationFood-=supplied;}
+                f.Provisions+=supplied;
                 if(RecoveryPercent(side)==40)f.Formation.ApplyOneHealingBuildingStrategicRefresh();else f.Formation.ApplyOneFieldStrategicRefresh();
                 Log(side+" supply -"+used+" +"+supplied+"; recovery "+RecoveryPercent(side)+"%, Armor unchanged");f.Tempo=100+Math.Min(0,f.Tempo);
+            }
+            if(Economy)
+            {
+                if(Owner(6).HasValue){var side=Owner(6).Value;Force(side).Gold+=75;Log(side+" Mine income +75 Gold");}
+                foreach(var side in new[]{Side.West,Side.East})CompleteRecruit(side);
             }
             Refresh++;CompletedActivations=0;ActiveSide=StartingSide;
         }

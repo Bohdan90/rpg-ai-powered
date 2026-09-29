@@ -12,7 +12,7 @@ namespace RPG.Presentation
         private DuelEncounter loadedDuel;
         public string DuelSaveMessage { get; private set; }="Stable map only · one Crossroads slot.";
         public static string DuelSlot=>Path.Combine(Application.persistentDataPath,"Crossroads","manual.json");
-        public void StartDuel(Side first=Side.West)=>ShowDuel(new CrossroadsScenario(first));
+        public void StartDuel(Side first=Side.West,bool economy=true)=>ShowDuel(new CrossroadsScenario(first,economy:economy));
         private void ShowDuel(CrossroadsScenario s)
         {
             World=null;loadedEncounter=null;worldHud?.Root.RemoveFromHierarchy();persistence=null;PlayerVsAi=false;
