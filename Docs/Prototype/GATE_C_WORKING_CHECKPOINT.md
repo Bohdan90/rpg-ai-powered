@@ -3,11 +3,21 @@
 Updated 2026-09-29. Single implementation handoff; Google Drive thematic owners retain
 priority for canon. Follow repository `AGENTS.md` and the efficiency protocol.
 
-## Baseline
+## WP-02 — current connected implementation delta
+
+- Starting accepted baseline: `develop` / **79ac6257ceb76478d057ed8e95a5761cf5a32b38**. WP-00 DONE and WP-01 TECHNICAL PASS accepted by coordinator; provisional combat values remain unchanged.
+- **Strategic Connected Playable 01 implemented**: authored 18-node graph, Tempo/Attack/Withdrawal debt, Refresh, Provisions/Hungry, Waystation supply, deterministic Hard Guard/Area Guard/Patrol/A/B, Portal/Village/Keep mission state and low-fi UI. World → chosen encounter → actual tactical battle → same persistent World.
+- Same player/enemy IDs carry HP/Armor, death/Safe, Commanderless/roster lock, XP/levels/rank and recovery carry. No replacement/exit healing/Armor repair. One authorized field Refresh at world boundary. Adjacent coalition snapshot and per-army approach/Retreat edges; negative-Tempo defense has no Retreat edge. Fixed XP enemy valuation to use battle-start Base Power.
+- Final mouse routes: Central R5, North R5, South R6 succeed. Delayed North changes Patrol contact; ignored A disables supply, ignored B causes Village defeat; guard removal/early death persist; physical Withdrawal gives node03→01, Tempo−40 then60 after Refresh. Controlled OS-click driver uses Core AI tactical suggestions; human balance acceptance remains **PENDING**.
+- Evidence-based mission-local tuning: B **1 HW + 1 EW + 1 HA**, one EW fewer after actual initial South loss/withdrawal/Village failure. Combat profiles/AI weights/timing/topology unchanged. Final South keeps six; Central/North four, Commanderless. Supply margins exceed approximate paper estimates; watch in later player evaluation.
+- Launch: existing TacticalGraybox → **Start Connected Mission 01**. No strategic Hotseat, save/load, cities/research/economy expansion or new combat content. Do not start another package automatically.
+- Fresh final validation: **329 EditMode + 39 PlayMode = 368 PASS; 0 failed/skipped**. Focused final35 Core/persistence +2 PlayMode PASS. Replay, preview/invalid-state and RNG regression PASS. Full validation/delivery results: see [WP-02 report](STRATEGIC_CONNECTED_PLAYABLE_01.md). This delta and implementation belong to local commit `Strategy: connect Mission 01 world and persistent battles`; obtain live hash with `git rev-parse HEAD`. Six pre-existing persistence `.meta` files remain untracked and SHA-256 unchanged. NO PUSH.
+
+## Baseline (prior milestone evidence retained)
 
 - Latest delta: **WP-00 + WP-01 implemented**, from live `develop` / `d41b5d5a2d161f75f5009e5d5e4295cd7ff038de`. Document 45 Phase 0 provisional values below supersede the old profile tuning. Core-derived attack result HUD/log distinguishes failed contact, Guard, Armor and HP (including spill); weak HA fallback remains Accuracy 80.
 - Fresh WP-01 validation: **298 EditMode + 37 PlayMode = 335 passed; 0 failed/skipped**. Five outcome mouse smoke cases PASS. Replay/preview/invalid-command regressions PASS. Player balance acceptance **PENDING**. Evidence/commands/limitations: [COMBAT_TUNING_01.md](COMBAT_TUNING_01.md). Code and this delta share the local `Combat: apply WP-01 tuning and clarify attack outcomes` commit; resolve HEAD from Git.
-- WP-02 is the next candidate only after coordinator acceptance; not started by this package. Six pre-existing persistence `.meta` files remain untracked and unchanged; no push.
+- At WP-01 closure, WP-02 was the next candidate; superseded by the current WP-02 delta above. Six pre-existing persistence `.meta` files remain untracked and unchanged; no push.
 
 - Implementation: final user-playtested siege baseline 41×39, validation/documentation committed with this checkpoint delta; geometry **462bd87**; ranged reach **25c57bd**; directional siege **7bed17e**; telemetry/replay **ec19d0b**; minimal AI **926e28c**; density fixtures **fb95710**; prior siege-scale V2 **18088fe**. Part A fallback: **5aff414**; prior bow baseline **3bb1164**. Live HEAD: `git rev-parse --short HEAD`.
 - Gate C: **PASS for the current prototype scope**. User completed a Player-vs-AI field battle, lost normally to the AI, found its behavior normal and reported no critical tactical-loop blocker. Technical DoD/replay, field 23×17, siege 41×39 and physical Retreat are accepted. Persistence Slice v0.1 is the next authorized work; do not reopen tactical redesign unless persistence exposes a direct Core defect.

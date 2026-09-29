@@ -115,12 +115,14 @@ namespace RPG.Core
         private readonly Dictionary<UnitId, PersistentCharacter> characters;
         private readonly Dictionary<Side, decimal> startEffectivePower;
         private readonly Dictionary<Side, int> startParticipants;
+        private readonly Dictionary<UnitId,decimal> startBasePower;
         public BattleState State { get; }
         public IReadOnlyDictionary<Side, decimal> StartEffectivePower => startEffectivePower;
 
         private PersistentBattle(PersistentFormation west, PersistentFormation east, BattleState state, Dictionary<UnitId, PersistentCharacter> characters)
         {
             this.west = west; this.east = east; State = state; this.characters = characters;
+            startBasePower=characters.ToDictionary(k=>k.Key,k=>BasePower(k.Value));
             startEffectivePower = new Dictionary<Side, decimal> {
                 { Side.West, EffectivePower(state.Units.Where(u => u.Side == Side.West), characters) },
                 { Side.East, EffectivePower(state.Units.Where(u => u.Side == Side.East), characters) } };
@@ -180,7 +182,8 @@ namespace RPG.Core
 
         private decimal EnemyXpWeight(UnitState unit)
         {
-            var character = characters[unit.Id]; decimal basePower = BasePower(character);
+            // Resolving West XP may raise a level before East XP is awarded. Valuation is a battle-start snapshot.
+            decimal basePower = startBasePower[unit.Id];
             return basePower * .2m * (unit.Status == UnitStatus.Escaped ? .15m : unit.Status == UnitStatus.Dead ? 1m : 0m);
         }
         private static decimal OutcomeShare(UnitStatus status) => status == UnitStatus.Active ? 1m : status == UnitStatus.Escaped ? .25m : 0m;

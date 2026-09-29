@@ -2,7 +2,7 @@ using System;
 
 namespace RPG.Core
 {
-    public enum RetreatEdge { West, East, North, South }
+    public enum RetreatEdge { West, East, North, South, Unavailable }
     public enum UnitStatus { Active, Dead, Escaped }
 
     public sealed class UnitState
@@ -39,7 +39,7 @@ namespace RPG.Core
             if (status < UnitStatus.Active || status > UnitStatus.Escaped) throw new ArgumentOutOfRangeException(nameof(status));
             if (status == UnitStatus.Dead && initialHp != 0) throw new ArgumentException("Dead units must have zero HP.");
             if (status == UnitStatus.Escaped && initialHp == 0) throw new ArgumentException("Escaped units must be alive.");
-            if (ownRetreatEdge.HasValue && (ownRetreatEdge < RetreatEdge.West || ownRetreatEdge > RetreatEdge.South)) throw new ArgumentOutOfRangeException(nameof(ownRetreatEdge));
+            if (ownRetreatEdge.HasValue && (ownRetreatEdge < RetreatEdge.West || ownRetreatEdge > RetreatEdge.Unavailable)) throw new ArgumentOutOfRangeException(nameof(ownRetreatEdge));
             OwnRetreatEdge=ownRetreatEdge;
             Id = id; Side = side; Position = position; Facing = facing; Hp = initialHp; Armor = initialArmor;
             Status = initialHp == 0 ? UnitStatus.Dead : status;

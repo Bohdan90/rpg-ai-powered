@@ -47,6 +47,7 @@ namespace RPG.Core
             if(!unit.OwnRetreatEdge.HasValue)return IsRetreatZone(unit.Side,cell);
             if(!IsWalkable(cell))return false;
             switch(unit.OwnRetreatEdge.Value) {
+                case RetreatEdge.Unavailable:return false;
                 case RetreatEdge.West:return cell.X==0;
                 case RetreatEdge.East:return cell.X==Columns-1;
                 case RetreatEdge.North:return cell.Y==Rows-1;

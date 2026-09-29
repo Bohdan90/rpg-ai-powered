@@ -21,6 +21,43 @@ namespace RPG.Presentation
         public string AiExplanation { get; private set; } = "Hotseat";
         public string LastAttackOutcome { get; private set; } = "";
         private float nextAiTime;
+        public StrategicScenario World { get; private set; }
+        private StrategicHud worldHud;
+        private StrategicEncounter loadedEncounter;
+        private PersistentCharacter ConnectedCharacter(UnitId id)
+        {
+            if(World==null||loadedEncounter==null)return null;
+            string key=loadedEncounter.UnitIds.FirstOrDefault(k=>k.Value==id).Key;
+            return World.Player.Members.Concat(World.Actors.SelectMany(a=>a.Formation.Members)).FirstOrDefault(c=>c.CharacterId==key);
+        }
+        public string UnitName(UnitId id)
+        {var c=ConnectedCharacter(id);return c==null?PrototypeFixture.Name(id):c.CharacterId+" · "+c.Profile.Id+(c.IsCommander?" *":"");}
+        public bool IsCommander(UnitId id)=>World==null?(id.Value==1||id.Value==6||id.Value==19):ConnectedCharacter(id)?.IsCommander==true;
+        public void StartStrategicScenario()
+        {
+            persistence=null;PlayerVsAi=false;World=new StrategicScenario();loadedEncounter=null;
+            worldHud?.Root.RemoveFromHierarchy();worldHud=new StrategicHud(hud.Root,this);WorldChanged();
+        }
+        public void WorldChanged()
+        {
+            if(World==null)return;
+            if(World.Encounter!=null&&World.Encounter!=loadedEncounter)
+            {
+                Fixture=SizeExperimentMap.Field_23x17_Full_9v9;
+                loadedEncounter=World.Encounter;State=loadedEncounter.Battle.State;
+                PlayerVsAi=true;AiSide=Side.East;LastAttackOutcome="";
+                Journal=new BattleJournal(State,"Connected_Mission01",Application.version+" / Unity "+Application.unityVersion,"Player","AI");
+                log.Clear();Message="Connected encounter: "+string.Join(" + ",loadedEncounter.Participants)+". Persistent roster; no restart/healing on battle exit.";
+                nextAiTime=Time.unscaledTime+.4f;grid.Resize(State.Battlefield);hud.Resize(State.Battlefield);FitBoard();ClearPreview();Refresh();
+            }
+            else if(World.Encounter==null)PlayerVsAi=false;
+            worldHud?.Refresh();
+        }
+        public void ReturnToWorld()
+        {if(World!=null&&World.ResolveBattle(State))WorldChanged();}
+        public void SelectWorldNode(int node)=>worldHud?.Select(node);
+        public bool MoveOnWorld(int node)
+        {if(World==null||!World.Move(node))return false;WorldChanged();return true;}
         public void SetPlayerVsAi(bool enabled, Side side=Side.East) { AiSide=side; PlayerVsAi=enabled; nextAiTime=Time.unscaledTime+.4f; ClearPreview(); Refresh(); }
         public BattleResult StepAi()
         {
@@ -41,6 +78,7 @@ namespace RPG.Presentation
         public string PersistenceSummary => persistence == null ? "" : persistence.Summary();
         public void StartPersistenceSlice()
         {
+            if(World!=null)return;
             persistence = new PersistenceSliceScenario(); persistenceResolved = false;
             LoadPersistenceBattle(persistence.StartFirstBattle());
         }
@@ -136,12 +174,14 @@ namespace RPG.Presentation
 
         public void ConfigureFixture(SizeExperimentMap map)
         {
+            if(World!=null)return;
             persistence=null;
             Fixture = map;
             ConfigureBattle(SizeExperimentFixture.Units(map), SizeExperimentFixture.Board(map), PrototypeFixture.Seed);
         }
         public void ConfigureFixture(bool controlMap)
         {
+            if(World!=null)return;
             persistence=null;
             Fixture = SizeExperimentMap.Field_13x9_Control;
             ConfigureBattle(PrototypeFixture.Units(), controlMap ? Battlefield.ControlMap : Battlefield.BaseMap, PrototypeFixture.Seed);
@@ -149,11 +189,13 @@ namespace RPG.Presentation
         // An explicit initial fixture seam, also used by PlayMode integration tests; no rule implementation.
         public void ConfigureBattle(IEnumerable<UnitState> units, Battlefield board, uint seed)
         {
+            if(World!=null)return;
             persistence=null;
             initialUnits = units.ToArray(); initialBoard = board; initialSeed = seed; RestartSameSeed();
         }
         public void RestartSameSeed()
         {
+            if(World!=null)return;
             LastAttackOutcome = "";
             var result = BattleResolver.StartBattle(initialUnits, initialSeed, initialBoard);
             State = result.State; Journal=new BattleJournal(State,Fixture.ToString(),Application.version+" / Unity "+Application.unityVersion,PlayerVsAi&&AiSide==Side.West?"AI":"Player",PlayerVsAi&&AiSide==Side.East?"AI":"Player"); AiExplanation="No AI decision yet."; nextAiTime=Time.unscaledTime+.4f; log.Clear(); Append(result.Events); Message = "Restarted with seed " + initialSeed + ".";
@@ -191,7 +233,7 @@ namespace RPG.Presentation
                 var preview = BattleResolver.PreviewAttack(State, command);
                 bool sight = actor.Profile.IsArcher && !meleeStrike ? LineOfSight.IsClear(State, actor.Position, target.Position)
                     : LineOfSight.IsMeleeCornerClear(State, actor.Position, target.Position);
-                PreviewText = PrototypeFixture.Name(actor.Id) + " → " + PrototypeFixture.Name(target.Id)
+                PreviewText = UnitName(actor.Id) + " → " + UnitName(target.Id)
                     + "\nTarget HP " + target.Hp + " / Armor " + target.Armor
                     + "\nDistance " + actor.Position.DistanceTo(target.Position)
                     + " | LoS / corner: " + (sight ? "clear" : "blocked");
@@ -232,7 +274,7 @@ namespace RPG.Presentation
                     {
                         PreviewText += "\nStep " + (exposure.StepIndex + 1) + " " + Cell(exposure.From) + " → " + Cell(exposure.To);
                         foreach (var threat in exposure.Threats)
-                            PreviewText += "\n  " + PrototypeFixture.Name(threat.Responder) + ": "
+                            PreviewText += "\n  " + UnitName(threat.Responder) + ": "
                                 + (threat.WouldReact ? "may make an OA" : threat.AvailableNow ? "OA used earlier on this path" : "OA spent — cannot react");
                     }
                     if (OpportunityRiskCount > 0)
@@ -259,11 +301,11 @@ namespace RPG.Presentation
             var actor = State.FindUnit(State.CurrentUnitId.Value);
             var path = Pathfinder.FindPath(State, actor.Id, cell);
             var unit = State.OccupantAt(cell);
-            string text = "Hover " + Cell(cell) + " " + (unit != null ? PrototypeFixture.Name(unit.Id) + " | " + OaStatus(unit)
+            string text = "Hover " + Cell(cell) + " " + (unit != null ? UnitName(unit.Id) + " | " + OaStatus(unit)
                     + "\nHP " + unit.Hp + " / Armor " + unit.Armor + " | Facing " + unit.Facing + (unit.IsDefending ? " | Defending" : "")
                 : path.Found ? "— Core path cost " + path.Cost : "— no reachable path");
             var sources = ZoneOfControl.Sources(State, actor.Side, cell);
-            if (sources.Count > 0) text += "\nEnemy ZoC: " + string.Join(", ", sources.Select(id => PrototypeFixture.Name(id) + " [" + OaStatus(State.FindUnit(id)) + "]"));
+            if (sources.Count > 0) text += "\nEnemy ZoC: " + string.Join(", ", sources.Select(id => UnitName(id) + " [" + OaStatus(State.FindUnit(id)) + "]"));
             if (path.Found && path.Cost > 0)
             {
                 var risk = OpportunityAttackPreview.Query(State, new MoveCommand(actor.Id, path.Steps));
@@ -309,7 +351,7 @@ namespace RPG.Presentation
             var outcomes = new List<string>();
             foreach (var e in events)
             {
-                string who = e.Actor.HasValue ? PrototypeFixture.Name(e.Actor.Value) : "Battle";
+                string who = e.Actor.HasValue ? UnitName(e.Actor.Value) : "Battle";
                 string line = "R" + e.Round + " " + who + ": " + e.Kind;
                 string outcome = e.Kind == BattleEventKind.AttackMissed ? "Failed contact — no damage"
                     : e.Kind == BattleEventKind.GuardSucceeded ? "Guard blocked — no damage"
@@ -317,10 +359,10 @@ namespace RPG.Presentation
                     : e.Kind == BattleEventKind.HpLost ? "HP damage " + e.Amount + " (" + e.Before + " → " + e.After + ")" : null;
                 if (outcome != null)
                 {
-                    outcomes.Add(who + " → " + PrototypeFixture.Name(e.Target.Value) + ": " + outcome);
+                    outcomes.Add(who + " → " + UnitName(e.Target.Value) + ": " + outcome);
                     line += " — " + outcome;
                 }
-                if (e.Target.HasValue) line += " → " + PrototypeFixture.Name(e.Target.Value);
+                if (e.Target.HasValue) line += " → " + UnitName(e.Target.Value);
                 if (e.Roll >= 0) line += " [" + e.Roll + " < " + e.ChancePercent + ": " + (e.Roll < e.ChancePercent ? "success" : "fail") + "]";
                 if (e.Kind == BattleEventKind.ArmorLost || e.Kind == BattleEventKind.HpLost) line += " " + e.Before + " → " + e.After;
                 if (e.Kind == BattleEventKind.DamageApplied) line += " " + e.Amount;

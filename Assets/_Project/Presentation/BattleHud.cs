@@ -70,6 +70,7 @@ namespace RPG.Presentation
             outcomePanel.style.paddingTop = 8; panel.Add(outcomePanel);
             outcomeText = Text(outcomePanel, "", 15); outcomeText.name = "outcome-summary";
             AddButton(outcomePanel, "Restart Same Seed", "outcome-restart", presenter.RestartSameSeed);
+            AddButton(outcomePanel, "Return persistent result to World", "world-return", presenter.ReturnToWorld);
             var control = new DropdownField("Controller",new List<string>{"Hotseat","Player West vs AI East","Player East vs AI West"},0) { name="controller-mode" };
             control.labelElement.style.color=new Color(.89f,.93f,.97f);
             control.RegisterValueChangedCallback(e=>presenter.SetPlayerVsAi(control.index!=0,control.index==2?Side.West:Side.East));panel.Add(control);
@@ -85,6 +86,7 @@ namespace RPG.Presentation
             map = new DropdownField("Fixture (resets battle)", new List<string>(Enum.GetNames(typeof(SizeExperimentMap))), 0) { name = "fixture-selector" };
             map.RegisterValueChangedCallback(e => presenter.ConfigureFixture((SizeExperimentMap)Enum.Parse(typeof(SizeExperimentMap), e.newValue))); panel.Add(map);
             AddButton(panel,"Start Persistence Slice v0.1","persistence-start",presenter.StartPersistenceSlice);
+            AddButton(panel,"Start Connected Mission 01","world-start",presenter.StartStrategicScenario);
             persistence=Text(panel,"",12);persistence.name="persistence-summary";
             persistenceContinue=AddButton(panel,"Continue Persistence Battle","persistence-continue",presenter.ContinuePersistenceSlice);
             Text(panel, "Size/density experiment · no combat retuning. 9v9 = synthetic tactical roster, not strategic Capacity validation. Siege: static fortress; moat proxy has fixed crossings. 41×39 preserves each attacker approach; West = attacker coalition, East = defenders. No real siege mechanics.", 12);
@@ -131,6 +133,9 @@ namespace RPG.Presentation
             if (hoveredCell.HasValue) hover.text = presenter.Hover(hoveredCell.Value);
             bool ended = state.Outcome.IsEnded;
             bool playerTurn = !presenter.IsAiTurn;
+            bool connected=presenter.World!=null;
+            Root.Q("world-return").style.display=connected?DisplayStyle.Flex:DisplayStyle.None;
+            foreach(string controlName in new[]{"fixture-selector","controller-mode","persistence-start","restart","outcome-restart","world-start"})Root.Q(controlName).SetEnabled(!connected);
             Root.Q<DropdownField>("controller-mode").SetValueWithoutNotify(presenter.PlayerVsAi?(presenter.AiSide==Side.East?"Player West vs AI East":"Player East vs AI West"):"Hotseat");
             aiInfo.text=presenter.PlayerVsAi?presenter.AiExplanation:"Hotseat";
             rangeInfo.text=presenter.RangedReachMessage;
@@ -148,12 +153,12 @@ namespace RPG.Presentation
             persistence.style.display=presenter.PersistenceActive?DisplayStyle.Flex:DisplayStyle.None;
             persistenceContinue.style.display=presenter.PersistenceActive?DisplayStyle.Flex:DisplayStyle.None;
             persistenceContinue.SetEnabled(presenter.CanContinuePersistence);
-            active.text = ended ? "No active turn — battle completed." : "ROUND " + state.Round + " · " + PrototypeFixture.Name(actor.Id) + "\n" + actor.Side + (actor.OwnRetreatEdge.HasValue?" · "+actor.OwnRetreatEdge+" approach":"")
+            active.text = ended ? "No active turn — battle completed." : "ROUND " + state.Round + " · " + presenter.UnitName(actor.Id) + "\n" + actor.Side + (actor.OwnRetreatEdge.HasValue?" · "+actor.OwnRetreatEdge+" approach":"")
                 + " | HP " + actor.Hp + " / Armor " + actor.Armor + "\nMovement " + actor.MovementRemaining
                 + " | Action " + (actor.ActionAvailable ? "available" : "spent")
                 + "\nFacing " + actor.Facing + " | Defending " + (actor.IsDefending ? "yes" : "no") + " | " + BattlePresenter.OaStatus(actor);
             queue.text = ended ? "" : "Initiative order (► current):\n" + string.Join("\n", state.ActivationOrder.Select(id =>
-                (id == actor.Id ? "► " : "   ") + PrototypeFixture.Name(id) + (state.FindUnit(id).OwnRetreatEdge.HasValue?" ("+state.FindUnit(id).OwnRetreatEdge+")":"") + " [" + state.FindUnit(id).Profile.Initiative + "] " + BattlePresenter.OaStatus(state.FindUnit(id))));
+                (id == actor.Id ? "► " : "   ") + presenter.UnitName(id) + (state.FindUnit(id).OwnRetreatEdge.HasValue?" ("+state.FindUnit(id).OwnRetreatEdge+")":"") + " [" + state.FindUnit(id).Profile.Initiative + "] " + BattlePresenter.OaStatus(state.FindUnit(id))));
             cell.text = selected.HasValue ? "Selected (" + selected.Value.X + "," + selected.Value.Y + ")" : "No destination / target selected.";
             preview.text = presenter.PreviewText; confirm.SetEnabled(canConfirm && playerTurn); message.text = presenter.Message;
             int risks = presenter.OpportunityRiskCount;
@@ -168,11 +173,16 @@ namespace RPG.Presentation
             string eastZone = state.Battlefield.EastRetreatUsesPerimeter ? "full legal outer perimeter" : "East edge";
             retreat.text = "West: West edge. East: " + eastZone + "." + (ended ? "" : "\nYOUR escape: " + (actor.Side == Side.West ? "West edge" : eastZone));
             string approachEdges = string.Join(" / ",state.Units.Where(u=>u.Side==Side.West && u.OwnRetreatEdge.HasValue).Select(u=>u.OwnRetreatEdge.Value).Distinct());
-            if(approachEdges.Length>0) retreat.text="Attacker rear edges (per army): "+approachEdges+". Defender: full legal outer perimeter."
+            if(approachEdges.Length>0) retreat.text="West rear edges (per army): "+approachEdges+". East: "+eastZone+"."
                 +(ended?"":"\nYOUR Retreat: "+(actor.OwnRetreatEdge.HasValue?actor.OwnRetreatEdge+" edge":eastZone));
             westEdge.text = "← West Retreat" + (!ended && actor.Side == Side.West ? " — YOUR ESCAPE" : "");
             eastEdge.text = (state.Battlefield.EastRetreatUsesPerimeter ? "East: ALL outer edges" : "East Retreat →") + (!ended && actor.Side == Side.East ? " — YOUR ESCAPE" : "");
             if(approachEdges.Length>0)westEdge.text=actor.OwnRetreatEdge.HasValue?"Attacker coalition · YOUR retreat: "+actor.OwnRetreatEdge:"Attacker retreat: "+approachEdges;
+            if(!ended&&actor.OwnRetreatEdge==RetreatEdge.Unavailable)
+            {
+                retreat.text="Retreat unavailable for this formation: negative Strategic Tempo until Refresh.";
+                if(actor.Side==Side.West)westEdge.text="West Retreat unavailable";else eastEdge.text="East Retreat unavailable";
+            }
             events.text = string.Join("\n", presenter.RecentEvents);
             foreach (var label in unitLabels.Values) label.style.display = DisplayStyle.None;
             foreach (var unit in state.Units)
@@ -187,17 +197,17 @@ namespace RPG.Presentation
                 }
                 label.style.display = unit.IsActive ? DisplayStyle.Flex : DisplayStyle.None;
                 string profile = unit.Profile.IsArcher ? "HA" : unit.Profile.Id == UnitProfileId.ElfWarriorTI ? "EW" : "HW";
-                bool commander = unit.Id.Value == 1 || unit.Id.Value == 6 || unit.Id.Value == 19;
+                bool commander = presenter.IsCommander(unit.Id);
                 label.text = (unit.Side == Side.West ? "W " : "E ") + profile + (commander ? " *" : "")
                     + (unit.IsDefending ? " DEF" : "") + "\nHP " + unit.Hp + " / A " + unit.Armor + "\n" + BattlePresenter.OaStatus(unit);
                 label.style.color = !ended && state.CurrentUnitId == unit.Id ? new Color(1, .86f, .3f) : Color.white;
             }
             PositionLabels(state);
         }
-        private static string Roster(BattleState state, UnitStatus status)
+        private string Roster(BattleState state, UnitStatus status)
         {
             var units = state.Units.Where(u => u.Status == status).ToArray();
-            return units.Length == 0 ? "None" : string.Join("\n", units.Select(u => PrototypeFixture.Name(u.Id)
+            return units.Length == 0 ? "None" : string.Join("\n", units.Select(u => presenter.UnitName(u.Id)
                 + " (" + u.Side + ") HP " + u.Hp + " / Armor " + u.Armor));
         }
         public void PositionLabels(BattleState state)
@@ -211,7 +221,7 @@ namespace RPG.Presentation
                 label.style.height = detailed ? 47 : 16;
                 label.style.fontSize = detailed ? 11 : 10;
                 string profile = unit.Profile.IsArcher ? "HA" : unit.Profile.Id == UnitProfileId.ElfWarriorTI ? "EW" : "HW";
-                bool commander = unit.Id.Value == 1 || unit.Id.Value == 6 || unit.Id.Value == 19;
+                bool commander = presenter.IsCommander(unit.Id);
                 label.text = detailed
                     ? (unit.Side == Side.West ? "W " : "E ") + profile + (commander ? " *" : "")
                         + (unit.IsDefending ? " DEF" : "") + "\nHP " + unit.Hp + " / A " + unit.Armor + "\n" + BattlePresenter.OaStatus(unit)
