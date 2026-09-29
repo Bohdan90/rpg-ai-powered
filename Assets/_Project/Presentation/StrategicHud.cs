@@ -11,7 +11,8 @@ namespace RPG.Presentation
         public VisualElement Root { get; }
         private readonly BattlePresenter presenter;
         private readonly VisualElement map;
-        private readonly Label status,preview,roster,events;
+        private readonly Label status,preview,roster,events,saveMessage;
+        private readonly Button save,load;
         private readonly Button move,interact,end;
         private readonly VisualElement attacks;
         private int selected;
@@ -41,6 +42,9 @@ namespace RPG.Presentation
             attacks=new VisualElement();left.Add(attacks);
             var right=new ScrollView();right.style.flexGrow=1;right.style.paddingLeft=14;Root.Add(right);
             status=Label(right,"",16);status.name="world-status";
+            save=Button(right,"Save Mission 01 (one slot)","world-save",()=>presenter.SaveStrategic());
+            load=Button(right,"Load saved Mission 01","world-load-slot",()=>presenter.LoadStrategic());
+            saveMessage=Label(right,"",12);saveMessage.name="world-save-status";
             Button(right,"Select persistent formation","world-select-player",()=>Select(presenter.World.PlayerNode));
             roster=Label(right,"",13);roster.name="world-roster";
             events=Label(right,"",12);events.name="world-events";
@@ -57,6 +61,7 @@ namespace RPG.Presentation
         public void Refresh()
         {
             var s=presenter.World;if(s==null)return;
+            save.SetEnabled(s.CanSave);load.SetEnabled(s.CanSave);saveMessage.text=presenter.StrategicSaveMessage;
             Root.style.display=s.Encounter==null?DisplayStyle.Flex:DisplayStyle.None;
             var p=s.PreviewMove(selected);preview.text=selected==s.PlayerNode?"Persistent formation selected. Choose a connected destination.":
                 string.Join(" → ",p.Path.Select(n=>n.ToString("00")))+"\nTempo cost "+p.Cost+(p.Encounter.HasValue?" · Hard Guard conflict / Attack Cost follows":"")+"\n"+(p.Reason??"Legal path");

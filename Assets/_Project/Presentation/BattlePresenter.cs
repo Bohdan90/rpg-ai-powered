@@ -24,6 +24,20 @@ namespace RPG.Presentation
         public StrategicScenario World { get; private set; }
         private StrategicHud worldHud;
         private StrategicEncounter loadedEncounter;
+        public string StrategicSaveMessage { get; private set; }="One manual slot · strategic map only.";
+        public bool SaveStrategic(string path=null)
+        {
+            bool ok=StrategicSaveFiles.TrySave(World,path??StrategicSaveFiles.ManualSlot,out var message);
+            StrategicSaveMessage=message;worldHud?.Refresh();return ok;
+        }
+        public bool LoadStrategic(string path=null)
+        {
+            if(World!=null&&!World.CanSave){StrategicSaveMessage="Finish the tactical battle and return to World before loading.";return false;}
+            bool ok=StrategicSaveFiles.TryLoad(path??StrategicSaveFiles.ManualSlot,out var restored,out var message);
+            StrategicSaveMessage=message;
+            if(ok)ShowStrategicScenario(restored);else {Message=message;worldHud?.Refresh();Refresh();}
+            return ok;
+        }
         private PersistentCharacter ConnectedCharacter(UnitId id)
         {
             if(World==null||loadedEncounter==null)return null;
@@ -34,8 +48,10 @@ namespace RPG.Presentation
         {var c=ConnectedCharacter(id);return c==null?PrototypeFixture.Name(id):c.CharacterId+" · "+c.Profile.Id+(c.IsCommander?" *":"");}
         public bool IsCommander(UnitId id)=>World==null?(id.Value==1||id.Value==6||id.Value==19):ConnectedCharacter(id)?.IsCommander==true;
         public void StartStrategicScenario()
+        {StrategicSaveMessage="One manual slot · strategic map only.";ShowStrategicScenario(new StrategicScenario());}
+        private void ShowStrategicScenario(StrategicScenario scenario)
         {
-            persistence=null;PlayerVsAi=false;World=new StrategicScenario();loadedEncounter=null;
+            persistence=null;PlayerVsAi=false;World=scenario;loadedEncounter=null;
             worldHud?.Root.RemoveFromHierarchy();worldHud=new StrategicHud(hud.Root,this);WorldChanged();
         }
         public void WorldChanged()

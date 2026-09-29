@@ -12,7 +12,8 @@ namespace RPG.Core
     public sealed class StrategicActor
     {
         public StrategicActorKind Kind { get; }
-        public PersistentFormation Formation { get; }
+        public PersistentFormation Formation { get; private set; }
+        internal void RestoreFormation(PersistentFormation formation) { Formation=formation; }
         public int Node { get; internal set; }
         public int Tempo { get; internal set; }=100;
         public StrategicObjective Objective { get; internal set; }

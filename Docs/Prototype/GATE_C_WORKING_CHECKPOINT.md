@@ -3,7 +3,16 @@
 Updated 2026-09-29. Single implementation handoff; Google Drive thematic owners retain
 priority for canon. Follow repository `AGENTS.md` and the efficiency protocol.
 
-## Visual readability delta — warrior / archer tokens
+## WP-03A — stable strategic save/load
+
+- From `develop` / `d917029`: version1 single-slot Mission01 JSON, Core snapshots/validation/checksum, independent candidate restore then atomic Presenter replacement. Captures world/actor cadence, seed+battle counter, Tempo/debt, supply/sites/results, persistent identities/HP/Armor/dead/Safe/Commanderless/progression/fractional carry and result history. Stable map only; no mid-battle resume.
+- Startup **Load saved Mission01**; World **Save Mission01 / Load saved Mission01**. Slot `Application.persistentDataPath/Mission01/manual.json`. Failed load preserves live state; save overwrites one slot through temp+atomic replace. No cloud/autosave/profiles/replay redesign.
+- Full application-restart mouse smoke PASS: saved node05/Refresh2 after actors moved; closed/reopened Unity; loaded checksum/state identical; moved06→10 and entered Area Guard battle. Fixed JSON absent-resolution decoding found in first smoke; added four explicit regression cases. Details/evidence: [SAVE_LOAD_01.md](SAVE_LOAD_01.md).
+- User's in-task visual correction applied: tokens now show **weapon icons only**, sword/shield for HW/EW, bow/arrow for HA; no people. Labels/facing/side colors remain.
+- Validation: **21 focused Core +6 focused PlayMode PASS; full350 EditMode +45 PlayMode =395 PASS, 0 failed/skipped**.
+- Local commit title `Persistence: save and load stable Mission 01 state`; exact hash from Git/final report. Starting scene/ProjectSettings diffs and six untracked `.meta` remain unchanged. NO PUSH. WP-03B follows only after this package's green validation; then mandatory WP-03C user gate.
+
+## Visual readability delta — warrior / archer tokens (prior implementation)
 
 - From `7069a80`: two shared flat vector silhouettes in Presentation replace cube/cylinder class tokens: sword/shield for both HW and EW; bow/arrow for HA. Race stays in existing HW/EW labels. Side-color base, Commander asterisk, active marker and HP/Armor labels remain. Facing arrow sits on the token edge; HUD legend updated. No Core/combat/persistence changes or asset-package dependency.
 - Unity visual checks: field23×17 and siege41×39 fit/focus/zoom show both types, side colors and HW/EW/HA labels; dense siege still needs zoom for detail. Evidence `/private/tmp/unit-silhouettes-20260929/`. Existing editor Search indexing/account warnings are unrelated to runtime silhouettes.

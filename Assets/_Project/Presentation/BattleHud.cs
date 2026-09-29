@@ -87,6 +87,7 @@ namespace RPG.Presentation
             map.RegisterValueChangedCallback(e => presenter.ConfigureFixture((SizeExperimentMap)Enum.Parse(typeof(SizeExperimentMap), e.newValue))); panel.Add(map);
             AddButton(panel,"Start Persistence Slice v0.1","persistence-start",presenter.StartPersistenceSlice);
             AddButton(panel,"Start Connected Mission 01","world-start",presenter.StartStrategicScenario);
+            AddButton(panel,"Load saved Mission 01","world-load",()=>presenter.LoadStrategic());
             persistence=Text(panel,"",12);persistence.name="persistence-summary";
             persistenceContinue=AddButton(panel,"Continue Persistence Battle","persistence-continue",presenter.ContinuePersistenceSlice);
             Text(panel, "Size/density experiment · no combat retuning. 9v9 = synthetic tactical roster, not strategic Capacity validation. Siege: static fortress; moat proxy has fixed crossings. 41×39 preserves each attacker approach; West = attacker coalition, East = defenders. No real siege mechanics.", 12);
@@ -135,7 +136,7 @@ namespace RPG.Presentation
             bool playerTurn = !presenter.IsAiTurn;
             bool connected=presenter.World!=null;
             Root.Q("world-return").style.display=connected?DisplayStyle.Flex:DisplayStyle.None;
-            foreach(string controlName in new[]{"fixture-selector","controller-mode","persistence-start","restart","outcome-restart","world-start"})Root.Q(controlName).SetEnabled(!connected);
+            foreach(string controlName in new[]{"fixture-selector","controller-mode","persistence-start","restart","outcome-restart","world-start","world-load"})Root.Q(controlName).SetEnabled(!connected);
             Root.Q<DropdownField>("controller-mode").SetValueWithoutNotify(presenter.PlayerVsAi?(presenter.AiSide==Side.East?"Player West vs AI East":"Player East vs AI West"):"Hotseat");
             aiInfo.text=presenter.PlayerVsAi?presenter.AiExplanation:"Hotseat";
             rangeInfo.text=presenter.RangedReachMessage;
