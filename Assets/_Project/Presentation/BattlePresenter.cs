@@ -19,6 +19,7 @@ namespace RPG.Presentation
         public bool PlayerVsAi { get; private set; }
         public bool IsAiTurn => PlayerVsAi && State != null && !State.Outcome.IsEnded && State.FindUnit(State.CurrentUnitId.Value).Side == AiSide;
         public string AiExplanation { get; private set; } = "Hotseat";
+        public string LastAttackOutcome { get; private set; } = "";
         private float nextAiTime;
         public void SetPlayerVsAi(bool enabled, Side side=Side.East) { AiSide=side; PlayerVsAi=enabled; nextAiTime=Time.unscaledTime+.4f; ClearPreview(); Refresh(); }
         public BattleResult StepAi()
@@ -50,6 +51,7 @@ namespace RPG.Presentation
         }
         private void LoadPersistenceBattle(PersistentBattle battle)
         {
+            LastAttackOutcome = "";
             Fixture = SizeExperimentMap.Field_23x17_Full_9v9;
             initialUnits = battle.State.Units.ToArray(); initialBoard = battle.State.Battlefield; initialSeed = battle.State.InitialSeed;
             State = battle.State; Journal = new BattleJournal(State,"Persistence_Battle_"+persistence.BattleNumber,Application.version+" / Unity "+Application.unityVersion,
@@ -152,6 +154,7 @@ namespace RPG.Presentation
         }
         public void RestartSameSeed()
         {
+            LastAttackOutcome = "";
             var result = BattleResolver.StartBattle(initialUnits, initialSeed, initialBoard);
             State = result.State; Journal=new BattleJournal(State,Fixture.ToString(),Application.version+" / Unity "+Application.unityVersion,PlayerVsAi&&AiSide==Side.West?"AI":"Player",PlayerVsAi&&AiSide==Side.East?"AI":"Player"); AiExplanation="No AI decision yet."; nextAiTime=Time.unscaledTime+.4f; log.Clear(); Append(result.Events); Message = "Restarted with seed " + initialSeed + ".";
             grid.Resize(State.Battlefield); hud.Resize(State.Battlefield); FitBoard();
@@ -303,10 +306,20 @@ namespace RPG.Presentation
         }
         private void Append(IEnumerable<BattleEvent> events)
         {
+            var outcomes = new List<string>();
             foreach (var e in events)
             {
                 string who = e.Actor.HasValue ? PrototypeFixture.Name(e.Actor.Value) : "Battle";
                 string line = "R" + e.Round + " " + who + ": " + e.Kind;
+                string outcome = e.Kind == BattleEventKind.AttackMissed ? "Failed contact — no damage"
+                    : e.Kind == BattleEventKind.GuardSucceeded ? "Guard blocked — no damage"
+                    : e.Kind == BattleEventKind.ArmorLost ? "Armor damage " + e.Amount + " (" + e.Before + " → " + e.After + ")"
+                    : e.Kind == BattleEventKind.HpLost ? "HP damage " + e.Amount + " (" + e.Before + " → " + e.After + ")" : null;
+                if (outcome != null)
+                {
+                    outcomes.Add(who + " → " + PrototypeFixture.Name(e.Target.Value) + ": " + outcome);
+                    line += " — " + outcome;
+                }
                 if (e.Target.HasValue) line += " → " + PrototypeFixture.Name(e.Target.Value);
                 if (e.Roll >= 0) line += " [" + e.Roll + " < " + e.ChancePercent + ": " + (e.Roll < e.ChancePercent ? "success" : "fail") + "]";
                 if (e.Kind == BattleEventKind.ArmorLost || e.Kind == BattleEventKind.HpLost) line += " " + e.Before + " → " + e.After;
@@ -320,6 +333,7 @@ namespace RPG.Presentation
                 if (e.Outcome.HasValue) line += " — Winner " + e.Outcome.Value.VictorySide + ", Loser " + e.Outcome.Value.DefeatedSide + ", " + e.Outcome.Value.Reason;
                 AddLog(line);
             }
+            if (outcomes.Count > 0) LastAttackOutcome = string.Join("\n", outcomes);
         }
         private void AddLog(string line) { log.Add(line); if (log.Count > 200) log.RemoveAt(0); }
     }

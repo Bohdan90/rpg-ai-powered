@@ -82,15 +82,15 @@ namespace RPG.Tests
             Assert.That(enemy.OpportunityAttackAvailable, Is.False);
             var kinds = result.Events.Select(e => e.Kind).ToList();
             Assert.That(kinds.IndexOf(BattleEventKind.OpportunityAttackResolved), Is.LessThan(kinds.IndexOf(BattleEventKind.StepMoved)));
-            Assert.That(Of(result, BattleEventKind.ContactRolled).Single().ChancePercent, Is.EqualTo(75));
+            Assert.That(Of(result, BattleEventKind.ContactRolled).Single().ChancePercent, Is.EqualTo(80));
             Assert.That(Of(result, BattleEventKind.DamageApplied).Single().Amount, Is.EqualTo(12));
             Assert.That(Of(result, BattleEventKind.ActionConsumed), Is.Empty);
             Assert.That(Of(result, BattleEventKind.OpportunityAttackTriggered).Length, Is.EqualTo(1));
             Assert.That(result.State.FindUnit(Attacker).OpportunityAttackAvailable, Is.True); // No recursive retaliation.
         }
 
-        [TestCase(Facing.East, 60)]
-        [TestCase(Facing.West, 75)]
+        [TestCase(Facing.East, 70)]
+        [TestCase(Facing.West, 80)]
         public void MoverFacingBeforeExitDeterminesFrontalEvasion(Facing facing, int chance)
         {
             var state = Engagement(facing: facing);
@@ -115,8 +115,10 @@ namespace RPG.Tests
         [Test]
         public void MissStillSpendsOaButDoesNotDamageOrStopMover()
         {
-            var state = Engagement(facing: Facing.East, seed: 1);
+            // Seed 1 now hits (61 < 70); seed 5 gives 97, still a miss after WP-01.
+            var state = Engagement(facing: Facing.East, seed: 5);
             var result = BattleResolver.Apply(state, Move(P(1, 2)));
+            Assert.That(Of(result, BattleEventKind.ContactRolled).Single().Roll, Is.EqualTo(97));
             Assert.That(Of(result, BattleEventKind.AttackMissed).Length, Is.EqualTo(1));
             Assert.That(result.State.FindUnit(Target).OpportunityAttackAvailable, Is.False);
             Assert.That(result.State.FindUnit(Attacker).Hp, Is.EqualTo(32));
@@ -151,7 +153,7 @@ namespace RPG.Tests
             Assert.That(Cover.Query(state, state.FindUnit(Target), state.FindUnit(Attacker)), Is.EqualTo(CoverLevel.Light));
             var result = BattleResolver.Apply(state, Move(P(1, 2)));
             Assert.That(result.IsApplied, Is.True);
-            Assert.That(Of(result, BattleEventKind.ContactRolled).Single().ChancePercent, Is.EqualTo(75));
+            Assert.That(Of(result, BattleEventKind.ContactRolled).Single().ChancePercent, Is.EqualTo(80));
             Assert.That(Of(result, BattleEventKind.DamageApplied).Single().Amount, Is.EqualTo(12));
         }
 

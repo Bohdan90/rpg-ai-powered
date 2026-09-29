@@ -8,6 +8,44 @@ namespace RPG.Tests
 {
     public class BattleResolverTests
     {
+        [TestCase(UnitProfileId.HumanWarriorTI, UnitProfileId.HumanWarriorTI, 1, true, false, 85, 15, 72.25)]
+        [TestCase(UnitProfileId.HumanWarriorTI, UnitProfileId.ElfWarriorTI, 1, true, false, 70, 0, 70)]
+        [TestCase(UnitProfileId.HumanWarriorTI, UnitProfileId.ElfWarriorTI, 1, false, false, 80, 0, 80)]
+        [TestCase(UnitProfileId.HumanArcherTI, UnitProfileId.HumanWarriorTI, 4, true, false, 80, 15, 68)]
+        [TestCase(UnitProfileId.HumanArcherTI, UnitProfileId.HumanWarriorTI, 4, true, true, 95, 15, 80.75)]
+        [TestCase(UnitProfileId.HumanArcherTI, UnitProfileId.ElfWarriorTI, 4, true, false, 65, 0, 65)]
+        [TestCase(UnitProfileId.HumanArcherTI, UnitProfileId.ElfWarriorTI, 4, true, true, 80, 0, 80)]
+        [TestCase(UnitProfileId.HumanArcherTI, UnitProfileId.HumanWarriorTI, 10, true, false, 50, 15, 42.5)]
+        [TestCase(UnitProfileId.HumanArcherTI, UnitProfileId.HumanWarriorTI, 10, true, true, 65, 15, 55.25)]
+        public void PhaseZeroCombinedDamageProbabilitiesUseActualContactAndEligibleGuard(
+            UnitProfileId attacker, UnitProfileId target, int distance, bool frontal, bool aim,
+            int contact, int guard, double damagePercent)
+        {
+            var attackerProfile = attacker == UnitProfileId.HumanArcherTI ? UnitProfile.HumanArcherTI : UnitProfile.HumanWarriorTI;
+            var targetProfile = target == UnitProfileId.ElfWarriorTI ? UnitProfile.ElfWarriorTI : UnitProfile.HumanWarriorTI;
+            var state = ToActor(BattleResolver.StartBattle(new[] {
+                Unit(1, attackerProfile, x: 2, y: 2),
+                Unit(2, targetProfile, Side.East, x: 2 + distance, y: 2, facing: frontal ? Facing.West : Facing.East)
+            }, 1, new Battlefield(23,17)).State, Attacker);
+            if (attackerProfile.IsArcher && !aim)
+            {
+                var moved = BattleResolver.Apply(state, new MoveCommand(Attacker, new[] { new GridPosition(2, 3) }));
+                Assert.That(moved.IsApplied, Is.True); state = moved.State;
+            }
+            string before = Snapshot(state);
+            var preview = BattleResolver.PreviewAttack(state, Attack());
+            Assert.That(preview.IsLegal, Is.True);
+            Assert.That(preview.ContactChance, Is.EqualTo(contact));
+            Assert.That(preview.GuardChance, Is.EqualTo(guard));
+            Assert.That(preview.ContactChance * (100 - preview.GuardChance) / 100m, Is.EqualTo((decimal)damagePercent));
+            Assert.That(Snapshot(state), Is.EqualTo(before));
+            var result = BattleResolver.Apply(state, Attack());
+            Assert.That(result.Events.Single(e => e.Kind == BattleEventKind.ContactRolled).ChancePercent, Is.EqualTo(contact));
+            foreach (var roll in result.Events.Where(e => e.Kind == BattleEventKind.GuardRolled))
+                Assert.That(roll.ChancePercent, Is.EqualTo(guard));
+            Assert.That(Snapshot(BattleResolver.Apply(state, Attack()).State), Is.EqualTo(Snapshot(result.State)));
+        }
+
         [Test]
         public void ArmorAbsorbsDamageBeforeHp()
         {
@@ -131,9 +169,9 @@ namespace RPG.Tests
             Assert.That(result.State.RngState, Is.EqualTo(3472693697u));
         }
 
-        [TestCase(Facing.West, 20)]
-        [TestCase(Facing.NorthWest, 20)]
-        [TestCase(Facing.SouthWest, 20)]
+        [TestCase(Facing.West, 15)]
+        [TestCase(Facing.NorthWest, 15)]
+        [TestCase(Facing.SouthWest, 15)]
         [TestCase(Facing.North, 0)]
         [TestCase(Facing.East, 0)]
         public void ShieldGuardIsFrontalOnly(Facing facing, int chance)
@@ -142,9 +180,9 @@ namespace RPG.Tests
             Assert.That(BattleResolver.PreviewAttack(state, Attack()).GuardChance, Is.EqualTo(chance));
         }
 
-        [TestCase(Facing.West, 60)]
-        [TestCase(Facing.North, 75)]
-        [TestCase(Facing.East, 75)]
+        [TestCase(Facing.West, 70)]
+        [TestCase(Facing.North, 80)]
+        [TestCase(Facing.East, 80)]
         public void ElfFrontalEvasionChangesContactNotDamage(Facing facing, int chance)
         {
             var preview = BattleResolver.PreviewAttack(Duel(target: UnitProfile.ElfWarriorTI, targetFacing: facing), Attack());
@@ -160,7 +198,7 @@ namespace RPG.Tests
             var preview = BattleResolver.PreviewAttack(state, Attack());
             Assert.That(preview.IsLegal, Is.True);
             Assert.That(preview.MaximumRange, Is.EqualTo(10));
-            Assert.That(preview.ContactChance, Is.EqualTo(75)); // 80 + 15 - 5 - 15.
+            Assert.That(preview.ContactChance, Is.EqualTo(80)); // 85 + 15 - 5 - 15.
             var result = BattleResolver.Apply(state, Attack());
             Assert.That(result.State.FindUnit(Attacker).MovementRemaining, Is.Zero);
             Assert.That(result.Events.Single(e => e.Kind == BattleEventKind.DamageApplied).Amount, Is.EqualTo(10));
@@ -175,7 +213,7 @@ namespace RPG.Tests
             state.FindUnit(Attacker).MovementRemaining = 3;
             var preview = BattleResolver.PreviewAttack(state, Attack());
             Assert.That(preview.MaximumRange, Is.EqualTo(10));
-            Assert.That(preview.ContactChance, Is.EqualTo(65));
+            Assert.That(preview.ContactChance, Is.EqualTo(70));
             Assert.That(preview.SteadyAim, Is.False);
             var far = Duel(attacker: UnitProfile.HumanArcherTI, targetX: 11);
             far.FindUnit(Attacker).MovementSpentThisActivation = 1;
@@ -187,9 +225,9 @@ namespace RPG.Tests
         {
             var profiles = new[] { UnitProfile.HumanWarriorTI, UnitProfile.HumanArcherTI, UnitProfile.ElfWarriorTI };
             var expected = new[] {
-                new[] { 40, 16, 4, 10, 85, 5, 20, 12, 1 },
-                new[] { 28, 4, 4, 12, 80, 5, 0, 10, 10 },
-                new[] { 32, 6, 6, 14, 85, 10, 0, 11, 1 }
+                new[] { 40, 16, 4, 10, 90, 5, 15, 12, 1 },
+                new[] { 28, 4, 4, 12, 85, 5, 0, 10, 10 },
+                new[] { 32, 6, 6, 14, 90, 10, 0, 11, 1 }
             };
             for (int i = 0; i < profiles.Length; i++)
             {

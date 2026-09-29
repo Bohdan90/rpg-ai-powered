@@ -29,7 +29,7 @@ namespace RPG.Tests
                 Assert.That(preview.DistanceModifier, Is.EqualTo(penalty));
                 Assert.That(preview.SteadyAim, Is.EqualTo(!moved));
                 Assert.That(preview.AimModifier, Is.EqualTo(moved ? 0 : 15));
-                Assert.That(preview.ContactChance, Is.EqualTo(80 + penalty + (moved ? 0 : 15) - 5));
+                Assert.That(preview.ContactChance, Is.EqualTo(System.Math.Min(95, 85 + penalty + (moved ? 0 : 15) - 5)));
                 Assert.That(Snapshot(state), Is.EqualTo(before));
                 var result = BattleResolver.Apply(state, Attack());
                 Assert.That(result.IsApplied, Is.True);
@@ -72,7 +72,7 @@ namespace RPG.Tests
             Assert.That(preview.Cover, Is.EqualTo(CoverLevel.Light));
             Assert.That(preview.CoverAccuracyModifier, Is.EqualTo(-15));
             Assert.That(preview.DistanceModifier, Is.EqualTo(-30));
-            Assert.That(preview.ContactChance, Is.EqualTo(45)); // 80 + 15 - 30 - 15 - 5.
+            Assert.That(preview.ContactChance, Is.EqualTo(50)); // 85 + 15 - 30 - 15 - 5.
         }
 
         [Test]

@@ -43,6 +43,49 @@ namespace RPG.Presentation.Tests
         }
 
         [UnityTest]
+        public IEnumerator AttackOutcomeHudDistinguishesContactGuardArmorHpAndSpillFromCoreEvents()
+        {
+            // Same frontal HW duel; stable seeds after the two initiative draws.
+            var seeds = new uint[] { 5, 31, 1, 1, 1 };
+            var armor = new[] { 16, 16, 16, 0, 4 };
+            var expected = new[] { "Failed contact", "Guard blocked", "Armor damage 12", "HP damage 12", "HP damage 8" };
+            for (int i = 0; i < seeds.Length; i++)
+            {
+                presenter.ConfigureBattle(new[] {
+                    Unit(1, UnitProfile.HumanWarriorTI, 2, 2),
+                    new UnitState(Two, Side.East, UnitProfile.HumanWarriorTI, P(3,2), Facing.West, armor: armor[i])
+                }, Battlefield.ControlMap, seeds[i]);
+                while (presenter.State.CurrentUnitId != One) presenter.EndActivation(null);
+                Assert.That(presenter.LastAttackOutcome, Is.Empty);
+                var before = Snapshot(presenter.State);
+                presenter.SelectCell(P(3,2));
+                Assert.That(Snapshot(presenter.State), Is.EqualTo(before));
+                Assert.That(presenter.LastAttackOutcome, Is.Empty);
+                presenter.ConfirmPreview();
+                string text = presenter.HudRoot.Q<Label>("attack-outcome").text;
+                Assert.That(text, Does.Contain(expected[i]).And.Not.Contain("Dodge"));
+                Assert.That(presenter.RecentEvents.Any(e => e.Contains(expected[i])), Is.True);
+                if (i < 2)
+                {
+                    Assert.That(presenter.State.FindUnit(Two).Hp, Is.EqualTo(40));
+                    Assert.That(presenter.State.FindUnit(Two).Armor, Is.EqualTo(16));
+                    Assert.That(text, Does.Not.Contain("Armor damage").And.Not.Contain("HP damage"));
+                }
+                if (i == 2) { Assert.That(presenter.State.FindUnit(Two).Hp, Is.EqualTo(40)); Assert.That(text, Does.Not.Contain("HP damage")); }
+                if (i == 4) Assert.That(text, Does.Contain("Armor damage 4 (4 → 0)").And.Contain("HP damage 8 (40 → 32)"));
+                // Invalid commands and selection cannot fabricate or clear a resolved outcome.
+                var resolved = Snapshot(presenter.State);
+                presenter.Submit(new BasicAttackCommand(One, Two));
+                Assert.That(Snapshot(presenter.State), Is.EqualTo(resolved));
+                Assert.That(presenter.HudRoot.Q<Label>("attack-outcome").text, Is.EqualTo(text));
+                presenter.RestartSameSeed();
+                Assert.That(presenter.LastAttackOutcome, Is.Empty);
+                yield return null;
+            }
+            LogAssert.NoUnexpectedReceived();
+        }
+
+        [UnityTest]
         public IEnumerator LegalSelectionAndConfirmationChangesCoreWithoutPreviewMutation()
         {
             var state = presenter.State; var actor = state.FindUnit(state.CurrentUnitId.Value);
@@ -150,12 +193,12 @@ namespace RPG.Presentation.Tests
             presenter.ConfigureBattle(units.Concat(new[] { Unit(3, UnitProfile.HumanWarriorTI, 5, 4) }), Battlefield.ControlMap, 1);
             presenter.SelectCell(P(8, 4));
             Assert.That(presenter.PreviewText, Does.Contain("Light Cover: -15 pp Accuracy"));
-            Assert.That(presenter.PreviewText, Does.Contain("Contact 65%"));
+            Assert.That(presenter.PreviewText, Does.Contain("Contact 70%"));
             Assert.That(presenter.HudRoot.Q<Button>("confirm-command").enabledSelf, Is.True);
             presenter.ConfirmPreview();
             Assert.That(presenter.State.FindUnit(One).ActionAvailable, Is.False);
             presenter.ConfigureBattle(units, Battlefield.ControlMap, 1);
-            presenter.SelectCell(P(8, 4)); Assert.That(presenter.PreviewText, Does.Contain("Contact 80%"));
+            presenter.SelectCell(P(8, 4)); Assert.That(presenter.PreviewText, Does.Contain("Contact 85%"));
             presenter.ConfirmPreview();
             Assert.That(presenter.State.FindUnit(Two).Armor, Is.EqualTo(6)); yield return null;
         }
@@ -166,10 +209,10 @@ namespace RPG.Presentation.Tests
             presenter.ConfigureBattle(new[] { Unit(1, UnitProfile.HumanWarriorTI, 2, 2), Unit(2, UnitProfile.ElfWarriorTI, 3, 3, Facing.West) }, Battlefield.ControlMap, 1);
             presenter.EndActivation(null); // Elf has the higher initiative.
             presenter.SelectCell(P(3, 3)); Assert.That(presenter.PreviewText, Does.Contain("Frontal Evasion: applies"));
-            Assert.That(presenter.PreviewText, Does.Contain("Contact 60%"));
+            Assert.That(presenter.PreviewText, Does.Contain("Contact 70%"));
             presenter.SelectCell(P(4, 3)); presenter.ConfirmPreview();
             presenter.SelectCell(P(3, 3)); Assert.That(presenter.PreviewText, Does.Contain("Frontal Evasion: does not apply"));
-            Assert.That(presenter.PreviewText, Does.Contain("Contact 75%")); yield return null;
+            Assert.That(presenter.PreviewText, Does.Contain("Contact 80%")); yield return null;
         }
 
         [UnityTest]

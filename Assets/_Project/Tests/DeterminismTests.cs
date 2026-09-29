@@ -65,8 +65,8 @@ namespace RPG.Tests
             for (int i = 0; i < 5; i++)
             {
                 var preview = BattleResolver.PreviewAttack(state, Attack());
-                Assert.That(preview.ContactChance, Is.EqualTo(80));
-                Assert.That(preview.GuardChance, Is.EqualTo(20));
+                Assert.That(preview.ContactChance, Is.EqualTo(85));
+                Assert.That(preview.GuardChance, Is.EqualTo(15));
                 Assert.That(preview.PhysicalDamage, Is.EqualTo(12));
                 Assert.That(BattleResolver.Validate(state, Attack()), Is.EqualTo(CommandError.None));
                 Assert.That(state.ActivationOrder.Count, Is.EqualTo(2));

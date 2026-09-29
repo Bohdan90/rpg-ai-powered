@@ -54,12 +54,12 @@ namespace RPG.Tests
         {
             var state = Shot(Unit(3, UnitProfile.HumanWarriorTI, x: 6, y: 2), Unit(4, UnitProfile.HumanWarriorTI, Side.East, x: 7, y: 2));
             var preview = BattleResolver.PreviewAttack(state, Attack());
-            Assert.That(preview.BaseAccuracy, Is.EqualTo(80));
+            Assert.That(preview.BaseAccuracy, Is.EqualTo(85));
             Assert.That(preview.AimModifier, Is.EqualTo(15));
             Assert.That(preview.DistanceModifier, Is.EqualTo(-10));
             Assert.That(preview.TargetDodge, Is.EqualTo(5));
             Assert.That(preview.CoverAccuracyModifier, Is.EqualTo(-15));
-            Assert.That(preview.ContactChance, Is.EqualTo(65));
+            Assert.That(preview.ContactChance, Is.EqualTo(70));
             Assert.That(BattleResolver.PreviewAttack(Shot(), Attack()).ContactChance - preview.ContactChance, Is.EqualTo(15));
             var result = BattleResolver.Apply(state, Attack());
             Assert.That(result.IsApplied, Is.True);
@@ -84,7 +84,7 @@ namespace RPG.Tests
             for (int i = 0; i < 5; i++)
             {
                 Assert.That(Cover.Query(state, state.FindUnit(Attacker), state.FindUnit(Target)), Is.EqualTo(CoverLevel.Light));
-                Assert.That(BattleResolver.PreviewAttack(state, Attack()).ContactChance, Is.EqualTo(65));
+                Assert.That(BattleResolver.PreviewAttack(state, Attack()).ContactChance, Is.EqualTo(70));
             }
             Assert.That(Snapshot(state), Is.EqualTo(before));
         }

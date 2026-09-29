@@ -64,9 +64,11 @@ namespace RPG.Tests
         public void AiLeavesEachApproachWithLegalCommands(SizeExperimentMap map)
         {
             var s=BattleResolver.StartBattle(SizeExperimentFixture.Units(map),20260921,SizeExperimentFixture.Board(map)).State;
-            var initial=s.FindUnit(new UnitId(5)).Position;int ended=0;
-            for(int i=0;i<12&&ended<2;i++)
-            {var actor=s.CurrentUnitId;var result=BattleResolver.Apply(s,TacticalAi.Choose(s).Command);Assert.That(result.IsApplied,Is.True);s=result.State;if(s.CurrentUnitId!=actor)ended++;}
+            // Stronger ranged contact can justify Defend on the first activation.
+            // The same attacker must still approach within two of its activations.
+            var attacker=new UnitId(5);var initial=s.FindUnit(attacker).Position;int ended=0;
+            for(int i=0;i<216&&ended<2;i++)
+            {var actor=s.CurrentUnitId;var result=BattleResolver.Apply(s,TacticalAi.Choose(s).Command);Assert.That(result.IsApplied,Is.True);s=result.State;if(actor==attacker&&s.CurrentUnitId!=actor)ended++;}
             Assert.That(ended,Is.EqualTo(2));Assert.That(s.FindUnit(new UnitId(5)).Position.DistanceTo(new GridPosition(20,19)),Is.LessThan(initial.DistanceTo(new GridPosition(20,19))));
         }
     }

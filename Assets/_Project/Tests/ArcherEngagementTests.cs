@@ -130,7 +130,7 @@ namespace RPG.Tests
             var state=Setup(UnitProfile.HumanWarriorTI,P(5,4));
             state.FindUnit(Target).Facing=Facing.West; state.FindUnit(Target).IsDefending=true;
             var preview=BattleResolver.PreviewAttack(state,Strike());
-            Assert.That(preview.GuardChance,Is.EqualTo(20)); Assert.That(preview.PhysicalDamage,Is.EqualTo(3));
+            Assert.That(preview.GuardChance,Is.EqualTo(15)); Assert.That(preview.PhysicalDamage,Is.EqualTo(3));
             var result=BattleResolver.Apply(state,Strike());
             Assert.That(result.Events.Any(e=>e.Kind==BattleEventKind.GuardRolled),Is.True);
             Assert.That(result.Events.Any(e=>e.Kind==BattleEventKind.SteadyAimApplied),Is.False);

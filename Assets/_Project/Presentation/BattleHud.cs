@@ -16,7 +16,7 @@ namespace RPG.Presentation
         private readonly Label active, queue, preview, message, events, hover, cell;
         private readonly Button confirm, cancel, defend, end;
         private readonly Label riskWarning, retreat, escaped, outcomeText;
-        private readonly Label persistence;
+        private readonly Label persistence, attackOutcome;
         private readonly Button persistenceContinue;
         private readonly VisualElement outcomePanel;
         private readonly ScrollView panel;
@@ -75,6 +75,8 @@ namespace RPG.Presentation
             control.RegisterValueChangedCallback(e=>presenter.SetPlayerVsAi(control.index!=0,control.index==2?Side.West:Side.East));panel.Add(control);
             aiInfo=Text(panel,"",12);aiInfo.name="ai-info";
             active = Text(panel, "", 16); active.name = "active-unit";
+            attackOutcome = Text(panel, "", 14); attackOutcome.name = "attack-outcome";
+            attackOutcome.style.color = new Color(1, .8f, .35f);
             rangeInfo = Text(panel, "", 12); rangeInfo.name="ranged-reach-info";
             rangeInfo.style.color=new Color(.3f,.85f,1f);
             queue = Text(panel, "", 12); queue.name = "activation-queue";
@@ -132,6 +134,8 @@ namespace RPG.Presentation
             Root.Q<DropdownField>("controller-mode").SetValueWithoutNotify(presenter.PlayerVsAi?(presenter.AiSide==Side.East?"Player West vs AI East":"Player East vs AI West"):"Hotseat");
             aiInfo.text=presenter.PlayerVsAi?presenter.AiExplanation:"Hotseat";
             rangeInfo.text=presenter.RangedReachMessage;
+            attackOutcome.text = presenter.LastAttackOutcome.Length == 0 ? "" : "LAST ATTACK RESULT\n" + presenter.LastAttackOutcome;
+            attackOutcome.style.display = attackOutcome.text.Length == 0 ? DisplayStyle.None : DisplayStyle.Flex;
             rangeInfo.style.display=rangeInfo.text.Length>0?DisplayStyle.Flex:DisplayStyle.None;
             if (ended != showedOutcome) panel.schedule.Execute(() => panel.scrollOffset = Vector2.zero);
             showedOutcome = ended;

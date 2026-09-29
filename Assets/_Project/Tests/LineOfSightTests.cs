@@ -105,7 +105,7 @@ namespace RPG.Tests
             var preview = BattleResolver.PreviewAttack(state, Attack());
             Assert.That(preview.IsLegal, Is.True);
             Assert.That(preview.MaximumRange, Is.EqualTo(10));
-            Assert.That(preview.ContactChance, Is.EqualTo(65));
+            Assert.That(preview.ContactChance, Is.EqualTo(70));
             Assert.That(preview.SteadyAim, Is.False);
             var far = Shot(P(13, 3), new Battlefield(19,13)); far = BattleResolver.Apply(far, Move(P(2, 3))).State;
             AssertRejected(far, Attack(), CommandError.OutOfRange);
@@ -127,10 +127,10 @@ namespace RPG.Tests
                 Unit(1, UnitProfile.HumanWarriorTI, x: 2, y: 2),
                 Unit(2, UnitProfile.ElfWarriorTI, Side.East, x: 3, y: 3, facing: Facing.West)
             }, 1).State, Attacker);
-            Assert.That(BattleResolver.PreviewAttack(state, Attack()).ContactChance, Is.EqualTo(60));
+            Assert.That(BattleResolver.PreviewAttack(state, Attack()).ContactChance, Is.EqualTo(70));
             state = BattleResolver.Apply(state, Move(P(3, 2), P(4, 2), P(4, 3))).State;
             var preview = BattleResolver.PreviewAttack(state, Attack());
-            Assert.That(preview.ContactChance, Is.EqualTo(75));
+            Assert.That(preview.ContactChance, Is.EqualTo(80));
             Assert.That(preview.PhysicalDamage, Is.EqualTo(12));
             state = BattleResolver.Apply(state, Attack()).State;
             Assert.That(state.FindUnit(Attacker).Facing, Is.EqualTo(Facing.West));

@@ -1,9 +1,13 @@
 # Gate C — working implementation checkpoint
 
-Updated 2026-09-21. Single implementation handoff; Google Drive thematic owners retain
+Updated 2026-09-29. Single implementation handoff; Google Drive thematic owners retain
 priority for canon. Follow repository `AGENTS.md` and the efficiency protocol.
 
 ## Baseline
+
+- Latest delta: **WP-00 + WP-01 implemented**, from live `develop` / `d41b5d5a2d161f75f5009e5d5e4295cd7ff038de`. Document 45 Phase 0 provisional values below supersede the old profile tuning. Core-derived attack result HUD/log distinguishes failed contact, Guard, Armor and HP (including spill); weak HA fallback remains Accuracy 80.
+- Fresh WP-01 validation: **298 EditMode + 37 PlayMode = 335 passed; 0 failed/skipped**. Five outcome mouse smoke cases PASS. Replay/preview/invalid-command regressions PASS. Player balance acceptance **PENDING**. Evidence/commands/limitations: [COMBAT_TUNING_01.md](COMBAT_TUNING_01.md). Code and this delta share the local `Combat: apply WP-01 tuning and clarify attack outcomes` commit; resolve HEAD from Git.
+- WP-02 is the next candidate only after coordinator acceptance; not started by this package. Six pre-existing persistence `.meta` files remain untracked and unchanged; no push.
 
 - Implementation: final user-playtested siege baseline 41×39, validation/documentation committed with this checkpoint delta; geometry **462bd87**; ranged reach **25c57bd**; directional siege **7bed17e**; telemetry/replay **ec19d0b**; minimal AI **926e28c**; density fixtures **fb95710**; prior siege-scale V2 **18088fe**. Part A fallback: **5aff414**; prior bow baseline **3bb1164**. Live HEAD: `git rev-parse --short HEAD`.
 - Gate C: **PASS for the current prototype scope**. User completed a Player-vs-AI field battle, lost normally to the AI, found its behavior normal and reported no critical tactical-loop blocker. Technical DoD/replay, field 23×17, siege 41×39 and physical Retreat are accepted. Persistence Slice v0.1 is the next authorized work; do not reopen tactical redesign unless persistence exposes a direct Core defect.
@@ -23,12 +27,12 @@ Escaped/Safe, Withdrawal/Eliminated and outcome HUD.
 
 | TI profile | HP | Armor | Move | Init | Accuracy | Dodge | Guard | Damage | Range |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| HW | 40 | 16 | 4 | 10 | 85 | 5 | 20 | 12 | 1 |
-| HA | 28 | 4 | 4 | 12 | 80 | 5 | 0 | 10 | 10 |
-| EW | 32 | 6 | 6 | 14 | 85 | 10 | 0 | 11 | 1 |
+| HW | 40 | 16 | 4 | 10 | 90 | 5 | 15 | 12 | 1 |
+| HA | 28 | 4 | 4 | 12 | 85 | 5 | 0 | 10 | 10 |
+| EW | 32 | 6 | 6 | 14 | 90 | 10 | 0 | 11 | 1 |
 
 - HA distance penalty: `5 × max(0, distance − 4)` pp. Steady Aim: **+15 pp Accuracy**, no Range increase; requires no prior Movement and consumes remaining Movement. Bow Range always 10 when available. Hostile existing HW/EW ZoC locks Bow even if OA spent; engaged HA gets Action-only Melee Strike (Range 1, damage 5, Accuracy 80), no Aim and no HA ZoC/OA. Surviving exit restores bow without Aim after Movement.
-- EW Frontal Evasion +15 pp Dodge. Defend: 25% Physical Resistance, before Movement only; consumes Action/remaining Movement, expires at next own activation.
+- EW Frontal Evasion +10 pp Dodge. Defend: 25% Physical Resistance, before Movement only; consumes Action/remaining Movement, expires at next own activation.
 - Light Cover −15 pp Accuracy, directional/nonstacking; unit bodies do not hard-block LoS. Strong classification exists; numeric tuning deferred.
 - Movement precedes Action, may be split; after Action no further Movement. HW/EW exert ZoC, HA does not; one OA between own activation starts, resolved before exit step, no responder rotation.
 - These values, working bow distance ~7 (1.75× baseline Movement), max 10 (2.5×) and map dimensions are prototype tuning, not final global canon.

@@ -92,7 +92,8 @@ namespace RPG.Core
             preview.TargetFacesAttacker = FacingDirections.IsFrontal(target.Facing, target.Position, actor.Position);
             int evasion = preview.TargetFacesAttacker ? target.Profile.FrontalEvasion : 0;
             int penalty = ranged ? 5 * (int)Math.Max(0, preview.Distance - 4) : 0;
-            preview.BaseAccuracy = actor.Profile.Accuracy;
+            // WP-01 changes Bow Accuracy, preserving the accepted weak melee fallback.
+            preview.BaseAccuracy = meleeStrike ? 80 : actor.Profile.Accuracy;
             preview.AimModifier = preview.SteadyAim ? 15 : 0;
             preview.DistanceModifier = -penalty;
             preview.TargetDodge = target.Profile.Dodge;
