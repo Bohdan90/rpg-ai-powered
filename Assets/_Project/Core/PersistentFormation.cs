@@ -52,11 +52,18 @@ namespace RPG.Core
                 : unit.Status == UnitStatus.Escaped ? PersistentCharacterStatus.EscapedSafe : PersistentCharacterStatus.Alive;
         }
         internal void ReturnFromSafety() { if (Status == PersistentCharacterStatus.EscapedSafe) Status = PersistentCharacterStatus.Alive; }
-        internal void ApplyFieldRefresh()
+        public const int FieldRecoveryPercent=15;
+        public const int HealingBuildingRecoveryPercent=40;
+        public int PreviewHpRecovery(int percent)
         {
+            if(percent!=FieldRecoveryPercent&&percent!=HealingBuildingRecoveryPercent)throw new ArgumentOutOfRangeException(nameof(percent));
+            return Status==PersistentCharacterStatus.Dead?0:Math.Min(Profile.MaxHp-Hp,(FieldRecoveryRemainderHundredths+Profile.MaxHp*percent)/100);
+        }
+        internal void ApplyHpRefresh(int percent)
+        {
+            int restored=PreviewHpRecovery(percent);
             if (Status == PersistentCharacterStatus.Dead) return;
-            int total = FieldRecoveryRemainderHundredths + Profile.MaxHp * 15;
-            int restored = total / 100;
+            int total = FieldRecoveryRemainderHundredths + Profile.MaxHp * percent;
             FieldRecoveryRemainderHundredths = total % 100;
             Hp = Math.Min(Profile.MaxHp, Hp + restored);
             if (Hp == Profile.MaxHp) FieldRecoveryRemainderHundredths = 0;
@@ -95,7 +102,8 @@ namespace RPG.Core
         }
         internal void RefreshCommanderState() { Commanderless = Commander != null && Commander.Status == PersistentCharacterStatus.Dead; }
         public void ReturnSafeMembersForNextBattle() { foreach (var member in members) member.ReturnFromSafety(); }
-        public void ApplyOneFieldStrategicRefresh() { foreach (var member in members) member.ApplyFieldRefresh(); }
+        public void ApplyOneFieldStrategicRefresh() { foreach (var member in members) member.ApplyHpRefresh(PersistentCharacter.FieldRecoveryPercent); }
+        public void ApplyOneHealingBuildingStrategicRefresh() { foreach (var member in members) member.ApplyHpRefresh(PersistentCharacter.HealingBuildingRecoveryPercent); }
     }
 
     public readonly struct PersistentDeployment

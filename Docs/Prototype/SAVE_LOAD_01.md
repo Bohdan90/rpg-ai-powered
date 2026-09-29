@@ -69,7 +69,8 @@ then Attack Area Guard enters the next battle normally. Evidence:
 retained separately as `save-initial-null-resolution-failure`.
 
 Manual slot used: `~/Library/Application Support/DefaultCompany/My project/Mission01/manual.json`.
-It contains the controlled smoke's Refresh2 state; a new mission does not delete
+At WP-03A closure it contained the smoke's Refresh2 state; later manual saves
+(including WP-03B validation) replace it. A new mission does not delete
 the slot, and pressing Save replaces it. Source test helpers stay outside repo.
 Unity Search indexing/account warnings also appeared at editor startup; no game
 exception accompanied the successful corrected smoke.

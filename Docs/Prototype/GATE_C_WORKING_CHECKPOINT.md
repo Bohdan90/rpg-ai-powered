@@ -3,6 +3,15 @@
 Updated 2026-09-29. Single implementation handoff; Google Drive thematic owners retain
 priority for canon. Follow repository `AGENTS.md` and the efficiency protocol.
 
+## WP-03B — Keep recovery / mandatory next player gate
+
+- From green WP-03A `8ed1480`: Mission01 Keep is the approved functioning Healing Building adapter. At the completed Refresh checkpoint, the player's physical location selects **Keep40% OR field15% Max HP**, never both. Fractional carry/cap preserved. No Armor repair, resurrection, replacement, Commanderless/XP reset or battle-exit healing.
+- UI shows expected per-character HP and no-Armor-repair/time-cost warning; event log shows actual changes. Actors/supply process unchanged while recovering. Existing version1 save stores all needed location/HP/fractional state; no new schema needed.
+- Controlled mouse sequence PASS: two real battles leave HWs20/40 and12/40, field Refresh makes26/18, return to Keep R3 then Save/Load checksum unchanged. One Keep Refresh gives40/34, Armor stays0, Patrol moves and B emerges R4. Redeploy to Village with same IDs/XP. Portal investigation was deferred by return/recovery. Details: [RETURN_RECOVERY_01.md](RETURN_RECOVERY_01.md).
+- Validation: **34 focused EditMode +7 focused PlayMode PASS; full359 EditMode +46 PlayMode =405 PASS, 0 failed/skipped**. Fresh artifacts and commands in RETURN_RECOVERY_01.md. Deterministic continuation, replay and preview/invalid-state regressions green.
+- Own commit title `Strategy: add Keep recovery with world time pressure`. Starting scene/settings diffs and six unrelated untracked `.meta` preserved. NO PUSH.
+- **STOP CODING: next is WP-03C INTEGRATED PLAYER GATE**, actual user playtest and KEEP / ITERATE / CONTRACT DECISION verdict. WP-02 and integrated player acceptance remain PENDING. No Strategic Hotseat, economy/settlement expansion, cities or research is authorized by this batch.
+
 ## WP-03A — stable strategic save/load
 
 - From `develop` / `d917029`: version1 single-slot Mission01 JSON, Core snapshots/validation/checksum, independent candidate restore then atomic Presenter replacement. Captures world/actor cadence, seed+battle counter, Tempo/debt, supply/sites/results, persistent identities/HP/Armor/dead/Safe/Commanderless/progression/fractional carry and result history. Stable map only; no mid-battle resume.

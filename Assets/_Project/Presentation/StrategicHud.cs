@@ -11,7 +11,7 @@ namespace RPG.Presentation
         public VisualElement Root { get; }
         private readonly BattlePresenter presenter;
         private readonly VisualElement map;
-        private readonly Label status,preview,roster,events,saveMessage;
+        private readonly Label status,preview,roster,events,saveMessage,recovery;
         private readonly Button save,load;
         private readonly Button move,interact,end;
         private readonly VisualElement attacks;
@@ -42,6 +42,7 @@ namespace RPG.Presentation
             attacks=new VisualElement();left.Add(attacks);
             var right=new ScrollView();right.style.flexGrow=1;right.style.paddingLeft=14;Root.Add(right);
             status=Label(right,"",16);status.name="world-status";
+            recovery=Label(right,"",13);recovery.name="world-recovery";
             save=Button(right,"Save Mission 01 (one slot)","world-save",()=>presenter.SaveStrategic());
             load=Button(right,"Load saved Mission 01","world-load-slot",()=>presenter.LoadStrategic());
             saveMessage=Label(right,"",12);saveMessage.name="world-save-status";
@@ -62,6 +63,10 @@ namespace RPG.Presentation
         {
             var s=presenter.World;if(s==null)return;
             save.SetEnabled(s.CanSave);load.SetEnabled(s.CanSave);saveMessage.text=presenter.StrategicSaveMessage;
+            recovery.text=s.Result!=StrategicMissionResult.Ongoing?"Mission ended; no further recovery Refreshes.":
+                "Next completed Refresh here: +"+s.RecoveryPercent+"% Max HP · "+(s.PlayerNode==1?"Baron Keep Healing Building":"field")
+                +"\n"+string.Join("; ",s.Player.LivingMembers.Where(c=>c.Hp<c.Profile.MaxHp).Select(c=>c.CharacterId+" "+c.Hp+"→"+(c.Hp+c.PreviewHpRecovery(s.RecoveryPercent))+" (+"+c.PreviewHpRecovery(s.RecoveryPercent)+")"))
+                +"\nArmor is NOT repaired. World actors and supply still advance. Moving/retreating before the checkpoint changes the rate.";
             Root.style.display=s.Encounter==null?DisplayStyle.Flex:DisplayStyle.None;
             var p=s.PreviewMove(selected);preview.text=selected==s.PlayerNode?"Persistent formation selected. Choose a connected destination.":
                 string.Join(" → ",p.Path.Select(n=>n.ToString("00")))+"\nTempo cost "+p.Cost+(p.Encounter.HasValue?" · Hard Guard conflict / Attack Cost follows":"")+"\n"+(p.Reason??"Legal path");

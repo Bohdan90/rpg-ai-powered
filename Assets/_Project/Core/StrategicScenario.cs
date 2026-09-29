@@ -47,6 +47,8 @@ namespace RPG.Core
         public const int MaxProvisions=36;
         public bool Hungry { get; private set; }
         public int Consumption => Player.LivingMembers.Count();
+        // Mission-01 adapter only: Keep represents a friendly functioning Healing Building.
+        public int RecoveryPercent => PlayerNode==1?PersistentCharacter.HealingBuildingRecoveryPercent:PersistentCharacter.FieldRecoveryPercent;
         public int WaystationFood { get; private set; }=12;
         public StrategicSiteCondition Waystation { get; private set; }
         public StrategicSiteCondition Village { get; private set; }
@@ -137,8 +139,11 @@ namespace RPG.Core
             {supplied=Math.Min(Math.Min(6,WaystationFood),MaxProvisions-Provisions);WaystationFood-=supplied;}
             Provisions+=supplied;Log("Supply: consumed "+used+", replenished "+supplied+"; "+Provisions+"/36.");
             var hpBefore=Player.LivingMembers.ToDictionary(c=>c.CharacterId,c=>c.Hp);
-            Player.ApplyOneFieldStrategicRefresh();foreach(var a in Actors.Where(a=>a.Active))a.Formation.ApplyOneFieldStrategicRefresh();
-            Log("One field Strategic Refresh: +15% Max HP, Armor unchanged. "+string.Join(", ",Player.LivingMembers.Where(c=>c.Hp!=hpBefore[c.CharacterId]).Select(c=>c.CharacterId+" "+hpBefore[c.CharacterId]+"→"+c.Hp+" HP")));
+            // Location is checked AFTER actor/battle aftermath, exactly once at the completed Refresh.
+            int recoveryPercent=RecoveryPercent;
+            if(PlayerNode==1)Player.ApplyOneHealingBuildingStrategicRefresh();else Player.ApplyOneFieldStrategicRefresh();
+            foreach(var a in Actors.Where(a=>a.Active))a.Formation.ApplyOneFieldStrategicRefresh();
+            Log("One "+(PlayerNode==1?"Baron Keep Healing Building":"field")+" Strategic Refresh: +"+recoveryPercent+"% Max HP, Armor unchanged. "+string.Join(", ",Player.LivingMembers.Where(c=>c.Hp!=hpBefore[c.CharacterId]).Select(c=>c.CharacterId+" "+hpBefore[c.CharacterId]+"→"+c.Hp+" HP")));
             Refresh++;Tempo=100+Math.Min(0,Tempo);foreach(var a in Actors)a.Tempo=100+Math.Min(0,a.Tempo);
             Hungry=Provisions==0;worldPhase=false;
             if(Refresh==4){var b=Actor(StrategicActorKind.IncursionB);b.Objective=StrategicObjective.Raid;Log("Local scouts: Incursion B emerged at Portal, moving toward Riverside Village. It must hold Village for a further activation to Ravage it.");}
