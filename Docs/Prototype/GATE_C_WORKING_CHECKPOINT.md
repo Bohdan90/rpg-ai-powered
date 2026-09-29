@@ -3,6 +3,13 @@
 Updated 2026-09-29. Single implementation handoff; Google Drive thematic owners retain
 priority for canon. Follow repository `AGENTS.md` and the efficiency protocol.
 
+## Visual readability delta — warrior / archer tokens
+
+- From `7069a80`: two shared flat vector silhouettes in Presentation replace cube/cylinder class tokens: sword/shield for both HW and EW; bow/arrow for HA. Race stays in existing HW/EW labels. Side-color base, Commander asterisk, active marker and HP/Armor labels remain. Facing arrow sits on the token edge; HUD legend updated. No Core/combat/persistence changes or asset-package dependency.
+- Unity visual checks: field23×17 and siege41×39 fit/focus/zoom show both types, side colors and HW/EW/HA labels; dense siege still needs zoom for detail. Evidence `/private/tmp/unit-silhouettes-20260929/`. Existing editor Search indexing/account warnings are unrelated to runtime silhouettes.
+- Validation: focused16 PlayMode PASS; full329 EditMode +39 PlayMode = **368 PASS, 0 failed/skipped**. Fresh XML/logs: `/private/tmp/unit-silhouettes-20260929/silhouettes-{focused,full-edit,full-play}.{xml,log}`. Tested code checksum manifest is in the same directory.
+- User's starting changes to TacticalGraybox scene and two ProjectSettings files plus six untracked persistence `.meta` files are preserved; only this visual diff is committed. Local commit title `Presentation: distinguish warrior and archer silhouettes`; no push.
+
 ## WP-02 — current connected implementation delta
 
 - Starting accepted baseline: `develop` / **79ac6257ceb76478d057ed8e95a5761cf5a32b38**. WP-00 DONE and WP-01 TECHNICAL PASS accepted by coordinator; provisional combat values remain unchanged.

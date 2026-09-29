@@ -39,7 +39,7 @@ namespace RPG.Presentation
             surface.style.overflow = Overflow.Hidden; Root.Add(surface);
             var title = Text(surface, "GATE C / HOTSEAT", 22); title.style.position = Position.Absolute;
             title.style.left = 20; title.style.top = 16; title.pickingMode = PickingMode.Ignore;
-            var legend = Text(surface, "BLUE West · ORANGE East · GOLD active\nGreen: reachable · Gold: path · Red segment: OA risk\nHW square · HA circle · EW diamond · * Commander\nThin red borders: enemy ZoC ready · Gray: spent\nWheel: zoom · Right-click: center view", 13);
+            var legend = Text(surface, "BLUE West · ORANGE East · GOLD active\nGreen: reachable · Gold: path · Red segment: OA risk\nSword + shield: HW/EW · Bow: HA · * Commander\nWhite arrow: facing · Red border: ZoC ready · Gray: spent\nWheel: zoom · Right-click: center view", 13);
             legend.style.position = Position.Absolute; legend.style.left = 20; legend.style.bottom = 16; legend.pickingMode = PickingMode.Ignore;
             westEdge = Text(surface, "West Retreat", 13); eastEdge = Text(surface, "East Retreat", 13);
             westEdge.style.position = eastEdge.style.position = Position.Absolute;

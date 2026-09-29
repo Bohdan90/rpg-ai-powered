@@ -10,6 +10,7 @@ namespace RPG.Presentation
     {
         private readonly GameObject root;
         private readonly Material material;
+        private readonly Mesh warriorSilhouette, archerSilhouette;
         private Renderer[,] tiles;
         private readonly Dictionary<UnitId, Token> units = new Dictionary<UnitId, Token>();
         private readonly LineRenderer pathLine;
@@ -28,6 +29,7 @@ namespace RPG.Presentation
         {
             root = new GameObject("Battle views"); root.transform.SetParent(parent, false);
             material = new Material(shader) { name = "Graybox runtime unlit" };
+            warriorSilhouette = UnitSilhouettes.Create(false); archerSilhouette = UnitSilhouettes.Create(true);
             var path = new GameObject("Core path preview"); path.transform.SetParent(root.transform, false);
             pathLine = path.AddComponent<LineRenderer>(); pathLine.sharedMaterial = material;
             pathLine.widthMultiplier = .045f; pathLine.useWorldSpace = true;
@@ -136,19 +138,20 @@ namespace RPG.Presentation
             var go = new GameObject(PrototypeFixture.Name(unit.Id)); go.transform.SetParent(root.transform, false);
             var ring = Primitive("Active marker", PrimitiveType.Cylinder, go.transform, new Vector3(0, .02f, 0), new Vector3(.88f, .025f, .88f));
             Tint(ring, new Color(1, .85f, .24f));
-            var type = unit.Profile.IsArcher ? PrimitiveType.Cylinder : PrimitiveType.Cube;
-            var body = Primitive("Unit token", type, go.transform, new Vector3(0, .20f, 0), new Vector3(.57f, .20f, .57f));
-            if (unit.Profile.Id == UnitProfileId.ElfWarriorTI)
-            {
-                body.transform.localRotation = Quaternion.Euler(0, 45, 0);
-                body.transform.localScale = new Vector3(.51f,.20f,.51f);
-            }
+            var body = Primitive("Side color base", PrimitiveType.Cylinder, go.transform,
+                new Vector3(0, .10f, 0), new Vector3(.82f, .035f, .82f));
+            var icon = new GameObject(unit.Profile.IsArcher ? "Archer silhouette" : "Warrior silhouette");
+            icon.transform.SetParent(go.transform, false);
+            icon.AddComponent<MeshFilter>().sharedMesh = unit.Profile.IsArcher ? archerSilhouette : warriorSilhouette;
+            var iconRenderer = icon.AddComponent<MeshRenderer>(); iconRenderer.sharedMaterial = material;
+            Tint(iconRenderer, new Color(1f, .96f, .82f));
             var facing = new GameObject("Facing"); facing.transform.SetParent(go.transform, false);
             var line = facing.AddComponent<LineRenderer>(); line.sharedMaterial = material;
-            line.useWorldSpace = false; line.widthMultiplier = .06f;
+            line.useWorldSpace = false; line.widthMultiplier = .045f;
             line.positionCount = 5;
-            line.SetPositions(new[] { new Vector3(0, .50f, .06f), new Vector3(0, .50f, .44f),
-                new Vector3(-.13f, .50f, .29f), new Vector3(0, .50f, .44f), new Vector3(.13f, .50f, .29f) });
+            line.SetPositions(new[] { new Vector3(0, .55f, .35f), new Vector3(0, .55f, .49f),
+                new Vector3(-.1f, .55f, .4f), new Vector3(0, .55f, .49f), new Vector3(.1f, .55f, .4f) });
+            Tint(line, Color.white);
             return new Token { Profile = unit.Profile.Id, Root = go, Body = body, Active = ring.gameObject, Facing = facing.transform };
         }
         private LineRenderer Line(string name, float width)
@@ -169,7 +172,7 @@ namespace RPG.Presentation
             var block = new MaterialPropertyBlock(); block.SetColor("_BaseColor", color); block.SetColor("_Color", color);
             renderer.SetPropertyBlock(block);
         }
-        public void Dispose() { Object.Destroy(root); Object.Destroy(material); }
+        public void Dispose() { Object.Destroy(root); Object.Destroy(material); Object.Destroy(warriorSilhouette); Object.Destroy(archerSilhouette); }
         private sealed class Token { public UnitProfileId Profile; public GameObject Root, Active; public Renderer Body; public Transform Facing; }
     }
 }
