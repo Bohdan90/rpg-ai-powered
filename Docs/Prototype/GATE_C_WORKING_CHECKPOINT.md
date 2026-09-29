@@ -3,6 +3,16 @@
 Updated 2026-09-29. Single implementation handoff; Google Drive thematic owners retain
 priority for canon. Follow repository `AGENTS.md` and the efficiency protocol.
 
+## WP-03D — player-feedback Provisions / essential readability
+
+- From `develop` / `2e8c454`. First integrated user playtest: combat feels acceptable for graybox; Central being easier is explicitly not a blocker. Only supply/readability adjusted; combat profiles, topology/edge Tempo, enemy compositions/timing/AI, recovery and XP unchanged.
+- New Mission01 **Starting/Max Provisions30/30**, provisional tuning. Figure cost1, supply6, Waystation Food12, existing ordering/Hungry unchanged. Old saves with max36 fail safely with a new-mission message; version1 format/transport unchanged and current live state preserved. Start a new mission for the new tuning.
+- Tactical units: distinct green HP / blue Armor fill and current/max values, HW/EW/HA and weapon icons preserved; DEAD explicit. Direct Core projection, including Armor-only/spill and no damage animation on failed contact/Guard. Compact cell-width layout; use existing zoom for small overview numbers.
+- Mission01-only scout/civilian information: known actor name/count/actual living composition + current role; no dormant B roster until its existing R4 report. Withdrawn survivors update count before exit; removed actors leave markers. Keep supply/recovery, consumption, Refresh/Tempo and Waystation Food/state clarified.
+- Controlled Unity Central R5/8 Provisions, North R5/10, South R6/12 (12 replenished), Central+1 delay R6/4: all success, no Hungry. All match real-command/replay automated ledgers. Details/screenshots/limits: [PROVISIONS_READABILITY_01.md](PROVISIONS_READABILITY_01.md).
+- Validation: **65 focused EditMode +21 focused PlayMode PASS; full363 EditMode +48 PlayMode =411 PASS, 0 failed/skipped**. Replay, preview/invalid/RNG and save/refresh regressions green. Own commit title `Prototype: tune Provisions and add essential readability`; preserved starting scene/settings changes and six untracked persistence `.meta`. NO PUSH.
+- **STOP after this package**; return to coordinator/user playtest. No Hotseat/Economy/City/Research expansion. New tuning/player acceptance remains to be evaluated by the user.
+
 ## WP-03B — Keep recovery / mandatory next player gate
 
 - From green WP-03A `8ed1480`: Mission01 Keep is the approved functioning Healing Building adapter. At the completed Refresh checkpoint, the player's physical location selects **Keep40% OR field15% Max HP**, never both. Fractional carry/cap preserved. No Armor repair, resurrection, replacement, Commanderless/XP reset or battle-exit healing.

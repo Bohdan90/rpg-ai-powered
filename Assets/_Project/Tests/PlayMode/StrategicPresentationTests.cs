@@ -31,7 +31,7 @@ namespace RPG.Presentation.Tests
             Assert.That(p.State.Outcome.IsEnded,Is.True);
             Assert.That(ReplayVerification.Verify(p.Journal.Header,p.Journal.Records,p.Journal.Footer()).Matches,Is.True);
             var hp=p.State.Units.Where(u=>u.Side==Side.West).Sum(u=>u.Hp);p.ReturnToWorld();
-            Assert.That(p.World,Is.SameAs(world));Assert.That(world.Refresh,Is.EqualTo(1));Assert.That(world.Provisions,Is.EqualTo(36));
+            Assert.That(p.World,Is.SameAs(world));Assert.That(world.Refresh,Is.EqualTo(1));Assert.That(world.Provisions,Is.EqualTo(30));
             Assert.That(world.Player.Members.Sum(c=>c.Hp),Is.EqualTo(hp));Assert.That(p.HudRoot.Q<Label>("world-roster").text,Does.Contain("baron-1"));
             Assert.That(p.HudRoot.Q<Label>("world-status").text,Does.Contain("No recovery on battle exit"));
             world.EndActivation();Assert.That(p.MoveOnWorld(10),Is.True);world.Attack(StrategicActorKind.AreaGuard);p.WorldChanged();ResolveDisplayedBattle(p);

@@ -59,9 +59,9 @@ namespace RPG.Tests
             var s=new StrategicScenario();Move(s,14);Assert.That(s.Tempo,Is.EqualTo(20));s.EndActivation();
             Assert.That(s.Encounter.LeadActor,Is.EqualTo(StrategicActorKind.IncursionA));Assert.That(s.Actor(StrategicActorKind.IncursionA).Node,Is.EqualTo(15));
             Assert.That(s.Tempo,Is.EqualTo(20));Assert.That(s.Refresh,Is.EqualTo(1));Assert.That(s.Actor(StrategicActorKind.Patrol).Node,Is.EqualTo(7));
-            Win(s);Assert.That(s.Refresh,Is.EqualTo(2));Assert.That(s.WaystationFood,Is.EqualTo(6));Assert.That(s.Provisions,Is.EqualTo(36));
+            Win(s);Assert.That(s.Refresh,Is.EqualTo(2));Assert.That(s.WaystationFood,Is.EqualTo(6));Assert.That(s.Provisions,Is.EqualTo(30));
             Assert.That(s.Actor(StrategicActorKind.Patrol).Node,Is.EqualTo(7),"Earlier actors must not repeat after battle");
-            s.EndActivation();Assert.That(s.WaystationFood,Is.Zero);Assert.That(s.Provisions,Is.EqualTo(36));
+            s.EndActivation();Assert.That(s.WaystationFood,Is.Zero);Assert.That(s.Provisions,Is.EqualTo(30));
         }
         [Test]
         public void BridgeAndAreaGuardStayRemovedAcrossBattlesAndPortalEndsActivation()
@@ -111,7 +111,7 @@ namespace RPG.Tests
             final.FindUnit(new UnitId(1)).Hp=17;final.FindUnit(new UnitId(1)).Armor=5;
             final.FindUnit(new UnitId(2)).Hp=0;final.FindUnit(new UnitId(2)).Status=UnitStatus.Dead;
             final.FindUnit(new UnitId(3)).Status=UnitStatus.Escaped;final.FindUnit(new UnitId(3)).Hp=13;final.FindUnit(new UnitId(3)).Armor=2;
-            Assert.That(s.ResolveBattle(final),Is.True);Assert.That(s.Refresh,Is.EqualTo(1));Assert.That(s.Provisions,Is.EqualTo(36));Assert.That(s.Consumption,Is.EqualTo(5));
+            Assert.That(s.ResolveBattle(final),Is.True);Assert.That(s.Refresh,Is.EqualTo(1));Assert.That(s.Provisions,Is.EqualTo(30));Assert.That(s.Consumption,Is.EqualTo(5));
             CollectionAssert.AreEqual(ids,s.Player.Members.Select(c=>c.CharacterId));Assert.That(s.Player.Commander.Hp,Is.EqualTo(17));Assert.That(s.Player.Commander.Armor,Is.EqualTo(5));
             Assert.That(s.Player.Members[2].Status,Is.EqualTo(PersistentCharacterStatus.EscapedSafe));Assert.That(s.Player.Commander.PersonalXp,Is.GreaterThan(0));
             Assert.That(s.ResolveBattle(final),Is.False); // cannot pay XP twice

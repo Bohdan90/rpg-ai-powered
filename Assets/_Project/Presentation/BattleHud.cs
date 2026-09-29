@@ -25,7 +25,7 @@ namespace RPG.Presentation
         private readonly DropdownField finalFacing, map;
         private readonly Toggle friendly;
         private GridPosition? hoveredCell;
-        private readonly Dictionary<UnitId, Label> unitLabels = new Dictionary<UnitId, Label>();
+        private readonly Dictionary<UnitId, UnitConditionView> unitLabels = new Dictionary<UnitId, UnitConditionView>();
         private readonly List<(Label label, Vector3 position)> coordinates = new List<(Label, Vector3)>();
         public VisualElement Root { get; }
 
@@ -190,18 +190,10 @@ namespace RPG.Presentation
             {
                 if (!unitLabels.TryGetValue(unit.Id, out var label))
                 {
-                    label = Text(surface, "", 11); label.pickingMode = PickingMode.Ignore;
-                    label.style.position = Position.Absolute; label.style.width = 84; label.style.height = 47;
-                    label.style.unityTextAlign = TextAnchor.MiddleCenter;
-                    label.style.backgroundColor = new Color(.025f, .04f, .06f, .88f);
-                    unitLabels.Add(unit.Id, label);
+                    label = new UnitConditionView {name="unit-condition-"+unit.Id.Value};
+                    surface.Add(label);unitLabels.Add(unit.Id, label);
                 }
-                label.style.display = unit.IsActive ? DisplayStyle.Flex : DisplayStyle.None;
-                string profile = unit.Profile.IsArcher ? "HA" : unit.Profile.Id == UnitProfileId.ElfWarriorTI ? "EW" : "HW";
-                bool commander = presenter.IsCommander(unit.Id);
-                label.text = (unit.Side == Side.West ? "W " : "E ") + profile + (commander ? " *" : "")
-                    + (unit.IsDefending ? " DEF" : "") + "\nHP " + unit.Hp + " / A " + unit.Armor + "\n" + BattlePresenter.OaStatus(unit);
-                label.style.color = !ended && state.CurrentUnitId == unit.Id ? new Color(1, .86f, .3f) : Color.white;
+                label.Refresh(unit,presenter.IsCommander(unit.Id),!ended&&state.CurrentUnitId==unit.Id);
             }
             PositionLabels(state);
         }
@@ -217,17 +209,9 @@ namespace RPG.Presentation
             {
                 if (!unitLabels.TryGetValue(unit.Id, out var label)) continue;
                 float cellPixels = surface.contentRect.height / (2 * camera.orthographicSize);
-                bool detailed = cellPixels >= 64;
-                label.style.width = detailed ? 84 : Mathf.Max(30, cellPixels);
-                label.style.height = detailed ? 47 : 16;
-                label.style.fontSize = detailed ? 11 : 10;
-                string profile = unit.Profile.IsArcher ? "HA" : unit.Profile.Id == UnitProfileId.ElfWarriorTI ? "EW" : "HW";
-                bool commander = presenter.IsCommander(unit.Id);
-                label.text = detailed
-                    ? (unit.Side == Side.West ? "W " : "E ") + profile + (commander ? " *" : "")
-                        + (unit.IsDefending ? " DEF" : "") + "\nHP " + unit.Hp + " / A " + unit.Armor + "\n" + BattlePresenter.OaStatus(unit)
-                    : profile + (commander ? "*" : "");
-                Place(label, BattleGridView.World(unit.Position), detailed ? -42 : -Mathf.Max(30, cellPixels) / 2, cellPixels * .30f);
+                float width=label.SizeForCell(cellPixels);
+                Place(label, BattleGridView.World(unit.Position), -width/2, cellPixels*.10f);
+
             }
             foreach (var axis in coordinates) Place(axis.label, axis.position, -10, -10);
         }

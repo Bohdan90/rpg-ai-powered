@@ -19,14 +19,14 @@ namespace RPG.Tests
             Assert.That(ReplayVerification.Verify(journal.Header,journal.Records,journal.Footer()).Matches,Is.True);
             Assert.That(s.ResolveBattle(journal.State),Is.True);Assert.That(s.Result,Is.Not.EqualTo(StrategicMissionResult.FormationLost));
         }
-        [TestCase("Central")][TestCase("North")][TestCase("South")]
+        [TestCase("Central")][TestCase("North")][TestCase("South")][TestCase("CentralDelay")]
         public void CompleteRoutesWithActualCoreCombatAndReplay(string route)
         {
             var s=new StrategicScenario();
-            if(route=="Central")
+            if(route.StartsWith("Central"))
             {
                 Move(s,3,8);Battle(s);s.EndActivation();Move(s,10);Assert.That(s.Attack(StrategicActorKind.AreaGuard),Is.True);Battle(s);
-                Move(s,10);Assert.That(s.InteractPortal(),Is.True);Move(s,12);s.EndActivation();s.EndActivation();Battle(s);Move(s,1);
+                Move(s,10);Assert.That(s.InteractPortal(),Is.True);Move(s,12);s.EndActivation();s.EndActivation();Battle(s);if(route=="CentralDelay")s.EndActivation();Move(s,1);
             }
             else if(route=="North")
             {
@@ -39,6 +39,8 @@ namespace RPG.Tests
                 s.EndActivation();Move(s,13);s.Attack(StrategicActorKind.IncursionB);Battle(s);s.EndActivation();Move(s,1);
                 Assert.That(s.Waystation,Is.EqualTo(StrategicSiteCondition.Intact));
             }
+            foreach(var e in s.Events.Where(e=>e.Contains("Supply:")))TestContext.WriteLine(e);
+            Assert.That(s.Hungry,Is.False,"Normal routes and one delay remain viable");
             TestContext.WriteLine(route+" finish R"+s.Refresh+" provisions "+s.Provisions+" roster "+string.Join(",",s.Player.Members.Select(c=>c.CharacterId+":"+c.Hp+"/"+c.Armor+":"+c.Status)));
             Assert.That(s.Result,Is.EqualTo(StrategicMissionResult.CouncilAssistanceRequested));
             Assert.That(s.Player.Members.Any(c=>c.Armor<c.Profile.MaxArmor),Is.True,"Attrition must remain visible");

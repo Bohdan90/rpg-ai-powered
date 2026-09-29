@@ -43,8 +43,8 @@ namespace RPG.Core
         public int PlayerNode { get; internal set; }=1;
         public int Tempo { get; internal set; }=100;
         public int Refresh { get; private set; }=1;
-        public int Provisions { get; internal set; }=36;
-        public const int MaxProvisions=36;
+        public int Provisions { get; internal set; }=30;
+        public const int MaxProvisions=30;
         public bool Hungry { get; private set; }
         public int Consumption => Player.LivingMembers.Count();
         // Mission-01 adapter only: Keep represents a friendly functioning Healing Building.
@@ -137,7 +137,7 @@ namespace RPG.Core
             if(PlayerNode==1)supplied=Math.Min(6,MaxProvisions-Provisions);
             if(PlayerNode==14&&Waystation==StrategicSiteCondition.Intact)
             {supplied=Math.Min(Math.Min(6,WaystationFood),MaxProvisions-Provisions);WaystationFood-=supplied;}
-            Provisions+=supplied;Log("Supply: consumed "+used+", replenished "+supplied+"; "+Provisions+"/36.");
+            Provisions+=supplied;Log("Supply: consumed "+used+", replenished "+supplied+"; "+Provisions+"/"+MaxProvisions+".");
             var hpBefore=Player.LivingMembers.ToDictionary(c=>c.CharacterId,c=>c.Hp);
             // Location is checked AFTER actor/battle aftermath, exactly once at the completed Refresh.
             int recoveryPercent=RecoveryPercent;

@@ -132,7 +132,8 @@ namespace RPG.Core
         {
             StrategicSaveData.Require(d.refresh>=1&&d.refresh<=1000000&&d.battleNumber>=0&&d.battleNumber<=1000000,"Invalid turn counters.");
             StrategicSaveData.Require(Graph.Node(d.playerNode)!=null&&d.playerNode!=11&&d.tempo>=-40&&d.tempo<=100,"Invalid player position/Tempo.");
-            StrategicSaveData.Require(d.maxProvisions==MaxProvisions&&d.provisions>=0&&d.provisions<=MaxProvisions&&d.waystationFood>=0&&d.waystationFood<=12,"Invalid supply.");
+            StrategicSaveData.Require(d.maxProvisions==MaxProvisions,"Save uses a different Provisions tuning. Start a new Mission 01 (30 Provisions); current session unchanged.");
+            StrategicSaveData.Require(d.provisions>=0&&d.provisions<=MaxProvisions&&d.waystationFood>=0&&d.waystationFood<=12,"Invalid supply.");
             StrategicSaveData.Require(Enum.IsDefined(typeof(StrategicSiteCondition),d.waystation)&&Enum.IsDefined(typeof(StrategicSiteCondition),d.village)
                 &&Enum.IsDefined(typeof(StrategicMissionResult),d.result),"Invalid mission/site state.");
             StrategicSaveData.Require(d.actorCursor>=0&&d.actorCursor<=4&&(!d.worldPhase||d.result!=(int)StrategicMissionResult.Ongoing),"Unstable world phase cannot be loaded.");

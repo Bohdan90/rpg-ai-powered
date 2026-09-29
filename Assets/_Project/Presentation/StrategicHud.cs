@@ -11,7 +11,7 @@ namespace RPG.Presentation
         public VisualElement Root { get; }
         private readonly BattlePresenter presenter;
         private readonly VisualElement map;
-        private readonly Label status,preview,roster,events,saveMessage,recovery;
+        private readonly Label status,preview,roster,events,saveMessage,recovery,intel;
         private readonly Button save,load;
         private readonly Button move,interact,end;
         private readonly VisualElement attacks;
@@ -31,10 +31,11 @@ namespace RPG.Presentation
             foreach(var node in StrategicGraph.Mission01.Nodes)
             {
                 int id=node.Id;var button=Button(map,node.Id.ToString("00")+" "+node.Name,"world-node-"+id,()=>Select(id));
-                button.style.position=Position.Absolute;button.style.width=112;button.style.height=52;button.style.fontSize=12;button.style.whiteSpace=WhiteSpace.Normal;
+                button.style.position=Position.Absolute;button.style.width=112;button.style.height=62;button.style.fontSize=11;button.style.whiteSpace=WhiteSpace.Normal;
                 button.style.color=Color.white;
                 button.style.left=Length.Percent(node.X*11.8f);button.style.top=440-node.Y*64;
             }
+            intel=Label(left,"",13);intel.name="world-intel";
             preview=Label(left,"Select the formation or a destination.",14);preview.name="world-preview";
             move=Button(left,"Move along preview (stop for Hard Guard)","world-move",()=>{if(!presenter.MoveOnWorld(selected))Refresh();});
             interact=Button(left,"Investigate Portal · 5 Tempo, ends activation","world-interact",()=>{presenter.World.InteractPortal();presenter.WorldChanged();});
@@ -73,22 +74,25 @@ namespace RPG.Presentation
             move.SetEnabled(p.IsLegal);interact.SetEnabled(s.CanInteractPortal);end.SetEnabled(s.IsPlayerActivation);
             string result=s.Result==StrategicMissionResult.Ongoing?"Investigate Portal; protect Village; resolve B; return to Keep."
                 :s.Result==StrategicMissionResult.CouncilAssistanceRequested?"SUCCESS · Council assistance requested. Portal remains active.":"DEFEAT · "+(s.Result==StrategicMissionResult.VillageRavaged?"Riverside Village Ravaged":"No continuing formation");
-            status.text="Refresh "+s.Refresh+" · Tempo "+s.Tempo+"\nProvisions "+s.Provisions+" / 36 · Consumption "+s.Consumption+(s.Hungry?" · HUNGRY: movement ×1.25":"")
+            status.text="Refresh "+s.Refresh+" · Tempo "+s.Tempo+"\nProvisions "+s.Provisions+" / "+StrategicScenario.MaxProvisions+" · Consumption "+s.Consumption+" / Refresh"+(s.Hungry?" · HUNGRY: movement ×1.25":"")
                 +"\n"+result+"\nVillage "+s.Village+" · Waystation "+s.Waystation+" (Food "+s.WaystationFood+")"
+                +"\nBaron Keep (01): supply up to 6 / Refresh; +40% Max HP here. No Armor repair."
                 +"\nPortal investigated: "+s.PortalInvestigated+" · Village threat resolved: "+s.VillageThreatResolved
                 +"\nBridge cleared: "+s.BridgeGuardDefeated+"\n"+s.LastBattleSummary;
             roster.text="\nPERSISTENT FORMATION · "+(s.Player.Commanderless?"Commanderless / roster locked":"Commander-led")+"\n"+string.Join("\n",s.Player.Members.Select(c=>
                 c.CharacterId+" · "+c.Profile.Id+" · "+c.Status+"\nHP "+c.Hp+"/"+c.Profile.MaxHp+" · Armor "+c.Armor+"/"+c.Profile.MaxArmor
                 +" · XP "+c.PersonalXp.ToString("0.##")+" L"+c.PersonalLevel+(c.IsCommander?" · Command XP "+c.CommandXp.ToString("0.##")+" L"+c.CommandLevel+" Rank "+c.CommandRank:"")));
-            events.text="\nSCOUT REPORTS / WORLD EVENTS\n"+string.Join("\n",s.Actors.Select(a=>a.Kind+": "+a.Objective+" @ "+a.Node+(a.RaidArmed?" · RAID ARMED":"")))+"\n\n"+string.Join("\n",s.Events.Reverse().Take(18));
+            events.text="\nSCOUT REPORTS / WORLD EVENTS\n"+string.Join("\n",s.Actors.Where(Mission01Intel.Known).Select(a=>Mission01Intel.Name(a.Kind)+": "+Mission01Intel.Intent(a)+" @ "+a.Node+(a.RaidArmed?" · RAID ARMED":"")))+"\n\n"+string.Join("\n",s.Events.Reverse().Take(18));
+            intel.text="KNOWN FORCES · Mission 01 local reports\n"+string.Join("\n",s.Actors.Where(Mission01Intel.Known).Select(a=>Mission01Intel.Force(a)+" · "+Mission01Intel.Intent(a)+" @ "+a.Node));
             attacks.Clear();foreach(var a in s.Actors.Where(a=>s.CanAttack(a.Kind)))
-            {var kind=a.Kind;Button(attacks,"Attack "+kind+" · costs up to 50 Tempo","world-attack-"+kind,()=>{s.Attack(kind);presenter.WorldChanged();});}
+            {var kind=a.Kind;Button(attacks,"Attack "+Mission01Intel.Force(a).Replace("\n"," · ")+" · up to 50 Tempo (nearby forces may join)","world-attack-"+kind,()=>{s.Attack(kind);presenter.WorldChanged();});}
             foreach(var node in s.Graph.Nodes)
             {
-                var button=map.Q<Button>("world-node-"+node.Id);var occupants=s.Actors.Where(a=>a.Active&&a.Node==node.Id).Select(a=>a.Kind.ToString());
-                button.text=node.Id.ToString("00")+" "+node.Name+(s.PlayerNode==node.Id?"\n◆ PLAYER":"")+(occupants.Any()?"\n"+string.Join(" / ",occupants):"");
-                button.style.backgroundColor=s.PlayerNode==node.Id?new Color(.16f,.4f,.57f):occupants.Any()?new Color(.5f,.23f,.16f):new Color(.18f,.24f,.28f);
-                button.tooltip=node.Name+"; adjacent: "+string.Join(", ",s.Graph.Neighbors(node.Id).Select(n=>n+" ("+s.Graph.Cost(node.Id,n,s.Hungry)+")"));
+                var button=map.Q<Button>("world-node-"+node.Id);var occupants=s.Actors.Where(a=>Mission01Intel.Known(a)&&a.Node==node.Id).ToArray();
+                string marker=occupants.Length==1?Mission01Intel.Marker(occupants[0]):occupants.Length>1?occupants.Length+" known forces · see reports":"";
+                button.text=node.Id.ToString("00")+" "+(occupants.Length>0?marker:node.Name)+(s.PlayerNode==node.Id?"\n◆ PLAYER":"");
+                button.style.backgroundColor=s.PlayerNode==node.Id?new Color(.16f,.4f,.57f):occupants.Length>0?new Color(.5f,.23f,.16f):new Color(.18f,.24f,.28f);
+                button.tooltip=string.Join("\n",occupants.Select(Mission01Intel.Force))+"\n"+node.Name+"; adjacent: "+string.Join(", ",s.Graph.Neighbors(node.Id).Select(n=>n+" ("+s.Graph.Cost(node.Id,n,s.Hungry)+")"));
             }
             map.MarkDirtyRepaint();
         }
