@@ -1,0 +1,150 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace RPG.Core
+{
+    // Document 47 prototype adapter. One persistent human-controlled formation per side.
+    public sealed class DuelForce
+    {
+        public PersistentFormation Formation { get; internal set; }
+        public int Node { get; internal set; }
+        public int Tempo { get; internal set; }=100;
+        public int Provisions { get; internal set; }=30;
+        public int Pressure { get; internal set; }
+        public bool Hungry => Provisions==0;
+        public int Consumption => Formation.LivingMembers.Count();
+        public bool Continues => Consumption>0;
+        internal DuelForce(Side side)
+        {
+            Node=side==Side.West?1:13;
+            var profiles=new[]{UnitProfile.HumanWarriorTI,UnitProfile.HumanWarriorTI,UnitProfile.HumanWarriorTI,UnitProfile.HumanWarriorTI,UnitProfile.HumanArcherTI,UnitProfile.HumanArcherTI};
+            Formation=new PersistentFormation("duel-"+side,side,profiles.Select((p,i)=>new PersistentCharacter("duel-"+side+"-"+(i+1),p,i==0)));
+        }
+    }
+    public sealed class DuelEncounter
+    {
+        public Side Attacker { get; }
+        public int WestOrigin { get; }
+        public int EastOrigin { get; }
+        public PersistentBattle Battle { get; }
+        public IReadOnlyDictionary<UnitId,string> Ids { get; }
+        internal DuelEncounter(Side attacker,DuelForce west,DuelForce east,uint seed)
+        {
+            Attacker=attacker;WestOrigin=west.Node;EastOrigin=east.Node;
+            var deployments=new List<PersistentDeployment>();var ids=new Dictionary<UnitId,string>();
+            foreach(var f in new[]{west,east})
+            {
+                bool w=f.Formation.Side==Side.West;int index=0;
+                foreach(var c in f.Formation.LivingMembers)
+                {
+                    var id=new UnitId((w?1:101)+index);ids.Add(id,c.CharacterId);
+                    deployments.Add(new PersistentDeployment(c.CharacterId,id,new GridPosition(w?(c.Profile.IsArcher?1:3):(c.Profile.IsArcher?21:19),1+index*2),w?Facing.East:Facing.West,
+                        f.Tempo<0?RetreatEdge.Unavailable:w?RetreatEdge.West:RetreatEdge.East));index++;
+                }
+            }
+            Ids=ids;Battle=PersistentBattle.Start(west.Formation,east.Formation,deployments,seed,SizeExperimentFixture.Board(SizeExperimentMap.Field_23x17_Full_9v9));
+        }
+    }
+    public sealed partial class CrossroadsScenario
+    {
+        public static readonly StrategicGraph Map=new StrategicGraph(new[]{
+            new StrategicNode(1,"West Keep",0,2),new StrategicNode(2,"West Road",1,2),new StrategicNode(3,"West Fork",2,2),
+            new StrategicNode(4,"NW Ridge",3,4),new StrategicNode(5,"SW Ford",3,0),new StrategicNode(6,"North Mine",4,4),
+            new StrategicNode(7,"Central Beacon",4,2),new StrategicNode(8,"South Waystation",4,0),new StrategicNode(9,"NE Ridge",5,4),
+            new StrategicNode(10,"SE Ford",5,0),new StrategicNode(11,"East Fork",6,2),new StrategicNode(12,"East Road",7,2),new StrategicNode(13,"East Keep",8,2)},
+            new[]{new StrategicEdge(1,2,20),new StrategicEdge(2,3,20),new StrategicEdge(3,4,20),new StrategicEdge(3,5,20),new StrategicEdge(3,7,35),
+                new StrategicEdge(4,6,20),new StrategicEdge(5,8,20),new StrategicEdge(6,7,25),new StrategicEdge(8,7,25),new StrategicEdge(6,9,20),
+                new StrategicEdge(8,10,20),new StrategicEdge(7,11,35),new StrategicEdge(9,11,20),new StrategicEdge(10,11,20),new StrategicEdge(11,12,20),new StrategicEdge(12,13,20)});
+        public const int MaxProvisions=30, PressureTarget=8;
+        public DuelForce West { get; private set; }=new DuelForce(Side.West);
+        public DuelForce East { get; private set; }=new DuelForce(Side.East);
+        public Side StartingSide { get; }
+        public Side ActiveSide { get; private set; }
+        public int Refresh { get; private set; }=1;
+        public int CompletedActivations { get; private set; }
+        public bool HandoffPending { get; private set; }
+        public Side? Winner { get; private set; }
+        public DuelEncounter Encounter { get; private set; }
+        public uint Seed { get; }
+        private int battleNumber;
+        private readonly Side?[] owners=new Side?[3];
+        private readonly List<string> events=new List<string>();
+        public IReadOnlyList<string> Events=>events.AsReadOnly();
+        public bool CanSave=>Encounter==null;
+        public CrossroadsScenario(Side startingSide=Side.West,uint seed=20260929)
+        {if(!ValidSide(startingSide))throw new ArgumentOutOfRangeException(nameof(startingSide));StartingSide=ActiveSide=startingSide;Seed=seed;}
+        internal static bool ValidSide(Side side)=>side==Side.West||side==Side.East;
+        public static Side Other(Side side)=>side==Side.West?Side.East:Side.West;
+        public DuelForce Force(Side side)=>side==Side.West?West:side==Side.East?East:throw new ArgumentOutOfRangeException(nameof(side));
+        public Side? Owner(int node)=>node>=6&&node<=8?owners[node-6]:null;
+        public int OwnKeep(Side side)=>side==Side.West?1:13;
+        public bool KeepAvailable(Side side)=>!Force(Other(side)).Continues||Force(Other(side)).Node!=OwnKeep(side);
+        public int RecoveryPercent(Side side)=>Force(side).Node==OwnKeep(side)&&KeepAvailable(side)?40:15;
+        public bool CanAct(Side side)=>ValidSide(side)&&side==ActiveSide&&!HandoffPending&&Encounter==null&&!Winner.HasValue&&Force(side).Continues;
+        private void Log(string text)=>events.Add("R"+Refresh+" "+text);
+        public bool ContinueHandoff(Side side)
+        {if(!HandoffPending||side!=ActiveSide||Winner.HasValue||Encounter!=null)return false;HandoffPending=false;return true;}
+        public StrategicMovePreview PreviewMove(Side side,int destination)
+        {
+            var p=new StrategicMovePreview();if(!CanAct(side)){p.Reason="No active side authority.";return p;}
+            var f=Force(side);var enemy=Force(Other(side));
+            if(Map.Node(destination)==null||destination==f.Node){p.Reason="Choose another graph node.";return p;}
+            p.Path=Map.Path(f.Node,destination,n=>!enemy.Continues||n!=enemy.Node,f.Hungry);
+            if(p.Path.Length<2){p.Reason="Occupied or unreachable destination.";return p;}
+            p.Cost=Map.PathCost(p.Path,f.Hungry);if(p.Cost>f.Tempo)p.Reason="Insufficient Tempo: "+p.Cost+" required.";return p;
+        }
+        public bool Move(Side side,int destination)
+        {var p=PreviewMove(side,destination);if(!p.IsLegal)return false;var f=Force(side);f.Tempo-=p.Cost;f.Node=destination;Log(side+" moves to "+destination+" for "+p.Cost);return true;}
+        public bool HostileContact=>West.Continues&&East.Continues&&Map.Cost(West.Node,East.Node)>=0;
+        public bool CanAttack(Side side)=>CanAct(side)&&HostileContact&&Force(side).Tempo>=0;
+        public bool Attack(Side side)
+        {if(!CanAttack(side))return false;Force(side).Tempo=StrategicScenario.AfterAttackCost(Force(side).Tempo);Encounter=new DuelEncounter(side,West,East,Seed+(uint)++battleNumber);Log(side+" attacks; tactical Hotseat");return true;}
+        public int RetreatDestination(Side side,int origin,int enemyNode)
+        {return Map.Nodes.Where(n=>n.Id!=origin&&n.Id!=enemyNode&&Map.Hops(origin,n.Id)<=2)
+            .OrderByDescending(n=>Map.Hops(n.Id,enemyNode)).ThenBy(n=>Map.PathCost(Map.Path(origin,n.Id))).ThenBy(n=>n.Id).Select(n=>n.Id).DefaultIfEmpty(origin).First();}
+        public bool Withdraw(Side side)
+        {
+            if(!CanAttack(side))return false;var f=Force(side);f.Node=RetreatDestination(side,f.Node,Force(Other(side)).Node);f.Tempo-=40;
+            Log(side+" strategic Withdrawal to "+f.Node+"; Tempo "+f.Tempo);return true;
+        }
+        public bool ResolveBattle(BattleState result)
+        {
+            var e=Encounter;if(e==null||result==null||!result.Outcome.IsEnded)return false;
+            var start=e.Battle.State;
+            if(result.InitialSeed!=start.InitialSeed||result.Units.Count!=start.Units.Count||result.Units.Any(u=>!start.Units.Any(v=>v.Id==u.Id&&v.Profile.Id==u.Profile.Id&&v.Side==u.Side)))return false;
+            e.Battle.Resolve(result);
+            foreach(var side in new[]{Side.West,Side.East})
+            {
+                var units=result.Units.Where(u=>u.Side==side).ToArray();var f=Force(side);
+                if(units.Any(u=>u.Status==UnitStatus.Escaped)&&units.All(u=>!u.IsActive))
+                {int origin=side==Side.West?e.WestOrigin:e.EastOrigin;f.Node=RetreatDestination(side,origin,Force(Other(side)).Node);f.Tempo-=40;Log(side+" tactical Withdrawal to "+f.Node+"; Tempo "+f.Tempo);}
+            }
+            var defender=Force(Other(e.Attacker));int target=e.Attacker==Side.West?e.EastOrigin:e.WestOrigin;
+            if(result.Outcome.VictorySide==e.Attacker&&(!defender.Continues||defender.Node!=target))Force(e.Attacker).Node=target;
+            Log("Battle "+battleNumber+": "+result.Outcome.VictorySide+" / "+result.Outcome.Reason+". Same IDs, HP/Armor and XP; no recovery.");
+            Encounter=null;if(!West.Continues)Winner=Side.East;else if(!East.Continues)Winner=Side.West;return true;
+        }
+        public bool EndActivation(Side side)
+        {
+            if(!CanAct(side))return false;int n=Force(side).Node;
+            if(n>=6&&n<=8){owners[n-6]=side;Log(side+" claims "+Map.Node(n).Name);}
+            CompletedActivations++;
+            if(CompletedActivations==2)CompleteRefresh();else ActiveSide=Other(StartingSide);
+            HandoffPending=!Winner.HasValue;return true;
+        }
+        private void CompleteRefresh()
+        {
+            foreach(var owner in owners)if(owner.HasValue)Force(owner.Value).Pressure++;
+            if(Math.Max(West.Pressure,East.Pressure)>=PressureTarget&&West.Pressure!=East.Pressure)Winner=West.Pressure>East.Pressure?Side.West:Side.East;
+            foreach(var side in new[]{Side.West,Side.East})
+            {
+                var f=Force(side);int used=f.Consumption;f.Provisions=Math.Max(0,f.Provisions-used);
+                int supplied=f.Node==OwnKeep(side)&&KeepAvailable(side)?Math.Min(6,MaxProvisions-f.Provisions):0;f.Provisions+=supplied;
+                if(RecoveryPercent(side)==40)f.Formation.ApplyOneHealingBuildingStrategicRefresh();else f.Formation.ApplyOneFieldStrategicRefresh();
+                Log(side+" supply -"+used+" +"+supplied+"; recovery "+RecoveryPercent(side)+"%, Armor unchanged");f.Tempo=100+Math.Min(0,f.Tempo);
+            }
+            Refresh++;CompletedActivations=0;ActiveSide=StartingSide;
+        }
+    }
+}

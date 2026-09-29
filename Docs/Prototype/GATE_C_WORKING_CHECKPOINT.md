@@ -3,6 +3,14 @@
 Updated 2026-09-29. Single implementation handoff; Google Drive thematic owners retain
 priority for canon. Follow repository `AGENTS.md` and the efficiency protocol.
 
+## Connected Playable 02 — Crossroads Hotseat (document47 Part A)
+
+- Starting `develop` / `55a269a`. Coordinator accepts Gate-C connected single-player slice **KEEP**. Latest Drive44/46 authorize document47 Part A → Part B autonomously; prior stop notices below are historical.
+- Part A implemented: exact symmetric13-node graph, two human6-body persistent formations, fixed configurable StartingSide, authority/handoff, global Refresh, contested claims, Pressure8/tie, current Attack/Withdrawal/debt, tactical Hotseat bridge, attacker advance/defender hold, stable two-sided save/load. No Mission01 or combat tuning change.
+- Provisions30/30, living body cost1, ownKeep supply6; HP field15/ownKeep40 at completed Refresh only, Armor unchanged. Separate Crossroads manual slot preserves Mission01.
+- Validation: focused17 EditMode +3 PlayMode PASS; full388 EditMode +55 PlayMode =443 PASS, zero failed/skipped. Mouse match West9:East8 afterR6, three recaptures, decline attack, tactical physical escape, same persistent IDs/XP, mid-Refresh save/recreate/load exact; replay12commands matches. East-first mirror smokePASS.
+- Report: [STRATEGIC_CONNECTED_PLAYABLE_02_03.md](STRATEGIC_CONNECTED_PLAYABLE_02_03.md). Commit title `Strategy: add Crossroads persistent strategic Hotseat`. Unrelated scene/settings/six.meta preserved; NO PUSH. **Continue directly Part B**, then integrated user gate; no broader systems.
+
 ## WP-03E — tactical AI retreat / wall stall
 
 - From `develop` / `e7036eb15a8ae2b929d3c5f06514512cfe61d2f5`. User accepts current graybox combat, Provisions and threat readability; only tactical AI defect addressed.

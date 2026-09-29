@@ -88,6 +88,9 @@ namespace RPG.Presentation
             AddButton(panel,"Start Persistence Slice v0.1","persistence-start",presenter.StartPersistenceSlice);
             AddButton(panel,"Start Connected Mission 01","world-start",presenter.StartStrategicScenario);
             AddButton(panel,"Load saved Mission 01","world-load",()=>presenter.LoadStrategic());
+            AddButton(panel,"Crossroads Hotseat · West first","duel-start-west",()=>presenter.StartDuel(Side.West));
+            AddButton(panel,"Crossroads Hotseat · East first","duel-start-east",()=>presenter.StartDuel(Side.East));
+            AddButton(panel,"Load Crossroads Hotseat","duel-load",()=>presenter.LoadDuel());
             persistence=Text(panel,"",12);persistence.name="persistence-summary";
             persistenceContinue=AddButton(panel,"Continue Persistence Battle","persistence-continue",presenter.ContinuePersistenceSlice);
             Text(panel, "Size/density experiment · no combat retuning. 9v9 = synthetic tactical roster, not strategic Capacity validation. Siege: static fortress; moat proxy has fixed crossings. 41×39 preserves each attacker approach; West = attacker coalition, East = defenders. No real siege mechanics.", 12);
@@ -134,9 +137,9 @@ namespace RPG.Presentation
             if (hoveredCell.HasValue) hover.text = presenter.Hover(hoveredCell.Value);
             bool ended = state.Outcome.IsEnded;
             bool playerTurn = !presenter.IsAiTurn;
-            bool connected=presenter.World!=null;
+            bool connected=presenter.World!=null||presenter.Duel!=null;
             Root.Q("world-return").style.display=connected?DisplayStyle.Flex:DisplayStyle.None;
-            foreach(string controlName in new[]{"fixture-selector","controller-mode","persistence-start","restart","outcome-restart","world-start","world-load"})Root.Q(controlName).SetEnabled(!connected);
+            foreach(string controlName in new[]{"fixture-selector","controller-mode","persistence-start","restart","outcome-restart","world-start","world-load","duel-start-west","duel-start-east","duel-load"})Root.Q(controlName).SetEnabled(!connected);
             Root.Q<DropdownField>("controller-mode").SetValueWithoutNotify(presenter.PlayerVsAi?(presenter.AiSide==Side.East?"Player West vs AI East":"Player East vs AI West"):"Hotseat");
             aiInfo.text=presenter.PlayerVsAi?presenter.AiExplanation:"Hotseat";
             rangeInfo.text=presenter.RangedReachMessage;

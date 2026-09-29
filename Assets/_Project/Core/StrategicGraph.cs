@@ -25,6 +25,8 @@ namespace RPG.Core
         public ReadOnlyCollection<StrategicNode> Nodes { get; }
         public ReadOnlyCollection<StrategicEdge> Edges { get; }
         public static readonly StrategicGraph Mission01 = new StrategicGraph();
+        internal StrategicGraph(StrategicNode[] nodes, StrategicEdge[] edges)
+        { Nodes=Array.AsReadOnly(nodes); Edges=Array.AsReadOnly(edges); }
         private StrategicGraph()
         {
             Nodes=Array.AsReadOnly(new[] {

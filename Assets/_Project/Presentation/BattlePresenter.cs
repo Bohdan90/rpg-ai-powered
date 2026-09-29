@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 
 namespace RPG.Presentation
 {
-    public sealed class BattlePresenter : MonoBehaviour
+    public sealed partial class BattlePresenter : MonoBehaviour
     {
         [SerializeField] private PanelSettings panelSettings;
         [SerializeField] private Shader unlitShader;
@@ -32,7 +32,7 @@ namespace RPG.Presentation
         }
         public bool LoadStrategic(string path=null)
         {
-            if(World!=null&&!World.CanSave){StrategicSaveMessage="Finish the tactical battle and return to World before loading.";return false;}
+            if((World!=null&&!World.CanSave)||(Duel!=null&&!Duel.CanSave)){StrategicSaveMessage="Finish the tactical battle and return to World before loading.";return false;}
             bool ok=StrategicSaveFiles.TryLoad(path??StrategicSaveFiles.ManualSlot,out var restored,out var message);
             StrategicSaveMessage=message;
             if(ok)ShowStrategicScenario(restored);else {Message=message;worldHud?.Refresh();Refresh();}
@@ -40,18 +40,19 @@ namespace RPG.Presentation
         }
         private PersistentCharacter ConnectedCharacter(UnitId id)
         {
+            if(Duel!=null&&loadedDuel!=null){return loadedDuel.Ids.TryGetValue(id,out var keyId)?Duel.West.Formation.Members.Concat(Duel.East.Formation.Members).FirstOrDefault(c=>c.CharacterId==keyId):null;}
             if(World==null||loadedEncounter==null)return null;
             string key=loadedEncounter.UnitIds.FirstOrDefault(k=>k.Value==id).Key;
             return World.Player.Members.Concat(World.Actors.SelectMany(a=>a.Formation.Members)).FirstOrDefault(c=>c.CharacterId==key);
         }
         public string UnitName(UnitId id)
         {var c=ConnectedCharacter(id);return c==null?PrototypeFixture.Name(id):c.CharacterId+" · "+c.Profile.Id+(c.IsCommander?" *":"");}
-        public bool IsCommander(UnitId id)=>World==null?(id.Value==1||id.Value==6||id.Value==19):ConnectedCharacter(id)?.IsCommander==true;
+        public bool IsCommander(UnitId id)=>World==null&&Duel==null?(id.Value==1||id.Value==6||id.Value==19):ConnectedCharacter(id)?.IsCommander==true;
         public void StartStrategicScenario()
         {StrategicSaveMessage="One manual slot · strategic map only.";ShowStrategicScenario(new StrategicScenario());}
         private void ShowStrategicScenario(StrategicScenario scenario)
         {
-            persistence=null;PlayerVsAi=false;World=scenario;loadedEncounter=null;
+            duelHud?.Root.RemoveFromHierarchy();Duel=null;loadedDuel=null;persistence=null;PlayerVsAi=false;World=scenario;loadedEncounter=null;
             worldHud?.Root.RemoveFromHierarchy();worldHud=new StrategicHud(hud.Root,this);WorldChanged();
         }
         public void WorldChanged()
@@ -70,11 +71,11 @@ namespace RPG.Presentation
             worldHud?.Refresh();
         }
         public void ReturnToWorld()
-        {if(World!=null&&World.ResolveBattle(State))WorldChanged();}
+        {if(Duel!=null){if(Duel.ResolveBattle(State))DuelChanged();return;}if(World!=null&&World.ResolveBattle(State))WorldChanged();}
         public void SelectWorldNode(int node)=>worldHud?.Select(node);
         public bool MoveOnWorld(int node)
         {if(World==null||!World.Move(node))return false;WorldChanged();return true;}
-        public void SetPlayerVsAi(bool enabled, Side side=Side.East) { AiSide=side; PlayerVsAi=enabled; nextAiTime=Time.unscaledTime+.4f; ClearPreview(); Refresh(); }
+        public void SetPlayerVsAi(bool enabled, Side side=Side.East) { AiSide=side; PlayerVsAi=enabled&&Duel==null; nextAiTime=Time.unscaledTime+.4f; ClearPreview(); Refresh(); }
         public BattleResult StepAi()
         {
             if(!IsAiTurn)return null;
@@ -94,7 +95,7 @@ namespace RPG.Presentation
         public string PersistenceSummary => persistence == null ? "" : persistence.Summary();
         public void StartPersistenceSlice()
         {
-            if(World!=null)return;
+            if(World!=null||Duel!=null)return;
             persistence = new PersistenceSliceScenario(); persistenceResolved = false;
             LoadPersistenceBattle(persistence.StartFirstBattle());
         }
@@ -190,14 +191,14 @@ namespace RPG.Presentation
 
         public void ConfigureFixture(SizeExperimentMap map)
         {
-            if(World!=null)return;
+            if(World!=null||Duel!=null)return;
             persistence=null;
             Fixture = map;
             ConfigureBattle(SizeExperimentFixture.Units(map), SizeExperimentFixture.Board(map), PrototypeFixture.Seed);
         }
         public void ConfigureFixture(bool controlMap)
         {
-            if(World!=null)return;
+            if(World!=null||Duel!=null)return;
             persistence=null;
             Fixture = SizeExperimentMap.Field_13x9_Control;
             ConfigureBattle(PrototypeFixture.Units(), controlMap ? Battlefield.ControlMap : Battlefield.BaseMap, PrototypeFixture.Seed);
@@ -205,13 +206,13 @@ namespace RPG.Presentation
         // An explicit initial fixture seam, also used by PlayMode integration tests; no rule implementation.
         public void ConfigureBattle(IEnumerable<UnitState> units, Battlefield board, uint seed)
         {
-            if(World!=null)return;
+            if(World!=null||Duel!=null)return;
             persistence=null;
             initialUnits = units.ToArray(); initialBoard = board; initialSeed = seed; RestartSameSeed();
         }
         public void RestartSameSeed()
         {
-            if(World!=null)return;
+            if(World!=null||Duel!=null)return;
             LastAttackOutcome = "";
             var result = BattleResolver.StartBattle(initialUnits, initialSeed, initialBoard);
             State = result.State; Journal=new BattleJournal(State,Fixture.ToString(),Application.version+" / Unity "+Application.unityVersion,PlayerVsAi&&AiSide==Side.West?"AI":"Player",PlayerVsAi&&AiSide==Side.East?"AI":"Player"); AiExplanation="No AI decision yet."; nextAiTime=Time.unscaledTime+.4f; log.Clear(); Append(result.Events); Message = "Restarted with seed " + initialSeed + ".";
