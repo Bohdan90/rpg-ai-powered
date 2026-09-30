@@ -9,3 +9,5 @@ Applies to melee, Bow, primary Fire Stream/Ice Shard, explicit spells and moveme
 Live movement previews now render the actual Core path/OA risk. Basic attack target cells are highlighted; spell footprints remain Core exact. Spent-Action UI fix retained. No Core combat/path/range/Action/RNG/replay/persistence rules changed.
 
 Focused10 PlayMode PASS: prior spell UX/Fire Armor/spent-Action/replay coverage plus movement hover/pin/reselection/leave/commit, melee/ranged/Fire/Ice target pinning, empty ground spell, cancel/action changes and explicit Friendly Fire. Hash/journal checks distinguish preview from committed commands. Fresh full585 EditMode +77 PlayMode =662 PASS,0 failed,0 skipped. Full suite provenance is in `Evidence/TWO-CLICK-TACTICAL/validation-manifest.json`. Mouse-driven manual validation NOT RUN; actual Presentation/UI is covered in automated PlayMode. No user window clicks/restart for testing.
+
+Delivery: main `My project/develop` fast-forwarded `3271802 → f33aae1`; tested source identical, nine unrelated files unchanged. No forced Unity restart or mouse input. Main integration evidence: `Evidence/TWO-CLICK-TACTICAL/main-integration.json`. NO PUSH.

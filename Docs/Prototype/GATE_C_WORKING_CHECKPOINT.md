@@ -2,7 +2,7 @@
 
 ## 2026-09-30 — unified two-click tactical input
 
-User replaces historical single-click primary-spell input: hover previews; first click pins path/target/area; second click on the same cell executes. Another cell replaces the pin, pointer leave preserves pinned geometry, cancel/action/activation changes clear it. Transient hover cannot execute via Confirm. Basic attacks, Bow, primary/special spells and movement use the same contract. Explicit Friendly Fire confirmation retained. Core rules unchanged. Starting main3271802; focused10PlayModePASS; full585 EditMode +77 PlayMode =662 PASS,0 failed/skipped; fresh results and delivery in `TWO_CLICK_TACTICAL.md` / `Evidence/TWO-CLICK-TACTICAL/validation-manifest.json`. NO PUSH.
+User replaces historical single-click primary-spell input: hover previews; first click pins path/target/area; second click on the same cell executes. Another cell replaces the pin, pointer leave preserves pinned geometry, cancel/action/activation changes clear it. Transient hover cannot execute via Confirm. Basic attacks, Bow, primary/special spells and movement use the same contract. Explicit Friendly Fire confirmation retained. Core rules unchanged. Main delivered by fast-forward3271802→f33aae1, tested source hashes identical and nine unrelated files unchanged; focused10PlayModePASS; full585 EditMode +77 PlayMode =662 PASS,0 failed/skipped; fresh results and delivery in `TWO_CLICK_TACTICAL.md` / `Evidence/TWO-CLICK-TACTICAL/validation-manifest.json`. NO PUSH.
 
 ## 2026-09-30 — spent spell Action readability
 
