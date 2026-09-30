@@ -7,7 +7,7 @@ namespace RPG.Presentation
     public static class Mission01Intel
     {
         public static bool Known(StrategicActor actor)=>actor.Active;
-        public static string ProfileLabel(UnitProfile p)=>p.IsArcher?"HA":p.Id==UnitProfileId.ElfWarriorTI?"EW":"HW";
+        public static string ProfileLabel(UnitProfile p)=>p.IsArcher?"HA":p.IsElf?(p.Tier==2?"EW II":"EW"):p.IsFireMage?"Fire "+p.Tier:p.IsIceMage?"Ice "+p.Tier:p.Id==UnitProfileId.HumanHealerTI?"HH":"HW";
         public static string Name(StrategicActorKind kind)
         {
             switch(kind){case StrategicActorKind.HardGuard:return "Old Bridge Guard";

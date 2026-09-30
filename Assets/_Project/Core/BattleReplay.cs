@@ -19,18 +19,18 @@ namespace RPG.Core
         public int id,side,profile,x,y,facing,hp,armor,status,movement,spent;
         public bool action,oa,defending;
         public uint tie;
+        public int TemporaryBarrier,BarrierActivations,BurnStacks,BurnTicks,PoisonStacks,BleedStacks,FrozenActivations,ExhaustedActivations,FireballUsed,FreezeUsed,CloseHealUsed;
+        public bool fireProtection; public int exitTarget;
         public static ReplayUnit Capture(UnitState u)=>new ReplayUnit { retreatEdge=u.OwnRetreatEdge.HasValue?(int)u.OwnRetreatEdge.Value:-1,id=u.Id.Value,side=(int)u.Side,profile=(int)u.Profile.Id,
             x=u.Position.X,y=u.Position.Y,facing=(int)u.Facing,hp=u.Hp,armor=u.Armor,status=(int)u.Status,
             movement=u.MovementRemaining,spent=u.MovementSpentThisActivation,action=u.ActionAvailable,oa=u.OpportunityAttackAvailable,
-            defending=u.IsDefending,tie=u.TieKey };
+            defending=u.IsDefending,tie=u.TieKey,fireProtection=u.FireProtection,exitTarget=u.GracefulExitTarget?.Value??0,
+            TemporaryBarrier=u.TemporaryBarrier,BarrierActivations=u.BarrierActivations,BurnStacks=u.BurnStacks,BurnTicks=u.BurnTicks,PoisonStacks=u.PoisonStacks,BleedStacks=u.BleedStacks,FrozenActivations=u.FrozenActivations,ExhaustedActivations=u.ExhaustedActivations,FireballUsed=u.FireballUsed,FreezeUsed=u.FreezeUsed,CloseHealUsed=u.CloseHealUsed };
         internal UnitState Restore()
         {
-            UnitProfile p;
-            switch((UnitProfileId)profile) { case UnitProfileId.HumanWarriorTI:p=UnitProfile.HumanWarriorTI;break;
-                case UnitProfileId.HumanArcherTI:p=UnitProfile.HumanArcherTI;break;case UnitProfileId.ElfWarriorTI:p=UnitProfile.ElfWarriorTI;break;
-                default:throw new InvalidDataException("Unknown profile"); }
+            var p=UnitProfile.Get((UnitProfileId)profile);
             return new UnitState(new UnitId(id),(Side)side,p,new GridPosition(x,y),(Facing)facing,hp,armor,(UnitStatus)status,retreatEdge<0?(RetreatEdge?)null:(RetreatEdge)retreatEdge) {
-                MovementRemaining=movement,MovementSpentThisActivation=spent,ActionAvailable=action,OpportunityAttackAvailable=oa,IsDefending=defending,TieKey=tie };
+                MovementRemaining=movement,MovementSpentThisActivation=spent,ActionAvailable=action,OpportunityAttackAvailable=oa,IsDefending=defending,TieKey=tie,FireProtection=fireProtection,GracefulExitTarget=exitTarget==0?(UnitId?)null:new UnitId(exitTarget),TemporaryBarrier=TemporaryBarrier,BarrierActivations=BarrierActivations,BurnStacks=BurnStacks,BurnTicks=BurnTicks,PoisonStacks=PoisonStacks,BleedStacks=BleedStacks,FrozenActivations=FrozenActivations,ExhaustedActivations=ExhaustedActivations,FireballUsed=FireballUsed,FreezeUsed=FreezeUsed,CloseHealUsed=CloseHealUsed };
         }
     }
     [Serializable] public sealed class ReplaySnapshot
@@ -50,12 +50,12 @@ namespace RPG.Core
             loser=s.Outcome.DefeatedSide.HasValue?(int)s.Outcome.DefeatedSide.Value:-1,outcome=(int)s.Outcome.Reason };
         public BattleState Restore()
         {
-            var s=new BattleState(units.Select(u=>u.Restore()),seed,new Battlefield(columns,rows,solids.Select(p=>p.Position()),eastPerimeter));
+            var s=new BattleState(units.Select(u=>u.Restore()),seed,new Battlefield(columns,rows,solids.Select(p=>p.Position()),eastPerimeter),completedMutualElimination:outcome==(int)BattleEndReason.MutualElimination);
             // Constructor seeds priority for fresh battles; replay restores the explicit initial snapshot.
             foreach(var data in units) { var u=s.FindUnit(new UnitId(data.id));u.TieKey=data.tie;u.OpportunityAttackAvailable=data.oa; }
             s.Random=new CombatRandom(rng);s.Round=round;s.CurrentUnitId=currentActor==0?(UnitId?)null:new UnitId(currentActor);
             s.PriorityIndex=priorityIndex;s.PriorityOrder.Clear();s.PriorityOrder.AddRange(priority.Select(id=>new UnitId(id)));
-            s.Outcome=outcome==0?BattleOutcome.Ongoing:new BattleOutcome((Side)winner,(Side)loser,(BattleEndReason)outcome);return s;
+            s.Outcome=outcome==0?BattleOutcome.Ongoing:outcome==(int)BattleEndReason.MutualElimination?BattleOutcome.Draw:new BattleOutcome((Side)winner,(Side)loser,(BattleEndReason)outcome);return s;
         }
     }
     public static class BattleStateHash
@@ -75,6 +75,9 @@ namespace RPG.Core
                 {
                     foreach(int v in new[]{u.id,u.side,u.profile,u.x,u.y,u.facing,u.hp,u.armor,u.status,u.movement,u.spent,u.retreatEdge})w.Write(v);
                     w.Write(u.action);w.Write(u.oa);w.Write(u.defending);w.Write(u.tie);
+                    if(state.Units.Any(v=>v.Profile.IsCaster||v.Profile.HasGracefulExit)) {
+                        w.Write(u.TemporaryBarrier);w.Write(u.BarrierActivations);w.Write(u.BurnStacks);w.Write(u.BurnTicks);w.Write(u.PoisonStacks);w.Write(u.BleedStacks);w.Write(u.FrozenActivations);w.Write(u.ExhaustedActivations);w.Write(u.FireballUsed);w.Write(u.FreezeUsed);w.Write(u.CloseHealUsed);w.Write(u.fireProtection);w.Write(u.exitTarget);
+                    }
                     var p=state.FindUnit(new UnitId(u.id)).Profile;
                     foreach(int v in new[]{p.MaxHp,p.MaxArmor,p.Movement,p.Initiative,p.Accuracy,p.Dodge,p.Guard,p.BasicDamage,p.Range,p.FrontalEvasion,p.CoverSize})w.Write(v);
                 }
@@ -85,13 +88,14 @@ namespace RPG.Core
     [Serializable] public sealed class ReplayCommand
     {
         public string kind;
-        public int actor,target,attackKind,facing;
+        public int actor,target,attackKind,facing,spell,cx,cy;
         public bool friendly,hasFacing;
         public ReplayCell[] path;
         public static ReplayCommand Capture(BattleCommand c)
         {
             var d=new ReplayCommand{kind=c?.GetType().Name??"Null",actor=c?.Actor.Value??0};
             if(c is BasicAttackCommand a){d.target=a.Target.Value;d.attackKind=(int)a.Kind;d.friendly=a.FriendlyFireConfirmed;}
+            if(c is CastCommand cast){d.spell=(int)cast.Spell;d.cx=cast.Cell.X;d.cy=cast.Cell.Y;d.friendly=cast.FriendlyFireConfirmed;}
             if(c is MoveCommand m)d.path=m.Path?.Select(p=>new ReplayCell(p)).ToArray();
             if(c is EndActivationCommand e){d.hasFacing=e.FinalFacing.HasValue;d.facing=(int)(e.FinalFacing??Facing.North);}return d;
         }
@@ -100,6 +104,7 @@ namespace RPG.Core
             if(kind=="Null")return null;
             var id=new UnitId(actor);
             switch(kind){case nameof(BasicAttackCommand):return new BasicAttackCommand(id,new UnitId(target),friendly,(BasicAttackKind)attackKind);
+                case nameof(CastCommand):return new CastCommand(id,(SpellId)spell,new GridPosition(cx,cy),friendly);
                 case nameof(MoveCommand):return new MoveCommand(id,path?.Select(p=>p.Position()));
                 case nameof(DefendCommand):return new DefendCommand(id);
                 case nameof(EndActivationCommand):return new EndActivationCommand(id,hasFacing?(Facing?)facing:null);
@@ -121,7 +126,7 @@ namespace RPG.Core
     [Serializable] public sealed class ReplayChange { public ReplayUnit before,after;public int hpDelta,armorDelta; }
     [Serializable] public sealed class ReplayHeader
     {
-        public string type="header",configVersion="GateC-v0.1-HA10-fallback5-AI1-directional-retreat",buildVersion,fixture,westController,eastController,initialHash;
+        public string type="header",configVersion="GateC-v0.1-HA10-fallback5-AI1-directional-retreat-51-spells1",buildVersion,fixture,westController,eastController,initialHash;
         public int formatVersion=2;
         public uint seed;
         public ReplaySnapshot initial;

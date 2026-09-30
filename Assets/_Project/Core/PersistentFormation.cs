@@ -13,7 +13,7 @@ namespace RPG.Core
     public sealed class PersistentCharacter
     {
         public string CharacterId { get; }
-        public UnitProfile Profile { get; }
+        public UnitProfile Profile { get; private set; }
         public bool IsCommander { get; }
         public int Hp { get; private set; }
         public int Armor { get; private set; }
@@ -44,10 +44,20 @@ namespace RPG.Core
             FieldRecoveryRemainderHundredths = fieldRecoveryRemainderHundredths;
         }
 
+        public int FireballUsed { get; internal set; }
+        public int FreezeUsed { get; internal set; }
+        public int CloseHealUsed { get; internal set; }
+        internal void RepairArmor(int amount) { if(Status!=PersistentCharacterStatus.Dead)Armor=Math.Min(Profile.MaxArmor,Armor+amount); }
+        internal void ResetSourceBudgets() { FireballUsed=0;FreezeUsed=0;CloseHealUsed=0; }
+        internal void TrainMageTierII() {
+            if(Status==PersistentCharacterStatus.Dead || PersonalLevel<3 || Profile.Tier!=1 || (!Profile.IsFireMage&&!Profile.IsIceMage))throw new InvalidOperationException("Ineligible persistent mage.");
+            Profile=Profile.IsFireMage?UnitProfile.FireMageTII:UnitProfile.IceMageTII;
+            Hp=Math.Min(Hp,Profile.MaxHp);Armor=Math.Min(Armor,Profile.MaxArmor);
+        }
         internal void SetBattleResult(UnitState unit)
         {
             if (unit == null) throw new ArgumentNullException(nameof(unit));
-            Hp = unit.Hp; Armor = unit.Armor;
+            Hp = unit.Hp; Armor = unit.Armor; FireballUsed=unit.FireballUsed;FreezeUsed=unit.FreezeUsed;CloseHealUsed=unit.CloseHealUsed;
             Status = unit.Status == UnitStatus.Dead ? PersistentCharacterStatus.Dead
                 : unit.Status == UnitStatus.Escaped ? PersistentCharacterStatus.EscapedSafe : PersistentCharacterStatus.Alive;
         }
@@ -160,7 +170,7 @@ namespace RPG.Core
                 if (character.Status == PersistentCharacterStatus.Dead) continue;
                 if (map.ContainsKey(d.UnitId)) throw new ArgumentException("Duplicate tactical unit ID.");
                 var side = west.Any(f=>f.Members.Contains(character)) ? Side.West : Side.East;
-                units.Add(new UnitState(d.UnitId, side, character.Profile, d.Position, d.Facing, character.Hp, character.Armor, UnitStatus.Active, d.OwnRetreatEdge));
+                units.Add(new UnitState(d.UnitId, side, character.Profile, d.Position, d.Facing, character.Hp, character.Armor, UnitStatus.Active, d.OwnRetreatEdge) { FireballUsed=character.FireballUsed,FreezeUsed=character.FreezeUsed,CloseHealUsed=character.CloseHealUsed });
                 map.Add(d.UnitId, character);
             }
             if (units.Count(u => u.Side == Side.West) == 0 || units.Count(u => u.Side == Side.East) == 0) throw new InvalidOperationException("Both persistent formations need a living deployed member.");
@@ -211,7 +221,7 @@ namespace RPG.Core
         {
             decimal ratio = enemy / own; return Math.Min(1.5m, Math.Max(1m, 1m + .5m * (ratio - 1m)));
         }
-        public static decimal BasePower(PersistentCharacter character) => 10m + .2m * character.PersonalLevel; // All accepted slice profiles remain Tier I.
+        public static decimal BasePower(PersistentCharacter character) => (character.Profile.Tier==2?13m:10m) + .2m * character.PersonalLevel;
         private static decimal EffectivePower(IEnumerable<UnitState> units, Dictionary<UnitId, PersistentCharacter> characters) => units.Sum(u => {
             decimal denominator = 1.5m * u.Profile.MaxHp + u.Profile.MaxArmor;
             decimal durability = (1.5m * u.Hp + u.Armor) / denominator;

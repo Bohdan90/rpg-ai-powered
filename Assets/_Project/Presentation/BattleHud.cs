@@ -76,6 +76,8 @@ namespace RPG.Presentation
             control.RegisterValueChangedCallback(e=>presenter.SetPlayerVsAi(control.index!=0,control.index==2?Side.West:Side.East));panel.Add(control);
             aiInfo=Text(panel,"",12);aiInfo.name="ai-info";
             active = Text(panel, "", 16); active.name = "active-unit";
+            var abilities=new DropdownField("Ability",new List<string>{"Basic / Move"},0){name="spell-selector"};
+            abilities.RegisterValueChangedCallback(e=>presenter.SelectSpell(e.newValue=="Basic / Move"?(SpellId?)null:(SpellId)Enum.Parse(typeof(SpellId),e.newValue)));abilities.labelElement.style.color=new Color(.89f,.93f,.97f);panel.Add(abilities);
             attackOutcome = Text(panel, "", 14); attackOutcome.name = "attack-outcome";
             attackOutcome.style.color = new Color(1, .8f, .35f);
             rangeInfo = Text(panel, "", 12); rangeInfo.name="ranged-reach-info";
@@ -83,8 +85,35 @@ namespace RPG.Presentation
             queue = Text(panel, "", 12); queue.name = "activation-queue";
             retreat = Text(panel, "", 13); retreat.name = "retreat-info";
             escaped = Text(panel, "", 12); escaped.name = "escaped-list";
+            hover = Text(panel, "Hover the battlefield.", 12);
+            cell = Text(panel, "", 12);
+            preview = Text(panel, "", 14); preview.name = "command-preview";
+            friendly = new Toggle("Explicitly confirm allied target");
+            friendly.RegisterValueChangedCallback(e => presenter.Repreview(e.newValue)); panel.Add(friendly);
+            riskWarning = Text(panel, "", 14); riskWarning.name = "oa-warning";
+            riskWarning.style.color = new Color(1, .68f, .4f);
+            confirm = AddButton(panel, "Confirm selected action", "confirm-command", presenter.ConfirmPreview);
+            cancel = AddButton(panel, "Cancel preview", "cancel-preview", presenter.CancelPreview);
+            defend = AddButton(panel, "Defend", "defend", presenter.Defend);
+            finalFacing = new DropdownField("End facing", new List<string> { "Keep current", "North", "NorthEast", "East", "SouthEast", "South", "SouthWest", "West", "NorthWest" }, 0);
+            panel.Add(finalFacing);
+            friendly.labelElement.style.color = finalFacing.labelElement.style.color = new Color(.89f, .93f, .97f);
+            end = AddButton(panel, "End Activation", "end-activation", () => presenter.EndActivation(finalFacing.index == 0 ? (Facing?)null : (Facing)(finalFacing.index - 1)));
+            message = Text(panel, "", 14); message.name = "battle-message"; message.style.color = new Color(1, .8f, .35f);
             map = new DropdownField("Fixture (resets battle)", new List<string>(Enum.GetNames(typeof(SizeExperimentMap))), 0) { name = "fixture-selector" };
+            map.labelElement.style.color=new Color(.89f,.93f,.97f);
             map.RegisterValueChangedCallback(e => presenter.ConfigureFixture((SizeExperimentMap)Enum.Parse(typeof(SizeExperimentMap), e.newValue))); panel.Add(map);
+            foreach(CombatLabMatch lab in Enum.GetValues(typeof(CombatLabMatch))) {
+                var chosen=lab;AddButton(panel,"Combat Lab · "+lab+" · near contact","lab-"+lab,()=>presenter.StartCombatLab(chosen));
+            }
+            var westPreset=new DropdownField("05B West preset",Enum.GetNames(typeof(CombatPreset)).ToList(),0);westPreset.labelElement.style.color=new Color(.89f,.93f,.97f);panel.Add(westPreset);
+            var eastPreset=new DropdownField("05B East preset",Enum.GetNames(typeof(CombatPreset)).ToList(),1);eastPreset.labelElement.style.color=new Color(.89f,.93f,.97f);panel.Add(eastPreset);
+            var firstSide=new DropdownField("05 Starting Side",new List<string>{"West","East"},0);firstSide.labelElement.style.color=new Color(.89f,.93f,.97f);panel.Add(firstSide);
+            AddButton(panel,"City Foundations 05A","city-start-a",()=>presenter.StartCity(first:(Side)firstSide.index));
+            AddButton(panel,"City & Combat 05B · permanent presets","city-start-b",()=>presenter.StartCity(true,(CombatPreset)westPreset.index,(CombatPreset)eastPreset.index,(Side)firstSide.index));
+            AddButton(panel,"Load AUTHORED 05B inspection fixture (not a played match)","city-authored",()=>presenter.LoadDuel(System.IO.Path.Combine(Application.streamingAssetsPath,"CityCombat05B","authored-ready.json")));
+            AddButton(panel,"Load City Foundations 05A","city-load-a",()=>presenter.LoadDuel(BattlePresenter.CitySlot(false)));
+            AddButton(panel,"Load City & Combat 05B","city-load-b",()=>presenter.LoadDuel(BattlePresenter.CitySlot(true)));
             AddButton(panel,"Start Persistence Slice v0.1","persistence-start",presenter.StartPersistenceSlice);
             AddButton(panel,"Start Connected Mission 01","world-start",presenter.StartStrategicScenario);
             AddButton(panel,"Load saved Mission 01","world-load",()=>presenter.LoadStrategic());
@@ -101,21 +130,6 @@ namespace RPG.Presentation
             AddButton(panel, "Fit whole board", "fit-board", presenter.FitBoard);
             AddButton(panel, "Focus active unit (wheel to zoom)", "focus-unit", presenter.FocusActor);
             AddButton(panel, "Restart Same Seed", "restart", presenter.RestartSameSeed);
-            hover = Text(panel, "Hover the battlefield.", 12);
-            cell = Text(panel, "", 12);
-            preview = Text(panel, "", 14); preview.name = "command-preview";
-            friendly = new Toggle("Explicitly confirm allied target");
-            friendly.RegisterValueChangedCallback(e => presenter.Repreview(e.newValue)); panel.Add(friendly);
-            riskWarning = Text(panel, "", 14); riskWarning.name = "oa-warning";
-            riskWarning.style.color = new Color(1, .68f, .4f);
-            confirm = AddButton(panel, "Confirm selected Move / Attack", "confirm-command", presenter.ConfirmPreview);
-            cancel = AddButton(panel, "Cancel preview", "cancel-preview", presenter.CancelPreview);
-            defend = AddButton(panel, "Defend", "defend", presenter.Defend);
-            finalFacing = new DropdownField("End facing", new List<string> { "Keep current", "North", "NorthEast", "East", "SouthEast", "South", "SouthWest", "West", "NorthWest" }, 0);
-            panel.Add(finalFacing);
-            map.labelElement.style.color = friendly.labelElement.style.color = finalFacing.labelElement.style.color = new Color(.89f, .93f, .97f);
-            end = AddButton(panel, "End Activation", "end-activation", () => presenter.EndActivation(finalFacing.index == 0 ? (Facing?)null : (Facing)(finalFacing.index - 1)));
-            message = Text(panel, "", 14); message.name = "battle-message"; message.style.color = new Color(1, .8f, .35f);
             Text(panel,"LOCAL REPLAY / TELEMETRY",14);
             var replayPath=new TextField("Replay file") { name="replay-path" };
             replayPath.labelElement.style.color=new Color(.89f,.93f,.97f);panel.Add(replayPath);
@@ -145,8 +159,12 @@ namespace RPG.Presentation
             bool incidentBattle=presenter.Duel?.Incident!=null;
             Root.Q<Label>("battle-title").text=incidentBattle?"INCIDENT 04 · Blue: "+presenter.TacticalSideLabel(Side.West)+" / Orange: "+presenter.TacticalSideLabel(Side.East):"GATE C / HOTSEAT";
             Root.Q("world-return").style.display=connected?DisplayStyle.Flex:DisplayStyle.None;
-            foreach(string controlName in new[]{"fixture-selector","controller-mode","persistence-start","restart","outcome-restart","world-start","world-load","duel-start-west","duel-start-east","duel-load","incident-start-west","incident-start-east","incident-control","incident-load"})Root.Q(controlName).SetEnabled(!connected);
+            foreach(string controlName in new[]{"fixture-selector","controller-mode","persistence-start","restart","outcome-restart","world-start","world-load","duel-start-west","duel-start-east","duel-load","incident-start-west","incident-start-east","incident-control","incident-load","city-start-a","city-start-b","city-load-a","city-load-b","city-authored"})Root.Q(controlName).SetEnabled(!connected);
             Root.Q<DropdownField>("controller-mode").SetValueWithoutNotify(presenter.PlayerVsAi?(presenter.AiSide==Side.East?"Player West vs AI East":"Player East vs AI West"):"Hotseat");
+            var spellSelect=Root.Q<DropdownField>("spell-selector");
+            spellSelect.choices=new[]{"Basic / Move"}.Concat(SpellRules.Kit(actor.Profile).Select(s=>s.ToString())).ToList();
+            if(!presenter.SelectedSpell.HasValue||!SpellRules.Has(actor.Profile,presenter.SelectedSpell.Value))spellSelect.SetValueWithoutNotify("Basic / Move");
+            foreach(CombatLabMatch lab in Enum.GetValues(typeof(CombatLabMatch)))Root.Q("lab-"+lab).SetEnabled(!connected);
             aiInfo.text=presenter.PlayerVsAi?presenter.AiExplanation:"Hotseat";
             rangeInfo.text=presenter.RangedReachMessage;
             attackOutcome.text = presenter.LastAttackOutcome.Length == 0 ? "" : "LAST ATTACK RESULT\n" + presenter.LastAttackOutcome;
@@ -167,6 +185,7 @@ namespace RPG.Presentation
                 + " | HP " + actor.Hp + " / Armor " + actor.Armor + "\nMovement " + actor.MovementRemaining
                 + " | Action " + (actor.ActionAvailable ? "available" : "spent")
                 + "\nFacing " + actor.Facing + " | Defending " + (actor.IsDefending ? "yes" : "no") + " | " + BattlePresenter.OaStatus(actor);
+            active.text+="\n"+BattlePresenter.CombatStatuses(actor);
             queue.text = ended ? "" : "Initiative order (► current):\n" + string.Join("\n", state.ActivationOrder.Select(id =>
                 (id == actor.Id ? "► " : "   ") + presenter.UnitName(id) + (state.FindUnit(id).OwnRetreatEdge.HasValue?" ("+state.FindUnit(id).OwnRetreatEdge+")":"") + " [" + state.FindUnit(id).Profile.Initiative + "] " + BattlePresenter.OaStatus(state.FindUnit(id))));
             cell.text = selected.HasValue ? "Selected (" + selected.Value.X + "," + selected.Value.Y + ")" : "No destination / target selected.";
@@ -174,7 +193,7 @@ namespace RPG.Presentation
             int risks = presenter.OpportunityRiskCount;
             riskWarning.text = risks > 0 ? "This path may trigger " + risks + " Opportunity Attack(s). Confirm to accept the risk, or Cancel." : "";
             riskWarning.style.display = risks > 0 ? DisplayStyle.Flex : DisplayStyle.None;
-            confirm.text = presenter.HasMovePreview ? (risks > 0 ? "Confirm Move — accept " + risks + " OA risk(s)" : "Confirm Move") : "Confirm Attack";
+            confirm.text = presenter.SelectedSpell.HasValue ? "Confirm " + presenter.SelectedSpell.Value : presenter.HasMovePreview ? (risks > 0 ? "Confirm Move — accept " + risks + " OA risk(s)" : "Confirm Move") : "Confirm Attack";
             cancel.SetEnabled(canConfirm);
             defend.SetEnabled(playerTurn && !ended && BattleResolver.Validate(state, new DefendCommand(actor.Id)) == CommandError.None);
             end.SetEnabled(!ended && playerTurn); finalFacing.SetEnabled(!ended); friendly.SetEnabled(!ended);

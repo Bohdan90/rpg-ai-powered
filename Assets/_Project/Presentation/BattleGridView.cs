@@ -10,7 +10,7 @@ namespace RPG.Presentation
     {
         private readonly GameObject root;
         private readonly Material material;
-        private readonly Mesh warriorSilhouette, archerSilhouette;
+        private readonly Mesh warriorSilhouette, archerSilhouette, casterSilhouette;
         private Renderer[,] tiles;
         private readonly Dictionary<UnitId, Token> units = new Dictionary<UnitId, Token>();
         private readonly LineRenderer pathLine;
@@ -29,7 +29,7 @@ namespace RPG.Presentation
         {
             root = new GameObject("Battle views"); root.transform.SetParent(parent, false);
             material = new Material(shader) { name = "Graybox runtime unlit" };
-            warriorSilhouette = UnitSilhouettes.Create(false); archerSilhouette = UnitSilhouettes.Create(true);
+            warriorSilhouette = UnitSilhouettes.Create(false); archerSilhouette = UnitSilhouettes.Create(true);casterSilhouette=UnitSilhouettes.CreateCaster();
             var path = new GameObject("Core path preview"); path.transform.SetParent(root.transform, false);
             pathLine = path.AddComponent<LineRenderer>(); pathLine.sharedMaterial = material;
             pathLine.widthMultiplier = .045f; pathLine.useWorldSpace = true;
@@ -71,8 +71,9 @@ namespace RPG.Presentation
         }
 
         public void Refresh(BattleState state, IReadOnlyCollection<GridPosition> reachable, IReadOnlyList<GridPosition> path,
-            IReadOnlyDictionary<GridPosition, IReadOnlyList<UnitId>> threats, OpportunityAttackPreview risk, IReadOnlyCollection<GridPosition> rangedReach)
+            IReadOnlyDictionary<GridPosition, IReadOnlyList<UnitId>> threats, OpportunityAttackPreview risk, IReadOnlyCollection<GridPosition> rangedReach,IReadOnlyCollection<GridPosition> spellArea=null)
         {
+            var spellCells=spellArea==null?new HashSet<GridPosition>():new HashSet<GridPosition>(spellArea);
             var highlights = new HashSet<GridPosition>(reachable);
             var rangeCells = new HashSet<GridPosition>(rangedReach);
             RangedVisualCount = 0;
@@ -97,7 +98,7 @@ namespace RPG.Presentation
                     ? new Color(.8f,.36f,.32f) : new Color(.4f,.43f,.47f));
                 tile.transform.localScale = new Vector3(.95f, solid ? .65f : .12f, .95f);
                 tile.transform.localPosition = new Vector3(x, solid ? .20f : -.12f, y);
-                Tint(tile, solid ? new Color(.40f, .43f, .47f) : pathCells.Contains(p) ? new Color(.72f, .51f, .12f)
+                Tint(tile, solid ? new Color(.40f, .43f, .47f) : spellCells.Contains(p)?new Color(.7f,.2f,.5f):pathCells.Contains(p) ? new Color(.72f, .51f, .12f)
                     : highlights.Contains(p) ? new Color(.18f, .38f, .37f) : (x + y) % 2 == 0 ? floorA : floorB);
             }
             foreach (var token in units.Values) token.Root.SetActive(false);
@@ -142,7 +143,7 @@ namespace RPG.Presentation
                 new Vector3(0, .10f, 0), new Vector3(.82f, .035f, .82f));
             var icon = new GameObject(unit.Profile.IsArcher ? "Archer silhouette" : "Warrior silhouette");
             icon.transform.SetParent(go.transform, false);
-            icon.AddComponent<MeshFilter>().sharedMesh = unit.Profile.IsArcher ? archerSilhouette : warriorSilhouette;
+            icon.AddComponent<MeshFilter>().sharedMesh = unit.Profile.IsCaster?casterSilhouette:unit.Profile.IsArcher ? archerSilhouette : warriorSilhouette;
             var iconRenderer = icon.AddComponent<MeshRenderer>(); iconRenderer.sharedMaterial = material;
             Tint(iconRenderer, new Color(1f, .96f, .82f));
             var facing = new GameObject("Facing"); facing.transform.SetParent(go.transform, false);
@@ -172,7 +173,7 @@ namespace RPG.Presentation
             var block = new MaterialPropertyBlock(); block.SetColor("_BaseColor", color); block.SetColor("_Color", color);
             renderer.SetPropertyBlock(block);
         }
-        public void Dispose() { Object.Destroy(root); Object.Destroy(material); Object.Destroy(warriorSilhouette); Object.Destroy(archerSilhouette); }
+        public void Dispose() { Object.Destroy(root); Object.Destroy(material); Object.Destroy(warriorSilhouette); Object.Destroy(archerSilhouette);Object.Destroy(casterSilhouette); }
         private sealed class Token { public UnitProfileId Profile; public GameObject Root, Active; public Renderer Body; public Transform Facing; }
     }
 }

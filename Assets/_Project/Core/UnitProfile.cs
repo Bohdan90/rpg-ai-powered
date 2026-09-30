@@ -1,6 +1,6 @@
 namespace RPG.Core
 {
-    public enum UnitProfileId { HumanWarriorTI, HumanArcherTI, ElfWarriorTI }
+    public enum UnitProfileId { HumanWarriorTI, HumanArcherTI, ElfWarriorTI, FireMageTI, FireMageTII, IceMageTI, IceMageTII, HumanHealerTI, ElfWarriorTII }
 
     // Document 45, Phase 0 (WP-01). Provisional playtest tuning, not final class balance.
     public sealed class UnitProfile
@@ -9,6 +9,35 @@ namespace RPG.Core
         public static readonly UnitProfile HumanArcherTI = new UnitProfile(UnitProfileId.HumanArcherTI, 28, 4, 4, 12, 85, 5, 0, 10, 10);
         public static readonly UnitProfile ElfWarriorTI = new UnitProfile(UnitProfileId.ElfWarriorTI, 32, 6, 6, 14, 90, 10, 0, 11, 1);
 
+        // Document 51 prototype adapters; original profiles retain their numbers and IDs.
+        public static readonly UnitProfile FireMageTI = new UnitProfile(UnitProfileId.FireMageTI,26,0,4,11,90,5,0,5,1);
+        public static readonly UnitProfile FireMageTII = new UnitProfile(UnitProfileId.FireMageTII,32,0,4,11,90,5,0,5,1);
+        public static readonly UnitProfile IceMageTI = new UnitProfile(UnitProfileId.IceMageTI,26,0,4,11,90,5,0,5,1);
+        public static readonly UnitProfile IceMageTII = new UnitProfile(UnitProfileId.IceMageTII,32,0,4,11,90,5,0,5,1);
+        public static readonly UnitProfile HumanHealerTI = new UnitProfile(UnitProfileId.HumanHealerTI,28,0,4,12,90,5,0,5,1);
+        public static readonly UnitProfile ElfWarriorTII = new UnitProfile(UnitProfileId.ElfWarriorTII,38,8,6,15,90,10,0,11,1);
+        public static UnitProfile Get(UnitProfileId id)
+        {
+            switch(id) {
+                case UnitProfileId.HumanWarriorTI:return HumanWarriorTI;
+                case UnitProfileId.HumanArcherTI:return HumanArcherTI;
+                case UnitProfileId.ElfWarriorTI:return ElfWarriorTI;
+                case UnitProfileId.FireMageTI:return FireMageTI;
+                case UnitProfileId.FireMageTII:return FireMageTII;
+                case UnitProfileId.IceMageTI:return IceMageTI;
+                case UnitProfileId.IceMageTII:return IceMageTII;
+                case UnitProfileId.HumanHealerTI:return HumanHealerTI;
+                case UnitProfileId.ElfWarriorTII:return ElfWarriorTII;
+                default:throw new System.ArgumentOutOfRangeException(nameof(id));
+            }
+        }
+        public bool IsElf => Id==UnitProfileId.ElfWarriorTI || Id==UnitProfileId.ElfWarriorTII;
+        public bool IsFireMage => Id==UnitProfileId.FireMageTI || Id==UnitProfileId.FireMageTII;
+        public bool IsIceMage => Id==UnitProfileId.IceMageTI || Id==UnitProfileId.IceMageTII;
+        public bool IsCaster => IsFireMage || IsIceMage || Id==UnitProfileId.HumanHealerTI;
+        public int Tier => Id==UnitProfileId.FireMageTII || Id==UnitProfileId.IceMageTII || Id==UnitProfileId.ElfWarriorTII ? 2 : 1;
+        public decimal MagicPower => IsCaster && Tier==2 ? 1.15m : 1m;
+        public bool HasGracefulExit => Id==UnitProfileId.ElfWarriorTII;
         public UnitProfileId Id { get; }
         public int MaxHp { get; }
         public int MaxArmor { get; }
@@ -20,9 +49,9 @@ namespace RPG.Core
         public int BasicDamage { get; }
         public int Range { get; }
         public int CoverSize => 1; // All current profiles are ordinary, same-size bodies.
-        public bool HasMeleeBasic => Id == UnitProfileId.HumanWarriorTI || Id == UnitProfileId.ElfWarriorTI;
+        public bool HasMeleeBasic => Id == UnitProfileId.HumanWarriorTI || IsElf;
         public bool IsArcher => Id == UnitProfileId.HumanArcherTI;
-        public int FrontalEvasion => Id == UnitProfileId.ElfWarriorTI ? 10 : 0;
+        public int FrontalEvasion => IsElf ? 10 : 0;
 
         private UnitProfile(UnitProfileId id, int hp, int armor, int movement, int initiative,
             int accuracy, int dodge, int guard, int damage, int range)

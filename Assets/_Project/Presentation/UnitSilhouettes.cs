@@ -7,6 +7,13 @@ namespace RPG.Presentation
     // Shared presentation geometry only; no combat state or collider.
     internal static class UnitSilhouettes
     {
+        public static Mesh CreateCaster()
+        {
+            var mesh=new Mesh{name="Caster staff icon"};
+            mesh.vertices=new[]{new Vector3(-.035f,.48f,-.34f),new Vector3(.035f,.48f,-.34f),new Vector3(.035f,.48f,.2f),new Vector3(-.035f,.48f,.2f),
+                new Vector3(0,.48f,.4f),new Vector3(.16f,.48f,.24f),new Vector3(0,.48f,.08f),new Vector3(-.16f,.48f,.24f)};
+            mesh.triangles=new[]{0,2,1,0,3,2,4,6,5,4,7,6};mesh.RecalculateBounds();return mesh;
+        }
         public static Mesh Create(bool archer)
         {
             var vertices = new List<Vector3>();

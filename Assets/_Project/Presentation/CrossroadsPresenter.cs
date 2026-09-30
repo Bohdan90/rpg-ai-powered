@@ -14,6 +14,9 @@ namespace RPG.Presentation
         public string DuelSaveMessage { get; private set; }="Stable map only · one Crossroads slot.";
         public static string DuelSlot=>Path.Combine(Application.persistentDataPath,"Crossroads","manual.json");
         public static string IncidentSlot=>Path.Combine(Application.persistentDataPath,"CrossroadsIncident04","manual.json");
+        public static string CitySlot(bool combined)=>Path.Combine(Application.persistentDataPath,combined?"CityCombat05B":"CityFoundations05A","manual.json");
+        public void StartCity(bool combined=false,CombatPreset west=CombatPreset.Fire,CombatPreset east=CombatPreset.Ice,Side first=Side.West)=>ShowDuel(new CrossroadsScenario(first,foundations:true,combined:combined,westPreset:west,eastPreset:east));
+        private string CurrentDuelSlot=>Duel?.Foundations!=null?CitySlot(Duel.Foundations.Combined):Duel?.Incident!=null?IncidentSlot:DuelSlot;
         public void StartIncident(Side first=Side.West,bool enabled=true)=>ShowDuel(new CrossroadsScenario(first,incident:true,incidentsEnabled:enabled));
         public bool LoadIncident()=>LoadDuel(IncidentSlot);
         public void StartDuel(Side first=Side.West,bool economy=true)=>ShowDuel(new CrossroadsScenario(first,economy:economy));
@@ -45,7 +48,7 @@ namespace RPG.Presentation
             try
             {
                 if(Duel==null||!Duel.CanSave)throw new InvalidOperationException("Save only from stable Crossroads map.");
-                string full=Path.GetFullPath(path??(Duel?.Incident!=null?IncidentSlot:DuelSlot));Directory.CreateDirectory(Path.GetDirectoryName(full));temp=full+"."+Guid.NewGuid().ToString("N")+".tmp";
+                string full=Path.GetFullPath(path??CurrentDuelSlot);Directory.CreateDirectory(Path.GetDirectoryName(full));temp=full+"."+Guid.NewGuid().ToString("N")+".tmp";
                 var bytes=System.Text.Encoding.UTF8.GetBytes(JsonUtility.ToJson(Duel.CaptureSave(),true));
                 if(bytes.Length>1024*1024)throw new InvalidDataException("Save exceeds prototype size limit.");
                 using(var stream=new FileStream(temp,FileMode.CreateNew,FileAccess.Write)){stream.Write(bytes,0,bytes.Length);stream.Flush(true);}
@@ -60,7 +63,7 @@ namespace RPG.Presentation
             try
             {
                 if((Duel!=null&&!Duel.CanSave)||(World!=null&&!World.CanSave))throw new InvalidOperationException("Finish tactical battle first.");
-                var file=new FileInfo(path??(Duel?.Incident!=null?IncidentSlot:DuelSlot));if(!file.Exists||file.Length==0||file.Length>1024*1024)throw new InvalidDataException("Missing/invalid Crossroads save.");
+                var file=new FileInfo(path??CurrentDuelSlot);if(!file.Exists||file.Length==0||file.Length>1024*1024)throw new InvalidDataException("Missing/invalid Crossroads save.");
                 var data=JsonUtility.FromJson<CrossroadsSaveData>(File.ReadAllText(file.FullName));
                 if(data==null)throw new InvalidDataException("Missing save data.");var candidate=data.Restore();
                 DuelSaveMessage="Loaded Crossroads R"+candidate.Refresh;ShowDuel(candidate);return true;

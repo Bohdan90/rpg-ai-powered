@@ -7,7 +7,7 @@ namespace RPG.Core
         ContactRolled, AttackMissed, GuardRolled, GuardSucceeded,
         DamageApplied, ArmorLost, HpLost, DefendApplied, DefendExpired, UnitDied, MovementStarted, StepMoved,
         ZoCExitDetected, OpportunityAttackTriggered, OpportunityAttackSpent, OpportunityAttackResolved,
-        MovementInterruptedByDeath, UnitEscaped, BattleEnded
+        MovementInterruptedByDeath, UnitEscaped, BattleEnded, SpellCast, BarrierChanged, BurnApplied, BurnTick, FreezeApplied, FreezeEnded, ExhaustionChanged, HpHealed, ConditionCleansed, GracefulExit
     }
 
     // A small value record for this resolver, not an event bus or persistence format.

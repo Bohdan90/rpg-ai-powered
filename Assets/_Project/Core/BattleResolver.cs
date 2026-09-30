@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RPG.Core
 {
-    public static class BattleResolver
+    public static partial class BattleResolver
     {
         public static BattleResult StartBattle(IEnumerable<UnitState> units, uint seed, Battlefield battlefield = null)
         {
@@ -36,6 +36,9 @@ namespace RPG.Core
             if (command is EndActivationCommand end)
                 return end.FinalFacing.HasValue && !FacingDirections.IsValid(end.FinalFacing.Value)
                     ? CommandError.InvalidFacing : CommandError.None;
+            if (actor.IsFrozen) return CommandError.Frozen;
+            if (command is CastCommand cast) return ValidateCast(state,actor,cast);
+            if (command is MoveCommand mobile && actor.Profile.HasGracefulExit) return MovementRules.ValidatePath(state, actor, mobile);
             if (!(command is BasicAttackCommand) && !(command is DefendCommand) && !(command is MoveCommand)) return CommandError.InvalidCommand;
             if (!actor.ActionAvailable) return CommandError.NoAction;
             if (command is MoveCommand move) return MovementRules.ValidatePath(state, actor, move);
@@ -75,7 +78,7 @@ namespace RPG.Core
         {
             var responder = state.FindUnit(responderId); var mover = state.FindUnit(moverId);
             if (responder == null || mover == null || !mover.IsActive || responder.Side == mover.Side
-                || !responder.OpportunityAttackAvailable || !ZoneOfControl.Exerts(state, responder, mover.Position))
+                || responder.IsFrozen || !responder.OpportunityAttackAvailable || !ZoneOfControl.Exerts(state, responder, mover.Position))
                 return new AttackPreview { Error = CommandError.InvalidCommand };
             return CalculateAttack(state, responder, mover);
         }
@@ -107,8 +110,8 @@ namespace RPG.Core
                 + preview.DistanceModifier + preview.CoverAccuracyModifier));
             preview.GuardChance = preview.TargetFacesAttacker ? target.Profile.Guard : 0;
             preview.PhysicalDamage = (meleeStrike ? 5 : actor.Profile.BasicDamage) * (100 - target.PhysicalResistance) / 100;
-            preview.ArmorLossOnUnguardedHit = Math.Min(target.Armor, preview.PhysicalDamage);
-            preview.HpLossOnUnguardedHit = Math.Min(target.Hp, preview.PhysicalDamage - preview.ArmorLossOnUnguardedHit);
+            preview.ArmorLossOnUnguardedHit = Math.Min(target.Armor, Math.Max(0,preview.PhysicalDamage-target.TemporaryBarrier));
+            preview.HpLossOnUnguardedHit = Math.Min(target.Hp, Math.Max(0,preview.PhysicalDamage-target.TemporaryBarrier) - preview.ArmorLossOnUnguardedHit);
             return preview;
         }
 
@@ -119,7 +122,9 @@ namespace RPG.Core
             var next = state.Copy();
             var events = new List<BattleEvent>();
             var actor = next.FindUnit(command.Actor);
-            if (command is MoveCommand move)
+            if (command is CastCommand cast)
+                Cast(next,actor,cast,events);
+            else if (command is MoveCommand move)
                 Move(next, actor, move, events);
             else if (command is BasicAttackCommand attack)
                 Attack(next, actor, next.FindUnit(attack.Target), PreviewAttack(state, attack), events);
@@ -137,6 +142,7 @@ namespace RPG.Core
                 ConsumeAction(next, actor, events);
                 ConsumeMovement(next, actor, events);
                 events.Add(new BattleEvent(BattleEventKind.ActivationEnded, next.Round, actor.Id));
+                EndStatuses(next, actor, events);
                 StartNextActivation(next, events);
             }
             EvaluateOutcome(next, events);
@@ -159,7 +165,13 @@ namespace RPG.Core
             bool west = false, east = false;
             foreach (var unit in state.Units)
                 if (unit.IsActive) { if (unit.Side == Side.West) west = true; else east = true; }
-            if (!west && !east) throw new InvalidOperationException("Scenario error: both sides have no active units.");
+            if (!west && !east) {
+                bool westDied=false,eastDied=false;
+                foreach(var e in events)if(e.Kind==BattleEventKind.UnitDied&&e.Target.HasValue){if(state.FindUnit(e.Target.Value).Side==Side.West)westDied=true;else eastDied=true;}
+                if(!westDied||!eastDied)throw new InvalidOperationException("Scenario error: both sides have no active units.");
+                state.Outcome=BattleOutcome.Draw;
+                events.Add(new BattleEvent(BattleEventKind.BattleEnded,state.Round,outcome:state.Outcome));return;
+            }
             if (west && east) return;
             var removedId = removal.Value.Kind == BattleEventKind.UnitEscaped ? removal.Value.Actor : removal.Value.Target;
             var removedSide = state.FindUnit(removedId.Value).Side;
@@ -195,6 +207,13 @@ namespace RPG.Core
                     events.Add(new BattleEvent(BattleEventKind.MovementInterruptedByDeath, state.Round, actor.Id, from: from, to: step));
                     break;
                 }
+                if (actor.GracefulExitTarget.HasValue) {
+                    var source=state.FindUnit(actor.GracefulExitTarget.Value);
+                    if (source!=null && ZoneOfControl.Exerts(state,source,from) && !ZoneOfControl.Exerts(state,source,step)) {
+                        events.Add(new BattleEvent(BattleEventKind.GracefulExit,state.Round,actor.Id,source.Id));
+                        actor.GracefulExitTarget=null;
+                    }
+                }
                 int before = actor.MovementRemaining;
                 actor.Position = step;
                 actor.MovementRemaining--;
@@ -228,6 +247,14 @@ namespace RPG.Core
                 events.Add(new BattleEvent(BattleEventKind.SteadyAimApplied, state.Round, actor.Id, target.Id, amount: 15));
             }
             ResolveContactAndDamage(state, actor, target, preview, events);
+            if (actor.Profile.HasGracefulExit) {
+                actor.GracefulExitTarget=target.Id;
+                if (actor.IsActive && target.IsActive) {
+                    var second=CalculateAttack(state,actor,target);
+                    second.PhysicalDamage=6*(100-target.PhysicalResistance)/100;
+                    ResolveContactAndDamage(state,actor,target,second,events);
+                }
+            }
         }
 
         private static void ResolveContactAndDamage(BattleState state, UnitState actor, UnitState target,
@@ -252,30 +279,8 @@ namespace RPG.Core
                     return;
                 }
             }
-            events.Add(new BattleEvent(BattleEventKind.DamageApplied, state.Round, actor.Id, target.Id, amount: preview.PhysicalDamage));
-            if (preview.ArmorLossOnUnguardedHit > 0)
-            {
-                int before = target.Armor;
-                target.Armor -= preview.ArmorLossOnUnguardedHit;
-                events.Add(new BattleEvent(BattleEventKind.ArmorLost, state.Round, actor.Id, target.Id,
-                    amount: preview.ArmorLossOnUnguardedHit, before: before, after: target.Armor));
-            }
-            if (preview.HpLossOnUnguardedHit > 0)
-            {
-                int before = target.Hp;
-                target.Hp -= preview.HpLossOnUnguardedHit;
-                events.Add(new BattleEvent(BattleEventKind.HpLost, state.Round, actor.Id, target.Id,
-                    amount: preview.HpLossOnUnguardedHit, before: before, after: target.Hp));
-            }
-            if (target.Hp == 0)
-            {
-                target.Status = UnitStatus.Dead;
-                target.ActionAvailable = false;
-                target.OpportunityAttackAvailable = false;
-                // Preserve unspent Movement as history: unexecuted steps are never charged.
-                // Position is retained as history, but inactive units do not occupy the field.
-                events.Add(new BattleEvent(BattleEventKind.UnitDied, state.Round, actor.Id, target.Id));
-            }
+            DealDamage(state,actor,target,preview.PhysicalDamage,DamageType.Physical,true,
+                !actor.Profile.IsArcher || preview.Kind==BasicAttackKind.MeleeStrike,events);
         }
 
         private static void ConsumeAction(BattleState state, UnitState actor, List<BattleEvent> events)
@@ -319,9 +324,11 @@ namespace RPG.Core
                     unit.IsDefending = false;
                     events.Add(new BattleEvent(BattleEventKind.DefendExpired, state.Round, unit.Id, before: 25, after: 0));
                 }
-                unit.ActionAvailable = true;
-                unit.OpportunityAttackAvailable = unit.Profile.HasMeleeBasic;
-                unit.MovementRemaining = unit.Profile.Movement;
+                StartStatuses(state,unit,events);
+                if (!unit.IsActive) { EvaluateOutcome(state,events); if(state.Outcome.IsEnded)return; continue; }
+                unit.ActionAvailable = !unit.IsFrozen;
+                unit.OpportunityAttackAvailable = unit.Profile.HasMeleeBasic && !unit.IsFrozen;
+                unit.MovementRemaining = unit.IsFrozen ? 0 : unit.Profile.Movement;
                 unit.MovementSpentThisActivation = 0;
                 events.Add(new BattleEvent(BattleEventKind.ActivationStarted, state.Round, unit.Id,
                     amount: 1, after: unit.MovementRemaining));

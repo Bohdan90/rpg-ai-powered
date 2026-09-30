@@ -21,7 +21,7 @@ namespace RPG.Core
         // Full live priority for a round; already-activated units are not reinserted mid-round.
         public IReadOnlyList<UnitId> ActivationOrder => PriorityOrder.Where(id => FindUnit(id).IsActive).ToList().AsReadOnly();
 
-        internal BattleState(IEnumerable<UnitState> initialUnits, uint seed, Battlefield battlefield)
+        internal BattleState(IEnumerable<UnitState> initialUnits, uint seed, Battlefield battlefield,bool completedMutualElimination=false)
         {
             Battlefield = battlefield ?? Battlefield.ControlMap;
             if (initialUnits == null) throw new ArgumentNullException(nameof(initialUnits));
@@ -31,7 +31,7 @@ namespace RPG.Core
             var active = input.Where(u => u.IsActive).ToList();
             if (active.Select(u => u.Position).Distinct().Count() != active.Count) throw new ArgumentException("Active units cannot share a cell.");
             if (active.Any(u => !Battlefield.IsWalkable(u.Position))) throw new ArgumentException("Active units must be on walkable battlefield cells.");
-            if (active.Count == 0) throw new ArgumentException("At least one active unit is required.");
+            if (active.Count == 0 && !completedMutualElimination) throw new ArgumentException("At least one active unit is required.");
             units = input.OrderBy(u => u.Id).Select(u => u.Copy()).ToList();
             Units = units.AsReadOnly(); InitialSeed = seed; Random = new CombatRandom(seed);
             // P: assign keys in ascending numeric ID order, independent of collection enumeration.
