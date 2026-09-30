@@ -11,9 +11,9 @@ namespace RPG.Core
     {
         public string id, personalXp, commandXp;
         public int profile, hp, armor, status, personalLevel, commandLevel, commandRank, recoveryRemainder;
-        public bool commander;
+        public bool commander; public int fireballUsed,freezeUsed,closeHealUsed;
         internal static StrategicSaveCharacter Capture(PersistentCharacter c) => new StrategicSaveCharacter {
-            id=c.CharacterId,profile=(int)c.Profile.Id,hp=c.Hp,armor=c.Armor,status=(int)c.Status,commander=c.IsCommander,
+            fireballUsed=c.FireballUsed,freezeUsed=c.FreezeUsed,closeHealUsed=c.CloseHealUsed,id=c.CharacterId,profile=(int)c.Profile.Id,hp=c.Hp,armor=c.Armor,status=(int)c.Status,commander=c.IsCommander,
             personalXp=c.PersonalXp.ToString(CultureInfo.InvariantCulture),commandXp=c.CommandXp.ToString(CultureInfo.InvariantCulture),
             personalLevel=c.PersonalLevel,commandLevel=c.CommandLevel,commandRank=(int)c.CommandRank,recoveryRemainder=c.FieldRecoveryRemainderHundredths };
         internal PersistentCharacter Restore(PersistentCharacter expected)
@@ -25,6 +25,8 @@ namespace RPG.Core
             var restored=new PersistentCharacter(id,expected.Profile,commander,hp,armor,(PersistentCharacterStatus)status,p,c,commandLevel,recoveryRemainder);
             StrategicSaveData.Require(restored.PersonalLevel==personalLevel&&restored.CommandLevel==commandLevel&&(int)restored.CommandRank==commandRank,"Derived progression mismatch.");
             StrategicSaveData.Require(commander||c==0,"Non-Commander Command XP.");
+            StrategicSaveData.Require(fireballUsed>=0&&fireballUsed<=2&&freezeUsed>=0&&freezeUsed<=2&&closeHealUsed>=0&&closeHealUsed<=3,"Invalid source budget.");
+            restored.FireballUsed=fireballUsed;restored.FreezeUsed=freezeUsed;restored.CloseHealUsed=closeHealUsed;
             return restored;
         }
         private static decimal Xp(string text)
@@ -33,7 +35,7 @@ namespace RPG.Core
             return value;
         }
         internal void Write(BinaryWriter w)
-        {w.Write(id);w.Write(profile);w.Write(commander);w.Write(hp);w.Write(armor);w.Write(status);w.Write(personalXp);w.Write(personalLevel);w.Write(commandXp);w.Write(commandLevel);w.Write(commandRank);w.Write(recoveryRemainder);}
+        {w.Write(id);w.Write(profile);w.Write(commander);w.Write(hp);w.Write(armor);w.Write(status);w.Write(personalXp);w.Write(personalLevel);w.Write(commandXp);w.Write(commandLevel);w.Write(commandRank);w.Write(recoveryRemainder);if(profile>2){w.Write(fireballUsed);w.Write(freezeUsed);w.Write(closeHealUsed);}}
     }
     [Serializable] public sealed class StrategicSaveFormation
     {

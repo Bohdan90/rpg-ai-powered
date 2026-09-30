@@ -29,6 +29,7 @@ namespace RPG.Core
         public static int Range(SpellId s)=>s==SpellId.FireStream?3:s==SpellId.Fireball||s==SpellId.IceShard?8:s==SpellId.Freeze?6:s==SpellId.IceShield?4:s==SpellId.CloseHeal?1:0;
         public static int Limit(SpellId s)=>s==SpellId.Fireball||s==SpellId.Freeze?2:s==SpellId.CloseHeal?3:int.MaxValue;
         public static int Used(UnitState u,SpellId s)=>s==SpellId.Fireball?u.FireballUsed:s==SpellId.Freeze?u.FreezeUsed:s==SpellId.CloseHeal?u.CloseHealUsed:0;
+        public static int Used(PersistentCharacter u,SpellId s)=>s==SpellId.Fireball?u.FireballUsed:s==SpellId.Freeze?u.FreezeUsed:s==SpellId.CloseHeal?u.CloseHealUsed:0;
         public static bool Has(UnitProfile p,SpellId s)=>p.IsFireMage && (s==SpellId.FireStream||s==SpellId.FireArmor||s==SpellId.Fireball&&p.Tier==2)
             ||p.IsIceMage && (s==SpellId.IceShard||s==SpellId.IceShield||s==SpellId.Freeze&&p.Tier==2)
             ||p.Id==UnitProfileId.HumanHealerTI&&s==SpellId.CloseHeal;

@@ -334,7 +334,7 @@ namespace RPG.Presentation
             else if (State.Battlefield.IsRetreatZone(actor.Side == Side.West ? Side.East : Side.West, cell)) text += "\nOpponent's edge — NOT your escape.";
             return text;
         }
-        private void ClearPreview() { pending = null; selected = null; MovementRisk = null; PreviewEscapes = false; PreviewText = "Click a cell or unit, then confirm. Green cells: Core reachable."; hud.ResetChoices(); }
+        private void ClearPreview() { spellPreviewCells=null; pending = null; selected = null; MovementRisk = null; PreviewEscapes = false; PreviewText = "Click a cell or unit, then confirm. Green cells: Core reachable."; hud.ResetChoices(); }
         private void Refresh()
         {
             reachable.Clear(); rangedReach.Clear(); RangedReachMessage=""; threats.Clear();
@@ -362,7 +362,7 @@ namespace RPG.Presentation
         }
         private void ShowViews()
         {
-            grid.Refresh(State, reachable, (pending as MoveCommand)?.Path, threats, MovementRisk, rangedReach);
+            grid.Refresh(State, reachable, (pending as MoveCommand)?.Path, threats, MovementRisk, rangedReach,spellPreviewCells);
             hud.Refresh(State, pending != null && !State.Outcome.IsEnded, selected);
         }
         private void Append(IEnumerable<BattleEvent> events)
@@ -384,6 +384,8 @@ namespace RPG.Presentation
                 if (e.Target.HasValue) line += " → " + UnitName(e.Target.Value);
                 if (e.Roll >= 0) line += " [" + e.Roll + " < " + e.ChancePercent + ": " + (e.Roll < e.ChancePercent ? "success" : "fail") + "]";
                 if (e.Kind == BattleEventKind.ArmorLost || e.Kind == BattleEventKind.HpLost) line += " " + e.Before + " → " + e.After;
+                if(e.Kind==BattleEventKind.SpellCast)line+=" "+(SpellId)e.Amount;
+                if(e.Kind==BattleEventKind.BarrierChanged||e.Kind==BattleEventKind.HpHealed)line+=" "+e.Before+" → "+e.After;
                 if (e.Kind == BattleEventKind.DamageApplied) line += " " + e.Amount;
                 if (e.From.HasValue) line += " " + Cell(e.From.Value) + " →";
                 if (e.To.HasValue) line += " " + Cell(e.To.Value);

@@ -71,5 +71,15 @@ namespace RPG.Tests
             var s=State(UnitProfile.FireMageTII);string hash=BattleStateHash.Compute(s);var d=TacticalAi.Choose(s);
             Assert.That(BattleStateHash.Compute(s),Is.EqualTo(hash));Assert.That(BattleResolver.Validate(s,d.Command),Is.EqualTo(CommandError.None));
         }
+
+        [TestCase(CombatLabMatch.FireVsIce)][TestCase(CombatLabMatch.SupportVsFire)][TestCase(CombatLabMatch.MobileBlades)]
+        public void ControlledLabAiMatchCompletesLegallyAndReplays(CombatLabMatch match)
+        {
+            var journal=new BattleJournal(BattleResolver.StartBattle(CombatLab.Units(match),5051,CombatLab.Board(match)).State,"controlled-Lab-"+match,"test");
+            for(int i=0;i<600&&!journal.State.Outcome.IsEnded;i++){var d=TacticalAi.Choose(journal.State);Assert.That(journal.Apply(d.Command,"AI",d.Explanation).IsApplied,Is.True);}
+            Assert.That(journal.State.Outcome.IsEnded,Is.True,"Bounded no-stall check "+match);
+            var replay=ReplayVerification.Verify(journal.Header,journal.Records,journal.Footer());Assert.That(replay.Matches,Is.True,replay.Message);
+            TestContext.WriteLine(match+": "+journal.State.Round+" rounds, "+journal.Records.Count+" commands, "+journal.State.Outcome.Reason+", casts "+journal.Records.SelectMany(r=>r.events).Count(e=>e.kind=="SpellCast"));
+        }
     }
 }

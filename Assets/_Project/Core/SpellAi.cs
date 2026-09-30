@@ -22,7 +22,7 @@ namespace RPG.Core
             foreach(var id in p.Targets) {
                 var u=state.FindUnit(id);bool friendly=u.Side==actor.Side;double hit=p.ContactChance/100.0;
                 switch(c.Spell) {
-                    case SpellId.CloseHeal:value+=Math.Min(p.Magnitude,u.Profile.MaxHp-u.Hp)+(u.BurnStacks>0?u.BurnStacks*3:0);break;
+                    case SpellId.CloseHeal:value+=Math.Min(p.Magnitude,u.Profile.MaxHp-u.Hp)+(u.BurnStacks>0?u.BurnStacks*3:u.PoisonStacks>0||u.BleedStacks>0?3:0);break;
                     case SpellId.IceShield:case SpellId.FireArmor:
                         int amount=c.Spell==SpellId.FireArmor?6:10;
                         if(state.Units.Any(e=>e.IsActive&&e.Side!=u.Side&&e.Position.DistanceTo(u.Position)<=8))value+=Math.Max(0,amount-u.TemporaryBarrier)*.6;

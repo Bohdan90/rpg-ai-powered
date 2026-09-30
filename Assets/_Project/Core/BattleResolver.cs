@@ -78,7 +78,7 @@ namespace RPG.Core
         {
             var responder = state.FindUnit(responderId); var mover = state.FindUnit(moverId);
             if (responder == null || mover == null || !mover.IsActive || responder.Side == mover.Side
-                || !responder.OpportunityAttackAvailable || !ZoneOfControl.Exerts(state, responder, mover.Position))
+                || responder.IsFrozen || !responder.OpportunityAttackAvailable || !ZoneOfControl.Exerts(state, responder, mover.Position))
                 return new AttackPreview { Error = CommandError.InvalidCommand };
             return CalculateAttack(state, responder, mover);
         }
@@ -166,6 +166,9 @@ namespace RPG.Core
             foreach (var unit in state.Units)
                 if (unit.IsActive) { if (unit.Side == Side.West) west = true; else east = true; }
             if (!west && !east) {
+                bool westDied=false,eastDied=false;
+                foreach(var e in events)if(e.Kind==BattleEventKind.UnitDied&&e.Target.HasValue){if(state.FindUnit(e.Target.Value).Side==Side.West)westDied=true;else eastDied=true;}
+                if(!westDied||!eastDied)throw new InvalidOperationException("Scenario error: both sides have no active units.");
                 state.Outcome=BattleOutcome.Draw;
                 events.Add(new BattleEvent(BattleEventKind.BattleEnded,state.Round,outcome:state.Outcome));return;
             }

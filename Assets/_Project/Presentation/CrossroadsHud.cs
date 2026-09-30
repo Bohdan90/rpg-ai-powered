@@ -15,7 +15,7 @@ namespace RPG.Presentation
         private readonly Button move,attack,withdraw,end,accept,recruitWarrior,recruitArcher;
         private readonly Label economy,incident;
         private readonly Button worldContinue,contactFight,contactWithdraw;
-        private int selected;
+        private int selected; private readonly CityOverview cityOverview;
         public CrossroadsHud(VisualElement parent,BattlePresenter presenter)
         {
             p=presenter;Root=new VisualElement {name="duel-world"};Root.style.position=Position.Absolute;
@@ -23,7 +23,7 @@ namespace RPG.Presentation
             content=new VisualElement();content.style.flexDirection=FlexDirection.Row;content.style.flexGrow=1;Root.Add(content);
             var left=new ScrollView();left.style.width=Length.Percent(64);content.Add(left);
             Text(left,p.Duel.Incident==null?"CROSSROADS DUEL · strategic Hotseat":"CROSSROADS INCIDENT 04 · World Dynamics",22);Text(left,"Open information · claim objectives at activation end · "+p.Duel.TargetPressure+" Pressure to win",14);
-            map=new VisualElement();map.style.height=p.Duel.Incident==null?400:650;map.style.flexShrink=0;left.Add(map);map.generateVisualContent+=Draw;
+            map=new VisualElement();map.style.height=p.Duel.Foundations!=null?700:p.Duel.Incident==null?400:650;map.style.flexShrink=0;left.Add(map);map.generateVisualContent+=Draw;
             foreach(var n in p.Duel.Graph.Nodes)
             {
                 int id=n.Id;var b=Button(map,n.Name,"duel-node-"+id,()=>{selected=id;Refresh();});b.style.position=Position.Absolute;b.style.width=90;b.style.height=65;
@@ -46,6 +46,7 @@ namespace RPG.Presentation
             economy=Text(right,"",14);economy.name="duel-economy";
             recruitWarrior=Button(right,"Recruit L1 HW · 100 Gold","duel-recruit-hw",()=>Act(()=>p.Duel.Recruit(p.Duel.ActiveSide,UnitProfileId.HumanWarriorTI)));
             recruitArcher=Button(right,"Recruit L1 HA · 100 Gold","duel-recruit-ha",()=>Act(()=>p.Duel.Recruit(p.Duel.ActiveSide,UnitProfileId.HumanArcherTI)));
+            cityOverview=new CityOverview(right,p);
             roster=Text(right,"",13);roster.name="duel-roster";
             handoff=new VisualElement {name="duel-handoff"};handoff.style.position=Position.Absolute;handoff.style.left=handoff.style.right=handoff.style.top=handoff.style.bottom=0;
             handoff.style.backgroundColor=new Color(.06f,.09f,.12f);handoff.style.justifyContent=Justify.Center;handoff.style.alignItems=Align.Center;Root.Add(handoff);
@@ -63,7 +64,7 @@ namespace RPG.Presentation
             preview.text=s.PendingContact!=null?"HOSTILE CONTACT — pass control to "+s.PendingContact.Target.Formation.Side+". Choose Fight or Withdrawal. Save blocked until resolved.":"Path "+string.Join(" → ",m.Path)+" · cost "+m.Cost+"\n"+(m.Reason??"Legal movement");move.SetEnabled(m.IsLegal);
             attack.SetEnabled(s.Incident==null?s.CanAttack(s.ActiveSide):s.CanAttackNode(s.ActiveSide,selected));withdraw.SetEnabled(s.Incident==null?s.CanAttack(s.ActiveSide):s.CanWithdrawIncident(s.ActiveSide));end.SetEnabled(s.CanAct(s.ActiveSide));
             status.text="R"+s.Refresh+" · "+(s.Incident?.WorldPhase==true?"WORLD PHASE":"Active "+s.ActiveSide)+" · first "+s.StartingSide+"\nPressure W "+s.West.Pressure+" / E "+s.East.Pressure+" · target "+s.TargetPressure
-                +(s.Winner.HasValue?"\nWINNER: "+s.Winner:"")+"\nTempo "+f.Tempo+" · Provisions "+f.Provisions+" / 30 · consumption "+f.Consumption+(f.Hungry?" · HUNGRY ×1.25 cost":"")
+                +(s.IsDraw?"\nDRAW: both formations eliminated":s.Winner.HasValue?"\nWINNER: "+s.Winner:"")+"\nTempo "+f.Tempo+" · Provisions "+f.Provisions+" / 30 · consumption "+f.Consumption+(f.Hungry?" · HUNGRY ×1.25 cost":"")
                 +"\nEnemy @ "+enemy.Node+": "+enemy.Consumption+" units · "+string.Join(" · ",enemy.Formation.LivingMembers.GroupBy(c=>c.Profile.Id).Select(g=>g.Count()+" "+g.Key))
                 +"\nNext Refresh here: +"+s.RecoveryPercent(s.ActiveSide)+"% Max HP. Own Keep: supply up to 6; HP40%. Field HP15%. Armor NOT repaired."
                 +"\nObjectives: "+string.Join("; ",new[]{6,7,8}.Select(n=>p.Duel.Graph.Node(n).Name+"="+(s.Owner(n)?.ToString()??"Neutral")));
@@ -71,11 +72,11 @@ namespace RPG.Presentation
             economy.text=displayedSide+" · Gold "+f.Gold+" · Own Keep Food "+f.KeepFood+" · free capacity "+f.FreeCapacity+" / "+f.Capacity+" (Native unit6)"
                 +"\nNorth Mine +75 Gold / Refresh. Central Beacon: position + Pressure only."
                 +"\nSouth Waystation Food "+s.WaystationFood+" /24 · controlling formation here: supply<=6. No regeneration."
-                +"\nOwn Keep supply<=6 costs actual Food. HP recovery costs time, not Gold/Food. No Armor repair."
+                +"\nOwn Keep supply<=6 costs actual Food. HP recovery costs time, not Gold/Food. "+(s.Foundations!=null?"Armor: paid Forge order only.":"No Armor repair.")
                 +"\n"+(f.PendingRecruit.HasValue?"PAID PENDING: "+f.PendingRecruitId+" / "+f.PendingRecruit:"Recruit: "+(s.RecruitBlocker(s.ActiveSide,UnitProfileId.HumanWarriorTI)??"legal · ends activation; joins at global Refresh end"));
             recruitWarrior.style.display=recruitArcher.style.display=s.Economy?DisplayStyle.Flex:DisplayStyle.None;
             recruitWarrior.SetEnabled(s.RecruitBlocker(s.ActiveSide,UnitProfileId.HumanWarriorTI)==null);recruitArcher.SetEnabled(s.RecruitBlocker(s.ActiveSide,UnitProfileId.HumanArcherTI)==null);
-            roster.text=(f.Formation.Commanderless?"COMMANDERLESS · roster locked":"COMMANDER-LED")+"\n"+string.Join("\n",f.Formation.Members.Select(c=>c.CharacterId+(c.IsCommander?" *":"")+" · "+c.Profile.Id+" · "+c.Status+"\nHP "+c.Hp+"/"+c.Profile.MaxHp+" Armor "+c.Armor+"/"+c.Profile.MaxArmor+" · XP "+c.PersonalXp.ToString("0.##")+" L"+c.PersonalLevel+(c.IsCommander?" · Command "+c.CommandXp.ToString("0.##")+" L"+c.CommandLevel+" Rank "+c.CommandRank:"")));
+            roster.text=(f.Formation.Commanderless?"COMMANDERLESS · roster locked":"COMMANDER-LED")+"\n"+string.Join("\n",f.Formation.Members.Select(c=>c.CharacterId+(c.IsCommander?" *":"")+" · "+c.Profile.Id+" · "+c.Status+"\nHP "+c.Hp+"/"+c.Profile.MaxHp+" Armor "+c.Armor+"/"+c.Profile.MaxArmor+" · XP "+c.PersonalXp.ToString("0.##")+" L"+c.PersonalLevel+(c.Profile.IsCaster?" · Refresh uses "+string.Join(", ",SpellRules.Kit(c.Profile).Where(s=>SpellRules.Limit(s)!=int.MaxValue).Select(s=>s+" "+(SpellRules.Limit(s)-SpellRules.Used(c,s))+" left")):"")+(c.IsCommander?" · Command "+c.CommandXp.ToString("0.##")+" L"+c.CommandLevel+" Rank "+c.CommandRank:"")));
             worldContinue.style.display=s.Incident?.WorldPhase==true?DisplayStyle.Flex:DisplayStyle.None;worldContinue.SetEnabled(s.Encounter==null&&s.PendingContact==null&&!s.Winner.HasValue);
             contactFight.style.display=contactWithdraw.style.display=s.PendingContact==null?DisplayStyle.None:DisplayStyle.Flex;contactWithdraw.SetEnabled(s.PendingContact!=null&&s.PendingContact.Target.Tempo>=0);
             incident.style.display=s.Incident==null?DisplayStyle.None:DisplayStyle.Flex;
@@ -83,7 +84,8 @@ namespace RPG.Presentation
             history.text=string.Join("\n",s.Events.Reverse().Take(8));
             Root.Q<Button>("duel-save").SetEnabled(s.CanSave);Root.Q<Button>("duel-load-slot").SetEnabled(s.CanSave);
             saveStatus.text=s.PendingContact!=null?"Save/Load disabled: defending human must resolve Fight / Withdrawal first.":p.DuelSaveMessage;
-            foreach(var n in p.Duel.Graph.Nodes){var b=map.Q<Button>("duel-node-"+n.Id);b.text=n.Id+" "+n.Name+(s.Owner(n.Id).HasValue?"\n"+s.Owner(n.Id):"")+(s.West.Continues&&s.West.Node==n.Id?"\n◆ WEST":"")+(s.East.Continues&&s.East.Node==n.Id?"\n◆ EAST":"");if(s.Incident!=null)foreach(var r in s.Incident.Raiders.Where(r=>r.OnMap&&r.Force.Node==n.Id))b.text+="\nRAIDER "+(r.Id.EndsWith("A")?"A":"B");b.tooltip="Edges: "+string.Join(", ",p.Duel.Graph.Neighbors(n.Id).Select(v=>v+" cost "+p.Duel.Graph.Cost(n.Id,v)));}
+            foreach(var n in p.Duel.Graph.Nodes){var b=map.Q<Button>("duel-node-"+n.Id);b.text=n.Id+" "+n.Name+(s.Foundations?.Location(n.Id)!=null?"\n"+s.Foundations.Location(n.Id).Controller:"")+(s.Owner(n.Id).HasValue?"\n"+s.Owner(n.Id):"")+(s.West.Continues&&s.West.Node==n.Id?"\n◆ WEST":"")+(s.East.Continues&&s.East.Node==n.Id?"\n◆ EAST":"");if(s.Incident!=null)foreach(var r in s.Incident.Raiders.Where(r=>r.OnMap&&r.Force.Node==n.Id))b.text+="\nRAIDER "+(r.Id.EndsWith("A")?"A":"B");b.tooltip="Edges: "+string.Join(", ",p.Duel.Graph.Neighbors(n.Id).Select(v=>v+" cost "+p.Duel.Graph.Cost(n.Id,v)));}
+            cityOverview.Refresh(selected);
             map.MarkDirtyRepaint();
         }
         private static Label Text(VisualElement parent,string text,int size){var l=new Label(text);l.style.whiteSpace=WhiteSpace.Normal;l.style.fontSize=size;l.style.color=Color.white;l.style.marginBottom=8;parent.Add(l);return l;}

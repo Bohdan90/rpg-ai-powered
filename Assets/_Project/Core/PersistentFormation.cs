@@ -47,6 +47,7 @@ namespace RPG.Core
         public int FireballUsed { get; internal set; }
         public int FreezeUsed { get; internal set; }
         public int CloseHealUsed { get; internal set; }
+        internal void RepairArmor(int amount) { if(Status!=PersistentCharacterStatus.Dead)Armor=Math.Min(Profile.MaxArmor,Armor+amount); }
         internal void ResetSourceBudgets() { FireballUsed=0;FreezeUsed=0;CloseHealUsed=0; }
         internal void TrainMageTierII() {
             if(Status==PersistentCharacterStatus.Dead || PersonalLevel<3 || Profile.Tier!=1 || (!Profile.IsFireMage&&!Profile.IsIceMage))throw new InvalidOperationException("Ineligible persistent mage.");

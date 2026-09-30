@@ -20,6 +20,18 @@ namespace RPG.Core
             if(state==null||state.Outcome.IsEnded||!state.CurrentUnitId.HasValue)return null;
             var actor=state.FindUnit(state.CurrentUnitId.Value);
             if(actor.IsFrozen)return Decision(new EndActivationCommand(actor.Id),0,"Frozen; End activation");
+            if(!actor.ActionAvailable&&actor.Profile.HasGracefulExit&&actor.GracefulExitTarget.HasValue&&actor.MovementRemaining>0) {
+                double baseline=Incoming(state,actor);BattleCommand exit=null;double bestExit=baseline;
+                foreach(var end in TacticalAiPaths.Reachable(state,actor,actor.MovementRemaining).OrderBy(e=>e.cost).ThenBy(e=>e.position.X).ThenBy(e=>e.position.Y)) {
+                    if(end.cost==0||state.Battlefield.IsRetreatZone(actor,end.position))continue;
+                    var path=Pathfinder.FindPath(state,actor.Id,end.position);if(!path.Found)continue;
+                    var query=state.Copy();var moving=query.FindUnit(actor.Id);moving.Position=end.position;moving.Facing=end.facing;
+                    var route=TacticalAiPaths.Start(actor);foreach(var step in path.Steps)route=TacticalAiPaths.Extend(state,actor,route,step);
+                    double incoming=Incoming(query,moving)+route.HpLoss(actor);
+                    if(incoming<bestExit-1e-9){bestExit=incoming;exit=new MoveCommand(actor.Id,path.Steps);}
+                }
+                if(exit!=null)return Decision(exit,baseline-bestExit,"Graceful Exit: reduce exposure using remaining legal Movement");
+            }
             if(!actor.ActionAvailable)return Decision(new EndActivationCommand(actor.Id),0,"Action spent; End");
             var enemies=state.Units.Where(u=>u.IsActive&&u.Side!=actor.Side).OrderBy(u=>u.Id).ToArray();
             if(enemies.Length==0)return Decision(new EndActivationCommand(actor.Id),0,"No enemy; End");
@@ -106,7 +118,7 @@ namespace RPG.Core
                         kill=p.HpLossOnUnguardedHit>=projected.FindUnit(attack.Target).Hp?hit:0;
                         mover.Facing=FacingDirections.Toward(mover.Position,projected.FindUnit(attack.Target).Position);
                     }
-                    if(action is CastCommand cast)hp=SpellAi.Value(projected,cast);
+                    if(action is CastCommand cast){hp=SpellAi.Value(projected,cast);if(hp<=0)continue;}
                     if(action is DefendCommand)mover.IsDefending=true;
                     string key=r.Position.X+","+r.Position.Y+":"+mover.Facing+":"+mover.IsDefending;
                     if(!incomingCache.TryGetValue(key,out double incoming))incomingCache[key]=incoming=Incoming(projected,mover);

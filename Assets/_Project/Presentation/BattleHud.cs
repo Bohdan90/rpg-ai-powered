@@ -90,6 +90,14 @@ namespace RPG.Presentation
             }
             var abilities=new DropdownField("Ability",new List<string>{"Basic / Move"},0){name="spell-selector"};
             abilities.RegisterValueChangedCallback(e=>presenter.SelectSpell(e.newValue=="Basic / Move"?(SpellId?)null:(SpellId)Enum.Parse(typeof(SpellId),e.newValue)));panel.Add(abilities);
+            var westPreset=new DropdownField("05B West preset",Enum.GetNames(typeof(CombatPreset)).ToList(),0);panel.Add(westPreset);
+            var eastPreset=new DropdownField("05B East preset",Enum.GetNames(typeof(CombatPreset)).ToList(),1);panel.Add(eastPreset);
+            var firstSide=new DropdownField("05 Starting Side",new List<string>{"West","East"},0);panel.Add(firstSide);
+            AddButton(panel,"City Foundations 05A","city-start-a",()=>presenter.StartCity(first:(Side)firstSide.index));
+            AddButton(panel,"City & Combat 05B · permanent presets","city-start-b",()=>presenter.StartCity(true,(CombatPreset)westPreset.index,(CombatPreset)eastPreset.index,(Side)firstSide.index));
+            AddButton(panel,"Load AUTHORED 05B inspection fixture (not a played match)","city-authored",()=>presenter.LoadDuel(System.IO.Path.Combine(Application.streamingAssetsPath,"CityCombat05B","authored-ready.json")));
+            AddButton(panel,"Load City Foundations 05A","city-load-a",()=>presenter.LoadDuel(BattlePresenter.CitySlot(false)));
+            AddButton(panel,"Load City & Combat 05B","city-load-b",()=>presenter.LoadDuel(BattlePresenter.CitySlot(true)));
             AddButton(panel,"Start Persistence Slice v0.1","persistence-start",presenter.StartPersistenceSlice);
             AddButton(panel,"Start Connected Mission 01","world-start",presenter.StartStrategicScenario);
             AddButton(panel,"Load saved Mission 01","world-load",()=>presenter.LoadStrategic());
@@ -150,7 +158,7 @@ namespace RPG.Presentation
             bool incidentBattle=presenter.Duel?.Incident!=null;
             Root.Q<Label>("battle-title").text=incidentBattle?"INCIDENT 04 · Blue: "+presenter.TacticalSideLabel(Side.West)+" / Orange: "+presenter.TacticalSideLabel(Side.East):"GATE C / HOTSEAT";
             Root.Q("world-return").style.display=connected?DisplayStyle.Flex:DisplayStyle.None;
-            foreach(string controlName in new[]{"fixture-selector","controller-mode","persistence-start","restart","outcome-restart","world-start","world-load","duel-start-west","duel-start-east","duel-load","incident-start-west","incident-start-east","incident-control","incident-load"})Root.Q(controlName).SetEnabled(!connected);
+            foreach(string controlName in new[]{"fixture-selector","controller-mode","persistence-start","restart","outcome-restart","world-start","world-load","duel-start-west","duel-start-east","duel-load","incident-start-west","incident-start-east","incident-control","incident-load","city-start-a","city-start-b","city-load-a","city-load-b","city-authored"})Root.Q(controlName).SetEnabled(!connected);
             Root.Q<DropdownField>("controller-mode").SetValueWithoutNotify(presenter.PlayerVsAi?(presenter.AiSide==Side.East?"Player West vs AI East":"Player East vs AI West"):"Hotseat");
             var spellSelect=Root.Q<DropdownField>("spell-selector");
             spellSelect.choices=new[]{"Basic / Move"}.Concat(SpellRules.Kit(actor.Profile).Select(s=>s.ToString())).ToList();

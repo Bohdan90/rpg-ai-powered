@@ -50,7 +50,7 @@ namespace RPG.Core
             loser=s.Outcome.DefeatedSide.HasValue?(int)s.Outcome.DefeatedSide.Value:-1,outcome=(int)s.Outcome.Reason };
         public BattleState Restore()
         {
-            var s=new BattleState(units.Select(u=>u.Restore()),seed,new Battlefield(columns,rows,solids.Select(p=>p.Position()),eastPerimeter));
+            var s=new BattleState(units.Select(u=>u.Restore()),seed,new Battlefield(columns,rows,solids.Select(p=>p.Position()),eastPerimeter),completedMutualElimination:outcome==(int)BattleEndReason.MutualElimination);
             // Constructor seeds priority for fresh battles; replay restores the explicit initial snapshot.
             foreach(var data in units) { var u=s.FindUnit(new UnitId(data.id));u.TieKey=data.tie;u.OpportunityAttackAvailable=data.oa; }
             s.Random=new CombatRandom(rng);s.Round=round;s.CurrentUnitId=currentActor==0?(UnitId?)null:new UnitId(currentActor);
