@@ -1,0 +1,61 @@
+{
+  "task": "50+51 isolated batch",
+  "starting_head": "045707f81847fb88ac34c724d5f87ce30fba5c39",
+  "implementation_head": "3d58f354f5c9764f47fdfa85b2d1b85fd5d5a0c4",
+  "branch": "feature/50-51-connected",
+  "worktree": "/Users/bohdanskrypka/UnityProjects/Convergence/Isolated-50-51",
+  "unity": "6000.6.2f1",
+  "full_regression": {
+    "EditMode": {
+      "passed": 489,
+      "failed": 0,
+      "skipped": 0,
+      "source_xml": "/private/tmp/convergence-5051/logs/EditMode-20260929-234404.xml",
+      "source_log": "/private/tmp/convergence-5051/logs/EditMode-20260929-234404.log",
+      "repo_xml": "Docs/Prototype/Evidence/5051/final-editmode.xml",
+      "command": "bash /private/tmp/convergence-5051/run-tests.sh EditMode",
+      "sha256": "1a71dbb3dc739e8b28b7719fcb19d5de3979f5d3bff2dca59ebbd6b4bee2b6f8"
+    },
+    "PlayMode": {
+      "passed": 64,
+      "failed": 0,
+      "skipped": 0,
+      "source_xml": "/private/tmp/convergence-5051/logs/PlayMode-20260929-234616.xml",
+      "source_log": "/private/tmp/convergence-5051/logs/PlayMode-20260929-234616.log",
+      "repo_xml": "Docs/Prototype/Evidence/5051/final-playmode.xml",
+      "command": "bash /private/tmp/convergence-5051/run-tests.sh PlayMode",
+      "sha256": "d40a421657e319c419fec58575601f5a459b1aaf5b47b1e1de0860a0cb9947a9"
+    }
+  },
+  "manual": {
+    "N1": "NOT RUN \u2014 no independent GUI/input session; automated fixtures are not manual play",
+    "N2": "NOT RUN \u2014 no independent GUI/input session; automated fixtures are not manual play",
+    "N3": "NOT RUN \u2014 no independent GUI/input session; automated fixtures are not manual play",
+    "N4": "NOT RUN \u2014 no independent GUI/input session; automated fixtures are not manual play",
+    "N5": "NOT RUN \u2014 no independent GUI/input session; automated fixtures are not manual play",
+    "V1": "NOT RUN \u2014 no independent GUI/input session; automated fixtures are not manual play",
+    "V2": "NOT RUN \u2014 no independent GUI/input session; automated fixtures are not manual play",
+    "V3": "NOT RUN \u2014 no independent GUI/input session; automated fixtures are not manual play",
+    "V4": "NOT RUN \u2014 no independent GUI/input session; automated fixtures are not manual play",
+    "V5": "NOT RUN \u2014 no independent GUI/input session; automated fixtures are not manual play"
+  },
+  "original_checkout": "/Users/bohdanskrypka/UnityProjects/Convergence/My project",
+  "original_head": "045707f81847fb88ac34c724d5f87ce30fba5c39",
+  "original_status": " M Assets/_Project/Scenes/TacticalGraybox.unity\n M ProjectSettings/EditorBuildSettings.asset\n M ProjectSettings/ProjectSettings.asset\n?? Assets/_Project/Core/PersistenceSliceScenario.cs.meta\n?? Assets/_Project/Core/PersistentFormation.cs.meta\n?? Assets/_Project/Tests/PersistenceProgressionTests.cs.meta\n?? Assets/_Project/Tests/PersistenceSliceScenarioTests.cs.meta\n?? Assets/_Project/Tests/PersistentFormationTests.cs.meta\n?? Assets/_Project/Tests/PlayMode/PersistenceSlicePresentationTests.cs.meta\n",
+  "original_nine_hash_checks": {
+    "Assets/_Project/Scenes/TacticalGraybox.unity": true,
+    "ProjectSettings/EditorBuildSettings.asset": true,
+    "ProjectSettings/ProjectSettings.asset": true,
+    "Assets/_Project/Core/PersistenceSliceScenario.cs.meta": true,
+    "Assets/_Project/Core/PersistentFormation.cs.meta": true,
+    "Assets/_Project/Tests/PersistenceProgressionTests.cs.meta": true,
+    "Assets/_Project/Tests/PersistenceSliceScenarioTests.cs.meta": true,
+    "Assets/_Project/Tests/PersistentFormationTests.cs.meta": true,
+    "Assets/_Project/Tests/PlayMode/PersistenceSlicePresentationTests.cs.meta": true
+  },
+  "save_namespace": "CodexPrototype/Convergence-5051-Isolated",
+  "test_preferences": "/private/tmp/convergence-5051/preferences",
+  "interactive_preferences": "/private/tmp/convergence-5051/play-preferences",
+  "push": "NOT PERFORMED",
+  "develop_merge": "NOT PERFORMED"
+}

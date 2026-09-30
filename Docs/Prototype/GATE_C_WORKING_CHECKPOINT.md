@@ -1,5 +1,7 @@
 # Gate C — working implementation checkpoint
 
+Latest isolated 50+51 checkpoint: gameplay `3d58f35` on `feature/50-51-connected`; full 489 EditMode +64 PlayMode =553 PASS, 0 failed/skipped. Manual N1–N5/V1–V5 NOT RUN. This feature is NOT merged into the user checkout. See final 2026-09-29 append and `COMBAT_VARIETY_AND_CONNECTED_05B.md`.
+
 Updated 2026-09-29. Single implementation handoff; Google Drive thematic owners retain
 priority for canon. Follow repository `AGENTS.md` and the efficiency protocol.
 
@@ -168,3 +170,19 @@ Escaped/Safe, Withdrawal/Eliminated and outcome HUD.
 ## 2026-09-29 isolated 50+51 early Lab (IN PROGRESS)
 
 Feature `feature/50-51-connected` in `../Isolated-50-51`, based on `045707f`. Separate company/product/preferences/save namespace; original checkout untouched. Combat Lab three direct near-contact entries implemented; focused 33 EditMode + 1 PlayMode PASS. This is not full regression or manual acceptance. 50 economy and combined 05B remain in progress. See `COMBAT_VARIETY_AND_CONNECTED_05B.md`. Continue the authorized batch; no merge into develop or push.
+
+## 2026-09-29 — isolated 50+51 implementation / coordinator handoff
+
+Starting live develop `045707f` (gameplay `20473ec`); no existing 50 work. Feature worktree `../Isolated-50-51`, `feature/50-51-connected`. Local commits `3541376` (early Combat Lab) and `3d58f35` (City/Region/Research/Forge, integrated 05B, save/replay and final gameplay fixes). Evidence/checkpoint commit follows; it changes no gameplay. Do not merge/cherry-pick into develop without separate authorization. NO PUSH.
+
+50 and 51 implementations are present. 05A remains separate with old roster. 05B reuses paid 05A economy and adds fixed Fire/Ice/Support presets, HOM/HH direction, TowerI/II,150G L1 Mage recruitment,6Work/40G Drills and75G same-ID HOM II training. New Lab Fire/Ice/HH/EW II kits, spell AI, clear source budgets/statuses and persistent results are connected. Old01/03/04 tuning and user checkout remain untouched.
+
+Final actual combined regression for gameplay `3d58f35`: **489 EditMode +64 PlayMode =553 passed; 0 failed; 0 skipped**. Fresh XML and exact source logs/commands: `Evidence/5051/validation-manifest.json`. Focused tests exercised concrete spell/attrition/queue/save/Forge risks. Two scripted mirrored 05B matches used actual tactical commands, casualties and save continuation and ended legally; they are not manual or balance acceptance.
+
+**N1–N5 / V1–V5 manual: NOT RUN.** No independent input session was exposed; no clicks/focus/Play changes were sent to the user's Unity. Exact residual human procedures are in the two reports. UI batch screenshot produced no usable artifact; no visual/manual PASS claimed. Coordinator review and integrated user evaluation remain required. 04 player acceptance stays PENDING with the reported repetition feedback; no invented KEEP.
+
+Launch isolated editor using `bash Tools/launch-isolated-5051.sh`; choose `Gate C/Combat Lab` (three direct entries), `Gate C/City Foundations 05A` or `Gate C/City and Combat 05B`. On-screen launcher supports presets/StartingSide. `Assets/StreamingAssets/CityCombat05B/authored-ready.json` is explicitly authored (not earned) and loadable by the labelled inspection-fixture button.
+
+Save/preference safety: distinct test and interactive preference roots, unique company/product, independent Library/Temp, separate05A/05B slots; old save namespaces preserved. All nine original scene/settings/persistence metadata files match preflight SHA256. The isolated worktree retains six untracked generated counterpart metadata files; these were not copied from or committed as the user's work.
+
+Reports: `CITY_REGION_RESEARCH_FOUNDATIONS_05A.md`, `COMBAT_VARIETY_AND_CONNECTED_05B.md`. Stop coding here for coordinator review/user playtest. No further Civilization Depth, City/research systems, Dominion/Convergence or siege.
