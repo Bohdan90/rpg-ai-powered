@@ -1,0 +1,699 @@
+{
+    "version": 4,
+    "refresh": 1,
+    "startingSide": 0,
+    "activeSide": 0,
+    "completed": 0,
+    "winner": -1,
+    "battleNumber": 0,
+    "seed": 20260929,
+    "handoff": false,
+    "economy": true,
+    "waystationFood": 24,
+    "scenario": "CityFoundations-05",
+    "checksum": "DY7EsYeJRZr/58CsFkSoy9r3GNkTZCZKSWWHXXQHhhQ=",
+    "owners": [
+        -1,
+        -1,
+        -1
+    ],
+    "events": [
+        "AUTHORED rare-case initial fixture: two-heals. No played history claimed. Following actions use GUI."
+    ],
+    "west": {
+        "node": 6,
+        "tempo": 100,
+        "provisions": 30,
+        "pressure": 0,
+        "gold": 300,
+        "keepFood": 36,
+        "nextRecruit": 1,
+        "pendingProfile": -1,
+        "lastRecruitRefresh": 0,
+        "pendingId": "",
+        "goldExact": "300",
+        "foodExact": "36",
+        "formation": {
+            "id": "duel-West",
+            "side": 0,
+            "commanderless": false,
+            "rosterLocked": false,
+            "members": [
+                {
+                    "id": "duel-West-1",
+                    "personalXp": "0",
+                    "commandXp": "0",
+                    "profile": 0,
+                    "hp": 40,
+                    "armor": 16,
+                    "status": 0,
+                    "personalLevel": 1,
+                    "commandLevel": 1,
+                    "commandRank": 0,
+                    "recoveryRemainder": 0,
+                    "commander": true,
+                    "fireballUsed": 0,
+                    "freezeUsed": 0,
+                    "closeHealUsed": 0
+                },
+                {
+                    "id": "duel-West-2",
+                    "personalXp": "0",
+                    "commandXp": "0",
+                    "profile": 0,
+                    "hp": 40,
+                    "armor": 16,
+                    "status": 0,
+                    "personalLevel": 1,
+                    "commandLevel": 1,
+                    "commandRank": 0,
+                    "recoveryRemainder": 0,
+                    "commander": false,
+                    "fireballUsed": 0,
+                    "freezeUsed": 0,
+                    "closeHealUsed": 0
+                },
+                {
+                    "id": "duel-West-3",
+                    "personalXp": "0",
+                    "commandXp": "0",
+                    "profile": 1,
+                    "hp": 28,
+                    "armor": 4,
+                    "status": 0,
+                    "personalLevel": 1,
+                    "commandLevel": 1,
+                    "commandRank": 0,
+                    "recoveryRemainder": 0,
+                    "commander": false,
+                    "fireballUsed": 0,
+                    "freezeUsed": 0,
+                    "closeHealUsed": 0
+                },
+                {
+                    "id": "duel-West-4",
+                    "personalXp": "20",
+                    "commandXp": "0",
+                    "profile": 8,
+                    "hp": 17,
+                    "armor": 5,
+                    "status": 0,
+                    "personalLevel": 3,
+                    "commandLevel": 1,
+                    "commandRank": 0,
+                    "recoveryRemainder": 0,
+                    "commander": false,
+                    "fireballUsed": 0,
+                    "freezeUsed": 0,
+                    "closeHealUsed": 0
+                },
+                {
+                    "id": "duel-West-5",
+                    "personalXp": "0",
+                    "commandXp": "0",
+                    "profile": 7,
+                    "hp": 28,
+                    "armor": 0,
+                    "status": 0,
+                    "personalLevel": 1,
+                    "commandLevel": 1,
+                    "commandRank": 0,
+                    "recoveryRemainder": 0,
+                    "commander": false,
+                    "fireballUsed": 0,
+                    "freezeUsed": 0,
+                    "closeHealUsed": 0
+                }
+            ]
+        }
+    },
+    "east": {
+        "node": 9,
+        "tempo": 100,
+        "provisions": 30,
+        "pressure": 0,
+        "gold": 300,
+        "keepFood": 36,
+        "nextRecruit": 1,
+        "pendingProfile": -1,
+        "lastRecruitRefresh": 0,
+        "pendingId": "",
+        "goldExact": "300",
+        "foodExact": "36",
+        "formation": {
+            "id": "duel-East",
+            "side": 1,
+            "commanderless": false,
+            "rosterLocked": false,
+            "members": [
+                {
+                    "id": "duel-East-1",
+                    "personalXp": "0",
+                    "commandXp": "0",
+                    "profile": 0,
+                    "hp": 40,
+                    "armor": 16,
+                    "status": 0,
+                    "personalLevel": 1,
+                    "commandLevel": 1,
+                    "commandRank": 0,
+                    "recoveryRemainder": 0,
+                    "commander": true,
+                    "fireballUsed": 0,
+                    "freezeUsed": 0,
+                    "closeHealUsed": 0
+                },
+                {
+                    "id": "duel-East-2",
+                    "personalXp": "0",
+                    "commandXp": "0",
+                    "profile": 0,
+                    "hp": 40,
+                    "armor": 16,
+                    "status": 0,
+                    "personalLevel": 1,
+                    "commandLevel": 1,
+                    "commandRank": 0,
+                    "recoveryRemainder": 0,
+                    "commander": false,
+                    "fireballUsed": 0,
+                    "freezeUsed": 0,
+                    "closeHealUsed": 0
+                },
+                {
+                    "id": "duel-East-3",
+                    "personalXp": "0",
+                    "commandXp": "0",
+                    "profile": 1,
+                    "hp": 28,
+                    "armor": 4,
+                    "status": 0,
+                    "personalLevel": 1,
+                    "commandLevel": 1,
+                    "commandRank": 0,
+                    "recoveryRemainder": 0,
+                    "commander": false,
+                    "fireballUsed": 0,
+                    "freezeUsed": 0,
+                    "closeHealUsed": 0
+                },
+                {
+                    "id": "duel-East-4",
+                    "personalXp": "20",
+                    "commandXp": "0",
+                    "profile": 8,
+                    "hp": 38,
+                    "armor": 8,
+                    "status": 0,
+                    "personalLevel": 3,
+                    "commandLevel": 1,
+                    "commandRank": 0,
+                    "recoveryRemainder": 0,
+                    "commander": false,
+                    "fireballUsed": 0,
+                    "freezeUsed": 0,
+                    "closeHealUsed": 0
+                },
+                {
+                    "id": "duel-East-5",
+                    "personalXp": "20",
+                    "commandXp": "0",
+                    "profile": 6,
+                    "hp": 32,
+                    "armor": 0,
+                    "status": 0,
+                    "personalLevel": 3,
+                    "commandLevel": 1,
+                    "commandRank": 0,
+                    "recoveryRemainder": 0,
+                    "commander": false,
+                    "fireballUsed": 0,
+                    "freezeUsed": 0,
+                    "closeHealUsed": 0
+                }
+            ]
+        }
+    },
+    "incident": {
+        "enabled": false,
+        "worldPhase": false,
+        "ravaged": false,
+        "cycleEligible": false,
+        "continuityBroken": false,
+        "rewardPaid": false,
+        "phase": 0,
+        "whiteout": 0,
+        "cursor": 0,
+        "contract": 0,
+        "holdCycles": 0,
+        "appliedBattle": 0,
+        "id": "",
+        "claimant": "",
+        "holdReason": "",
+        "actorOrder": [],
+        "raiders": []
+    },
+    "foundations": {
+        "combined": true,
+        "locations": [
+            {
+                "node": 1,
+                "parent": 0,
+                "controller": 0,
+                "development": 1,
+                "tower": 0,
+                "functioning": true,
+                "forge": false,
+                "institute": false,
+                "depot": false,
+                "assay": false,
+                "hasActive": false,
+                "stock": [
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                ],
+                "regional": "0",
+                "condition": "1",
+                "queue": [],
+                "active": {
+                    "kind": 0,
+                    "started": 0,
+                    "steps": 0,
+                    "paused": false
+                }
+            },
+            {
+                "node": 13,
+                "parent": 0,
+                "controller": 1,
+                "development": 1,
+                "tower": 0,
+                "functioning": true,
+                "forge": false,
+                "institute": false,
+                "depot": false,
+                "assay": false,
+                "hasActive": false,
+                "stock": [
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                ],
+                "regional": "0",
+                "condition": "1",
+                "queue": [],
+                "active": {
+                    "kind": 0,
+                    "started": 0,
+                    "steps": 0,
+                    "paused": false
+                }
+            },
+            {
+                "node": 14,
+                "parent": 1,
+                "controller": 0,
+                "development": 1,
+                "tower": 0,
+                "functioning": true,
+                "forge": false,
+                "institute": false,
+                "depot": false,
+                "assay": false,
+                "hasActive": false,
+                "stock": [
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                ],
+                "regional": "0",
+                "condition": "1",
+                "queue": [],
+                "active": {
+                    "kind": 0,
+                    "started": 0,
+                    "steps": 0,
+                    "paused": false
+                }
+            },
+            {
+                "node": 15,
+                "parent": 13,
+                "controller": 1,
+                "development": 1,
+                "tower": 0,
+                "functioning": true,
+                "forge": false,
+                "institute": false,
+                "depot": false,
+                "assay": false,
+                "hasActive": false,
+                "stock": [
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                ],
+                "regional": "0",
+                "condition": "1",
+                "queue": [],
+                "active": {
+                    "kind": 0,
+                    "started": 0,
+                    "steps": 0,
+                    "paused": false
+                }
+            },
+            {
+                "node": 16,
+                "parent": 14,
+                "controller": 0,
+                "development": 1,
+                "tower": 0,
+                "functioning": true,
+                "forge": false,
+                "institute": false,
+                "depot": false,
+                "assay": false,
+                "hasActive": false,
+                "stock": [
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                ],
+                "regional": "0",
+                "condition": "1",
+                "queue": [],
+                "active": {
+                    "kind": 0,
+                    "started": 0,
+                    "steps": 0,
+                    "paused": false
+                }
+            },
+            {
+                "node": 17,
+                "parent": 14,
+                "controller": 0,
+                "development": 1,
+                "tower": 0,
+                "functioning": true,
+                "forge": false,
+                "institute": false,
+                "depot": false,
+                "assay": false,
+                "hasActive": false,
+                "stock": [
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                ],
+                "regional": "0",
+                "condition": "1",
+                "queue": [],
+                "active": {
+                    "kind": 0,
+                    "started": 0,
+                    "steps": 0,
+                    "paused": false
+                }
+            },
+            {
+                "node": 18,
+                "parent": 14,
+                "controller": 0,
+                "development": 1,
+                "tower": 0,
+                "functioning": true,
+                "forge": false,
+                "institute": false,
+                "depot": false,
+                "assay": false,
+                "hasActive": false,
+                "stock": [
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                ],
+                "regional": "0",
+                "condition": "1",
+                "queue": [],
+                "active": {
+                    "kind": 0,
+                    "started": 0,
+                    "steps": 0,
+                    "paused": false
+                }
+            },
+            {
+                "node": 19,
+                "parent": 14,
+                "controller": 0,
+                "development": 1,
+                "tower": 0,
+                "functioning": true,
+                "forge": false,
+                "institute": false,
+                "depot": false,
+                "assay": false,
+                "hasActive": false,
+                "stock": [
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                ],
+                "regional": "0",
+                "condition": "1",
+                "queue": [],
+                "active": {
+                    "kind": 0,
+                    "started": 0,
+                    "steps": 0,
+                    "paused": false
+                }
+            },
+            {
+                "node": 20,
+                "parent": 15,
+                "controller": 1,
+                "development": 1,
+                "tower": 0,
+                "functioning": true,
+                "forge": false,
+                "institute": false,
+                "depot": false,
+                "assay": false,
+                "hasActive": false,
+                "stock": [
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                ],
+                "regional": "0",
+                "condition": "1",
+                "queue": [],
+                "active": {
+                    "kind": 0,
+                    "started": 0,
+                    "steps": 0,
+                    "paused": false
+                }
+            },
+            {
+                "node": 21,
+                "parent": 15,
+                "controller": 1,
+                "development": 1,
+                "tower": 0,
+                "functioning": true,
+                "forge": false,
+                "institute": false,
+                "depot": false,
+                "assay": false,
+                "hasActive": false,
+                "stock": [
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                ],
+                "regional": "0",
+                "condition": "1",
+                "queue": [],
+                "active": {
+                    "kind": 0,
+                    "started": 0,
+                    "steps": 0,
+                    "paused": false
+                }
+            },
+            {
+                "node": 22,
+                "parent": 15,
+                "controller": 1,
+                "development": 1,
+                "tower": 0,
+                "functioning": true,
+                "forge": false,
+                "institute": false,
+                "depot": false,
+                "assay": false,
+                "hasActive": false,
+                "stock": [
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                ],
+                "regional": "0",
+                "condition": "1",
+                "queue": [],
+                "active": {
+                    "kind": 0,
+                    "started": 0,
+                    "steps": 0,
+                    "paused": false
+                }
+            },
+            {
+                "node": 23,
+                "parent": 15,
+                "controller": 1,
+                "development": 1,
+                "tower": 0,
+                "functioning": true,
+                "forge": false,
+                "institute": false,
+                "depot": false,
+                "assay": false,
+                "hasActive": false,
+                "stock": [
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                ],
+                "regional": "0",
+                "condition": "1",
+                "queue": [],
+                "active": {
+                    "kind": 0,
+                    "started": 0,
+                    "steps": 0,
+                    "paused": false
+                }
+            }
+        ],
+        "west": {
+            "wood": "30",
+            "iron": "20",
+            "preset": 2,
+            "active": -1,
+            "started": 0,
+            "paused": false,
+            "queue": [],
+            "research": [
+                {
+                    "tech": 0,
+                    "work": "0",
+                    "paid": false,
+                    "cities": [],
+                    "contributions": []
+                },
+                {
+                    "tech": 1,
+                    "work": "0",
+                    "paid": false,
+                    "cities": [],
+                    "contributions": []
+                },
+                {
+                    "tech": 2,
+                    "work": "0",
+                    "paid": false,
+                    "cities": [],
+                    "contributions": []
+                },
+                {
+                    "tech": 3,
+                    "work": "0",
+                    "paid": false,
+                    "cities": [],
+                    "contributions": []
+                },
+                {
+                    "tech": 4,
+                    "work": "0",
+                    "paid": false,
+                    "cities": [],
+                    "contributions": []
+                }
+            ],
+            "repairStarted": 0,
+            "trainingStarted": 0,
+            "repairIds": [],
+            "repairs": [],
+            "trainee": ""
+        },
+        "east": {
+            "wood": "30",
+            "iron": "20",
+            "preset": 1,
+            "active": -1,
+            "started": 0,
+            "paused": false,
+            "queue": [],
+            "research": [
+                {
+                    "tech": 0,
+                    "work": "0",
+                    "paid": false,
+                    "cities": [],
+                    "contributions": []
+                },
+                {
+                    "tech": 1,
+                    "work": "0",
+                    "paid": false,
+                    "cities": [],
+                    "contributions": []
+                },
+                {
+                    "tech": 2,
+                    "work": "0",
+                    "paid": false,
+                    "cities": [],
+                    "contributions": []
+                },
+                {
+                    "tech": 3,
+                    "work": "0",
+                    "paid": false,
+                    "cities": [],
+                    "contributions": []
+                },
+                {
+                    "tech": 4,
+                    "work": "0",
+                    "paid": false,
+                    "cities": [],
+                    "contributions": []
+                }
+            ],
+            "repairStarted": 0,
+            "trainingStarted": 0,
+            "repairIds": [],
+            "repairs": [],
+            "trainee": ""
+        }
+    }
+}

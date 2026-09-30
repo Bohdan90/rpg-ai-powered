@@ -1,0 +1,16 @@
+{
+    "type": "session",
+    "fixture": "Field_13x9_Control",
+    "rounds": 1,
+    "activations": 1,
+    "attacks": 3,
+    "oaExits": 1,
+    "oaTriggers": 1,
+    "defends": 0,
+    "escapes": 0,
+    "deaths": 0,
+    "invalidAttempts": 0,
+    "cancelledPreviews": 0,
+    "attacksBeforeFirstHpLoss": 1,
+    "firstHpLossObserved": true
+}

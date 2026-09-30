@@ -1,0 +1,15 @@
+{
+  "preflight_manifest": "/private/tmp/convergence-5051/audit-original-backup/manifest.json",
+  "matches": {
+    "Assets/_Project/Scenes/TacticalGraybox.unity": true,
+    "ProjectSettings/EditorBuildSettings.asset": true,
+    "ProjectSettings/ProjectSettings.asset": true,
+    "Assets/_Project/Core/PersistenceSliceScenario.cs.meta": true,
+    "Assets/_Project/Core/PersistentFormation.cs.meta": true,
+    "Assets/_Project/Tests/PersistenceProgressionTests.cs.meta": true,
+    "Assets/_Project/Tests/PersistenceSliceScenarioTests.cs.meta": true,
+    "Assets/_Project/Tests/PersistentFormationTests.cs.meta": true,
+    "Assets/_Project/Tests/PlayMode/PersistenceSlicePresentationTests.cs.meta": true
+  },
+  "settings_note": "Unity normalizes scriptingDefineSymbols during startup; restored exact original local SENTIS_ANALYTICS_ENABLED;APP_UI_EDITOR_ONLY after tests. No other settings changed."
+}

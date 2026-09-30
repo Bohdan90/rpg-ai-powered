@@ -46,7 +46,7 @@ namespace RPG.Presentation
             return World.Player.Members.Concat(World.Actors.SelectMany(a=>a.Formation.Members)).FirstOrDefault(c=>c.CharacterId==key);
         }
         public string UnitName(UnitId id)
-        {var c=ConnectedCharacter(id);return c==null?(State.FindUnit(id).Profile.IsCaster||State.FindUnit(id).Profile.HasGracefulExit?State.FindUnit(id).Profile.Id+" #"+id:PrototypeFixture.Name(id)):c.CharacterId+" · "+c.Profile.Id+(c.IsCommander?" *":"");}
+        {var c=ConnectedCharacter(id);return c==null?(Lab.HasValue||State.FindUnit(id).Profile.IsCaster||State.FindUnit(id).Profile.HasGracefulExit?State.FindUnit(id).Profile.Id+" #"+id:PrototypeFixture.Name(id)):c.CharacterId+" · "+c.Profile.Id+(c.IsCommander?" *":"");}
         public bool IsCommander(UnitId id)=>World==null&&Duel==null?(id.Value==1||id.Value==6||id.Value==19):ConnectedCharacter(id)?.IsCommander==true;
         public void StartStrategicScenario()
         {StrategicSaveMessage="One manual slot · strategic map only.";ShowStrategicScenario(new StrategicScenario());}
@@ -192,6 +192,7 @@ namespace RPG.Presentation
         public void ConfigureFixture(SizeExperimentMap map)
         {
             if(World!=null||Duel!=null)return;
+            Lab=null;
             persistence=null;
             Fixture = map;
             ConfigureBattle(SizeExperimentFixture.Units(map), SizeExperimentFixture.Board(map), PrototypeFixture.Seed);
@@ -199,6 +200,7 @@ namespace RPG.Presentation
         public void ConfigureFixture(bool controlMap)
         {
             if(World!=null||Duel!=null)return;
+            Lab=null;
             persistence=null;
             Fixture = SizeExperimentMap.Field_13x9_Control;
             ConfigureBattle(PrototypeFixture.Units(), controlMap ? Battlefield.ControlMap : Battlefield.BaseMap, PrototypeFixture.Seed);

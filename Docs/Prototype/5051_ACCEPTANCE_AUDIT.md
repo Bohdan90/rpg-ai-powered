@@ -1,5 +1,7 @@
 # 50 + 51 acceptance audit — 2026-09-30
 
+Latest: [acceptance completion](5051_ACCEPTANCE_COMPLETION.md) supersedes the manual/coverage gaps below with measured follow-up evidence. This audit records what was missing at entry; it is not the current N/V status.
+
 ## Scope and provenance
 
 Audit starts at feature/50-51-connected `d84571dc8dc11a2c119045c8d8ae514ae2c8e2d4`. Main checkout starts at develop `045707f81847fb88ac34c724d5f87ce30fba5c39`. Read live reports/checkpoint/manifest, document 50 §§11–12 plus addendum and document 51 §§12–13; checked relevant numeric contract sections against source.

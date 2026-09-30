@@ -1,6 +1,6 @@
 # Combat Variety 51 + Connected 05B — isolated implementation evidence
 
-**Latest follow-up (2026-09-30): PARTIAL.** User explicitly authorized integration into main after audit. GUI was restored: V1/V2 have partial real-input evidence; N1–N5/V3–V5 remain NOT RUN. Prior “no GUI” statements below describe the original delivery, not the current access state. See [acceptance audit](5051_ACCEPTANCE_AUDIT.md) and the updated validation manifest.
+**Latest follow-up (2026-09-30): N1–N5 and V1–V5 controlled GUI checks completed.** Main integration was explicitly authorized. Current measured regression, deviations and evidence are in [acceptance completion](5051_ACCEPTANCE_COMPLETION.md). Earlier NOT RUN statements below are historical delivery records, superseded by that report. Coordinator/player acceptance remain separate.
 
 ## Status and commits
 

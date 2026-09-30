@@ -7,6 +7,17 @@ namespace RPG.Core
     public enum CityProjectKind { DevelopmentII, DevelopmentIII, Forge, ResearchInstitute, ExtractionDepot, AssayOffice, MageTowerI, MageTowerII }
     public enum CityTech { Extraction, Assay, ResearchMethod, ForgeOrganization, ElementalDrills }
     public enum CombatPreset { Fire, Ice, Support }
+    public sealed class SourceOutputPreview
+    {
+        public int Node { get; }
+        public int City { get; }
+        public decimal Output { get; }
+        public decimal Reference { get; }
+        public decimal Regional { get; }
+        public string Status { get; }
+        internal SourceOutputPreview(int node,int city,decimal output,decimal reference,decimal regional,string status)
+        {Node=node;City=city;Output=output;Reference=reference;Regional=regional;Status=status;}
+    }
     public sealed class CityProject
     {
         public CityProjectKind Kind {get;internal set;}
@@ -123,7 +134,7 @@ namespace RPG.Core
             if(!Connected(from)||from.IsCity)return;var to=Location(from.Parent);
             for(int r=0;r<4;r++){decimal n=Math.Min(from.Stock[r],Capacity(w,to,r));from.Stock[r]-=n;Receive(w,to,r,n);}
         }
-        private decimal Produce(CrossroadsScenario world,bool commit)
+        private decimal Produce(CrossroadsScenario world,bool commit,List<SourceOutputPreview> preview=null)
         {
             // Projection is performed against a snapshot by ProjectedRegional; this method mutates only its own economy/world.
             foreach(var city in Locations.Where(l=>l.IsCity))city.Regional=0;
@@ -131,8 +142,8 @@ namespace RPG.Core
             foreach(var source in Locations.Where(l=>!l.IsCity&&!l.IsMinor).OrderBy(l=>l.Node))Transfer(world,source);
             foreach(var minor in Locations.Where(l=>l.IsMinor).OrderBy(l=>l.Node))Transfer(world,minor);
             foreach(var source in Locations.Where(l=>!l.IsCity&&!l.IsMinor).OrderBy(l=>l.Node)) {
-                if(!source.Functioning)continue;
                 int r=(int)source.Resource;var minor=Location(source.Parent);var city=Location(minor.Parent);
+                if(!source.Functioning){preview?.Add(new SourceOutputPreview(source.Node,city.Node,0,Baseline[r],0,"Source unavailable"));continue;}
                 decimal multiplier=minor.Functioning&&minor.Controller==source.Controller&&(r==0?minor.Depot:minor.Assay)?1.5m:1m;
                 // Prior downstream draining leaves room only where real storage/recipients exist.
                 decimal room=Capacity(world,source,r);
@@ -141,17 +152,24 @@ namespace RPG.Core
                 decimal local=Math.Min(output,Capacity(world,source,r));source.Stock[r]+=local;
                 Transfer(world,source);Transfer(world,minor);
                 decimal rest=output-local;if(rest>0){source.Stock[r]+=rest;Transfer(world,source);Transfer(world,minor);}
-                if(Connected(source)&&Connected(minor)&&city.Functioning)city.Regional+=10m*output/Baseline[r];
+                bool connected=Connected(source)&&Connected(minor)&&city.Functioning;
+                decimal regional=connected?10m*output/Baseline[r]:0;
+                city.Regional+=regional;
+                preview?.Add(new SourceOutputPreview(source.Node,city.Node,output,Baseline[r],regional,
+                    !connected?"Parent chain interrupted; local storage only":output<Baseline[r]*multiplier*source.OutputCondition?"Storage limits production":"Export chain available"));
             }
             return Locations.Where(l=>l.IsCity).Sum(l=>l.Regional);
         }
         public decimal ProjectedRegional(CrossroadsScenario world,Side side)
+            =>PreviewSources(world).Where(s=>s.City==world.OwnKeep(side)).Sum(s=>s.Regional);
+        public IReadOnlyList<SourceOutputPreview> PreviewSources(CrossroadsScenario world)
         {
             var copy=new CrossroadsScenario(foundations:true);
             copy.Foundations=CityFoundationData.Capture(this).Restore(world.Refresh);
             copy.West.Gold=world.West.Gold;copy.East.Gold=world.East.Gold;
             copy.West.KeepFood=world.West.KeepFood;copy.East.KeepFood=world.East.KeepFood;
-            copy.Foundations.Produce(copy,true);return copy.Foundations.City(side).Regional;
+            var result=new List<SourceOutputPreview>();
+            copy.Foundations.Produce(copy,true,result);return result.AsReadOnly();
         }
         public string ProjectBlocker(CrossroadsScenario world,int node,CityProjectKind kind,bool continuation=false)
         {

@@ -1,0 +1,493 @@
+{
+  "mode": "v5-mobile-blades-ai",
+  "hash": "dUm3HxF5SEkCk6dJDvfHeQKho7bH/Zh7cA8R5L63m6o=",
+  "plan": "MoveCommand",
+  "contact": "",
+  "hud": "Stable map only \u00b7 one Crossroads slot.\nMoveCommand applied.\nGATE C / HOTSEAT\nBLUE West \u00b7 ORANGE East \u00b7 GOLD active\nGreen: reachable \u00b7 Gold: path \u00b7 Red segment: OA risk\nSword + shield: HW/EW \u00b7 Bow: HA \u00b7 * Commander\nWhite arrow: facing \u00b7 Red border: ZoC ready \u00b7 Gray: spent\nWheel: zoom \u00b7 Right-click: center view\n\u2190 West Retreat \u2014 YOUR ESCAPE\nEast Retreat \u2192\nEW II*\nHP 34/38\nA 0/8\nEW II\nHP 38/38\nA 0/8\nHH\nHP 28/28\nA 0/0\nEXH \nHW DEAD\nHP 0/40\nA 0/16\nHW\nHP 16/40\nA 0/16\nIce 2* DEAD\nHP 0/32\nA 0/0\nHW\nHP 40/40\nA 16/16\nHA\nHP 28/28\nA 4/4\nHA\nHP 28/28\nA 4/4\nEW\nHP 32/32\nA 6/6\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\nTACTICAL GRAYBOX\nHotseat \u00b7 ZoC / OA / physical Retreat\nController\nAI S=0.00 \u00b7 Action spent; End\nROUND 7 \u00b7 HumanHealerTI #3\nWest | HP 28 / Armor 0\nMovement 3 | Action available\nFacing SouthWest | Defending no | no OA\nBarrier 0 \u00b7 EXHAUSTED\nAbility\nLAST ATTACK RESULT\nElfWarriorTII #1 \u2192 HumanWarriorTI #5: HP damage 11 (33 \u2192 22)\nElfWarriorTII #1 \u2192 HumanWarriorTI #5: HP damage 6 (22 \u2192 16)\nInitiative order (\u25ba current):\n   ElfWarriorTII #1 [15] OA ready\n   ElfWarriorTII #2 [15] OA ready\n\u25ba HumanHealerTI #3 [12] no OA\n   HumanWarriorTI #5 [10] OA ready\nWest: West edge. East: East edge.\nYOUR escape: West edge\nEscaped/Safe:\nNone\nHover (7,10) HumanHealerTI #3 | no OA\nHP 28 / Armor 0 | Facing SouthWest\nNo destination / target selected.\nClick a cell or unit, then confirm. Green cells: Core reachable.\nExplicitly confirm allied target\nEnd facing\nMoveCommand applied.\nFixture (resets battle)\n05B West preset\n05B East preset\n05 Starting Side\nSize/density experiment \u00b7 no combat retuning. 9v9 = synthetic tactical roster, not strategic Capacity validation. Siege: static fortress; moat proxy has fixed crossings. 41\u00d739 preserves each attacker approach; West = attacker coalition, East = defenders. No real siege mechanics.\nLOCAL REPLAY / TELEMETRY\nReplay file\nRECENT CORE EVENTS\nR4 ElfWarriorTII #2: ActivationEnded\nR4 HumanHealerTI #3: ActivationStarted\nR4 HumanHealerTI #3: MovementStarted\nR4 HumanHealerTI #3: FacingChanged\nR4 HumanHealerTI #3: MovementConsumed\nR4 HumanHealerTI #3: StepMoved (4,10) \u2192 (4,11)\nR4 HumanHealerTI #3: MovementConsumed\nR4 HumanHealerTI #3: StepMoved (4,11) \u2192 (4,12)\nR4 HumanHealerTI #3: ActionConsumed\nR4 HumanHealerTI #3: ExhaustionChanged\nR4 HumanHealerTI #3: SpellCast CloseHeal (5,13)\nR4 HumanHealerTI #3: FacingChanged\nR4 HumanHealerTI #3: HpHealed \u2192 ElfWarriorTII #2 22 \u2192 36\nR4 HumanHealerTI #3: MovementConsumed\nR4 HumanHealerTI #3: ActivationEnded\nR4 HumanHealerTI #3: ExhaustionChanged\nR4 HumanWarriorTI #5: ActivationStarted\nR4 HumanWarriorTI #5: MovementStarted\nR4 HumanWarriorTI #5: FacingChanged\nR4 HumanWarriorTI #5: MovementConsumed\nR4 HumanWarriorTI #5: StepMoved (15,12) \u2192 (14,11)\nR4 HumanWarriorTI #5: MovementConsumed\nR4 HumanWarriorTI #5: StepMoved (14,11) \u2192 (13,10)\nAI S=2.00 \u00b7 MoveCommand; endpoint 13,10; next EndActivationCommand; HP 0.00, Armor 0.00, kill 0.00, OA HP 0.00, incoming HP 0.00, approach 2\nR4 HumanWarriorTI #5: MovementStarted\nR4 HumanWarriorTI #5: FacingChanged\nR4 HumanWarriorTI #5: MovementConsumed\nR4 HumanWarriorTI #5: StepMoved (13,10) \u2192 (13,9)\nR4 HumanWarriorTI #5: FacingChanged\nR4 HumanWarriorTI #5: MovementConsumed\nR4 HumanWarriorTI #5: StepMoved (13,9) \u2192 (12,8)\nAI S=1.00 \u00b7 MoveCommand; endpoint 12,8; next EndActivationCommand; HP 0.00, Armor 0.00, kill 0.00, OA HP 0.00, incoming HP 0.00, approach 1\nR4 HumanWarriorTI #5: ActionConsumed\nR4 HumanWarriorTI #5: ActivationEnded\nR4 HumanWarriorTI #4: ActivationStarted\nAI S=0.00 \u00b7 EndActivationCommand; endpoint 12,8; next EndActivationCommand; HP 0.00, Armor 0.00, kill 0.00, OA HP 0.00, incoming HP 0.00, approach 0\nR4 HumanWarriorTI #4: MovementStarted\nR4 HumanWarriorTI #4: FacingChanged\nR4 HumanWarriorTI #4: MovementConsumed\nR4 HumanWarriorTI #4: StepMoved (6,14) \u2192 (5,14)\nR4 HumanWarriorTI #4: MovementConsumed\nR4 HumanWarriorTI #4: StepMoved (5,14) \u2192 (4,14)\nR4 HumanWarriorTI #4: FacingChanged\nR4 HumanWarriorTI #4: MovementConsumed\nR4 HumanWarriorTI #4: StepMoved (4,14) \u2192 (4,13)\nAI S=-1.28 \u00b7 MoveCommand; endpoint 4,13; next attack 3; HP 10.20, Armor 0.00, kill 0.00, OA HP 0.00, incoming HP 22.95, approach 0\nR4 HumanWarriorTI #4: ActionConsumed\nR4 HumanWarriorTI #4: ContactRolled \u2192 HumanHealerTI #3 [90 < 85: fail]\nR4 HumanWarriorTI #4: AttackMissed \u2014 Failed contact \u2014 no damage \u2192 HumanHealerTI #3\nAI S=-1.28 \u00b7 BasicAttackCommand; endpoint 4,13; next attack 3; HP 10.20, Armor 0.00, kill 0.00, OA HP 0.00, incoming HP 22.95, approach 0\nR4 HumanWarriorTI #4: MovementConsumed\nR4 HumanWarriorTI #4: ActivationEnded\nR5 Battle: RoundStarted\nR5 ElfWarriorTII #1: ActivationStarted\nAI S=0.00 \u00b7 Action spent; End\nR5 ElfWarriorTII #1: ActionConsumed\nR5 ElfWarriorTII #1: ContactRolled \u2192 HumanWarriorTI #4 [59 < 85: success]\nR5 ElfWarriorTII #1: GuardRolled \u2192 HumanWarriorTI #4 [28 < 15: fail]\nR5 ElfWarriorTII #1: DamageApplied \u2192 HumanWarriorTI #4 11\nR5 ElfWarriorTII #1: HpLost \u2014 HP damage 11 (28 \u2192 17) \u2192 HumanWarriorTI #4 28 \u2192 17\nR5 ElfWarriorTII #1: ContactRolled \u2192 HumanWarriorTI #4 [5 < 85: success]\nR5 ElfWarriorTII #1: GuardRolled \u2192 HumanWarriorTI #4 [54 < 15: fail]\nR5 ElfWarriorTII #1: DamageApplied \u2192 HumanWarriorTI #4 6\nR5 ElfWarriorTII #1: HpLost \u2014 HP damage 6 (17 \u2192 11) \u2192 HumanWarriorTI #4 17 \u2192 11\nR5 ElfWarriorTII #1: MovementStarted\nR5 ElfWarriorTII #1: GracefulExit \u2192 HumanWarriorTI #4\nR5 ElfWarriorTII #1: FacingChanged\nR5 ElfWarriorTII #1: MovementConsumed\nR5 ElfWarriorTII #1: StepMoved (5,12) \u2192 (6,11)\nR5 ElfWarriorTII #1: MovementConsumed\nR5 ElfWarriorTII #1: ActivationEnded\nR5 ElfWarriorTII #2: ActivationStarted\nR5 ElfWarriorTII #2: ActionConsumed\nR5 ElfWarriorTII #2: FacingChanged\nR5 ElfWarriorTII #2: ContactRolled \u2192 HumanWarriorTI #4 [2 < 85: success]\nR5 ElfWarriorTII #2: DamageApplied \u2192 HumanWarriorTI #4 11\nR5 ElfWarriorTII #2: HpLost \u2014 HP damage 11 (11 \u2192 0) \u2192 HumanWarriorTI #4 11 \u2192 0\nR5 ElfWarriorTII #2: UnitDied \u2192 HumanWarriorTI #4\nR5 ElfWarriorTII #2: MovementConsumed\nR5 ElfWarriorTII #2: ActivationEnded\nR5 HumanHealerTI #3: ActivationStarted\nR5 HumanHealerTI #3: MovementStarted\nR5 HumanHealerTI #3: FacingChanged\nR5 HumanHealerTI #3: MovementConsumed\nR5 HumanHealerTI #3: StepMoved (4,12) \u2192 (5,12)\nR5 HumanHealerTI #3: MovementConsumed\nR5 HumanHealerTI #3: StepMoved (5,12) \u2192 (6,12)\nR5 HumanHealerTI #3: MovementStarted\nR5 HumanHealerTI #3: MovementConsumed\nR5 HumanHealerTI #3: StepMoved (6,12) \u2192 (7,12)\nR5 HumanHealerTI #3: FacingChanged\nR5 HumanHealerTI #3: MovementConsumed\nR5 HumanHealerTI #3: StepMoved (7,12) \u2192 (8,11)\nR5 HumanHealerTI #3: ActionConsumed\nR5 HumanHealerTI #3: ActivationEnded\nR5 HumanHealerTI #3: ExhaustionChanged\nR5 HumanWarriorTI #5: ActivationStarted\nR5 HumanWarriorTI #5: ActionConsumed\nR5 HumanWarriorTI #5: MovementConsumed\nR5 HumanWarriorTI #5: DefendApplied\nAI S=0.00 \u00b7 DefendCommand; endpoint 12,8; next DefendCommand; HP 0.00, Armor 0.00, kill 0.00, OA HP 0.00, incoming HP 0.00, approach 0\nR5 HumanWarriorTI #5: ActivationEnded\nR6 Battle: RoundStarted\nR6 ElfWarriorTII #1: ActivationStarted\nAI S=0.00 \u00b7 Action spent; End\nR6 ElfWarriorTII #1: MovementStarted\nR6 ElfWarriorTII #1: MovementConsumed\nR6 ElfWarriorTII #1: StepMoved (6,11) \u2192 (7,10)\nR6 ElfWarriorTII #1: MovementConsumed\nR6 ElfWarriorTII #1: StepMoved (7,10) \u2192 (8,9)\nR6 ElfWarriorTII #1: MovementStarted\nR6 ElfWarriorTII #1: MovementConsumed\nR6 ElfWarriorTII #1: StepMoved (8,9) \u2192 (9,8)\nR6 ElfWarriorTII #1: FacingChanged\nR6 ElfWarriorTII #1: MovementConsumed\nR6 ElfWarriorTII #1: StepMoved (9,8) \u2192 (9,7)\nR6 ElfWarriorTII #1: FacingChanged\nR6 ElfWarriorTII #1: MovementConsumed\nR6 ElfWarriorTII #1: StepMoved (9,7) \u2192 (10,6)\nR6 ElfWarriorTII #1: MovementStarted\nR6 ElfWarriorTII #1: MovementConsumed\nR6 ElfWarriorTII #1: StepMoved (10,6) \u2192 (11,5)\nR6 ElfWarriorTII #1: ActionConsumed\nR6 ElfWarriorTII #1: ActivationEnded\nR6 ElfWarriorTII #2: ActivationStarted\nR6 ElfWarriorTII #2: MovementStarted\nR6 ElfWarriorTII #2: FacingChanged\nR6 ElfWarriorTII #2: MovementConsumed\nR6 ElfWarriorTII #2: StepMoved (5,13) \u2192 (6,13)\nR6 ElfWarriorTII #2: FacingChanged\nR6 ElfWarriorTII #2: MovementConsumed\nR6 ElfWarriorTII #2: StepMoved (6,13) \u2192 (7,12)\nR6 ElfWarriorTII #2: MovementStarted\nR6 ElfWarriorTII #2: FacingChanged\nR6 ElfWarriorTII #2: MovementConsumed\nR6 ElfWarriorTII #2: StepMoved (7,12) \u2192 (8,12)\nR6 ElfWarriorTII #2: ActionConsumed\nR6 ElfWarriorTII #2: MovementConsumed\nR6 ElfWarriorTII #2: ActivationEnded\nR6 HumanHealerTI #3: ActivationStarted\nR6 HumanHealerTI #3: ActionConsumed\nR6 HumanHealerTI #3: ExhaustionChanged\nR6 HumanHealerTI #3: SpellCast CloseHeal (8,12)\nR6 HumanHealerTI #3: FacingChanged\nR6 HumanHealerTI #3: HpHealed \u2192 ElfWarriorTII #2 36 \u2192 38\nR6 HumanHealerTI #3: MovementConsumed\nR6 HumanHealerTI #3: ActivationEnded\nR6 HumanHealerTI #3: ExhaustionChanged\nR6 HumanWarriorTI #5: DefendExpired\nR6 HumanWarriorTI #5: ActivationStarted\nR6 HumanWarriorTI #5: MovementStarted\nR6 HumanWarriorTI #5: FacingChanged\nR6 HumanWarriorTI #5: MovementConsumed\nR6 HumanWarriorTI #5: StepMoved (12,8) \u2192 (12,7)\nR6 HumanWarriorTI #5: MovementConsumed\nR6 HumanWarriorTI #5: StepMoved (12,7) \u2192 (12,6)\nAI S=3.73 \u00b7 MoveCommand; endpoint 12,6; next attack 1; HP 3.20, Armor 6.40, kill 0.00, OA HP 0.00, incoming HP 9.35, approach 2\nR6 HumanWarriorTI #5: ActionConsumed\nR6 HumanWarriorTI #5: FacingChanged\nR6 HumanWarriorTI #5: ContactRolled \u2192 ElfWarriorTII #1 [60 < 80: success]\nR6 HumanWarriorTI #5: DamageApplied \u2192 ElfWarriorTII #1 12\nR6 HumanWarriorTI #5: ArmorLost \u2014 Armor damage 8 (8 \u2192 0) \u2192 ElfWarriorTII #1 8 \u2192 0\nR6 HumanWarriorTI #5: HpLost \u2014 HP damage 4 (38 \u2192 34) \u2192 ElfWarriorTII #1 38 \u2192 34\nAI S=1.73 \u00b7 BasicAttackCommand; endpoint 12,6; next attack 1; HP 3.20, Armor 6.40, kill 0.00, OA HP 0.00, incoming HP 9.35, approach 0\nR6 HumanWarriorTI #5: MovementConsumed\nR6 HumanWarriorTI #5: ActivationEnded\nR7 Battle: RoundStarted\nR7 ElfWarriorTII #1: ActivationStarted\nAI S=0.00 \u00b7 Action spent; End\nR7 ElfWarriorTII #1: MovementStarted\nR7 ElfWarriorTII #1: FacingChanged\nR7 ElfWarriorTII #1: MovementConsumed\nR7 ElfWarriorTII #1: StepMoved (11,5) \u2192 (12,5)\nR7 ElfWarriorTII #1: MovementConsumed\nR7 ElfWarriorTII #1: StepMoved (12,5) \u2192 (13,5)\nR7 ElfWarriorTII #1: ActionConsumed\nR7 ElfWarriorTII #1: FacingChanged\nR7 ElfWarriorTII #1: ContactRolled \u2192 HumanWarriorTI #5 [57 < 85: success]\nR7 ElfWarriorTII #1: DamageApplied \u2192 HumanWarriorTI #5 11\nR7 ElfWarriorTII #1: HpLost \u2014 HP damage 11 (33 \u2192 22) \u2192 HumanWarriorTI #5 33 \u2192 22\nR7 ElfWarriorTII #1: ContactRolled \u2192 HumanWarriorTI #5 [28 < 85: success]\nR7 ElfWarriorTII #1: DamageApplied \u2192 HumanWarriorTI #5 6\nR7 ElfWarriorTII #1: HpLost \u2014 HP damage 6 (22 \u2192 16) \u2192 HumanWarriorTI #5 22 \u2192 16\nR7 ElfWarriorTII #1: MovementConsumed\nR7 ElfWarriorTII #1: ActivationEnded\nR7 ElfWarriorTII #2: ActivationStarted\nR7 ElfWarriorTII #2: MovementStarted\nR7 ElfWarriorTII #2: MovementConsumed\nR7 ElfWarriorTII #2: StepMoved (8,12) \u2192 (9,12)\nR7 ElfWarriorTII #2: FacingChanged\nR7 ElfWarriorTII #2: MovementConsumed\nR7 ElfWarriorTII #2: StepMoved (9,12) \u2192 (10,11)\nR7 ElfWarriorTII #2: ActionConsumed\nR7 ElfWarriorTII #2: MovementConsumed\nR7 ElfWarriorTII #2: ActivationEnded\nR7 HumanHealerTI #3: ActivationStarted\nR7 HumanHealerTI #3: MovementStarted\nR7 HumanHealerTI #3: FacingChanged\nR7 HumanHealerTI #3: MovementConsumed\nR7 HumanHealerTI #3: StepMoved (8,11) \u2192 (7,10)",
+  "spell": "",
+  "persistentPath": "/tmp/convergence-5051/manual-complete/preferences/Library/Application Support/DefaultCompany/My project",
+  "ff": false,
+  "gx": 0.0,
+  "gy": 97.0,
+  "fields": [
+    {
+      "label": "Controller",
+      "name": "controller-mode",
+      "index": 1,
+      "choices": [
+        "Hotseat",
+        "Player West vs AI East",
+        "Player East vs AI West"
+      ],
+      "x": 1340.103515625,
+      "y": -94.07502746582031
+    },
+    {
+      "label": "Ability",
+      "name": "spell-selector",
+      "index": 0,
+      "choices": [
+        "Basic / Move",
+        "CloseHeal"
+      ],
+      "x": 1340.103515625,
+      "y": 88.95213317871094
+    },
+    {
+      "label": "End facing",
+      "name": "",
+      "index": 0,
+      "choices": [
+        "Keep current",
+        "North",
+        "NorthEast",
+        "East",
+        "SouthEast",
+        "South",
+        "SouthWest",
+        "West",
+        "NorthWest"
+      ],
+      "x": 1340.103515625,
+      "y": 660.3881225585938
+    },
+    {
+      "label": "Fixture (resets battle)",
+      "name": "fixture-selector",
+      "index": 0,
+      "choices": [
+        "Field_13x9_Control",
+        "Field_17x11_Expanded",
+        "Siege_23x17_Tight",
+        "Siege_27x21_Roomy",
+        "Field_19x13_ExpandedV2",
+        "Siege_31x25_Medium",
+        "Siege_35x27_Large",
+        "Field_23x17_Full_9v9",
+        "Siege_35x27_Full_9v9",
+        "Siege_41x39_West_9v9",
+        "Siege_41x39_East_9v9",
+        "Siege_41x39_North_9v9",
+        "Siege_41x39_South_9v9",
+        "Siege_41x39_WestEast_18v9",
+        "Siege_41x39_NorthSouth_18v9"
+      ],
+      "x": 1340.103515625,
+      "y": 781.0090942382812
+    },
+    {
+      "label": "05B West preset",
+      "name": "",
+      "index": 0,
+      "choices": [
+        "Fire",
+        "Ice",
+        "Support"
+      ],
+      "x": 1340.103515625,
+      "y": 954.7218627929688
+    },
+    {
+      "label": "05B East preset",
+      "name": "",
+      "index": 1,
+      "choices": [
+        "Fire",
+        "Ice",
+        "Support"
+      ],
+      "x": 1340.103515625,
+      "y": 995.7050170898438
+    },
+    {
+      "label": "05 Starting Side",
+      "name": "",
+      "index": 0,
+      "choices": [
+        "West",
+        "East"
+      ],
+      "x": 1340.103515625,
+      "y": 1036.688232421875
+    }
+  ],
+  "toggles": [
+    {
+      "label": "Explicitly confirm allied target",
+      "value": false,
+      "x": 1340.103515625,
+      "y": 490.168212890625
+    }
+  ],
+  "battle": false,
+  "ended": false,
+  "ai": true,
+  "aiTurn": false,
+  "round": 7,
+  "records": 87,
+  "active": 3,
+  "x": 417.9844055175781,
+  "y": 333.4669494628906,
+  "rw": 1590.892578125,
+  "rh": 805.6920776367188,
+  "sw": 3416,
+  "sh": 1820,
+  "tx": 7,
+  "ty": 10,
+  "buttons": [
+    {
+      "name": "end-activation",
+      "text": "End Activation",
+      "x": 1340.103515625,
+      "y": 701.3712768554688
+    },
+    {
+      "name": "lab-FireVsIce",
+      "text": "Combat Lab \u00b7 FireVsIce \u00b7 near contact",
+      "x": 1340.103515625,
+      "y": 821.9923095703125
+    },
+    {
+      "name": "lab-SupportVsFire",
+      "text": "Combat Lab \u00b7 SupportVsFire \u00b7 near contact",
+      "x": 1340.103515625,
+      "y": 866.2354125976562
+    },
+    {
+      "name": "lab-MobileBlades",
+      "text": "Combat Lab \u00b7 MobileBlades \u00b7 near contact",
+      "x": 1340.103515625,
+      "y": 910.4785766601562
+    },
+    {
+      "name": "city-start-a",
+      "text": "City Foundations 05A",
+      "x": 1340.103515625,
+      "y": 1077.67138671875
+    },
+    {
+      "name": "city-start-b",
+      "text": "City & Combat 05B \u00b7 permanent presets",
+      "x": 1340.103515625,
+      "y": 1121.91455078125
+    },
+    {
+      "name": "city-authored",
+      "text": "Load AUTHORED 05B inspection fixture (not a played match)",
+      "x": 1340.103515625,
+      "y": 1166.15771484375
+    },
+    {
+      "name": "city-load-a",
+      "text": "Load City Foundations 05A",
+      "x": 1340.103515625,
+      "y": 1210.4010009765625
+    },
+    {
+      "name": "city-load-b",
+      "text": "Load City & Combat 05B",
+      "x": 1340.103515625,
+      "y": 1254.644287109375
+    },
+    {
+      "name": "persistence-start",
+      "text": "Start Persistence Slice v0.1",
+      "x": 1340.103515625,
+      "y": 1298.887451171875
+    },
+    {
+      "name": "world-start",
+      "text": "Start Connected Mission 01",
+      "x": 1340.103515625,
+      "y": 1343.130615234375
+    },
+    {
+      "name": "world-load",
+      "text": "Load saved Mission 01",
+      "x": 1340.103515625,
+      "y": 1387.373779296875
+    },
+    {
+      "name": "duel-start-west",
+      "text": "Crossroads economy Hotseat \u00b7 West first",
+      "x": 1340.103515625,
+      "y": 1431.616943359375
+    },
+    {
+      "name": "duel-start-east",
+      "text": "Crossroads economy Hotseat \u00b7 East first",
+      "x": 1340.103515625,
+      "y": 1475.8603515625
+    },
+    {
+      "name": "incident-start-west",
+      "text": "Crossroads Incident 04 \u00b7 West first",
+      "x": 1340.103515625,
+      "y": 1520.103515625
+    },
+    {
+      "name": "incident-start-east",
+      "text": "Crossroads Incident 04 \u00b7 East first",
+      "x": 1340.103515625,
+      "y": 1564.3466796875
+    },
+    {
+      "name": "incident-control",
+      "text": "Incident 04 \u00b7 control (no incidents)",
+      "x": 1340.103515625,
+      "y": 1608.58984375
+    },
+    {
+      "name": "incident-load",
+      "text": "Load Incident 04",
+      "x": 1340.103515625,
+      "y": 1652.8330078125
+    },
+    {
+      "name": "duel-load",
+      "text": "Load Crossroads Hotseat",
+      "x": 1340.103515625,
+      "y": 1697.076171875
+    },
+    {
+      "name": "fit-board",
+      "text": "Fit whole board",
+      "x": 1340.103515625,
+      "y": 1815.83447265625
+    },
+    {
+      "name": "focus-unit",
+      "text": "Focus active unit (wheel to zoom)",
+      "x": 1340.103515625,
+      "y": 1860.0775146484375
+    },
+    {
+      "name": "restart",
+      "text": "Restart Same Seed",
+      "x": 1340.103515625,
+      "y": 1904.32080078125
+    },
+    {
+      "name": "export-replay",
+      "text": "Export battle + session",
+      "x": 1340.103515625,
+      "y": 2024.9417724609375
+    },
+    {
+      "name": "verify-replay",
+      "text": "Load / verify replay file",
+      "x": 1340.103515625,
+      "y": 2069.18505859375
+    }
+  ],
+  "units": [
+    {
+      "id": 1,
+      "x": 13,
+      "y": 5,
+      "hp": 34,
+      "armor": 0,
+      "movement": 0,
+      "burn": 0,
+      "barrier": 0,
+      "action": false,
+      "frozen": false,
+      "side": "West",
+      "status": "Active",
+      "persistent": "",
+      "profile": "ElfWarriorTII"
+    },
+    {
+      "id": 2,
+      "x": 10,
+      "y": 11,
+      "hp": 38,
+      "armor": 0,
+      "movement": 0,
+      "burn": 0,
+      "barrier": 0,
+      "action": false,
+      "frozen": false,
+      "side": "West",
+      "status": "Active",
+      "persistent": "",
+      "profile": "ElfWarriorTII"
+    },
+    {
+      "id": 3,
+      "x": 7,
+      "y": 10,
+      "hp": 28,
+      "armor": 0,
+      "movement": 3,
+      "burn": 0,
+      "barrier": 0,
+      "action": true,
+      "frozen": false,
+      "side": "West",
+      "status": "Active",
+      "persistent": "",
+      "profile": "HumanHealerTI"
+    },
+    {
+      "id": 4,
+      "x": 4,
+      "y": 13,
+      "hp": 0,
+      "armor": 0,
+      "movement": 0,
+      "burn": 0,
+      "barrier": 0,
+      "action": false,
+      "frozen": false,
+      "side": "East",
+      "status": "Dead",
+      "persistent": "",
+      "profile": "HumanWarriorTI"
+    },
+    {
+      "id": 5,
+      "x": 12,
+      "y": 6,
+      "hp": 16,
+      "armor": 0,
+      "movement": 0,
+      "burn": 0,
+      "barrier": 0,
+      "action": false,
+      "frozen": false,
+      "side": "East",
+      "status": "Active",
+      "persistent": "",
+      "profile": "HumanWarriorTI"
+    },
+    {
+      "id": 6,
+      "x": 12,
+      "y": 10,
+      "hp": 0,
+      "armor": 0,
+      "movement": 4,
+      "burn": 0,
+      "barrier": 0,
+      "action": false,
+      "frozen": false,
+      "side": "East",
+      "status": "Dead",
+      "persistent": "",
+      "profile": "IceMageTII"
+    }
+  ],
+  "world": {
+    "version": 0,
+    "refresh": 0,
+    "startingSide": 0,
+    "activeSide": 0,
+    "completed": 0,
+    "winner": 0,
+    "battleNumber": 0,
+    "seed": 0,
+    "handoff": false,
+    "economy": false,
+    "waystationFood": 0,
+    "scenario": "",
+    "checksum": "",
+    "owners": [],
+    "events": [],
+    "west": {
+      "node": 0,
+      "tempo": 0,
+      "provisions": 0,
+      "pressure": 0,
+      "gold": 0,
+      "keepFood": 0,
+      "nextRecruit": 0,
+      "pendingProfile": 0,
+      "lastRecruitRefresh": 0,
+      "pendingId": "",
+      "goldExact": "",
+      "foodExact": "",
+      "formation": {
+        "id": "",
+        "side": 0,
+        "commanderless": false,
+        "rosterLocked": false,
+        "members": []
+      }
+    },
+    "east": {
+      "node": 0,
+      "tempo": 0,
+      "provisions": 0,
+      "pressure": 0,
+      "gold": 0,
+      "keepFood": 0,
+      "nextRecruit": 0,
+      "pendingProfile": 0,
+      "lastRecruitRefresh": 0,
+      "pendingId": "",
+      "goldExact": "",
+      "foodExact": "",
+      "formation": {
+        "id": "",
+        "side": 0,
+        "commanderless": false,
+        "rosterLocked": false,
+        "members": []
+      }
+    },
+    "incident": {
+      "enabled": false,
+      "worldPhase": false,
+      "ravaged": false,
+      "cycleEligible": false,
+      "continuityBroken": false,
+      "rewardPaid": false,
+      "phase": 0,
+      "whiteout": 0,
+      "cursor": 0,
+      "contract": 0,
+      "holdCycles": 0,
+      "appliedBattle": 0,
+      "id": "",
+      "claimant": "",
+      "holdReason": "",
+      "actorOrder": [],
+      "raiders": []
+    },
+    "foundations": {
+      "combined": false,
+      "locations": [],
+      "west": {
+        "wood": "",
+        "iron": "",
+        "preset": 0,
+        "active": 0,
+        "started": 0,
+        "paused": false,
+        "queue": [],
+        "research": [],
+        "repairStarted": 0,
+        "trainingStarted": 0,
+        "repairIds": [],
+        "repairs": [],
+        "trainee": ""
+      },
+      "east": {
+        "wood": "",
+        "iron": "",
+        "preset": 0,
+        "active": 0,
+        "started": 0,
+        "paused": false,
+        "queue": [],
+        "research": [],
+        "repairStarted": 0,
+        "trainingStarted": 0,
+        "repairIds": [],
+        "repairs": [],
+        "trainee": ""
+      }
+    }
+  }
+}

@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="54" result="Passed" total="54" passed="54" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.1365834">
+  <test-suite type="TestSuite" id="1000" name="My project" fullname="My project" runstate="Runnable" testcasecount="521" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.136583" total="54" passed="54" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1629" name="RPG.Tests.dll" fullname="/Users/bohdanskrypka/UnityProjects/Convergence/My project/Library/ScriptAssemblies/RPG.Tests.dll" runstate="Runnable" testcasecount="521" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.127141" total="54" passed="54" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="52661" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1630" name="RPG" fullname="RPG" runstate="Runnable" testcasecount="521" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.125676" total="54" passed="54" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1631" name="Tests" fullname="RPG.Tests" runstate="Runnable" testcasecount="521" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.124225" total="54" passed="54" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestFixture" id="1103" name="CityFoundationsAcceptanceTests" fullname="RPG.Tests.CityFoundationsAcceptanceTests" classname="RPG.Tests.CityFoundationsAcceptanceTests" runstate="Runnable" testcasecount="16" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.061696" total="16" passed="16" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1105" name="ChangedReferenceYieldChangesProductionWithoutInventingMoreRegional" fullname="RPG.Tests.CityFoundationsAcceptanceTests.ChangedReferenceYieldChangesProductionWithoutInventingMoreRegional" methodname="ChangedReferenceYieldChangesProductionWithoutInventingMoreRegional" classname="RPG.Tests.CityFoundationsAcceptanceTests" runstate="Runnable" seed="1441193006" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.017084" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1117" name="DeepAccountingRowsAreAccountingOnly" fullname="RPG.Tests.CityFoundationsAcceptanceTests.DeepAccountingRowsAreAccountingOnly" classname="RPG.Tests.CityFoundationsAcceptanceTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.002905" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1109" name="DeepAccountingRowsAreAccountingOnly(RecruitmentWing,0,0,1,2)" fullname="RPG.Tests.CityFoundationsAcceptanceTests.DeepAccountingRowsAreAccountingOnly(RecruitmentWing,0,0,1,2)" methodname="DeepAccountingRowsAreAccountingOnly" classname="RPG.Tests.CityFoundationsAcceptanceTests" runstate="Runnable" seed="776755691" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.001213" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1110" name="DeepAccountingRowsAreAccountingOnly(Research,0,2,2,2)" fullname="RPG.Tests.CityFoundationsAcceptanceTests.DeepAccountingRowsAreAccountingOnly(Research,0,2,2,2)" methodname="DeepAccountingRowsAreAccountingOnly" classname="RPG.Tests.CityFoundationsAcceptanceTests" runstate="Runnable" seed="1486903382" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.000052" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1111" name="DeepAccountingRowsAreAccountingOnly(Training,1,1,1,1)" fullname="RPG.Tests.CityFoundationsAcceptanceTests.DeepAccountingRowsAreAccountingOnly(Training,1,1,1,1)" methodname="DeepAccountingRowsAreAccountingOnly" classname="RPG.Tests.CityFoundationsAcceptanceTests" runstate="Runnable" seed="1809480726" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.000039" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1112" name="DeepAccountingRowsAreAccountingOnly(Healing,0,1,2,2)" fullname="RPG.Tests.CityFoundationsAcceptanceTests.DeepAccountingRowsAreAccountingOnly(Healing,0,1,2,2)" methodname="DeepAccountingRowsAreAccountingOnly" classname="RPG.Tests.CityFoundationsAcceptanceTests" runstate="Runnable" seed="539579447" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.000037" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1113" name="DeepAccountingRowsAreAccountingOnly(ForgeMagic,1,1,1,1)" fullname="RPG.Tests.CityFoundationsAcceptanceTests.DeepAccountingRowsAreAccountingOnly(ForgeMagic,1,1,1,1)" methodname="DeepAccountingRowsAreAccountingOnly" classname="RPG.Tests.CityFoundationsAcceptanceTests" runstate="Runnable" seed="1494568814" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.000039" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1114" name="DeepAccountingRowsAreAccountingOnly(CulturalSiege,1,1,1,1)" fullname="RPG.Tests.CityFoundationsAcceptanceTests.DeepAccountingRowsAreAccountingOnly(CulturalSiege,1,1,1,1)" methodname="DeepAccountingRowsAreAccountingOnly" classname="RPG.Tests.CityFoundationsAcceptanceTests" runstate="Runnable" seed="1108909266" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.000037" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1115" name="DeepAccountingRowsAreAccountingOnly(Walls,0,0,0,0)" fullname="RPG.Tests.CityFoundationsAcceptanceTests.DeepAccountingRowsAreAccountingOnly(Walls,0,0,0,0)" methodname="DeepAccountingRowsAreAccountingOnly" classname="RPG.Tests.CityFoundationsAcceptanceTests" runstate="Runnable" seed="2093505975" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.000037" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1116" name="DeepAccountingRowsAreAccountingOnly(SpecialSite,0,0,0,0)" fullname="RPG.Tests.CityFoundationsAcceptanceTests.DeepAccountingRowsAreAccountingOnly(SpecialSite,0,0,0,0)" methodname="DeepAccountingRowsAreAccountingOnly" classname="RPG.Tests.CityFoundationsAcceptanceTests" runstate="Runnable" seed="1919541899" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.000035" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-case id="1119" name="DisconnectedMinorPaysOnlyItsOwnStock" fullname="RPG.Tests.CityFoundationsAcceptanceTests.DisconnectedMinorPaysOnlyItsOwnStock" methodname="DisconnectedMinorPaysOnlyItsOwnStock" classname="RPG.Tests.CityFoundationsAcceptanceTests" runstate="Runnable" seed="281840188" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.009611" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1107" name="ForgeQuotedIdentityDoesNotTransferToRecruitAndExtraDamageDoesNotIncreaseQuote" fullname="RPG.Tests.CityFoundationsAcceptanceTests.ForgeQuotedIdentityDoesNotTransferToRecruitAndExtraDamageDoesNotIncreaseQuote" methodname="ForgeQuotedIdentityDoesNotTransferToRecruitAndExtraDamageDoesNotIncreaseQuote" classname="RPG.Tests.CityFoundationsAcceptanceTests" runstate="Runnable" seed="2042197165" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.009200" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1106" name="FullFoodChainStopsProductionUntilActualSupplyCreatesRoom" fullname="RPG.Tests.CityFoundationsAcceptanceTests.FullFoodChainStopsProductionUntilActualSupplyCreatesRoom" methodname="FullFoodChainStopsProductionUntilActualSupplyCreatesRoom" classname="RPG.Tests.CityFoundationsAcceptanceTests" runstate="Runnable" seed="1950478665" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.000910" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1118" name="InstituteReplacementDoesNotStackAndUnavailableCityKeepsPhysicalLoad" fullname="RPG.Tests.CityFoundationsAcceptanceTests.InstituteReplacementDoesNotStackAndUnavailableCityKeepsPhysicalLoad" methodname="InstituteReplacementDoesNotStackAndUnavailableCityKeepsPhysicalLoad" classname="RPG.Tests.CityFoundationsAcceptanceTests" runstate="Runnable" seed="667834518" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.004782" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1120" name="NewlyEligibleCityContributesOnlyRemainingResearchWork" fullname="RPG.Tests.CityFoundationsAcceptanceTests.NewlyEligibleCityContributesOnlyRemainingResearchWork" methodname="NewlyEligibleCityContributesOnlyRemainingResearchWork" classname="RPG.Tests.CityFoundationsAcceptanceTests" runstate="Runnable" seed="463545443" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.003568" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1108" name="PaidTrainingCancellationAndCommanderlessPauseSurviveReload" fullname="RPG.Tests.CityFoundationsAcceptanceTests.PaidTrainingCancellationAndCommanderlessPauseSurviveReload" methodname="PaidTrainingCancellationAndCommanderlessPauseSurviveReload" classname="RPG.Tests.CityFoundationsAcceptanceTests" runstate="Runnable" seed="1631698950" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.002000" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1104" name="SourcePreviewUsesActualProductionWithoutMutationOrBacklogRegional" fullname="RPG.Tests.CityFoundationsAcceptanceTests.SourcePreviewUsesActualProductionWithoutMutationOrBacklogRegional" methodname="SourcePreviewUsesActualProductionWithoutMutationOrBacklogRegional" classname="RPG.Tests.CityFoundationsAcceptanceTests" runstate="Runnable" seed="702705844" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.005177" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1121" name="CityFoundationsTests" fullname="RPG.Tests.CityFoundationsTests" classname="RPG.Tests.CityFoundationsTests" runstate="Runnable" testcasecount="22" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.023103" total="22" passed="22" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1130" name="BoosterStartsFollowingProductionCycleAndCountsActualRate" fullname="RPG.Tests.CityFoundationsTests.BoosterStartsFollowingProductionCycleAndCountsActualRate" methodname="BoosterStartsFollowingProductionCycleAndCountsActualRate" classname="RPG.Tests.CityFoundationsTests" runstate="Runnable" seed="653764061" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.001262" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1124" name="CapturedSourceKeepsParentAndStockWithoutForeignRegional" fullname="RPG.Tests.CityFoundationsTests.CapturedSourceKeepsParentAndStockWithoutForeignRegional" methodname="CapturedSourceKeepsParentAndStockWithoutForeignRegional" classname="RPG.Tests.CityFoundationsTests" runstate="Runnable" seed="917714807" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.000425" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1136" name="CombinedRosterAndRealmDirectionArePersistentNotFreeRespec" fullname="RPG.Tests.CityFoundationsTests.CombinedRosterAndRealmDirectionArePersistentNotFreeRespec" methodname="CombinedRosterAndRealmDirectionArePersistentNotFreeRespec" classname="RPG.Tests.CityFoundationsTests" runstate="Runnable" seed="1703310700" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.000361" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1126" name="ConstructionPaysOnceNeedsSubsequentCyclesAndPausesOnActualLoss" fullname="RPG.Tests.CityFoundationsTests.ConstructionPaysOnceNeedsSubsequentCyclesAndPausesOnActualLoss" methodname="ConstructionPaysOnceNeedsSubsequentCyclesAndPausesOnActualLoss" classname="RPG.Tests.CityFoundationsTests" runstate="Runnable" seed="72577301" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.000914" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1135" name="CorruptLoadRejectsWithoutChangingLiveWorld" fullname="RPG.Tests.CityFoundationsTests.CorruptLoadRejectsWithoutChangingLiveWorld" methodname="CorruptLoadRejectsWithoutChangingLiveWorld" classname="RPG.Tests.CityFoundationsTests" runstate="Runnable" seed="1784718861" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.001246" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1142" name="DeepAccountingKeepsPhysicalLoadWhenContextIsLost" fullname="RPG.Tests.CityFoundationsTests.DeepAccountingKeepsPhysicalLoadWhenContextIsLost" methodname="DeepAccountingKeepsPhysicalLoadWhenContextIsLost" classname="RPG.Tests.CityFoundationsTests" runstate="Runnable" seed="1597016538" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.000360" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1131" name="DeepReservationSurvivesPauseAndCancelReleasesOnlyIncrement" fullname="RPG.Tests.CityFoundationsTests.DeepReservationSurvivesPauseAndCancelReleasesOnlyIncrement" methodname="DeepReservationSurvivesPauseAndCancelReleasesOnlyIncrement" classname="RPG.Tests.CityFoundationsTests" runstate="Runnable" seed="1197695784" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.000741" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1133" name="ForgeDepartureCancelsWithoutRefundAndNoFieldArmorRepair" fullname="RPG.Tests.CityFoundationsTests.ForgeDepartureCancelsWithoutRefundAndNoFieldArmorRepair" methodname="ForgeDepartureCancelsWithoutRefundAndNoFieldArmorRepair" classname="RPG.Tests.CityFoundationsTests" runstate="Runnable" seed="390567519" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.004127" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1132" name="ForgeQuoteCompletesOnceOnlySameAliveIdsAndDoesNotHealDirectly" fullname="RPG.Tests.CityFoundationsTests.ForgeQuoteCompletesOnceOnlySameAliveIdsAndDoesNotHealDirectly" methodname="ForgeQuoteCompletesOnceOnlySameAliveIdsAndDoesNotHealDirectly" classname="RPG.Tests.CityFoundationsTests" runstate="Runnable" seed="560576186" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.001026" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1140" name="FractionalProductionSurvivesStorageSaveAndRegionalAccounting" fullname="RPG.Tests.CityFoundationsTests.FractionalProductionSurvivesStorageSaveAndRegionalAccounting" methodname="FractionalProductionSurvivesStorageSaveAndRegionalAccounting" classname="RPG.Tests.CityFoundationsTests" runstate="Runnable" seed="1705795418" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.000771" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1129" name="MinorCaptureRetainsPaidProgressAndDropsOnlyUnpaidQueue" fullname="RPG.Tests.CityFoundationsTests.MinorCaptureRetainsPaidProgressAndDropsOnlyUnpaidQueue" methodname="MinorCaptureRetainsPaidProgressAndDropsOnlyUnpaidQueue" classname="RPG.Tests.CityFoundationsTests" runstate="Runnable" seed="1006294156" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.001072" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1123" name="OutputCreditsOnceAndRegionalDoesNotCountTreasury" fullname="RPG.Tests.CityFoundationsTests.OutputCreditsOnceAndRegionalDoesNotCountTreasury" methodname="OutputCreditsOnceAndRegionalDoesNotCountTreasury" classname="RPG.Tests.CityFoundationsTests" runstate="Runnable" seed="462398947" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.000586" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1138" name="PaidMageRecruitRequiresVacancyDirectionAndGetsUniqueIdentity" fullname="RPG.Tests.CityFoundationsTests.PaidMageRecruitRequiresVacancyDirectionAndGetsUniqueIdentity" methodname="PaidMageRecruitRequiresVacancyDirectionAndGetsUniqueIdentity" classname="RPG.Tests.CityFoundationsTests" runstate="Runnable" seed="1234845314" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.000624" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1141" name="ResearchLastTickSharesOnlyAcceptedWorkAndContextIsExplicit" fullname="RPG.Tests.CityFoundationsTests.ResearchLastTickSharesOnlyAcceptedWorkAndContextIsExplicit" methodname="ResearchLastTickSharesOnlyAcceptedWorkAndContextIsExplicit" classname="RPG.Tests.CityFoundationsTests" runstate="Runnable" seed="952621214" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.000181" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1128" name="ResearchSingleActiveActualProvenanceAndNoDoublePaymentOnRestart" fullname="RPG.Tests.CityFoundationsTests.ResearchSingleActiveActualProvenanceAndNoDoublePaymentOnRestart" methodname="ResearchSingleActiveActualProvenanceAndNoDoublePaymentOnRestart" classname="RPG.Tests.CityFoundationsTests" runstate="Runnable" seed="1496444652" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.000970" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1125" name="SaturatedSourceStopsOutputWithoutOverflowOrDiscard" fullname="RPG.Tests.CityFoundationsTests.SaturatedSourceStopsOutputWithoutOverflowOrDiscard" methodname="SaturatedSourceStopsOutputWithoutOverflowOrDiscard" classname="RPG.Tests.CityFoundationsTests" runstate="Runnable" seed="865704477" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.000864" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1134" name="SaveRoundTripAllEconomicStateAndContinuesDeterministically" fullname="RPG.Tests.CityFoundationsTests.SaveRoundTripAllEconomicStateAndContinuesDeterministically" methodname="SaveRoundTripAllEconomicStateAndContinuesDeterministically" classname="RPG.Tests.CityFoundationsTests" runstate="Runnable" seed="1913391258" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.001989" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1122" name="SeparateMapBaselinesAndProtectedRearCities" fullname="RPG.Tests.CityFoundationsTests.SeparateMapBaselinesAndProtectedRearCities" methodname="SeparateMapBaselinesAndProtectedRearCities" classname="RPG.Tests.CityFoundationsTests" runstate="Runnable" seed="834543761" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.000554" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1137" name="SourceBudgetsOnlyResetAtGlobalRefreshNotHandoffOrSave" fullname="RPG.Tests.CityFoundationsTests.SourceBudgetsOnlyResetAtGlobalRefreshNotHandoffOrSave" methodname="SourceBudgetsOnlyResetAtGlobalRefreshNotHandoffOrSave" classname="RPG.Tests.CityFoundationsTests" runstate="Runnable" seed="1799307540" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.000633" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1127" name="StartValidationUsesCurrentProjectionNotOldCycle" fullname="RPG.Tests.CityFoundationsTests.StartValidationUsesCurrentProjectionNotOldCycle" methodname="StartValidationUsesCurrentProjectionNotOldCycle" classname="RPG.Tests.CityFoundationsTests" runstate="Runnable" seed="1621776307" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.000292" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1139" name="TrainingKeepsSameIdAndCurrentPoolsNoImmediateCompletion" fullname="RPG.Tests.CityFoundationsTests.TrainingKeepsSameIdAndCurrentPoolsNoImmediateCompletion" methodname="TrainingKeepsSameIdAndCurrentPoolsNoImmediateCompletion" classname="RPG.Tests.CityFoundationsTests" runstate="Runnable" seed="218520569" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.001501" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1143" name="TrainingPausesAwayAndDeathCancelsRatherThanReplacingIdentity" fullname="RPG.Tests.CityFoundationsTests.TrainingPausesAwayAndDeathCancelsRatherThanReplacingIdentity" methodname="TrainingPausesAwayAndDeathCancelsRatherThanReplacingIdentity" classname="RPG.Tests.CityFoundationsTests" runstate="Runnable" seed="357678155" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.000732" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1144" name="CombatVarietyAcceptanceTests" fullname="RPG.Tests.CombatVarietyAcceptanceTests" classname="RPG.Tests.CombatVarietyAcceptanceTests" runstate="Runnable" testcasecount="16" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.029930" total="16" passed="16" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1148" name="BurnDeathSkipsDeadActivationAndPreservesArmor" fullname="RPG.Tests.CombatVarietyAcceptanceTests.BurnDeathSkipsDeadActivationAndPreservesArmor" methodname="BurnDeathSkipsDeadActivationAndPreservesArmor" classname="RPG.Tests.CombatVarietyAcceptanceTests" runstate="Runnable" seed="1823577343" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.008547" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1147" name="BurnReapplicationAtCapRefreshesTicksWithoutImmediateTick" fullname="RPG.Tests.CombatVarietyAcceptanceTests.BurnReapplicationAtCapRefreshesTicksWithoutImmediateTick" methodname="BurnReapplicationAtCapRefreshesTicksWithoutImmediateTick" classname="RPG.Tests.CombatVarietyAcceptanceTests" runstate="Runnable" seed="102708004" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.003438" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1157" name="CloseHealBudgetAndDamagedArmorCarryThroughTwoResolvedBattlesWithoutRefresh" fullname="RPG.Tests.CombatVarietyAcceptanceTests.CloseHealBudgetAndDamagedArmorCarryThroughTwoResolvedBattlesWithoutRefresh" methodname="CloseHealBudgetAndDamagedArmorCarryThroughTwoResolvedBattlesWithoutRefresh" classname="RPG.Tests.CombatVarietyAcceptanceTests" runstate="Runnable" seed="1769732445" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.007443" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1159" name="EveryKitActionHasLegalAiCandidatesWithoutStateOrRngMutation" fullname="RPG.Tests.CombatVarietyAcceptanceTests.EveryKitActionHasLegalAiCandidatesWithoutStateOrRngMutation" methodname="EveryKitActionHasLegalAiCandidatesWithoutStateOrRngMutation" classname="RPG.Tests.CombatVarietyAcceptanceTests" runstate="Runnable" seed="1692850773" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.004338" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1160" name="ExhaustionAllowsOrdinaryStaffDefendAndSpellButBlocksExertion" fullname="RPG.Tests.CombatVarietyAcceptanceTests.ExhaustionAllowsOrdinaryStaffDefendAndSpellButBlocksExertion" methodname="ExhaustionAllowsOrdinaryStaffDefendAndSpellButBlocksExertion" classname="RPG.Tests.CombatVarietyAcceptanceTests" runstate="Runnable" seed="1736662168" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.000315" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1146" name="FailedDirectedContactDoesNotBreakFreezeOrSpendAnotherRoll" fullname="RPG.Tests.CombatVarietyAcceptanceTests.FailedDirectedContactDoesNotBreakFreezeOrSpendAnotherRoll" methodname="FailedDirectedContactDoesNotBreakFreezeOrSpendAnotherRoll" classname="RPG.Tests.CombatVarietyAcceptanceTests" runstate="Runnable" seed="516776137" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.000268" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1149" name="FireArmorRetaliatesOnceAfterPhysicalHitEvenWithoutBarrierAndDoesNotRecurse" fullname="RPG.Tests.CombatVarietyAcceptanceTests.FireArmorRetaliatesOnceAfterPhysicalHitEvenWithoutBarrierAndDoesNotRecurse" methodname="FireArmorRetaliatesOnceAfterPhysicalHitEvenWithoutBarrierAndDoesNotRecurse" classname="RPG.Tests.CombatVarietyAcceptanceTests" runstate="Runnable" seed="1006398801" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.000888" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1150" name="FireballCannotPropagateThroughSealedCorner" fullname="RPG.Tests.CombatVarietyAcceptanceTests.FireballCannotPropagateThroughSealedCorner" methodname="FireballCannotPropagateThroughSealedCorner" classname="RPG.Tests.CombatVarietyAcceptanceTests" runstate="Runnable" seed="1894112485" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.000446" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1145" name="FreezeActuallyDeniesActivationThenExpiresWithoutBonusTurn" fullname="RPG.Tests.CombatVarietyAcceptanceTests.FreezeActuallyDeniesActivationThenExpiresWithoutBonusTurn" methodname="FreezeActuallyDeniesActivationThenExpiresWithoutBonusTurn" classname="RPG.Tests.CombatVarietyAcceptanceTests" runstate="Runnable" seed="1779808401" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.000296" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1156" name="FullHpCleanseUsesOneBudgetAndLeavesArmorAndOtherConditions" fullname="RPG.Tests.CombatVarietyAcceptanceTests.FullHpCleanseUsesOneBudgetAndLeavesArmorAndOtherConditions" methodname="FullHpCleanseUsesOneBudgetAndLeavesArmorAndOtherConditions" classname="RPG.Tests.CombatVarietyAcceptanceTests" runstate="Runnable" seed="331404140" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.000151" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1161" name="GracefulExitAfterMissIsConsumedAndSecondExitCanProvoke" fullname="RPG.Tests.CombatVarietyAcceptanceTests.GracefulExitAfterMissIsConsumedAndSecondExitCanProvoke" methodname="GracefulExitAfterMissIsConsumedAndSecondExitCanProvoke" classname="RPG.Tests.CombatVarietyAcceptanceTests" runstate="Runnable" seed="980337668" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.001231" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1155" name="HealRejectsFullDeadHostileAndEmptyTargetsWithoutMutation" fullname="RPG.Tests.CombatVarietyAcceptanceTests.HealRejectsFullDeadHostileAndEmptyTargetsWithoutMutation" methodname="HealRejectsFullDeadHostileAndEmptyTargetsWithoutMutation" classname="RPG.Tests.CombatVarietyAcceptanceTests" runstate="Runnable" seed="1277704908" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.000375" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1154" name="TierTwoScalesOnlyDirectMagnitude" fullname="RPG.Tests.CombatVarietyAcceptanceTests.TierTwoScalesOnlyDirectMagnitude" classname="RPG.Tests.CombatVarietyAcceptanceTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.000570" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1151" name="TierTwoScalesOnlyDirectMagnitude(FireStream,11)" fullname="RPG.Tests.CombatVarietyAcceptanceTests.TierTwoScalesOnlyDirectMagnitude(FireStream,11)" methodname="TierTwoScalesOnlyDirectMagnitude" classname="RPG.Tests.CombatVarietyAcceptanceTests" runstate="Runnable" seed="10360562" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.000101" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1152" name="TierTwoScalesOnlyDirectMagnitude(Fireball,16)" fullname="RPG.Tests.CombatVarietyAcceptanceTests.TierTwoScalesOnlyDirectMagnitude(Fireball,16)" methodname="TierTwoScalesOnlyDirectMagnitude" classname="RPG.Tests.CombatVarietyAcceptanceTests" runstate="Runnable" seed="1789394881" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.000023" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1153" name="TierTwoScalesOnlyDirectMagnitude(IceShard,13)" fullname="RPG.Tests.CombatVarietyAcceptanceTests.TierTwoScalesOnlyDirectMagnitude(IceShard,13)" methodname="TierTwoScalesOnlyDirectMagnitude" classname="RPG.Tests.CombatVarietyAcceptanceTests" runstate="Runnable" seed="1799052437" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.000024" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-case id="1158" name="TrainingPromotionItselfKeepsIdentityXpAndCurrentPools" fullname="RPG.Tests.CombatVarietyAcceptanceTests.TrainingPromotionItselfKeepsIdentityXpAndCurrentPools" methodname="TrainingPromotionItselfKeepsIdentityXpAndCurrentPools" classname="RPG.Tests.CombatVarietyAcceptanceTests" runstate="Runnable" seed="590650841" result="Passed" start-time="2026-09-30 14:51:02Z" end-time="2026-09-30 14:51:02Z" duration="0.000139" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[Saving results to: /tmp/convergence-5051/preferences/Library/Application Support/DefaultCompany/My project/TestResults.xml
+]]></output>
+            </test-case>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

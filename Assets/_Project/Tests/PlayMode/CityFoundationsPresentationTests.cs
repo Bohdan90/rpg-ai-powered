@@ -15,6 +15,9 @@ namespace RPG.Presentation.Tests
             yield return SceneManager.LoadSceneAsync("TacticalGraybox",LoadSceneMode.Single);yield return null;
             var p=Object.FindAnyObjectByType<BattlePresenter>();p.StartCity(true);yield return null;
             Assert.That(p.HudRoot.Q("city-overview"),Is.Not.Null);
+            foreach(var field in p.HudRoot.Q("city-overview").Query<DropdownField>().ToList())
+                Assert.That(field.labelElement.resolvedStyle.color,Is.EqualTo(Color.white));
+            Assert.That(p.HudRoot.Q("city-overview").Query<Label>().ToList().Exists(l=>l.text.Contains("Projected source contributions")),Is.True);
             var world=p.Duel;Assert.That(world.Foundations.QueueProject(world,Side.West,1,CityProjectKind.DevelopmentII),Is.True);
             Assert.That(world.Foundations.QueueResearch(world,Side.West,CityTech.ElementalDrills),Is.True);p.DuelChanged();
             string path=Path.Combine(Application.temporaryCachePath,"city-5051-"+System.Guid.NewGuid()+".json");

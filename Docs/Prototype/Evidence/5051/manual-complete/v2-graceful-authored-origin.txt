@@ -1,0 +1,1 @@
+AUTHORED rare-case initial fixture: graceful. All following commands use ordinary GUI input; no result injection.

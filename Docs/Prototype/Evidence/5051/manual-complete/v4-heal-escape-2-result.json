@@ -1,0 +1,501 @@
+{
+  "mode": "v4-heal-escape-2",
+  "hash": "nqMv5uHrfaN8iOhP9mBmz1yJSUyQ/BSvHFPYD7SVzQA=",
+  "plan": "MoveCommand",
+  "contact": "",
+  "hud": "Loaded Crossroads R1\nReplay matches: 15 successful commands, 15 attempts.\nGATE C / HOTSEAT\nBLUE West \u00b7 ORANGE East \u00b7 GOLD active\nGreen: reachable \u00b7 Gold: path \u00b7 Red segment: OA risk\nSword + shield: HW/EW \u00b7 Bow: HA \u00b7 * Commander\nWhite arrow: facing \u00b7 Red border: ZoC ready \u00b7 Gray: spent\nWheel: zoom \u00b7 Right-click: center view\nAttacker coalition \u00b7 YOUR retreat: East\nEast Retreat \u2192\nHW*\nHP 40/40\nA 16/16\nHW\nHP 40/40\nA 16/16\nHA\nHP 28/28\nA 4/4\nEW II\nHP 38/38\nA 5/8\nHH\nHP 28/28\nA 0/0\nEXH \nHW*\nHP 40/40\nA 16/16\nHW\nHP 40/40\nA 16/16\nHA\nHP 28/28\nA 4/4\nHA\nHP 28/28\nA 4/4\nEW\nHP 32/32\nA 6/6\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\nHW*\nHP 40/40\nA 16/16\nHW\nHP 40/40\nA 16/16\nHA\nHP 28/28\nA 4/4\nEW II\nHP 38/38\nA 8/8\nIce 2\nHP 32/32\nA 0/0\nTACTICAL GRAYBOX\nHotseat \u00b7 ZoC / OA / physical Retreat\nBATTLE ENDED\nWinner: West\nLoser: East\nResult: Withdrawal\n\nDead:\nNone\n\nEscaped/Safe:\nduel-East-1 \u00b7 HumanWarriorTI * (East) HP 40 / Armor 16\nduel-East-2 \u00b7 HumanWarriorTI (East) HP 40 / Armor 16\nduel-East-3 \u00b7 HumanArcherTI (East) HP 28 / Armor 4\nduel-East-4 \u00b7 ElfWarriorTII (East) HP 38 / Armor 8\nduel-East-5 \u00b7 IceMageTII (East) HP 32 / Armor 0\n\nSurviving active units:\nduel-West-1 \u00b7 HumanWarriorTI * (West) HP 40 / Armor 16\nduel-West-2 \u00b7 HumanWarriorTI (West) HP 40 / Armor 16\nduel-West-3 \u00b7 HumanArcherTI (West) HP 28 / Armor 4\nduel-West-4 \u00b7 ElfWarriorTII (West) HP 38 / Armor 5\nduel-West-5 \u00b7 HumanHealerTI (West) HP 28 / Armor 0\nController\nHotseat\nNo active turn \u2014 battle completed.\nBarrier 0\nAbility\nWest rear edges (per army): West. East: East edge.\nEscaped/Safe:\nduel-East-1 \u00b7 HumanWarriorTI * (East) HP 40 / Armor 16\nduel-East-2 \u00b7 HumanWarriorTI (East) HP 40 / Armor 16\nduel-East-3 \u00b7 HumanArcherTI (East) HP 28 / Armor 4\nduel-East-4 \u00b7 ElfWarriorTII (East) HP 38 / Armor 8\nduel-East-5 \u00b7 IceMageTII (East) HP 32 / Armor 0\nBattle ended. Restart Same Seed to play again.\nNo destination / target selected.\nClick a cell or unit, then confirm. Green cells: Core reachable.\nExplicitly confirm allied target\nEnd facing\nReplay matches: 15 successful commands, 15 attempts.\nFixture (resets battle)\n05B West preset\n05B East preset\n05 Starting Side\nSize/density experiment \u00b7 no combat retuning. 9v9 = synthetic tactical roster, not strategic Capacity validation. Siege: static fortress; moat proxy has fixed crossings. 41\u00d739 preserves each attacker approach; West = attacker coalition, East = defenders. No real siege mechanics.\nLOCAL REPLAY / TELEMETRY\nReplay file\nRECENT CORE EVENTS\nR1 duel-West-4 \u00b7 ElfWarriorTII: ActionConsumed\nR1 duel-West-4 \u00b7 ElfWarriorTII: MovementConsumed\nR1 duel-West-4 \u00b7 ElfWarriorTII: ActivationEnded\nR1 duel-East-4 \u00b7 ElfWarriorTII: ActivationStarted\nR1 duel-East-4 \u00b7 ElfWarriorTII: ActionConsumed\nR1 duel-East-4 \u00b7 ElfWarriorTII: MovementConsumed\nR1 duel-East-4 \u00b7 ElfWarriorTII: ActivationEnded\nR1 duel-East-3 \u00b7 HumanArcherTI: ActivationStarted\nR1 duel-East-3 \u00b7 HumanArcherTI: ActionConsumed\nR1 duel-East-3 \u00b7 HumanArcherTI: MovementConsumed\nR1 duel-East-3 \u00b7 HumanArcherTI: ActivationEnded\nR1 duel-West-3 \u00b7 HumanArcherTI: ActivationStarted\nR1 duel-West-3 \u00b7 HumanArcherTI: ActionConsumed\nR1 duel-West-3 \u00b7 HumanArcherTI: MovementConsumed\nR1 duel-West-3 \u00b7 HumanArcherTI: ActivationEnded\nR1 duel-West-5 \u00b7 HumanHealerTI: ActivationStarted\nR1 duel-West-5 \u00b7 HumanHealerTI: MovementStarted\nR1 duel-West-5 \u00b7 HumanHealerTI: FacingChanged\nR1 duel-West-5 \u00b7 HumanHealerTI: MovementConsumed\nR1 duel-West-5 \u00b7 HumanHealerTI: StepMoved (3,8) \u2192 (3,7)\nR1 duel-West-5 \u00b7 HumanHealerTI: ActionConsumed\nR1 duel-West-5 \u00b7 HumanHealerTI: ExhaustionChanged\nR1 duel-West-5 \u00b7 HumanHealerTI: SpellCast CloseHeal (3,6)\nR1 duel-West-5 \u00b7 HumanHealerTI: HpHealed \u2192 duel-West-4 \u00b7 ElfWarriorTII 31 \u2192 38\nR1 duel-West-5 \u00b7 HumanHealerTI: MovementConsumed\nR1 duel-West-5 \u00b7 HumanHealerTI: ActivationEnded\nR1 duel-West-5 \u00b7 HumanHealerTI: ExhaustionChanged\nR1 duel-East-5 \u00b7 IceMageTII: ActivationStarted\nR1 duel-East-5 \u00b7 IceMageTII: MovementStarted\nR1 duel-East-5 \u00b7 IceMageTII: FacingChanged\nR1 duel-East-5 \u00b7 IceMageTII: MovementConsumed\nR1 duel-East-5 \u00b7 IceMageTII: StepMoved (19,8) \u2192 (20,7)\nR1 duel-East-5 \u00b7 IceMageTII: MovementConsumed\nR1 duel-East-5 \u00b7 IceMageTII: StepMoved (20,7) \u2192 (21,6)\nR1 duel-East-5 \u00b7 IceMageTII: MovementConsumed\nR1 duel-East-5 \u00b7 IceMageTII: StepMoved (21,6) \u2192 (22,5)\nR1 duel-East-5 \u00b7 IceMageTII: UnitEscaped (21,6) \u2192 (22,5) \u2014 SAFE, not Dead.\nR1 duel-East-5 \u00b7 IceMageTII: ActivationEnded\nR1 duel-West-1 \u00b7 HumanWarriorTI *: ActivationStarted\nR1 duel-West-1 \u00b7 HumanWarriorTI *: ActionConsumed\nR1 duel-West-1 \u00b7 HumanWarriorTI *: MovementConsumed\nR1 duel-West-1 \u00b7 HumanWarriorTI *: ActivationEnded\nR1 duel-East-1 \u00b7 HumanWarriorTI *: ActivationStarted\nR1 duel-East-1 \u00b7 HumanWarriorTI *: MovementStarted\nR1 duel-East-1 \u00b7 HumanWarriorTI *: FacingChanged\nR1 duel-East-1 \u00b7 HumanWarriorTI *: MovementConsumed\nR1 duel-East-1 \u00b7 HumanWarriorTI *: StepMoved (19,0) \u2192 (20,0)\nR1 duel-East-1 \u00b7 HumanWarriorTI *: MovementConsumed\nR1 duel-East-1 \u00b7 HumanWarriorTI *: StepMoved (20,0) \u2192 (21,0)\nR1 duel-East-1 \u00b7 HumanWarriorTI *: MovementConsumed\nR1 duel-East-1 \u00b7 HumanWarriorTI *: StepMoved (21,0) \u2192 (22,0)\nR1 duel-East-1 \u00b7 HumanWarriorTI *: UnitEscaped (21,0) \u2192 (22,0) \u2014 SAFE, not Dead.\nR1 duel-East-1 \u00b7 HumanWarriorTI *: ActivationEnded\nR1 duel-East-2 \u00b7 HumanWarriorTI: ActivationStarted\nR1 duel-East-2 \u00b7 HumanWarriorTI: MovementStarted\nR1 duel-East-2 \u00b7 HumanWarriorTI: FacingChanged\nR1 duel-East-2 \u00b7 HumanWarriorTI: MovementConsumed\nR1 duel-East-2 \u00b7 HumanWarriorTI: StepMoved (19,2) \u2192 (20,1)\nR1 duel-East-2 \u00b7 HumanWarriorTI: FacingChanged\nR1 duel-East-2 \u00b7 HumanWarriorTI: MovementConsumed\nR1 duel-East-2 \u00b7 HumanWarriorTI: StepMoved (20,1) \u2192 (21,1)\nR1 duel-East-2 \u00b7 HumanWarriorTI: FacingChanged\nR1 duel-East-2 \u00b7 HumanWarriorTI: MovementConsumed\nR1 duel-East-2 \u00b7 HumanWarriorTI: StepMoved (21,1) \u2192 (22,0)\nR1 duel-East-2 \u00b7 HumanWarriorTI: UnitEscaped (21,1) \u2192 (22,0) \u2014 SAFE, not Dead.\nR1 duel-East-2 \u00b7 HumanWarriorTI: ActivationEnded\nR1 duel-West-2 \u00b7 HumanWarriorTI: ActivationStarted\nR1 duel-West-2 \u00b7 HumanWarriorTI: ActionConsumed\nR1 duel-West-2 \u00b7 HumanWarriorTI: MovementConsumed\nR1 duel-West-2 \u00b7 HumanWarriorTI: ActivationEnded\nR2 Battle: RoundStarted\nR2 duel-West-4 \u00b7 ElfWarriorTII: ActivationStarted\nR2 duel-West-4 \u00b7 ElfWarriorTII: ActionConsumed\nR2 duel-West-4 \u00b7 ElfWarriorTII: MovementConsumed\nR2 duel-West-4 \u00b7 ElfWarriorTII: ActivationEnded\nR2 duel-East-4 \u00b7 ElfWarriorTII: ActivationStarted\nR2 duel-East-4 \u00b7 ElfWarriorTII: MovementStarted\nR2 duel-East-4 \u00b7 ElfWarriorTII: FacingChanged\nR2 duel-East-4 \u00b7 ElfWarriorTII: MovementConsumed\nR2 duel-East-4 \u00b7 ElfWarriorTII: StepMoved (19,6) \u2192 (20,6)\nR2 duel-East-4 \u00b7 ElfWarriorTII: FacingChanged\nR2 duel-East-4 \u00b7 ElfWarriorTII: MovementConsumed\nR2 duel-East-4 \u00b7 ElfWarriorTII: StepMoved (20,6) \u2192 (21,5)\nR2 duel-East-4 \u00b7 ElfWarriorTII: FacingChanged\nR2 duel-East-4 \u00b7 ElfWarriorTII: MovementConsumed\nR2 duel-East-4 \u00b7 ElfWarriorTII: StepMoved (21,5) \u2192 (22,5)\nR2 duel-East-4 \u00b7 ElfWarriorTII: UnitEscaped (21,5) \u2192 (22,5) \u2014 SAFE, not Dead.\nR2 duel-East-4 \u00b7 ElfWarriorTII: ActivationEnded\nR2 duel-East-3 \u00b7 HumanArcherTI: ActivationStarted\nR2 duel-East-3 \u00b7 HumanArcherTI: MovementStarted\nR2 duel-East-3 \u00b7 HumanArcherTI: FacingChanged\nR2 duel-East-3 \u00b7 HumanArcherTI: MovementConsumed\nR2 duel-East-3 \u00b7 HumanArcherTI: StepMoved (21,4) \u2192 (22,3)\nR2 duel-East-3 \u00b7 HumanArcherTI: UnitEscaped (21,4) \u2192 (22,3) \u2014 SAFE, not Dead.\nR2 Battle: BattleEnded \u2014 Winner West, Loser East, Withdrawal\nR2 duel-East-3 \u00b7 HumanArcherTI: ActivationEnded\nReplay matches: 15 successful commands, 15 attempts.\nCROSSROADS DUEL \u00b7 strategic Hotseat\nOpen information \u00b7 claim objectives at activation end \u00b7 24 Pressure to win\nPath  \u00b7 cost 0\nNo active side authority.\nR1 West attacks; tactical Hotseat\nR1 West moves to 11 for 20\nR1 Battle 1: West / Withdrawal. Same IDs, HP/Armor and XP; no recovery.\nR1 East tactical Withdrawal to 10; Tempo 60\nR1 West attacks; tactical Hotseat\nAUTHORED rare-case initial fixture: two-heals. No played history claimed. Following actions use GUI.\nR1 \u00b7 Active West \u00b7 first West\nPressure W 0 / E 0 \u00b7 target 24\nTempo 0 \u00b7 Provisions 30 / 30 \u00b7 consumption 5\nEnemy @ 10: 5 units \u00b7 2 HumanWarriorTI \u00b7 1 HumanArcherTI \u00b7 1 ElfWarriorTII \u00b7 1 IceMageTII\nNext Refresh here: +15% Max HP. Own Keep: supply up to 6; HP40%. Field HP15%. Armor NOT repaired.\nObjectives: North Mine=Neutral; Central Beacon=Neutral; South Waystation=Neutral\nLoaded Crossroads R1\nWest \u00b7 Gold 300 \u00b7 Own Keep Food 36 \u00b7 free capacity 5 / 32 (Native unit6)\nNorth Mine +75 Gold / Refresh. Central Beacon: position + Pressure only.\nSouth Waystation Food 24 /24 \u00b7 controlling formation here: supply<=6. No regeneration.\nOwn Keep supply<=6 costs actual Food. HP recovery costs time, not Gold/Food. Armor: paid Forge order only.\nRecruit: No active side authority.\nCITY & COMBAT 05B \u00b7 Human Integrated \u00b7 protected rear Cities (no siege)\nWest City Development 1 \u00b7 IV outside this prototype\nRegional projected 40 / last cycle 0\nDeep 0 physical + 0 reserved / 0\nGlobal: Gold 300 \u00b7 Wood 30 \u00b7 Iron 20\nCity Food 36/90 \u00b7 field supply<=6; HP40%, Armor only via Forge\nCenter/Institute Work: 2 \u00b7 Mage Tower 0 \u00b7 direction HH\nProjected source contributions: 16: +10 \u00b7 17: +10 \u00b7 18: +10 \u00b7 19: +10\nSelected 1 \u00b7 controller West \u00b7 fixed parent 0\nLocal stock Gold 0 \u00b7 Food 0 \u00b7 Wood 0 \u00b7 Iron 0\nDevelopmentII: 100G 10W 0I / 2 steps \u00b7 requirements met (payment when active)\nDevelopmentIII: 200G 20W 10I / 3 steps \u00b7 Development II required / III already reached.\nForge: 100G 10W 10I / 2 steps \u00b7 Development II + Forge Organization required.\nResearchInstitute: 150G 20W 10I / 2 steps \u00b7 Development III, Regional 50, Research Method required.\nExtractionDepot: 60G 10W 0I / 1 steps \u00b7 Wrong location type.\nAssayOffice: 60G 10W 0I / 1 steps \u00b7 Wrong location type.\nMageTowerI: 100G 10W 0I / 2 steps \u00b7 requirements met (payment when active)\nMageTowerII: 120G 10W 5I / 2 steps \u00b7 HOM direction, Tower I, Development II, Elemental Drills required.\nNext production / unboosted reference: 16 30 / 30 \u00b7 Export chain available; 17 6 / 6 \u00b7 Export chain available; 18 6 / 6 \u00b7 Export chain available; 19 4 / 4 \u00b7 Export chain available\nConstruction: none\nUnpaid queue: \nResearch: none \u00b7 queue \nExtraction [Universal] 0/6 unpaid \u00b7 City Work \nAssay [Universal] 0/6 unpaid \u00b7 City Work \nResearchMethod [Universal] 0/12 unpaid \u00b7 City Work \nForgeOrganization [Universal] 0/12 unpaid \u00b7 City Work \nElementalDrills [Human foundation] 0/6 unpaid \u00b7 City Work \nConstruction\nResearch\nForge: own functioning Forge, physical presence and missing Armor required.\nL1 Mage\nTraining: HOM formation at own Tower II, Drills, Commander required.\nMage recruit: No active side authority.\nPersistent trainee\nPermanent school spell: Fireball / Freeze. Pay 75 Gold; no healing.\nCOMMANDER-LED\nduel-West-1 * \u00b7 HumanWarriorTI \u00b7 Alive\nHP 40/40 Armor 16/16 \u00b7 XP 0.37 L1 \u00b7 Command 0.26 L1 Rank I\nduel-West-2 \u00b7 HumanWarriorTI \u00b7 Alive\nHP 40/40 Armor 16/16 \u00b7 XP 0.37 L1\nduel-West-3 \u00b7 HumanArcherTI \u00b7 Alive\nHP 28/28 Armor 4/4 \u00b7 XP 0.37 L1\nduel-West-4 \u00b7 ElfWarriorTII \u00b7 Alive\nHP 31/38 Armor 5/8 \u00b7 XP 20.37 L3\nduel-West-5 \u00b7 HumanHealerTI \u00b7 Alive\nHP 28/28 Armor 0/0 \u00b7 XP 0.37 L1 \u00b7 Refresh uses CloseHeal 2 left\nPass to West \u2014 Continue",
+  "spell": "IceShard",
+  "persistentPath": "/tmp/convergence-5051/manual-complete/preferences/Library/Application Support/DefaultCompany/My project",
+  "ff": true,
+  "gx": 0.0,
+  "gy": 97.0,
+  "fields": [
+    {
+      "label": "Controller",
+      "name": "controller-mode",
+      "index": 0,
+      "choices": [
+        "Hotseat",
+        "Player West vs AI East",
+        "Player East vs AI West"
+      ],
+      "x": 1340.103515625,
+      "y": 575.62744140625
+    },
+    {
+      "label": "Ability",
+      "name": "spell-selector",
+      "index": 0,
+      "choices": [
+        "Basic / Move"
+      ],
+      "x": 1340.103515625,
+      "y": 705.0969848632812
+    },
+    {
+      "label": "End facing",
+      "name": "",
+      "index": 0,
+      "choices": [
+        "Keep current",
+        "North",
+        "NorthEast",
+        "East",
+        "SouthEast",
+        "South",
+        "SouthWest",
+        "West",
+        "NorthWest"
+      ],
+      "x": 1340.103515625,
+      "y": 1168.486328125
+    },
+    {
+      "label": "Fixture (resets battle)",
+      "name": "fixture-selector",
+      "index": 7,
+      "choices": [
+        "Field_13x9_Control",
+        "Field_17x11_Expanded",
+        "Siege_23x17_Tight",
+        "Siege_27x21_Roomy",
+        "Field_19x13_ExpandedV2",
+        "Siege_31x25_Medium",
+        "Siege_35x27_Large",
+        "Field_23x17_Full_9v9",
+        "Siege_35x27_Full_9v9",
+        "Siege_41x39_West_9v9",
+        "Siege_41x39_East_9v9",
+        "Siege_41x39_North_9v9",
+        "Siege_41x39_South_9v9",
+        "Siege_41x39_WestEast_18v9",
+        "Siege_41x39_NorthSouth_18v9"
+      ],
+      "x": 1340.103515625,
+      "y": 1289.107421875
+    },
+    {
+      "label": "05B West preset",
+      "name": "",
+      "index": 0,
+      "choices": [
+        "Fire",
+        "Ice",
+        "Support"
+      ],
+      "x": 1340.103515625,
+      "y": 1462.820068359375
+    },
+    {
+      "label": "05B East preset",
+      "name": "",
+      "index": 1,
+      "choices": [
+        "Fire",
+        "Ice",
+        "Support"
+      ],
+      "x": 1340.103515625,
+      "y": 1503.80322265625
+    },
+    {
+      "label": "05 Starting Side",
+      "name": "",
+      "index": 0,
+      "choices": [
+        "West",
+        "East"
+      ],
+      "x": 1340.103515625,
+      "y": 1544.78662109375
+    },
+    {
+      "label": "Construction",
+      "name": "",
+      "index": 0,
+      "choices": [
+        "DevelopmentII",
+        "DevelopmentIII",
+        "Forge",
+        "ResearchInstitute",
+        "ExtractionDepot",
+        "AssayOffice",
+        "MageTowerI",
+        "MageTowerII"
+      ],
+      "x": 1034.359619140625,
+      "y": 1078.1370849609375
+    },
+    {
+      "label": "Research",
+      "name": "",
+      "index": 0,
+      "choices": [
+        "Extraction",
+        "Assay",
+        "ResearchMethod",
+        "ForgeOrganization",
+        "ElementalDrills"
+      ],
+      "x": 1034.359619140625,
+      "y": 1283.052978515625
+    },
+    {
+      "label": "L1 Mage",
+      "name": "",
+      "index": 0,
+      "choices": [
+        "Fire HOM",
+        "Ice HOM",
+        "HH Support"
+      ],
+      "x": 1034.359619140625,
+      "y": 1565.278076171875
+    },
+    {
+      "label": "Persistent trainee",
+      "name": "",
+      "index": 0,
+      "choices": [
+        "duel-West-5"
+      ],
+      "x": 1034.359619140625,
+      "y": 1699.40478515625
+    }
+  ],
+  "toggles": [
+    {
+      "label": "Explicitly confirm allied target",
+      "value": false,
+      "x": 1340.103515625,
+      "y": 998.2664794921875
+    },
+    {
+      "label": "Permanent school spell: Fireball / Freeze. Pay 75 Gold; no healing.",
+      "value": false,
+      "x": 1034.359619140625,
+      "y": 1740.387939453125
+    }
+  ],
+  "battle": true,
+  "ended": true,
+  "ai": false,
+  "aiTurn": false,
+  "round": 2,
+  "records": 15,
+  "active": 103,
+  "x": 938.2401123046875,
+  "y": 576.2935791015625,
+  "rw": 1590.892578125,
+  "rh": 805.6920776367188,
+  "sw": 3416,
+  "sh": 1820,
+  "tx": 22,
+  "ty": 3,
+  "buttons": [
+    {
+      "name": "world-return",
+      "text": "Return persistent result to World",
+      "x": 1340.103515625,
+      "y": 531.3842163085938
+    },
+    {
+      "name": "fit-board",
+      "text": "Fit whole board",
+      "x": 1340.103515625,
+      "y": 2323.9326171875
+    },
+    {
+      "name": "focus-unit",
+      "text": "Focus active unit (wheel to zoom)",
+      "x": 1340.103515625,
+      "y": 2368.17578125
+    },
+    {
+      "name": "export-replay",
+      "text": "Export battle + session",
+      "x": 1340.103515625,
+      "y": 2533.0400390625
+    },
+    {
+      "name": "verify-replay",
+      "text": "Load / verify replay file",
+      "x": 1340.103515625,
+      "y": 2577.283203125
+    }
+  ],
+  "units": [
+    {
+      "id": 1,
+      "x": 3,
+      "y": 0,
+      "hp": 40,
+      "armor": 16,
+      "movement": 0,
+      "burn": 0,
+      "barrier": 0,
+      "action": false,
+      "frozen": false,
+      "side": "West",
+      "status": "Active",
+      "persistent": "duel-West-1",
+      "profile": "HumanWarriorTI"
+    },
+    {
+      "id": 2,
+      "x": 3,
+      "y": 2,
+      "hp": 40,
+      "armor": 16,
+      "movement": 0,
+      "burn": 0,
+      "barrier": 0,
+      "action": false,
+      "frozen": false,
+      "side": "West",
+      "status": "Active",
+      "persistent": "duel-West-2",
+      "profile": "HumanWarriorTI"
+    },
+    {
+      "id": 3,
+      "x": 1,
+      "y": 4,
+      "hp": 28,
+      "armor": 4,
+      "movement": 0,
+      "burn": 0,
+      "barrier": 0,
+      "action": false,
+      "frozen": false,
+      "side": "West",
+      "status": "Active",
+      "persistent": "duel-West-3",
+      "profile": "HumanArcherTI"
+    },
+    {
+      "id": 4,
+      "x": 3,
+      "y": 6,
+      "hp": 38,
+      "armor": 5,
+      "movement": 0,
+      "burn": 0,
+      "barrier": 0,
+      "action": false,
+      "frozen": false,
+      "side": "West",
+      "status": "Active",
+      "persistent": "duel-West-4",
+      "profile": "ElfWarriorTII"
+    },
+    {
+      "id": 5,
+      "x": 3,
+      "y": 7,
+      "hp": 28,
+      "armor": 0,
+      "movement": 0,
+      "burn": 0,
+      "barrier": 0,
+      "action": false,
+      "frozen": false,
+      "side": "West",
+      "status": "Active",
+      "persistent": "duel-West-5",
+      "profile": "HumanHealerTI"
+    },
+    {
+      "id": 101,
+      "x": 22,
+      "y": 0,
+      "hp": 40,
+      "armor": 16,
+      "movement": 1,
+      "burn": 0,
+      "barrier": 0,
+      "action": false,
+      "frozen": false,
+      "side": "East",
+      "status": "Escaped",
+      "persistent": "duel-East-1",
+      "profile": "HumanWarriorTI"
+    },
+    {
+      "id": 102,
+      "x": 22,
+      "y": 0,
+      "hp": 40,
+      "armor": 16,
+      "movement": 1,
+      "burn": 0,
+      "barrier": 0,
+      "action": false,
+      "frozen": false,
+      "side": "East",
+      "status": "Escaped",
+      "persistent": "duel-East-2",
+      "profile": "HumanWarriorTI"
+    },
+    {
+      "id": 103,
+      "x": 22,
+      "y": 3,
+      "hp": 28,
+      "armor": 4,
+      "movement": 3,
+      "burn": 0,
+      "barrier": 0,
+      "action": false,
+      "frozen": false,
+      "side": "East",
+      "status": "Escaped",
+      "persistent": "duel-East-3",
+      "profile": "HumanArcherTI"
+    },
+    {
+      "id": 104,
+      "x": 22,
+      "y": 5,
+      "hp": 38,
+      "armor": 8,
+      "movement": 3,
+      "burn": 0,
+      "barrier": 0,
+      "action": false,
+      "frozen": false,
+      "side": "East",
+      "status": "Escaped",
+      "persistent": "duel-East-4",
+      "profile": "ElfWarriorTII"
+    },
+    {
+      "id": 105,
+      "x": 22,
+      "y": 5,
+      "hp": 32,
+      "armor": 0,
+      "movement": 1,
+      "burn": 0,
+      "barrier": 0,
+      "action": false,
+      "frozen": false,
+      "side": "East",
+      "status": "Escaped",
+      "persistent": "duel-East-5",
+      "profile": "IceMageTII"
+    }
+  ],
+  "world": {
+    "version": 0,
+    "refresh": 0,
+    "startingSide": 0,
+    "activeSide": 0,
+    "completed": 0,
+    "winner": 0,
+    "battleNumber": 0,
+    "seed": 0,
+    "handoff": false,
+    "economy": false,
+    "waystationFood": 0,
+    "scenario": "",
+    "checksum": "",
+    "owners": [],
+    "events": [],
+    "west": {
+      "node": 0,
+      "tempo": 0,
+      "provisions": 0,
+      "pressure": 0,
+      "gold": 0,
+      "keepFood": 0,
+      "nextRecruit": 0,
+      "pendingProfile": 0,
+      "lastRecruitRefresh": 0,
+      "pendingId": "",
+      "goldExact": "",
+      "foodExact": "",
+      "formation": {
+        "id": "",
+        "side": 0,
+        "commanderless": false,
+        "rosterLocked": false,
+        "members": []
+      }
+    },
+    "east": {
+      "node": 0,
+      "tempo": 0,
+      "provisions": 0,
+      "pressure": 0,
+      "gold": 0,
+      "keepFood": 0,
+      "nextRecruit": 0,
+      "pendingProfile": 0,
+      "lastRecruitRefresh": 0,
+      "pendingId": "",
+      "goldExact": "",
+      "foodExact": "",
+      "formation": {
+        "id": "",
+        "side": 0,
+        "commanderless": false,
+        "rosterLocked": false,
+        "members": []
+      }
+    },
+    "incident": {
+      "enabled": false,
+      "worldPhase": false,
+      "ravaged": false,
+      "cycleEligible": false,
+      "continuityBroken": false,
+      "rewardPaid": false,
+      "phase": 0,
+      "whiteout": 0,
+      "cursor": 0,
+      "contract": 0,
+      "holdCycles": 0,
+      "appliedBattle": 0,
+      "id": "",
+      "claimant": "",
+      "holdReason": "",
+      "actorOrder": [],
+      "raiders": []
+    },
+    "foundations": {
+      "combined": false,
+      "locations": [],
+      "west": {
+        "wood": "",
+        "iron": "",
+        "preset": 0,
+        "active": 0,
+        "started": 0,
+        "paused": false,
+        "queue": [],
+        "research": [],
+        "repairStarted": 0,
+        "trainingStarted": 0,
+        "repairIds": [],
+        "repairs": [],
+        "trainee": ""
+      },
+      "east": {
+        "wood": "",
+        "iron": "",
+        "preset": 0,
+        "active": 0,
+        "started": 0,
+        "paused": false,
+        "queue": [],
+        "research": [],
+        "repairStarted": 0,
+        "trainingStarted": 0,
+        "repairIds": [],
+        "repairs": [],
+        "trainee": ""
+      }
+    }
+  }
+}

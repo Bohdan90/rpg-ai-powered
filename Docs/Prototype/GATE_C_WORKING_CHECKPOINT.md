@@ -196,3 +196,15 @@ Reports: `CITY_REGION_RESEARCH_FOUNDATIONS_05A.md`, `COMBAT_VARIETY_AND_CONNECTE
 - GUI: menu/Fire-vs-Ice launch, Ability selection, lawful self IceShield (Barrier10/Exhausted), AI Fireball with real damage, directed Freeze on FireTI observed through OS input. Full match, player FF/Burn and the rest of N/V are not passed.
 - Reproduced unreadable Ability/preset labels and distant command controls corrected. Selected-spell confirmation and zero-damage status/protection preview wording corrected. No gameplay rules, profiles, RNG, save formats or economic tuning changed.
 - Full final regression and exact source/config hashes are recorded in the manifest. Main integration keeps original product/save namespace and all nine unrelated files; test/feature preferences and saves stay isolated. User merge permission is not coordinator or player acceptance. NO PUSH. Stop for review; no next system.
+
+## 2026-09-30 — 50/51 acceptance completion in authorized main
+
+User authorized merging and checking main; follow-up starts `develop @73caac9` in `My project`. The feature was already integrated; no reset or duplicate implementation. Own final commit contains this delta (use live git log), no push.
+
+N1–N5 and V1–V5 now **PASS as controlled real OS-input GUI checks**, with clearly labelled rare initial fixtures. Includes full05A Pressure victoryR35, Forge/departure/redeploy, capture/recapture, full05B eliminationR10 with150G newMage later fighting, paid75G same-ID training/reload, two battles withoutRefresh (HP17→31→38/Armor5; CloseHeal0→1→2), mirrored starts and all three Lab battles. This is not actual player balance acceptance.
+
+Bounded fixes: Lab ordinary-unit names; readable City dropdown labels; explicit dynamic construction blocker; per-source Core production/export/Regional preview. No tuning, save-schema or combat-rule change. Targeted acceptance coverage closes identified reference/Institute/Forge/status/heal/training/AI-candidate gaps.
+
+Fresh final **521 EditMode +64 PlayMode =585 PASS;0failed;0skipped**. Focused54EditMode+3PlayMode. Exact commands/config/source hashes/XML/logs and GUI replays: `Evidence/5051/validation-manifest.json`. Historical553 kept separately. Report: `5051_ACCEPTANCE_COMPLETION.md` supersedes old NOT RUN summaries in the original reports/audit.
+
+User's nine unrelated scene/settings/meta files preserved byte-for-byte; temporary observer removed. GUI/batch preferences and saves separate from user namespace. Current main menus: Gate C/Combat Lab (Fire vs Ice, Support vs Fire, Mobile Blades), City Foundations05A, City and Combat05B. Authored-ready button remains labelled; genuine playedR10 save also supplied in evidence. Coordinator and player acceptance PENDING. STOP: no next package, NO PUSH.

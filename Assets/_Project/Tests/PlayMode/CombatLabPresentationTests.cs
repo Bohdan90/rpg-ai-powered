@@ -16,7 +16,12 @@ namespace RPG.Presentation.Tests
             foreach(CombatLabMatch match in System.Enum.GetValues(typeof(CombatLabMatch))) {
                 p.StartCombatLab(match);Assert.That(p.State.Battlefield.Columns,Is.EqualTo(23));Assert.That(p.State.Units.Count,Is.EqualTo(6));
                 Assert.That(p.HudRoot.Q<Button>("lab-"+match),Is.Not.Null);
+                foreach(var member in p.State.Units)
+                    Assert.That(p.UnitName(member.Id),Does.StartWith(member.Profile.Id.ToString()),"Lab names must use the actual roster, including ordinary warriors.");
             }
+            p.ConfigureFixture(SizeExperimentMap.Field_13x9_Control);
+            Assert.That(p.Lab,Is.Null);
+            Assert.That(p.UnitName(new UnitId(3)),Is.EqualTo(PrototypeFixture.Name(new UnitId(3))));
             p.StartCombatLab(CombatLabMatch.FireVsIce);p.SetPlayerVsAi(false);
             for(int i=0;i<6&&p.State.FindUnit(p.State.CurrentUnitId.Value).Profile!=UnitProfile.FireMageTII;i++)p.EndActivation(null);
             var u=p.State.FindUnit(p.State.CurrentUnitId.Value);Assert.That(u.Profile,Is.EqualTo(UnitProfile.FireMageTII));
