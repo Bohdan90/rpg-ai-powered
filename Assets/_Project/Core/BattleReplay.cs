@@ -20,17 +20,18 @@ namespace RPG.Core
         public bool action,oa,defending;
         public uint tie;
         public int TemporaryBarrier,BarrierActivations,BurnStacks,BurnTicks,PoisonStacks,BleedStacks,FrozenActivations,ExhaustedActivations,FireballUsed,FreezeUsed,CloseHealUsed;
+        public bool silenced;
         public bool fireProtection; public int exitTarget;
         public static ReplayUnit Capture(UnitState u)=>new ReplayUnit { retreatEdge=u.OwnRetreatEdge.HasValue?(int)u.OwnRetreatEdge.Value:-1,id=u.Id.Value,side=(int)u.Side,profile=(int)u.Profile.Id,
             x=u.Position.X,y=u.Position.Y,facing=(int)u.Facing,hp=u.Hp,armor=u.Armor,status=(int)u.Status,
             movement=u.MovementRemaining,spent=u.MovementSpentThisActivation,action=u.ActionAvailable,oa=u.OpportunityAttackAvailable,
-            defending=u.IsDefending,tie=u.TieKey,fireProtection=u.FireProtection,exitTarget=u.GracefulExitTarget?.Value??0,
+            defending=u.IsDefending,tie=u.TieKey,silenced=u.IsSilenced,fireProtection=u.FireProtection,exitTarget=u.GracefulExitTarget?.Value??0,
             TemporaryBarrier=u.TemporaryBarrier,BarrierActivations=u.BarrierActivations,BurnStacks=u.BurnStacks,BurnTicks=u.BurnTicks,PoisonStacks=u.PoisonStacks,BleedStacks=u.BleedStacks,FrozenActivations=u.FrozenActivations,ExhaustedActivations=u.ExhaustedActivations,FireballUsed=u.FireballUsed,FreezeUsed=u.FreezeUsed,CloseHealUsed=u.CloseHealUsed };
         internal UnitState Restore()
         {
             var p=UnitProfile.Get((UnitProfileId)profile);
             return new UnitState(new UnitId(id),(Side)side,p,new GridPosition(x,y),(Facing)facing,hp,armor,(UnitStatus)status,retreatEdge<0?(RetreatEdge?)null:(RetreatEdge)retreatEdge) {
-                MovementRemaining=movement,MovementSpentThisActivation=spent,ActionAvailable=action,OpportunityAttackAvailable=oa,IsDefending=defending,TieKey=tie,FireProtection=fireProtection,GracefulExitTarget=exitTarget==0?(UnitId?)null:new UnitId(exitTarget),TemporaryBarrier=TemporaryBarrier,BarrierActivations=BarrierActivations,BurnStacks=BurnStacks,BurnTicks=BurnTicks,PoisonStacks=PoisonStacks,BleedStacks=BleedStacks,FrozenActivations=FrozenActivations,ExhaustedActivations=ExhaustedActivations,FireballUsed=FireballUsed,FreezeUsed=FreezeUsed,CloseHealUsed=CloseHealUsed };
+                MovementRemaining=movement,MovementSpentThisActivation=spent,ActionAvailable=action,OpportunityAttackAvailable=oa,IsDefending=defending,TieKey=tie,IsSilenced=silenced,FireProtection=fireProtection,GracefulExitTarget=exitTarget==0?(UnitId?)null:new UnitId(exitTarget),TemporaryBarrier=TemporaryBarrier,BarrierActivations=BarrierActivations,BurnStacks=BurnStacks,BurnTicks=BurnTicks,PoisonStacks=PoisonStacks,BleedStacks=BleedStacks,FrozenActivations=FrozenActivations,ExhaustedActivations=ExhaustedActivations,FireballUsed=FireballUsed,FreezeUsed=FreezeUsed,CloseHealUsed=CloseHealUsed };
         }
     }
     [Serializable] public sealed class ReplaySnapshot
@@ -81,6 +82,8 @@ namespace RPG.Core
                     var p=state.FindUnit(new UnitId(u.id)).Profile;
                     foreach(int v in new[]{p.MaxHp,p.MaxArmor,p.Movement,p.Initiative,p.Accuracy,p.Dodge,p.Guard,p.BasicDamage,p.Range,p.FrontalEvasion,p.CoverSize})w.Write(v);
                 }
+                // Optional extension preserves existing no-Silence replay hashes byte-for-byte.
+                if(s.units.Any(u=>u.silenced)){w.Write("Silence");foreach(var u in s.units.Where(u=>u.silenced).OrderBy(u=>u.id))w.Write(u.id);}
                 w.Flush();using(var sha=SHA256.Create())return Convert.ToBase64String(sha.ComputeHash(stream.ToArray()));
             }
         }

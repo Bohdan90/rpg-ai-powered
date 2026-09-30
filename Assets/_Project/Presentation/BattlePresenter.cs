@@ -75,7 +75,7 @@ namespace RPG.Presentation
         public void SelectWorldNode(int node)=>worldHud?.Select(node);
         public bool MoveOnWorld(int node)
         {if(World==null||!World.Move(node))return false;WorldChanged();return true;}
-        public void SetPlayerVsAi(bool enabled, Side side=Side.East) { AiSide=side; PlayerVsAi=enabled&&Duel==null; nextAiTime=Time.unscaledTime+.4f; ClearPreview(); Refresh(); }
+        public void SetPlayerVsAi(bool enabled, Side side=Side.East) { ResetAim(); AiSide=side; PlayerVsAi=enabled&&Duel==null; nextAiTime=Time.unscaledTime+.4f; ClearPreview(); Refresh(); }
         public BattleResult StepAi()
         {
             if(!IsAiTurn)return null;
@@ -114,9 +114,9 @@ namespace RPG.Presentation
             AiExplanation="No AI decision yet.";nextAiTime=Time.unscaledTime+.4f;log.Clear();Message="Persistence Battle "+persistence.BattleNumber+" started.";
             grid.Resize(State.Battlefield);hud.Resize(State.Battlefield);FitBoard();ClearPreview();Refresh();
         }
-        public void Zoom(float factor) { zoom = Mathf.Clamp(zoom * factor, .4f, 1); }
-        public void CenterView(GridPosition cell) { battleCamera.transform.position = new Vector3(cell.X, 20, cell.Y); }
-        public void FitBoard() { zoom = 1; CenterCamera(); }
+        public void Zoom(float factor) { zoom = Mathf.Clamp(zoom * factor, .4f, 1); if(State!=null){ClearPreview();ShowViews();} }
+        public void CenterView(GridPosition cell) { battleCamera.transform.position = new Vector3(cell.X, 20, cell.Y); if(State!=null){ClearPreview();ShowViews();} }
+        public void FitBoard() { zoom = 1; CenterCamera(); if(State!=null){ClearPreview();Refresh();} }
         public void FocusActor()
         {
             if (State == null) return;
@@ -167,7 +167,7 @@ namespace RPG.Presentation
         public IReadOnlyDictionary<GridPosition, IReadOnlyList<UnitId>> ThreatCells => threats;
         public static string Cell(GridPosition p) => "(" + p.X + "," + p.Y + ")";
         public static string OaStatus(UnitState unit) => !unit.Profile.HasMeleeBasic ? "no OA" : unit.OpportunityAttackAvailable ? "OA ready" : "OA spent";
-        public void CancelPreview() { if(pending!=null && Journal!=null)Journal.Session.cancelledPreviews++;ClearPreview(); ShowViews(); }
+        public void CancelPreview() { if(pending!=null && Journal!=null)Journal.Session.cancelledPreviews++;ResetAim();ClearPreview(); ShowViews(); }
 
         private void Awake()
         {
@@ -217,7 +217,7 @@ namespace RPG.Presentation
             if(World!=null||Duel!=null)return;
             LastAttackOutcome = "";
             var result = BattleResolver.StartBattle(initialUnits, initialSeed, initialBoard);
-            State = result.State; Journal=new BattleJournal(State,Fixture.ToString(),Application.version+" / Unity "+Application.unityVersion,PlayerVsAi&&AiSide==Side.West?"AI":"Player",PlayerVsAi&&AiSide==Side.East?"AI":"Player"); AiExplanation="No AI decision yet."; nextAiTime=Time.unscaledTime+.4f; log.Clear(); Append(result.Events); Message = "Restarted with seed " + initialSeed + ".";
+            ResetAim(); State = result.State; Journal=new BattleJournal(State,Fixture.ToString(),Application.version+" / Unity "+Application.unityVersion,PlayerVsAi&&AiSide==Side.West?"AI":"Player",PlayerVsAi&&AiSide==Side.East?"AI":"Player"); AiExplanation="No AI decision yet."; nextAiTime=Time.unscaledTime+.4f; log.Clear(); Append(result.Events); Message = "Restarted with seed " + initialSeed + ".";
             grid.Resize(State.Battlefield); hud.Resize(State.Battlefield); FitBoard();
             ClearPreview(); Refresh();
         }
@@ -227,7 +227,7 @@ namespace RPG.Presentation
             var result = Journal.Apply(command,IsAiTurn?"AI":"Player",IsAiTurn?AiExplanation:null);
             State = result.State;
             Message = result.IsApplied ? command.GetType().Name + " applied." : "Rejected by Core: " + result.Error;
-            if(result.IsApplied)SelectedSpell=null;
+            if(result.IsApplied)ResetAim();
             if (result.IsApplied) Append(result.Events); else AddLog(Message);
             if (result.IsApplied && State.Outcome.IsEnded && persistence != null && !persistenceResolved)
             {
@@ -243,9 +243,10 @@ namespace RPG.Presentation
         public void SelectCell(GridPosition cell, bool friendlyConfirmed = false)
         {
             if (State.Outcome.IsEnded || IsAiTurn) return;
-            selected = cell; pending = null; MovementRisk = null; PreviewEscapes = false;
+            selected = cell; aimHover=cell; pending = null; MovementRisk = null; PreviewEscapes = false; spellPreviewCells=null;spellBlockedCells=null;spellCenter=null;
             var actor = State.FindUnit(State.CurrentUnitId.Value); var target = State.OccupantAt(cell);
             if(PreviewSelectedSpell(cell,friendlyConfirmed))return;
+            if(target!=null&&target.Side==actor.Side&&Primary(actor.Profile).HasValue&&!StaffSelected){PreviewText="Inspect "+UnitName(target.Id)+" · HP "+target.Hp+" / Armor "+target.Armor+". Choose an explicit friendly spell to cast.";ShowViews();return;}
             if (target != null && target.Id != actor.Id)
             {
                 var kind = BattleResolver.AvailableBasicAttack(State, actor.Id);
@@ -336,7 +337,7 @@ namespace RPG.Presentation
             else if (State.Battlefield.IsRetreatZone(actor.Side == Side.West ? Side.East : Side.West, cell)) text += "\nOpponent's edge — NOT your escape.";
             return text;
         }
-        private void ClearPreview() { spellPreviewCells=null; pending = null; selected = null; MovementRisk = null; PreviewEscapes = false; PreviewText = "Click a cell or unit, then confirm. Green cells: Core reachable."; hud.ResetChoices(); }
+        private void ClearPreview() { spellPreviewCells=null;spellBlockedCells=null;spellCenter=null;aimHover=null;inspectedSpell=null; pending = null; selected = null; MovementRisk = null; PreviewEscapes = false; PreviewText = "Click a cell or unit, then confirm. Green cells: Core reachable."; hud.ResetChoices(); }
         private void Refresh()
         {
             reachable.Clear(); rangedReach.Clear(); RangedReachMessage=""; threats.Clear();
@@ -364,7 +365,8 @@ namespace RPG.Presentation
         }
         private void ShowViews()
         {
-            grid.Refresh(State, reachable, (pending as MoveCommand)?.Path, threats, MovementRisk, rangedReach,spellPreviewCells);
+            RefreshSpellEnvelope();
+            grid.Refresh(State, reachable, (pending as MoveCommand)?.Path, threats, MovementRisk, rangedReach,inspectedSpell.HasValue?null:spellPreviewCells,spellEnvelope,inspectedSpell.HasValue?null:spellBlockedCells,inspectedSpell.HasValue?null:spellCenter);
             hud.Refresh(State, pending != null && !State.Outcome.IsEnded, selected);
         }
         private void Append(IEnumerable<BattleEvent> events)

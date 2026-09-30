@@ -48,13 +48,15 @@ namespace RPG.Presentation
             westEdge.pickingMode = eastEdge.pickingMode = PickingMode.Ignore;
             surface.RegisterCallback<WheelEvent>(e => { presenter.Zoom(e.delta.y > 0 ? 1.12f : .89f); e.StopPropagation(); });
             surface.RegisterCallback<PointerMoveEvent>(e => {
-                if (presenter.State != null && Pick(surface.WorldToLocal(e.position), out var p)) { hoveredCell = p; hover.text = presenter.Hover(p); }
+                if (presenter.State != null && Pick(surface.WorldToLocal(e.position), out var p)) { hoveredCell = p; presenter.HoverCell(p); hover.text = presenter.SelectedSpell.HasValue?"Aim cell "+BattlePresenter.Cell(p):presenter.Hover(p); }
+                else {hoveredCell=null;presenter.LeaveBoard();}
             });
+            surface.RegisterCallback<PointerLeaveEvent>(e=>presenter.LeaveBoard());
             surface.RegisterCallback<PointerDownEvent>(e => {
                 if (presenter.State == null || !Pick(surface.WorldToLocal(e.position), out var p)) return;
                 if (e.button == 1) { presenter.CenterView(p); e.StopPropagation(); return; }
                 if (e.button != 0) return;
-                friendly.SetValueWithoutNotify(false); presenter.SelectCell(p); e.StopPropagation();
+                friendly.SetValueWithoutNotify(false); presenter.ClickCell(p); e.StopPropagation();
             });
 
             panel = new ScrollView { name = "battle-panel" };
@@ -77,7 +79,14 @@ namespace RPG.Presentation
             aiInfo=Text(panel,"",12);aiInfo.name="ai-info";
             active = Text(panel, "", 16); active.name = "active-unit";
             var abilities=new DropdownField("Ability",new List<string>{"Basic / Move"},0){name="spell-selector"};
-            abilities.RegisterValueChangedCallback(e=>presenter.SelectSpell(e.newValue=="Basic / Move"?(SpellId?)null:(SpellId)Enum.Parse(typeof(SpellId),e.newValue)));abilities.labelElement.style.color=new Color(.89f,.93f,.97f);panel.Add(abilities);
+            abilities.RegisterValueChangedCallback(e=>presenter.SelectSpell((e.newValue=="Basic / Move"||e.newValue=="Primary / Move")?(SpellId?)null:(SpellId)Enum.Parse(typeof(SpellId),e.newValue)));abilities.labelElement.style.color=new Color(.89f,.93f,.97f);panel.Add(abilities);
+            var primary=AddButton(panel,"Primary attack","primary-attack",()=>presenter.SelectSpell(null));
+            primary.RegisterCallback<PointerEnterEvent>(e=>presenter.InspectSpell(presenter.PrimarySpell));primary.RegisterCallback<PointerLeaveEvent>(e=>presenter.InspectSpell(null));
+            AddButton(panel,"Staff Strike · melee 1 · explicit alternative","staff-attack",presenter.SelectStaff);
+            var spellButtons=new VisualElement{name="spell-buttons"};spellButtons.style.flexDirection=FlexDirection.Row;spellButtons.style.flexWrap=Wrap.Wrap;panel.Add(spellButtons);
+            foreach(SpellId spell in Enum.GetValues(typeof(SpellId))){var chosen=spell;var b=AddButton(spellButtons,spell+(spell==SpellId.FireArmor?" · Self":""),"spell-"+spell,()=>presenter.SelectSpell(chosen));b.style.width=Length.Percent(48);b.tooltip=BattlePresenter.TargetDescription(spell);b.RegisterCallback<PointerEnterEvent>(e=>presenter.InspectSpell(chosen));b.RegisterCallback<PointerLeaveEvent>(e=>presenter.InspectSpell(null));}
+            var aimPanel=new VisualElement{name="spell-aim-panel"};panel.Add(aimPanel);
+            var details=Text(aimPanel,"",12);details.name="spell-details";
             attackOutcome = Text(panel, "", 14); attackOutcome.name = "attack-outcome";
             attackOutcome.style.color = new Color(1, .8f, .35f);
             rangeInfo = Text(panel, "", 12); rangeInfo.name="ranged-reach-info";
@@ -100,6 +109,7 @@ namespace RPG.Presentation
             friendly.labelElement.style.color = finalFacing.labelElement.style.color = new Color(.89f, .93f, .97f);
             end = AddButton(panel, "End Activation", "end-activation", () => presenter.EndActivation(finalFacing.index == 0 ? (Facing?)null : (Facing)(finalFacing.index - 1)));
             message = Text(panel, "", 14); message.name = "battle-message"; message.style.color = new Color(1, .8f, .35f);
+            foreach(var element in new VisualElement[]{hover,cell,preview,friendly,riskWarning,confirm,cancel})aimPanel.Add(element);
             map = new DropdownField("Fixture (resets battle)", new List<string>(Enum.GetNames(typeof(SizeExperimentMap))), 0) { name = "fixture-selector" };
             map.labelElement.style.color=new Color(.89f,.93f,.97f);
             map.RegisterValueChangedCallback(e => presenter.ConfigureFixture((SizeExperimentMap)Enum.Parse(typeof(SizeExperimentMap), e.newValue))); panel.Add(map);
@@ -152,7 +162,7 @@ namespace RPG.Presentation
         public void Refresh(BattleState state, bool canConfirm, GridPosition? selected)
         {
             var actor = state.FindUnit(state.CurrentUnitId.Value);
-            if (hoveredCell.HasValue) hover.text = presenter.Hover(hoveredCell.Value);
+            if (hoveredCell.HasValue) hover.text = presenter.SelectedSpell.HasValue?"Aim cell "+BattlePresenter.Cell(hoveredCell.Value):presenter.Hover(hoveredCell.Value);
             bool ended = state.Outcome.IsEnded;
             bool playerTurn = !presenter.IsAiTurn;
             bool connected=presenter.World!=null||presenter.Duel!=null;
@@ -162,8 +172,15 @@ namespace RPG.Presentation
             foreach(string controlName in new[]{"fixture-selector","controller-mode","persistence-start","restart","outcome-restart","world-start","world-load","duel-start-west","duel-start-east","duel-load","incident-start-west","incident-start-east","incident-control","incident-load","city-start-a","city-start-b","city-load-a","city-load-b","city-authored"})Root.Q(controlName).SetEnabled(!connected);
             Root.Q<DropdownField>("controller-mode").SetValueWithoutNotify(presenter.PlayerVsAi?(presenter.AiSide==Side.East?"Player West vs AI East":"Player East vs AI West"):"Hotseat");
             var spellSelect=Root.Q<DropdownField>("spell-selector");
-            spellSelect.choices=new[]{"Basic / Move"}.Concat(SpellRules.Kit(actor.Profile).Select(s=>s.ToString())).ToList();
-            if(!presenter.SelectedSpell.HasValue||!SpellRules.Has(actor.Profile,presenter.SelectedSpell.Value))spellSelect.SetValueWithoutNotify("Basic / Move");
+            string ordinary=presenter.PrimarySpell.HasValue?"Primary / Move":"Basic / Move";
+            spellSelect.choices=new[]{ordinary}.Concat(SpellRules.Kit(actor.Profile).Select(s=>s.ToString())).ToList();
+            spellSelect.SetValueWithoutNotify(presenter.SelectedSpell?.ToString()??ordinary);
+            Root.Q<Button>("primary-attack").text=presenter.PrimarySpell.HasValue?"Primary: "+presenter.PrimarySpell+" · hostile click":"Basic / Move";
+            Root.Q("primary-attack").SetEnabled(playerTurn&&!ended);Root.Q("staff-attack").style.display=actor.Profile.IsCaster?DisplayStyle.Flex:DisplayStyle.None;Root.Q("staff-attack").SetEnabled(playerTurn&&!ended);
+            Root.Q<Label>("spell-details").text=presenter.SpellDetails;
+            spellSelect.SetEnabled(playerTurn&&!ended);
+            foreach(SpellId spell in Enum.GetValues(typeof(SpellId))){var b=Root.Q<Button>("spell-"+spell);b.style.display=SpellRules.Has(actor.Profile,spell)?DisplayStyle.Flex:DisplayStyle.None;b.SetEnabled(playerTurn&&!ended);}
+
             foreach(CombatLabMatch lab in Enum.GetValues(typeof(CombatLabMatch)))Root.Q("lab-"+lab).SetEnabled(!connected);
             aiInfo.text=presenter.PlayerVsAi?presenter.AiExplanation:"Hotseat";
             rangeInfo.text=presenter.RangedReachMessage;
@@ -193,8 +210,9 @@ namespace RPG.Presentation
             int risks = presenter.OpportunityRiskCount;
             riskWarning.text = risks > 0 ? "This path may trigger " + risks + " Opportunity Attack(s). Confirm to accept the risk, or Cancel." : "";
             riskWarning.style.display = risks > 0 ? DisplayStyle.Flex : DisplayStyle.None;
-            confirm.text = presenter.SelectedSpell.HasValue ? "Confirm " + presenter.SelectedSpell.Value : presenter.HasMovePreview ? (risks > 0 ? "Confirm Move — accept " + risks + " OA risk(s)" : "Confirm Move") : "Confirm Attack";
-            cancel.SetEnabled(canConfirm);
+            confirm.text = pendingSpellText();
+            string pendingSpellText()=>presenter.HasMovePreview ? (risks > 0 ? "Confirm Move — accept " + risks + " OA risk(s)" : "Confirm Move") : presenter.ConfirmActionText;
+            cancel.SetEnabled(playerTurn&&!ended);
             defend.SetEnabled(playerTurn && !ended && BattleResolver.Validate(state, new DefendCommand(actor.Id)) == CommandError.None);
             end.SetEnabled(!ended && playerTurn); finalFacing.SetEnabled(!ended); friendly.SetEnabled(!ended);
             surface.SetEnabled(!ended && playerTurn);

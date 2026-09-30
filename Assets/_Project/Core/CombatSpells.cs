@@ -22,6 +22,8 @@ namespace RPG.Core
         public IReadOnlyList<UnitId> Targets { get; internal set; }
         public int Magnitude { get; internal set; }
         public int ContactChance { get; internal set; }=100;
+        public IReadOnlyList<CommandError> Blockers { get; internal set; }
+        public IReadOnlyList<GridPosition> BlockedCells { get; internal set; }
     }
     public static class SpellRules
     {
@@ -62,34 +64,61 @@ namespace RPG.Core
             return result;
         }
         private static CommandError ValidateCast(BattleState state,UnitState actor,CastCommand command)
+            => CastBlockers(state,actor,command).FirstOrDefault();
+        // One diagnostic/validation path. Read-only; collecting all blockers never probes execution/RNG.
+        private static List<CommandError> CastBlockers(BattleState state,UnitState actor,CastCommand command)
         {
-            if(!actor.ActionAvailable)return CommandError.NoAction;
-            if(!SpellRules.Has(actor.Profile,command.Spell))return CommandError.AbilityUnavailable;
-            if(SpellRules.Exertion(command.Spell)&&actor.IsExhausted)return CommandError.Exhausted;
-            if(SpellRules.Used(actor,command.Spell)>=SpellRules.Limit(command.Spell))return CommandError.SourceBudgetSpent;
-            if(!state.Battlefield.Contains(command.Cell))return CommandError.OutOfBounds;
-            if(!state.Battlefield.IsWalkable(command.Cell))return CommandError.SolidCell;
-            if(actor.Position.DistanceTo(command.Cell)>SpellRules.Range(command.Spell))return CommandError.OutOfRange;
-            if(!LineOfSight.IsClear(state,actor.Position,command.Cell))return CommandError.BlockedLineOfSight;
+            var errors=new List<CommandError>();
+            if(!actor.ActionAvailable)errors.Add(CommandError.NoAction);
+            if(actor.IsSilenced)errors.Add(CommandError.Silenced);
+            if(!SpellRules.Has(actor.Profile,command.Spell))errors.Add(CommandError.AbilityUnavailable);
+            if(SpellRules.Exertion(command.Spell)&&actor.IsExhausted)errors.Add(CommandError.Exhausted);
+            if(SpellRules.Used(actor,command.Spell)>=SpellRules.Limit(command.Spell))errors.Add(CommandError.SourceBudgetSpent);
+            if(command.Spell==SpellId.FireArmor&&command.Cell!=actor.Position)errors.Add(CommandError.SelfOnly);
+            if(!state.Battlefield.Contains(command.Cell)){errors.Add(CommandError.OutOfBounds);return errors;}
+            if(!state.Battlefield.IsWalkable(command.Cell))errors.Add(CommandError.SolidCell);
+            if(actor.Position.DistanceTo(command.Cell)>SpellRules.Range(command.Spell)&&command.Spell!=SpellId.FireArmor)errors.Add(CommandError.OutOfRange);
+            if(!LineOfSight.IsClear(state,actor.Position,command.Cell))errors.Add(CommandError.BlockedLineOfSight);
             if(SpellRules.Area(command.Spell)) {
                 var cells=SpellCells(state,actor,command);
-                if(cells.Count==0)return CommandError.InvalidCommand;
-                if(!command.FriendlyFireConfirmed&&state.Units.Any(u=>u.IsActive&&u.Side==actor.Side&&cells.Contains(u.Position)))return CommandError.FriendlyFireNotConfirmed;
-                return CommandError.None;
+                if(command.Spell==SpellId.FireStream) {
+                    int dx=command.Cell.X-actor.Position.X,dy=command.Cell.Y-actor.Position.Y;
+                    if(dx==0&&dy==0||dx!=0&&dy!=0&&Math.Abs(dx)!=Math.Abs(dy))errors.Add(CommandError.OutsideSpellLine);
+                    else if(cells.Count==0&&!errors.Contains(CommandError.BlockedLineOfSight)&&!errors.Contains(CommandError.SolidCell))errors.Add(CommandError.BlockedLineOfSight);
+                }
+                if(!command.FriendlyFireConfirmed&&state.Units.Any(u=>u.IsActive&&u.Side==actor.Side&&cells.Contains(u.Position)))errors.Add(CommandError.FriendlyFireNotConfirmed);
+                return errors;
             }
             var target=state.OccupantAt(command.Cell);
-            if(target==null)return CommandError.TargetNotFound;
-            if(SpellRules.Helpful(command.Spell)?target.Side!=actor.Side:target.Side==actor.Side)return CommandError.InvalidCommand;
-            if(command.Spell==SpellId.FireArmor&&target.Id!=actor.Id)return CommandError.SelfTarget;
-            if(command.Spell==SpellId.CloseHeal&&target.Hp==target.Profile.MaxHp&&target.BurnStacks==0&&target.PoisonStacks==0&&target.BleedStacks==0)return CommandError.NoUsefulEffect;
-            return CommandError.None;
+            if(target==null){errors.Add(CommandError.TargetNotFound);return errors;}
+            if(SpellRules.Helpful(command.Spell)?target.Side!=actor.Side:target.Side==actor.Side)errors.Add(CommandError.InvalidSpellTarget);
+            if(command.Spell==SpellId.CloseHeal&&target.Hp==target.Profile.MaxHp&&target.BurnStacks==0&&target.PoisonStacks==0&&target.BleedStacks==0)errors.Add(CommandError.NoUsefulEffect);
+            return errors;
+        }
+        // Legal geometric aim envelope; action/status/budget and recipient eligibility are reported separately.
+        public static IReadOnlyList<GridPosition> SpellAimCells(BattleState state,UnitId id,SpellId spell)
+        {
+            var actor=state.FindUnit(id);var cells=new List<GridPosition>();if(actor==null)return cells;
+            for(int x=0;x<state.Battlefield.Columns;x++)for(int y=0;y<state.Battlefield.Rows;y++) {
+                var p=new GridPosition(x,y);if(actor.Position.DistanceTo(p)>SpellRules.Range(spell)||!state.Battlefield.IsWalkable(p)||!LineOfSight.IsClear(state,actor.Position,p))continue;
+                if(spell==SpellId.FireStream){int dx=x-actor.Position.X,dy=y-actor.Position.Y;if(dx==0&&dy==0||dx!=0&&dy!=0&&Math.Abs(dx)!=Math.Abs(dy))continue;}
+                cells.Add(p);
+            }
+            return cells.AsReadOnly();
         }
         public static SpellPreview PreviewSpell(BattleState state,CastCommand command)
         {
             var error=Validate(state,command);var actor=state.FindUnit(command.Actor);
             var cells=actor==null?new List<GridPosition>():SpellCells(state,actor,command);
             var targets=state.Units.Where(u=>u.IsActive&&cells.Contains(u.Position)).OrderBy(u=>u.Id).ToArray();
-            var preview=new SpellPreview{Error=error,Cells=cells.AsReadOnly(),Targets=Array.AsReadOnly(targets.Select(u=>u.Id).ToArray()),Magnitude=actor==null?0:SpellRules.Magnitude(actor.Profile,command.Spell)};
+            var blockers=actor==null?new List<CommandError>():CastBlockers(state,actor,command);
+            if(error!=CommandError.None&&!blockers.Contains(error))blockers.Insert(0,error);
+            var blocked=new List<GridPosition>();
+            if(actor!=null&&SpellRules.Area(command.Spell)) {
+                if(command.Spell==SpellId.Fireball)for(int x=command.Cell.X-1;x<=command.Cell.X+1;x++)for(int y=command.Cell.Y-1;y<=command.Cell.Y+1;y++){var p=new GridPosition(x,y);if(state.Battlefield.Contains(p)&&!cells.Contains(p))blocked.Add(p);}
+                else {int dx=command.Cell.X-actor.Position.X,dy=command.Cell.Y-actor.Position.Y;if((dx!=0||dy!=0)&&(dx==0||dy==0||Math.Abs(dx)==Math.Abs(dy)))for(int i=1;i<=3;i++){var p=new GridPosition(actor.Position.X+Math.Sign(dx)*i,actor.Position.Y+Math.Sign(dy)*i);if(state.Battlefield.Contains(p)&&!cells.Contains(p))blocked.Add(p);}}
+            }
+            var preview=new SpellPreview{Error=error,Blockers=blockers.Distinct().ToArray(),BlockedCells=blocked.AsReadOnly(),Cells=cells.AsReadOnly(),Targets=Array.AsReadOnly(targets.Select(u=>u.Id).ToArray()),Magnitude=actor==null?0:SpellRules.Magnitude(actor.Profile,command.Spell)};
             if(actor!=null&&!SpellRules.Area(command.Spell)&&!SpellRules.Helpful(command.Spell)&&targets.Length==1) {
                 var t=targets[0];int frontal=FacingDirections.IsFrontal(t.Facing,t.Position,actor.Position)?t.Profile.FrontalEvasion:0;
                 preview.ContactChance=Math.Max(5,Math.Min(95,actor.Profile.Accuracy-t.Profile.Dodge-frontal));

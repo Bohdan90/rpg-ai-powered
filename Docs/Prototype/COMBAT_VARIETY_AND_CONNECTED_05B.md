@@ -121,3 +121,12 @@ Stop after this evidence commit for coordinator review and the new integrated pl
 ## 2026-09-30 coordinator follow-up
 
 Both contracts remain **PARTIAL**. See [requirement-level acceptance audit](5051_ACCEPTANCE_AUDIT.md) for named-test coverage, unasserted branches, checked numeric values and manual evidence. The prior 553 PASS are valid historical evidence, not complete coverage of every required branch. Main integration was explicitly authorized by the user after the original NO MERGE instruction; integration does not grant technical/manual/player acceptance. Runtime changes in this follow-up are limited to the reproduced tactical ability/command discoverability defect. No rules or balance changes. Fresh validation and manual results are in `Evidence/5051/validation-manifest.json`.
+
+
+## 2026-09-30 — SPELL-UX-01 (§14), superseding follow-up status
+
+Coordinator accepted the preceding main `da9f776` technical completion; prior N/V and585 results above are historical, not current failures/gates to repeat. The user personally tried the new combat and requested targeting/readability/default-input corrections, not a new balance pass.
+
+Implemented on isolated `feature/spell-ux-01` while preserving the open main editor: Core-derived hover envelope/footprint/obstruction/complete blockers, correct Self-only Fire Armor diagnosis, empty/occupied Fireball, eight-direction Stream explanations, Fire/Ice primary hostile click, explicit staff/specials, stable clicked preview/FF confirmation and cancel/handoff/camera reset. Minimal previously missing Silence eligibility/snapshot state closes the existing restriction; no new source/duration/content. Combat numbers, pools, budgets, rosters and economy are unchanged.
+
+Fresh focused59 EditMode +13 PlayMode and full540 EditMode +69 PlayMode =609 PASS (0 failed/skipped), representative real GUI examples, normal05B battle/physicalEscape/return/save-recreate-load smoke, known limitations and exact launch path: [SPELL_UX_01.md](SPELL_UX_01.md), [evidence manifest](Evidence/SPELL-UX-01/validation-manifest.json). Nine original files/saves/session preserved; no push. Main remains da9f776 until this follow-up can be loaded without resetting the user's active session. Stop for coordinator review and short user targeting check, not another full N/V gate.

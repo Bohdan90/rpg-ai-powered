@@ -15,7 +15,9 @@ namespace RPG.Presentation
         private readonly Dictionary<UnitId, Token> units = new Dictionary<UnitId, Token>();
         private readonly LineRenderer pathLine;
         private LineRenderer[,] zocBorders;
-        private LineRenderer[,] rangeMarks;
+        private LineRenderer[,] rangeMarks, spellMarks, blockedMarks;
+        public int SpellEnvelopeVisualCount { get; private set; }
+        public int SpellFootprintVisualCount { get; private set; }
         public int RangedVisualCount { get; private set; }
         private Renderer[,] retreatStripes;
         private Renderer[,] eastStripes;
@@ -44,6 +46,7 @@ namespace RPG.Presentation
             tiles = new Renderer[board.Columns, board.Rows];
             zocBorders = new LineRenderer[board.Columns, board.Rows];
             rangeMarks = new LineRenderer[board.Columns, board.Rows];
+            spellMarks = new LineRenderer[board.Columns, board.Rows];blockedMarks = new LineRenderer[board.Columns, board.Rows];
             retreatStripes = new Renderer[board.Columns, board.Rows];
             eastStripes = new Renderer[board.Columns, board.Rows];
             for (int x = 0; x < board.Columns; x++)
@@ -63,6 +66,11 @@ namespace RPG.Presentation
                 rangeMarks[x,y].SetPositions(new[] { new Vector3(x-.35f,.56f,y+.1f),
                     new Vector3(x-.35f,.56f,y+.35f), new Vector3(x-.1f,.56f,y+.35f) });
                 Tint(rangeMarks[x,y],new Color(.3f,.85f,1f));
+                spellMarks[x,y]=Line("Spell aim envelope "+x+","+y,.027f);spellMarks[x,y].transform.SetParent(cellsRoot.transform,false);
+                spellMarks[x,y].positionCount=5;spellMarks[x,y].SetPositions(new[]{new Vector3(x-.38f,.6f,y-.38f),new Vector3(x+.38f,.6f,y-.38f),new Vector3(x+.38f,.6f,y+.38f),new Vector3(x-.38f,.6f,y+.38f),new Vector3(x-.38f,.6f,y-.38f)});Tint(spellMarks[x,y],new Color(1,.75f,.25f));
+                blockedMarks[x,y]=Line("Spell obstruction "+x+","+y,.055f);blockedMarks[x,y].transform.SetParent(cellsRoot.transform,false);
+                blockedMarks[x,y].positionCount=4;blockedMarks[x,y].SetPositions(new[]{new Vector3(x-.25f,.7f,y-.25f),new Vector3(x+.25f,.7f,y+.25f),new Vector3(x,.7f,y),new Vector3(x-.25f,.7f,y+.25f)});Tint(blockedMarks[x,y],new Color(1,.3f,.25f));
+
                 retreatStripes[x, y] = Primitive("Retreat edge " + x + "," + y, PrimitiveType.Cube, cellsRoot.transform,
                     new Vector3(x, .02f, y+.35f), new Vector3(.8f,.025f,.1f));
                 eastStripes[x, y] = Primitive("East retreat " + x + "," + y, PrimitiveType.Cube, cellsRoot.transform,
@@ -71,8 +79,11 @@ namespace RPG.Presentation
         }
 
         public void Refresh(BattleState state, IReadOnlyCollection<GridPosition> reachable, IReadOnlyList<GridPosition> path,
-            IReadOnlyDictionary<GridPosition, IReadOnlyList<UnitId>> threats, OpportunityAttackPreview risk, IReadOnlyCollection<GridPosition> rangedReach,IReadOnlyCollection<GridPosition> spellArea=null)
+            IReadOnlyDictionary<GridPosition, IReadOnlyList<UnitId>> threats, OpportunityAttackPreview risk, IReadOnlyCollection<GridPosition> rangedReach,IReadOnlyCollection<GridPosition> spellArea=null,IReadOnlyCollection<GridPosition> spellEnvelope=null,IReadOnlyCollection<GridPosition> spellBlocked=null,GridPosition? spellCenter=null)
         {
+            var aimCells=new HashSet<GridPosition>(spellEnvelope??System.Array.Empty<GridPosition>());
+            var blockedCells=new HashSet<GridPosition>(spellBlocked??System.Array.Empty<GridPosition>());
+            SpellEnvelopeVisualCount=aimCells.Count;SpellFootprintVisualCount=spellArea?.Count??0;
             var spellCells=spellArea==null?new HashSet<GridPosition>():new HashSet<GridPosition>(spellArea);
             var highlights = new HashSet<GridPosition>(reachable);
             var rangeCells = new HashSet<GridPosition>(rangedReach);
@@ -82,6 +93,7 @@ namespace RPG.Presentation
             for (int y = 0; y < state.Battlefield.Rows; y++)
             {
                 var p = new GridPosition(x, y);
+                spellMarks[x,y].gameObject.SetActive(aimCells.Contains(p));blockedMarks[x,y].gameObject.SetActive(blockedCells.Contains(p));
                 bool inRange = rangeCells.Contains(p); rangeMarks[x,y].gameObject.SetActive(inRange);
                 if (inRange) RangedVisualCount++;
                 var tile = tiles[x, y]; bool solid = state.Battlefield.IsSolid(p);
@@ -98,7 +110,7 @@ namespace RPG.Presentation
                     ? new Color(.8f,.36f,.32f) : new Color(.4f,.43f,.47f));
                 tile.transform.localScale = new Vector3(.95f, solid ? .65f : .12f, .95f);
                 tile.transform.localPosition = new Vector3(x, solid ? .20f : -.12f, y);
-                Tint(tile, solid ? new Color(.40f, .43f, .47f) : spellCells.Contains(p)?new Color(.7f,.2f,.5f):pathCells.Contains(p) ? new Color(.72f, .51f, .12f)
+                Tint(tile, solid ? new Color(.40f, .43f, .47f) : spellCells.Contains(p)?(spellCenter==p?new Color(.95f,.45f,.8f):new Color(.7f,.2f,.5f)):pathCells.Contains(p) ? new Color(.72f, .51f, .12f)
                     : highlights.Contains(p) ? new Color(.18f, .38f, .37f) : (x + y) % 2 == 0 ? floorA : floorB);
             }
             foreach (var token in units.Values) token.Root.SetActive(false);

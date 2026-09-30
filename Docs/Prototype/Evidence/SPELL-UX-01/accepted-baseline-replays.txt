@@ -1,0 +1,17 @@
+Docs/Prototype/Evidence/5051/manual-complete/n1-05a-hotseat-replay/gate-c-20260930-134538-ae24bf12.jsonl | True | Replay matches: 222 successful commands, 222 attempts.
+Docs/Prototype/Evidence/5051/manual-complete/n2-attrition-retreat-replay/gate-c-20260930-135129-c70c6f3a.jsonl | True | Replay matches: 129 successful commands, 129 attempts.
+Docs/Prototype/Evidence/5051/manual-complete/n2-recruit-armor-battle-replay/gate-c-20260930-135536-e2b0ccbd.jsonl | True | Replay matches: 107 successful commands, 107 attempts.
+Docs/Prototype/Evidence/5051/manual-complete/n2-repaired-redeploy-replay/gate-c-20260930-135707-d9a69ece.jsonl | True | Replay matches: 12 successful commands, 12 attempts.
+Docs/Prototype/Evidence/5051/manual-complete/v1-fire-ice-ai-replay/gate-c-20260930-123402-1a9d3eed.jsonl | True | Replay matches: 45 successful commands, 45 attempts.
+Docs/Prototype/Evidence/5051/manual-complete/v1-player-ff-replay/gate-c-20260930-123433-0f656daa.jsonl | True | Replay matches: 2 successful commands, 2 attempts.
+Docs/Prototype/Evidence/5051/manual-complete/v2-cleanse-authored-replay/gate-c-20260930-133618-b8035799.jsonl | True | Replay matches: 1 successful commands, 1 attempts.
+Docs/Prototype/Evidence/5051/manual-complete/v2-freeze-break-authored-replay/gate-c-20260930-133715-d51b106e.jsonl | True | Replay matches: 4 successful commands, 4 attempts.
+Docs/Prototype/Evidence/5051/manual-complete/v2-freeze-expiry-authored-replay/gate-c-20260930-133633-efd3dfeb.jsonl | True | Replay matches: 4 successful commands, 4 attempts.
+Docs/Prototype/Evidence/5051/manual-complete/v2-graceful-authored-replay/gate-c-20260930-133624-952a1d02.jsonl | True | Replay matches: 2 successful commands, 2 attempts.
+Docs/Prototype/Evidence/5051/manual-complete/v2-support-ai-replay/gate-c-20260930-123637-0db573e0.jsonl | True | Replay matches: 30 successful commands, 30 attempts.
+Docs/Prototype/Evidence/5051/manual-complete/v2-support-replay/gate-c-20260930-123555-c0804aa5.jsonl | True | Replay matches: 2 successful commands, 2 attempts.
+Docs/Prototype/Evidence/5051/manual-complete/v3-05b-new-mage-battle-replay/gate-c-20260930-144442-cd0786b6.jsonl | True | Replay matches: 146 successful commands, 146 attempts.
+Docs/Prototype/Evidence/5051/manual-complete/v3-loss-preserve-commander-replay/gate-c-20260930-143912-ce683026.jsonl | True | Replay matches: 69 successful commands, 69 attempts.
+Docs/Prototype/Evidence/5051/manual-complete/v4-heal-escape-1-replay/gate-c-20260930-144550-25b6a74b.jsonl | True | Replay matches: 15 successful commands, 15 attempts.
+Docs/Prototype/Evidence/5051/manual-complete/v4-heal-escape-2-replay/gate-c-20260930-144619-d3fb797d.jsonl | True | Replay matches: 15 successful commands, 15 attempts.
+Docs/Prototype/Evidence/5051/manual-complete/v5-mobile-blades-ai-replay/gate-c-20260930-144959-a8e6f335.jsonl | True | Replay matches: 93 successful commands, 93 attempts.

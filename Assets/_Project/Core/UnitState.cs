@@ -56,6 +56,8 @@ namespace RPG.Core
         public bool IsFrozen => FrozenActivations > 0;
         public int ExhaustedActivations { get; internal set; }
         public bool IsExhausted => ExhaustedActivations > 0;
+        // Source-owned condition; this package adds no Silence-producing ability or arbitrary duration.
+        public bool IsSilenced { get; internal set; }
         public int FireballUsed { get; internal set; }
         public int FreezeUsed { get; internal set; }
         public int CloseHealUsed { get; internal set; }
