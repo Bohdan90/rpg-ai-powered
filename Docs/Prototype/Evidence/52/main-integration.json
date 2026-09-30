@@ -1,0 +1,10 @@
+{
+  "starting_main": "2dff871481fbf0646aec87a2fae4027d93a782f4",
+  "integrated_implementation": "8c25cc8d3eddac1a9faafdd0ba247e353da8be8d",
+  "method": "User-authorized git merge --ff-only",
+  "protected_files_unchanged": true,
+  "tested_source_hashes_identical": true,
+  "prior_regression": "585 EditMode +73 PlayMode =658 PASS, no new test run during unchanged-code delivery",
+  "persistent_changed_paths": [],
+  "push": "NOT PERFORMED"
+}

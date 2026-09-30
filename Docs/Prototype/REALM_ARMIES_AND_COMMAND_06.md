@@ -1,5 +1,7 @@
 # Realm Armies & Command 06 — document 52
 
+Delivery update: user-authorized main integration completed on 2026-09-30, `My project/develop` fast-forward `2dff871 → 8c25cc8`. Historical feature-only statements below describe original validation, and no longer limit delivery. Exact tested source unchanged; previous658 PASS retained with its provenance. Main menu now includes Realm Operations06. See `Evidence/52/main-integration.json`. NO PUSH.
+
 Implementation and controlled technical validation complete on `feature/realm-operations-06`, isolated `Realm-Operations-06` worktree.
 Starting main: `develop` at `2dff871481fbf0646aec87a2fae4027d93a782f4`, descendant of accepted Fire patch `7ae088c`.
 Implementation/coordinator/player acceptance are separate. No prior 628 result is counted as this package's regression.

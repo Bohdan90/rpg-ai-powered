@@ -1,5 +1,7 @@
 # Gate C — working implementation checkpoint
 
+Latest delivery (2026-09-30): user explicitly requested Realm Operations 06 in main. `My project/develop` fast-forwarded `2dff871 → 8c25cc8`. The feature-only limitation in the original report is superseded for delivery. All140 tested source fingerprints match;658 PASS is retained pre-integration evidence, not a new run. Nine unrelated files and gameplay saves preserved. Launch in main: `Gate C / Realm Operations 06 / West starts (Fire vs Ice)`; alternate StartingSide/schools and labelled inspection also available. See `Evidence/52/main-integration.json`. NO PUSH.
+
 Latest delivery (2026-09-30): user explicitly authorized ending the current party and integrating FIRE-TARGETING-02. `My project / develop` fast-forwarded `008e58f → 7ae088c`. Main Unity now runs the new cell-directed Stream/allied Fire Armor; actual off-axis `(3,2)` hit verified, HP26→15. Original nine files and campaign saves preserved.628 PASS is retained pre-integration evidence for identical gameplay/test source, not a new run. Feature-only delivery limitation below is superseded. See [delivery evidence](Evidence/FIRE-TARGETING-02/main-integration.json). NO PUSH.
 
 ## 2026-09-30 — FIRE-TARGETING-02 / document51 §16
