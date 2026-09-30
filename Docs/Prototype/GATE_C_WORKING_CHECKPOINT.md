@@ -2,7 +2,7 @@
 
 ## 2026-09-30 — melee approach + strike
 
-User extends two-click input for HW/EW: hover/first enemy click shows and pins a reachable legal approach; second click moves then revalidates/executes BasicAttack. Existing Core path/contact/OA rules only; no extra Movement or automatic caster/archer approach. Real death/interruption prevents follow-up. Replay retains ordinary Move+BasicAttack commands. Starting49a2a17; focused5 EditMode+12 spell/approach+7 corner PlayModePASS; final590 EditMode+79 PlayMode=669 PASS,0 failed/skipped; results/delivery: `MELEE_APPROACH.md`, `Evidence/MELEE-APPROACH/validation-manifest.json`. NO PUSH.
+User extends two-click input for HW/EW: hover/first enemy click shows and pins a reachable legal approach; second click moves then revalidates/executes BasicAttack. Existing Core path/contact/OA rules only; no extra Movement or automatic caster/archer approach. Real death/interruption prevents follow-up. Replay retains ordinary Move+BasicAttack commands. Main delivered by fast-forward49a2a17→029a42e with tested source identical and nine protected files unchanged; focused5 EditMode+12 spell/approach+7 corner PlayModePASS; final590 EditMode+79 PlayMode=669 PASS,0 failed/skipped; results/delivery: `MELEE_APPROACH.md`, `Evidence/MELEE-APPROACH/validation-manifest.json`. NO PUSH.
 
 ## 2026-09-30 — unified two-click tactical input
 
