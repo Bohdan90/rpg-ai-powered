@@ -40,7 +40,7 @@ namespace RPG.Presentation
         }
         private PersistentCharacter ConnectedCharacter(UnitId id)
         {
-            if(Duel!=null&&loadedDuel!=null){return loadedDuel.Ids.TryGetValue(id,out var keyId)?Duel.West.Formation.Members.Concat(Duel.East.Formation.Members).FirstOrDefault(c=>c.CharacterId==keyId):null;}
+            if(Duel!=null&&loadedDuel!=null){return loadedDuel.Ids.TryGetValue(id,out var keyId)?Duel.AllForces.SelectMany(f=>f.Formation.Members).FirstOrDefault(c=>c.CharacterId==keyId):null;}
             if(World==null||loadedEncounter==null)return null;
             string key=loadedEncounter.UnitIds.FirstOrDefault(k=>k.Value==id).Key;
             return World.Player.Members.Concat(World.Actors.SelectMany(a=>a.Formation.Members)).FirstOrDefault(c=>c.CharacterId==key);

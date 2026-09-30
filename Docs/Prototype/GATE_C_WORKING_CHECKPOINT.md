@@ -3,6 +3,18 @@
 Updated 2026-09-29. Single implementation handoff; Google Drive thematic owners retain
 priority for canon. Follow repository `AGENTS.md` and the efficiency protocol.
 
+## Connected Playable 04 — World Dynamics (document49; manual gate incomplete)
+
+- Starting `develop @ 4fe7851`; document49 A–F authorized, latest48/44/46 read. Prior02+03 personal user **KEEP** is closed and unchanged.
+- A–E implemented: separate **Crossroads Incident 04 · West first / East first** selectors in TacticalGraybox Play-mode panel, plus no-incident control. Same original graph plus axis nodes14–16/edges20; target16 only here (original03 stays8).
+- R1 Precursor / R2 A / R3 B / R4–5 Whiteout2/1 / R6 Closure / R7 Recovery / R8 Stable. Persistent staged/pending/unreleased/exited/defeated/stranded records, physical raid/return and lasting Waystation supply disable. Resources/combat/recovery inherited unchanged.
+- Resumable world phase after both humans; stable actor cursor, one initiation/slot; explicit Continue World Phase. Target-centered multi-formation participation, per-army Attack/Withdrawal, directional deployment, same IDs/XP/Commanderless, human Hotseat versus raider AI; pre-battle human Fight/Withdrawal.
+- Shared continuous Hold: same physical owner for2 COMPLETE cycles (first R2), resets on break;150Gold once; ravage fails / R6 expires. No contract spawns or bonus Pressure/healing.
+- Incident schema3/separate slot includes all actor/cursor/Hold/service/economy state; original Crossroads schema2/Mission01 unchanged. Invalid loads preserve live state; battle/modal save disabled. Core previews/replay/invalid-command invariants retained.
+- Automated final: **70 focused EditMode +9 focused PlayMode PASS; full441 EditMode +61 PlayMode =502 PASS, 0 failed/skipped**. Replay/preview/invalid/save continuation checks PASS; see report for fresh XML. Manual **PARTIAL**: launch/R1→R2, NPC contact/deployment and exact mid-Refresh save/recreate/load verified. Full M1, M2/M3/M5 and remaining M4 **NOT RUN** after external mouse-input failure; **do not claim full document49 DoD or manual PASS**.
+- Report/launch/evidence: [STRATEGIC_CONNECTED_PLAYABLE_04_WORLD_DYNAMICS.md](STRATEGIC_CONNECTED_PLAYABLE_04_WORLD_DYNAMICS.md). No balance conclusion from partial manual run. Coordinator acceptance and integrated04 user playtest remain PENDING.
+- Nine unrelated scene/settings/six.meta preserved by SHA-256; own diff isolated. NO PUSH. STOP before Civilization Depth/other systems; remaining controlled manual gate must be completed.
+
 ## Connected Playable 03 — economy/recruitment extension (document47 Part B)
 
 - Continues green Part A commit `d3dd271`; same Crossroads graph/Pressure/human Hotseat, no combat or Mission01 changes. Start from tactical screen **Crossroads economy Hotseat · West first / East first**; separate Crossroads load button/slot.

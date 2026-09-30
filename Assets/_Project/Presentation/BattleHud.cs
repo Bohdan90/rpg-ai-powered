@@ -38,7 +38,7 @@ namespace RPG.Presentation
             surface.style.width = Length.Percent(70); surface.style.height = Length.Percent(100);
             surface.style.overflow = Overflow.Hidden; Root.Add(surface);
             var title = Text(surface, "GATE C / HOTSEAT", 22); title.style.position = Position.Absolute;
-            title.style.left = 20; title.style.top = 16; title.pickingMode = PickingMode.Ignore;
+            title.name="battle-title"; title.style.left = 20; title.style.top = 16; title.pickingMode = PickingMode.Ignore;
             var legend = Text(surface, "BLUE West · ORANGE East · GOLD active\nGreen: reachable · Gold: path · Red segment: OA risk\nSword + shield: HW/EW · Bow: HA · * Commander\nWhite arrow: facing · Red border: ZoC ready · Gray: spent\nWheel: zoom · Right-click: center view", 13);
             legend.style.position = Position.Absolute; legend.style.left = 20; legend.style.bottom = 16; legend.pickingMode = PickingMode.Ignore;
             westEdge = Text(surface, "West Retreat", 13); eastEdge = Text(surface, "East Retreat", 13);
@@ -90,6 +90,10 @@ namespace RPG.Presentation
             AddButton(panel,"Load saved Mission 01","world-load",()=>presenter.LoadStrategic());
             AddButton(panel,"Crossroads economy Hotseat · West first","duel-start-west",()=>presenter.StartDuel(Side.West));
             AddButton(panel,"Crossroads economy Hotseat · East first","duel-start-east",()=>presenter.StartDuel(Side.East));
+            AddButton(panel,"Crossroads Incident 04 · West first","incident-start-west",()=>presenter.StartIncident(Side.West));
+            AddButton(panel,"Crossroads Incident 04 · East first","incident-start-east",()=>presenter.StartIncident(Side.East));
+            AddButton(panel,"Incident 04 · control (no incidents)","incident-control",()=>presenter.StartIncident(Side.West,false));
+            AddButton(panel,"Load Incident 04","incident-load",()=>presenter.LoadIncident());
             AddButton(panel,"Load Crossroads Hotseat","duel-load",()=>presenter.LoadDuel());
             persistence=Text(panel,"",12);persistence.name="persistence-summary";
             persistenceContinue=AddButton(panel,"Continue Persistence Battle","persistence-continue",presenter.ContinuePersistenceSlice);
@@ -138,8 +142,10 @@ namespace RPG.Presentation
             bool ended = state.Outcome.IsEnded;
             bool playerTurn = !presenter.IsAiTurn;
             bool connected=presenter.World!=null||presenter.Duel!=null;
+            bool incidentBattle=presenter.Duel?.Incident!=null;
+            Root.Q<Label>("battle-title").text=incidentBattle?"INCIDENT 04 · Blue: "+presenter.TacticalSideLabel(Side.West)+" / Orange: "+presenter.TacticalSideLabel(Side.East):"GATE C / HOTSEAT";
             Root.Q("world-return").style.display=connected?DisplayStyle.Flex:DisplayStyle.None;
-            foreach(string controlName in new[]{"fixture-selector","controller-mode","persistence-start","restart","outcome-restart","world-start","world-load","duel-start-west","duel-start-east","duel-load"})Root.Q(controlName).SetEnabled(!connected);
+            foreach(string controlName in new[]{"fixture-selector","controller-mode","persistence-start","restart","outcome-restart","world-start","world-load","duel-start-west","duel-start-east","duel-load","incident-start-west","incident-start-east","incident-control","incident-load"})Root.Q(controlName).SetEnabled(!connected);
             Root.Q<DropdownField>("controller-mode").SetValueWithoutNotify(presenter.PlayerVsAi?(presenter.AiSide==Side.East?"Player West vs AI East":"Player East vs AI West"):"Hotseat");
             aiInfo.text=presenter.PlayerVsAi?presenter.AiExplanation:"Hotseat";
             rangeInfo.text=presenter.RangedReachMessage;
@@ -149,7 +155,7 @@ namespace RPG.Presentation
             if (ended != showedOutcome) panel.schedule.Execute(() => panel.scrollOffset = Vector2.zero);
             showedOutcome = ended;
             outcomePanel.style.display = ended ? DisplayStyle.Flex : DisplayStyle.None;
-            outcomeText.text = ended ? "BATTLE ENDED\nWinner: " + state.Outcome.VictorySide + "\nLoser: " + state.Outcome.DefeatedSide
+            outcomeText.text = ended ? "BATTLE ENDED\nWinner: " + presenter.TacticalSideLabel(state.Outcome.VictorySide) + "\nLoser: " + presenter.TacticalSideLabel(state.Outcome.DefeatedSide)
                 + "\nResult: " + state.Outcome.Reason + "\n\nDead:\n" + Roster(state, UnitStatus.Dead)
                 + "\n\nEscaped/Safe:\n" + Roster(state, UnitStatus.Escaped)
                 + "\n\nSurviving active units:\n" + Roster(state, UnitStatus.Active) : "";
@@ -182,6 +188,13 @@ namespace RPG.Presentation
             westEdge.text = "← West Retreat" + (!ended && actor.Side == Side.West ? " — YOUR ESCAPE" : "");
             eastEdge.text = (state.Battlefield.EastRetreatUsesPerimeter ? "East: ALL outer edges" : "East Retreat →") + (!ended && actor.Side == Side.East ? " — YOUR ESCAPE" : "");
             if(approachEdges.Length>0)westEdge.text=actor.OwnRetreatEdge.HasValue?"Attacker coalition · YOUR retreat: "+actor.OwnRetreatEdge:"Attacker retreat: "+approachEdges;
+            if(incidentBattle)
+            {
+                string blue=string.Join(" / ",state.Units.Where(u=>u.Side==Side.West).Select(u=>u.OwnRetreatEdge).Distinct());
+                string orange=string.Join(" / ",state.Units.Where(u=>u.Side==Side.East).Select(u=>u.OwnRetreatEdge).Distinct());
+                westEdge.text="Blue rear: "+blue;eastEdge.text="Orange rear: "+orange;
+                retreat.text="Blue ("+presenter.TacticalSideLabel(Side.West)+"): "+blue+". Orange ("+presenter.TacticalSideLabel(Side.East)+"): "+orange+"."+(ended?"":"\nCurrent unit Retreat: "+actor.OwnRetreatEdge);
+            }
             if(!ended&&actor.OwnRetreatEdge==RetreatEdge.Unavailable)
             {
                 retreat.text="Retreat unavailable for this formation: negative Strategic Tempo until Refresh.";

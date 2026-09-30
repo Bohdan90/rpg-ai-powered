@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using RPG.Core;
 using UnityEngine;
 
@@ -12,11 +13,19 @@ namespace RPG.Presentation
         private DuelEncounter loadedDuel;
         public string DuelSaveMessage { get; private set; }="Stable map only · one Crossroads slot.";
         public static string DuelSlot=>Path.Combine(Application.persistentDataPath,"Crossroads","manual.json");
+        public static string IncidentSlot=>Path.Combine(Application.persistentDataPath,"CrossroadsIncident04","manual.json");
+        public void StartIncident(Side first=Side.West,bool enabled=true)=>ShowDuel(new CrossroadsScenario(first,incident:true,incidentsEnabled:enabled));
+        public bool LoadIncident()=>LoadDuel(IncidentSlot);
         public void StartDuel(Side first=Side.West,bool economy=true)=>ShowDuel(new CrossroadsScenario(first,economy:economy));
         private void ShowDuel(CrossroadsScenario s)
         {
             World=null;loadedEncounter=null;worldHud?.Root.RemoveFromHierarchy();persistence=null;PlayerVsAi=false;
             Duel=s;loadedDuel=null;duelHud?.Root.RemoveFromHierarchy();duelHud=new CrossroadsHud(hud.Root,this);DuelChanged();
+        }
+        public string TacticalSideLabel(Side? side)
+        {
+            if(!side.HasValue)return "None";var e=Duel?.Encounter;if(Duel?.Incident==null||e==null)return side.ToString();
+            return string.Join(" + ",e.Participants.Where(f=>e.TacticalSides[f.Formation.FormationId]==side).Select(f=>f==Duel.West?"West human":f==Duel.East?"East human":f.Formation.FormationId.EndsWith("A")?"Raider A AI":"Raider B AI"));
         }
         public void DuelChanged()
         {
@@ -24,8 +33,8 @@ namespace RPG.Presentation
             if(Duel.Encounter!=null&&Duel.Encounter!=loadedDuel)
             {
                 loadedDuel=Duel.Encounter;Fixture=SizeExperimentMap.Field_23x17_Full_9v9;State=loadedDuel.Battle.State;
-                PlayerVsAi=false;LastAttackOutcome="";Journal=new BattleJournal(State,"Crossroads_Hotseat",Application.version+" / Unity "+Application.unityVersion,"West human","East human");
-                log.Clear();Message="Crossroads · "+loadedDuel.Attacker+" attacks. Tactical Hotseat; same persistent IDs.";
+                PlayerVsAi=loadedDuel.HasRaiders;AiSide=loadedDuel.AiSide;LastAttackOutcome="";Journal=new BattleJournal(State,"Crossroads_Hotseat",Application.version+" / Unity "+Application.unityVersion,PlayerVsAi&&AiSide==Side.West?"Raider AI":"Human",PlayerVsAi&&AiSide==Side.East?"Raider AI":"Human");
+                log.Clear();Message="Crossroads · "+(Duel.Incident==null?loadedDuel.Attacker.ToString():loadedDuel.Lead.Formation.FormationId)+" attacks. "+(PlayerVsAi?"Human vs raider AI":"Tactical Hotseat")+"; same persistent IDs.";
                 grid.Resize(State.Battlefield);hud.Resize(State.Battlefield);FitBoard();ClearPreview();Refresh();
             }
             duelHud.Refresh();
@@ -36,7 +45,7 @@ namespace RPG.Presentation
             try
             {
                 if(Duel==null||!Duel.CanSave)throw new InvalidOperationException("Save only from stable Crossroads map.");
-                string full=Path.GetFullPath(path??DuelSlot);Directory.CreateDirectory(Path.GetDirectoryName(full));temp=full+"."+Guid.NewGuid().ToString("N")+".tmp";
+                string full=Path.GetFullPath(path??(Duel?.Incident!=null?IncidentSlot:DuelSlot));Directory.CreateDirectory(Path.GetDirectoryName(full));temp=full+"."+Guid.NewGuid().ToString("N")+".tmp";
                 var bytes=System.Text.Encoding.UTF8.GetBytes(JsonUtility.ToJson(Duel.CaptureSave(),true));
                 if(bytes.Length>1024*1024)throw new InvalidDataException("Save exceeds prototype size limit.");
                 using(var stream=new FileStream(temp,FileMode.CreateNew,FileAccess.Write)){stream.Write(bytes,0,bytes.Length);stream.Flush(true);}
@@ -51,12 +60,12 @@ namespace RPG.Presentation
             try
             {
                 if((Duel!=null&&!Duel.CanSave)||(World!=null&&!World.CanSave))throw new InvalidOperationException("Finish tactical battle first.");
-                var file=new FileInfo(path??DuelSlot);if(!file.Exists||file.Length==0||file.Length>1024*1024)throw new InvalidDataException("Missing/invalid Crossroads save.");
+                var file=new FileInfo(path??(Duel?.Incident!=null?IncidentSlot:DuelSlot));if(!file.Exists||file.Length==0||file.Length>1024*1024)throw new InvalidDataException("Missing/invalid Crossroads save.");
                 var data=JsonUtility.FromJson<CrossroadsSaveData>(File.ReadAllText(file.FullName));
                 if(data==null)throw new InvalidDataException("Missing save data.");var candidate=data.Restore();
                 DuelSaveMessage="Loaded Crossroads R"+candidate.Refresh;ShowDuel(candidate);return true;
             }
-            catch(Exception e){DuelSaveMessage="Load failed; current session unchanged: "+e.Message;duelHud?.Refresh();return false;}
+            catch(Exception e){DuelSaveMessage="Load failed; current session unchanged: "+e.Message;Message=DuelSaveMessage;Refresh();duelHud?.Refresh();return false;}
         }
     }
 }

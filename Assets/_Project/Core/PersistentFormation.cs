@@ -125,7 +125,7 @@ namespace RPG.Core
 
     public sealed class PersistentBattle
     {
-        private readonly PersistentFormation west, east;
+        private readonly PersistentFormation[] west, east;
         private readonly Dictionary<UnitId, PersistentCharacter> characters;
         private readonly Dictionary<Side, decimal> startEffectivePower;
         private readonly Dictionary<Side, int> startParticipants;
@@ -133,7 +133,7 @@ namespace RPG.Core
         public BattleState State { get; }
         public IReadOnlyDictionary<Side, decimal> StartEffectivePower => startEffectivePower;
 
-        private PersistentBattle(PersistentFormation west, PersistentFormation east, BattleState state, Dictionary<UnitId, PersistentCharacter> characters)
+        private PersistentBattle(PersistentFormation[] west, PersistentFormation[] east, BattleState state, Dictionary<UnitId, PersistentCharacter> characters)
         {
             this.west = west; this.east = east; State = state; this.characters = characters;
             startBasePower=characters.ToDictionary(k=>k.Key,k=>BasePower(k.Value));
@@ -145,17 +145,22 @@ namespace RPG.Core
 
         public static PersistentBattle Start(PersistentFormation west, PersistentFormation east, IEnumerable<PersistentDeployment> deployments, uint seed, Battlefield board)
         {
-            if (west == null || east == null || deployments == null) throw new ArgumentNullException();
-            west.ReturnSafeMembersForNextBattle(); east.ReturnSafeMembersForNextBattle();
-            var lookup = west.Members.Concat(east.Members).ToDictionary(c => c.CharacterId);
+            return Start(new[]{west},new[]{east},deployments,seed,board);
+        }
+        // Tactical sides are coalition slots, independent of persistent strategic ownership.
+        public static PersistentBattle Start(PersistentFormation[] west, PersistentFormation[] east, IEnumerable<PersistentDeployment> deployments, uint seed, Battlefield board)
+        {
+            if (west == null || east == null || deployments == null || west.Length==0 || east.Length==0) throw new ArgumentNullException();
+            foreach(var f in west.Concat(east)) f.ReturnSafeMembersForNextBattle();
+            var lookup = west.Concat(east).SelectMany(f=>f.Members).ToDictionary(c => c.CharacterId);
             var units = new List<UnitState>(); var map = new Dictionary<UnitId, PersistentCharacter>();
             foreach (var d in deployments)
             {
                 if (!lookup.TryGetValue(d.CharacterId, out var character)) throw new ArgumentException("Unknown persistent character " + d.CharacterId);
                 if (character.Status == PersistentCharacterStatus.Dead) continue;
                 if (map.ContainsKey(d.UnitId)) throw new ArgumentException("Duplicate tactical unit ID.");
-                var formation = west.Members.Contains(character) ? west : east;
-                units.Add(new UnitState(d.UnitId, formation.Side, character.Profile, d.Position, d.Facing, character.Hp, character.Armor, UnitStatus.Active, d.OwnRetreatEdge));
+                var side = west.Any(f=>f.Members.Contains(character)) ? Side.West : Side.East;
+                units.Add(new UnitState(d.UnitId, side, character.Profile, d.Position, d.Facing, character.Hp, character.Armor, UnitStatus.Active, d.OwnRetreatEdge));
                 map.Add(d.UnitId, character);
             }
             if (units.Count(u => u.Side == Side.West) == 0 || units.Count(u => u.Side == Side.East) == 0) throw new InvalidOperationException("Both persistent formations need a living deployed member.");
@@ -166,7 +171,7 @@ namespace RPG.Core
         {
             if (finalState == null || !finalState.Outcome.IsEnded) throw new InvalidOperationException("Resolve only a completed tactical battle.");
             foreach (var unit in finalState.Units) if (characters.TryGetValue(unit.Id, out var character)) character.SetBattleResult(unit);
-            west.RefreshCommanderState(); east.RefreshCommanderState();
+            foreach(var f in west.Concat(east)) f.RefreshCommanderState();
             var westPool = ResolveSide(Side.West, finalState); var eastPool = ResolveSide(Side.East, finalState);
             return new PersistenceBattleResolution(westPool, eastPool);
         }
@@ -183,10 +188,11 @@ namespace RPG.Core
             {
                 var character = characters[unit.Id]; character.AddPersonalXp(personalReserve * OutcomeShare(unit.Status));
             }
-            var commander = own.Commander;
-            decimal commandReserve = pool / 7m; // This slice has one participating strategic army per side.
-            if (commander != null)
+            decimal commandReserve = pool / (7m * own.Length);
+            foreach(var formation in own)
             {
+                var commander = formation.Commander;
+                if(commander==null)continue;
                 var commanderUnit = participants.SingleOrDefault(u => characters[u.Id] == commander);
                 if (commanderUnit != null && OutcomeShare(commanderUnit.Status) > 0m)
                     commander.AddCommandXp(commandReserve * OutcomeShare(commanderUnit.Status));
