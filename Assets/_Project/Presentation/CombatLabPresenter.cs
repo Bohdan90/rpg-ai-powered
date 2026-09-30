@@ -26,7 +26,7 @@ namespace RPG.Presentation
             PreviewText=command.Spell+" · Action"+(SpellRules.Exertion(command.Spell)?" + Exertion":"")
                 +" · range "+SpellRules.Range(command.Spell)+" · uses "+SpellRules.Used(actor,command.Spell)+"/"+(SpellRules.Limit(command.Spell)==int.MaxValue?"—":SpellRules.Limit(command.Spell).ToString())
                 +"\nCells: "+string.Join(" ",p.Cells.Select(Cell))+"\nAffected: "+string.Join(", ",p.Targets.Select(id=>UnitName(id)+(State.FindUnit(id).Side==actor.Side?" [ALLY / SELF]":"")))
-                +"\nMagnitude "+p.Magnitude+" · contact "+p.ContactChance+"% · "+(p.IsLegal?"LEGAL":p.Error.ToString());
+                +(p.Magnitude>0?"\nMagnitude "+p.Magnitude:"\nStatus / protection effect")+" · contact "+p.ContactChance+"% · "+(p.IsLegal?"LEGAL":p.Error.ToString());
             pending=p.IsLegal?command:null;Refresh();return true;
         }
         public static string CombatStatuses(UnitState u)=>"Barrier "+u.TemporaryBarrier+(u.FireProtection?" Fire Armor":"")

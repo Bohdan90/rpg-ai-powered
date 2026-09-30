@@ -193,7 +193,7 @@ namespace RPG.Presentation
             int risks = presenter.OpportunityRiskCount;
             riskWarning.text = risks > 0 ? "This path may trigger " + risks + " Opportunity Attack(s). Confirm to accept the risk, or Cancel." : "";
             riskWarning.style.display = risks > 0 ? DisplayStyle.Flex : DisplayStyle.None;
-            confirm.text = presenter.HasMovePreview ? (risks > 0 ? "Confirm Move — accept " + risks + " OA risk(s)" : "Confirm Move") : "Confirm Attack";
+            confirm.text = presenter.SelectedSpell.HasValue ? "Confirm " + presenter.SelectedSpell.Value : presenter.HasMovePreview ? (risks > 0 ? "Confirm Move — accept " + risks + " OA risk(s)" : "Confirm Move") : "Confirm Attack";
             cancel.SetEnabled(canConfirm);
             defend.SetEnabled(playerTurn && !ended && BattleResolver.Validate(state, new DefendCommand(actor.Id)) == CommandError.None);
             end.SetEnabled(!ended && playerTurn); finalFacing.SetEnabled(!ended); friendly.SetEnabled(!ended);
