@@ -26,22 +26,28 @@ namespace RPG.Core
             Participants=Array.AsReadOnly(attackers.Concat(defenders).ToArray());
             TacticalSides=Participants.ToDictionary(f=>f.Formation.FormationId,f=>attackers.Contains(f)?Side.West:Side.East);
             Origins=Participants.ToDictionary(f=>f.Formation.FormationId,f=>f.Node);
-            HasRaiders=Participants.Any(f=>world.Incident.Raiders.Any(r=>r.Force==f));
-            AiSide=world.Incident.Raiders.Any(r=>r.Force==lead)?Side.West:Side.East;
+            HasRaiders=Participants.Any(f=>world.Incident!=null&&world.Incident.Raiders.Any(r=>r.Force==f));
+            AiSide=world.Incident!=null&&world.Incident.Raiders.Any(r=>r.Force==lead)?Side.West:Side.East;
             WestOrigin=lead.Node;EastOrigin=target.Node;
             var board=SizeExperimentFixture.Board(SizeExperimentMap.Field_23x17_Full_9v9);
+            var deployments=DeploymentPlan(world.Graph,lead,target,Participants,board);
+            Ids=deployments.ToDictionary(d=>d.UnitId,d=>d.CharacterId);
+            Battle=PersistentBattle.Start(attackers.Select(f=>f.Formation).ToArray(),defenders.Select(f=>f.Formation).ToArray(),deployments,seed,board);
+        }
+        internal static PersistentDeployment[] DeploymentPlan(StrategicGraph graph,DuelForce lead,DuelForce target,IEnumerable<DuelForce> participants,Battlefield board)
+        {
             var deployments=new List<PersistentDeployment>();var ids=new Dictionary<UnitId,string>();var occupied=new HashSet<GridPosition>();
             var sectorCount=new Dictionary<RetreatEdge,int>();int id=1;
-            foreach(var f in Participants)
+            foreach(var f in participants)
             {
-                var node=world.Graph.Node(f.Node);var center=world.Graph.Node(target.Node);
+                var node=graph.Node(f.Node);var center=graph.Node(target.Node);
                 var edge=Direction(node.X-center.X,node.Y-center.Y);
-                if(f==target){var a=world.Graph.Node(lead.Node);edge=Opposite(Direction(a.X-center.X,a.Y-center.Y));}
+                if(f==target){var a=graph.Node(lead.Node);edge=Opposite(Direction(a.X-center.X,a.Y-center.Y));}
                 int slot=sectorCount.TryGetValue(edge,out int count)?count:0;
                 foreach(var c in f.Formation.LivingMembers)
                 {
                     GridPosition position;
-                    do{int row=slot%9,depth=slot/9+1;slot++;position=edge==RetreatEdge.West?new GridPosition(depth,4+row):edge==RetreatEdge.East?new GridPosition(22-depth,4+row):edge==RetreatEdge.North?new GridPosition(7+row,16-depth):new GridPosition(7+row,depth);}
+                    do{if(slot>=81)throw new InvalidOperationException("Deployment sector capacity exceeded; no battle committed.");int row=slot%9,depth=slot/9+1;slot++;position=edge==RetreatEdge.West?new GridPosition(depth,4+row):edge==RetreatEdge.East?new GridPosition(22-depth,4+row):edge==RetreatEdge.North?new GridPosition(7+row,16-depth):new GridPosition(7+row,depth);}
                     while(!board.IsWalkable(position)||occupied.Contains(position));
                     occupied.Add(position);var uid=new UnitId(id++);ids.Add(uid,c.CharacterId);
                     var facing=edge==RetreatEdge.West?Facing.East:edge==RetreatEdge.East?Facing.West:edge==RetreatEdge.North?Facing.South:Facing.North;
@@ -49,7 +55,7 @@ namespace RPG.Core
                 }
                 sectorCount[edge]=slot;
             }
-            Ids=ids;Battle=PersistentBattle.Start(attackers.Select(f=>f.Formation).ToArray(),defenders.Select(f=>f.Formation).ToArray(),deployments,seed,board);
+            return deployments.ToArray();
         }
         private static RetreatEdge Direction(float dx,float dy)=>Math.Abs(dx)>=Math.Abs(dy)?(dx<0?RetreatEdge.West:RetreatEdge.East):(dy<0?RetreatEdge.South:RetreatEdge.North);
         private static RetreatEdge Opposite(RetreatEdge e)=>e==RetreatEdge.West?RetreatEdge.East:e==RetreatEdge.East?RetreatEdge.West:e==RetreatEdge.North?RetreatEdge.South:RetreatEdge.North;
@@ -79,7 +85,7 @@ namespace RPG.Core
         }
         public bool RespondToContact(Side human,bool withdraw)
         {
-            var p=PendingContact;if(p==null||p.Target!=Force(human)||Encounter!=null)return false;
+            if(Realm!=null)return Realm.RespondToContact(human,withdraw);var p=PendingContact;if(p==null||p.Target!=Force(human)||Encounter!=null)return false;
             if(withdraw)
             {
                 if(p.Target.Tempo<0)return false;

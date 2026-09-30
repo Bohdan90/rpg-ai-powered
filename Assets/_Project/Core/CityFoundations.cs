@@ -88,6 +88,8 @@ namespace RPG.Core
     {
         public static readonly decimal[] Baseline={30m,6m,6m,4m};
         public static readonly StrategicGraph Map=CreateMap();
+        public bool RealmMode {get;internal set;}
+        public decimal Reference(int resource)=>RealmMode&&resource==1?12m:Baseline[resource];
         public bool Combined {get;internal set;}
         public List<CityLocation> Locations {get;internal set;}
         public CityRealm West {get;internal set;}=new CityRealm();
@@ -122,7 +124,7 @@ namespace RPG.Core
         {if(affinity!=.9m&&affinity!=1m&&affinity!=1.1m)throw new ArgumentOutOfRangeException(nameof(affinity));return(tier==3?50m:tier==4?70m:0m)*affinity;}
         private bool Connected(CityLocation site)=>site.Functioning&&(site.IsCity||Location(site.Parent).Functioning&&Location(site.Parent).Controller==site.Controller);
         private decimal Capacity(CrossroadsScenario w,CityLocation location,int resource)
-        {if(location.IsCity)return resource==1?Math.Max(0,90-w.Force(location.Controller).KeepFood):1000000000000000000m;return Baseline[resource]*(location.IsMinor?4:3)-location.Stock[resource];}
+        {if(location.IsCity)return resource==1?Math.Max(0,(RealmMode?180:90)-w.Force(location.Controller).KeepFood):1000000000000000000m;return Reference(resource)*(location.IsMinor?4:3)-location.Stock[resource];}
         private void Receive(CrossroadsScenario w,CityLocation location,int resource,decimal amount)
         {
             if(!location.IsCity){location.Stock[resource]+=amount;return;}
@@ -143,20 +145,20 @@ namespace RPG.Core
             foreach(var minor in Locations.Where(l=>l.IsMinor).OrderBy(l=>l.Node))Transfer(world,minor);
             foreach(var source in Locations.Where(l=>!l.IsCity&&!l.IsMinor).OrderBy(l=>l.Node)) {
                 int r=(int)source.Resource;var minor=Location(source.Parent);var city=Location(minor.Parent);
-                if(!source.Functioning){preview?.Add(new SourceOutputPreview(source.Node,city.Node,0,Baseline[r],0,"Source unavailable"));continue;}
+                if(!source.Functioning){preview?.Add(new SourceOutputPreview(source.Node,city.Node,0,Reference(r),0,"Source unavailable"));continue;}
                 decimal multiplier=minor.Functioning&&minor.Controller==source.Controller&&(r==0?minor.Depot:minor.Assay)?1.5m:1m;
                 // Prior downstream draining leaves room only where real storage/recipients exist.
                 decimal room=Capacity(world,source,r);
                 if(Connected(source)){room+=Capacity(world,minor,r);if(Connected(minor))room+=Capacity(world,city,r);}
-                decimal output=Math.Min(Baseline[r]*multiplier*source.OutputCondition,room);
+                decimal output=Math.Min(Reference(r)*multiplier*source.OutputCondition,room);
                 decimal local=Math.Min(output,Capacity(world,source,r));source.Stock[r]+=local;
                 Transfer(world,source);Transfer(world,minor);
                 decimal rest=output-local;if(rest>0){source.Stock[r]+=rest;Transfer(world,source);Transfer(world,minor);}
                 bool connected=Connected(source)&&Connected(minor)&&city.Functioning;
-                decimal regional=connected?10m*output/Baseline[r]:0;
+                decimal regional=connected?10m*output/Reference(r):0;
                 city.Regional+=regional;
-                preview?.Add(new SourceOutputPreview(source.Node,city.Node,output,Baseline[r],regional,
-                    !connected?"Parent chain interrupted; local storage only":output<Baseline[r]*multiplier*source.OutputCondition?"Storage limits production":"Export chain available"));
+                preview?.Add(new SourceOutputPreview(source.Node,city.Node,output,Reference(r),regional,
+                    !connected?"Parent chain interrupted; local storage only":output<Reference(r)*multiplier*source.OutputCondition?"Storage limits production":"Export chain available"));
             }
             return Locations.Where(l=>l.IsCity).Sum(l=>l.Regional);
         }
@@ -238,7 +240,7 @@ namespace RPG.Core
         {var r=Realm(side);if(!w.CanAct(side)||!r.ActiveResearch.HasValue)return false;r.ActiveResearch=null;r.ResearchPaused=false;ActivateResearch(w,side);return true;}
         public ForgeOrder QuoteRepair(CrossroadsScenario w,Side side)
         {
-            var f=w.Force(side);var city=City(side);if(!w.CanAct(side)||f.Node!=city.Node||!city.Functioning||!city.Forge||Realm(side).Repair!=null)return null;
+            if(RealmMode)return null;var f=w.Force(side);var city=City(side);if(!w.CanAct(side)||f.Node!=city.Node||!city.Functioning||!city.Forge||Realm(side).Repair!=null)return null;
             var q=new ForgeOrder{Started=w.Refresh};foreach(var c in f.Formation.LivingMembers){int n=Math.Min(c.Profile.MaxArmor-c.Armor,(c.Profile.MaxArmor+1)/2);if(n>0)q.Quotes.Add(c.CharacterId,n);}return q.Cost==0?null:q;
         }
         public bool OrderRepair(CrossroadsScenario w,Side side)
@@ -264,7 +266,7 @@ namespace RPG.Core
                 switch(p.Kind){case CityProjectKind.DevelopmentII:site.Development=2;break;case CityProjectKind.DevelopmentIII:site.Development=3;break;case CityProjectKind.Forge:site.Forge=true;break;case CityProjectKind.ResearchInstitute:site.Institute=true;break;case CityProjectKind.ExtractionDepot:site.Depot=true;break;case CityProjectKind.AssayOffice:site.Assay=true;break;case CityProjectKind.MageTowerI:site.MageTower=1;break;case CityProjectKind.MageTowerII:site.MageTower=2;break;}site.Active=null;
             }
             foreach(var side in new[]{Side.West,Side.East}) {
-                var realm=Realm(side);var f=w.Force(side);var repair=realm.Repair;
+                var realm=Realm(side);if(RealmMode){ActivateResearch(w,side);continue;}var f=w.Force(side);var repair=realm.Repair;
                 if(repair!=null){if(f.Node!=City(side).Node||!City(side).Functioning||!City(side).Forge)realm.Repair=null;else if(repair.Started<w.Refresh){foreach(var c in f.Formation.LivingMembers)if(repair.Quotes.TryGetValue(c.CharacterId,out int n))c.RepairArmor(n);realm.Repair=null;}}
                 AdvanceTraining(w,side);
                 foreach(var c in f.Formation.Members)c.ResetSourceBudgets();
@@ -285,7 +287,7 @@ namespace RPG.Core
         }
         public string TrainingBlocker(CrossroadsScenario w,Side side,string id)
         {
-            var r=Realm(side);var f=w.Force(side);var c=f.Formation.Members.SingleOrDefault(m=>m.CharacterId==id);
+            if(RealmMode)return "Use the explicit 06 character training service.";var r=Realm(side);var f=w.Force(side);var c=f.Formation.Members.SingleOrDefault(m=>m.CharacterId==id);
             if(!w.CanAct(side)||!Combined||r.Preset==CombatPreset.Support||f.Formation.Commanderless||f.Node!=w.OwnKeep(side)||City(side).MageTower!=2||!r.Knows(CityTech.ElementalDrills))return "HOM formation at own Tower II, Drills, Commander required.";
             if(r.Training!=null)return "A trainee is already pending.";
             if(c==null||c.Status==PersistentCharacterStatus.Dead||c.Profile.Tier!=1||!c.Profile.IsFireMage&&!c.Profile.IsIceMage||c.PersonalLevel<3)return "Living HOM TI, Personal Level 3 required.";

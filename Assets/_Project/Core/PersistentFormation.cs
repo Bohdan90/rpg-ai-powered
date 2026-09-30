@@ -14,7 +14,8 @@ namespace RPG.Core
     {
         public string CharacterId { get; }
         public UnitProfile Profile { get; private set; }
-        public bool IsCommander { get; }
+        public bool IsCommander { get; private set; }
+        internal void Commission() { if(IsCommander)throw new InvalidOperationException("Already commissioned."); IsCommander=true; CommandXp=0; CommandLevel=1; }
         public int Hp { get; private set; }
         public int Armor { get; private set; }
         public PersistentCharacterStatus Status { get; private set; }
@@ -97,18 +98,20 @@ namespace RPG.Core
         public ReadOnlyCollection<PersistentCharacter> Members { get; }
         public bool Commanderless { get; private set; }
         public bool RosterLocked => Commanderless;
-        public PersistentCharacter Commander => members.SingleOrDefault(c => c.IsCommander);
+        public string AssignedCommanderId { get; private set; }
+        public bool ExplicitAssignment { get; private set; }
+        public PersistentCharacter Commander => ExplicitAssignment ? members.SingleOrDefault(c=>c.CharacterId==AssignedCommanderId) : members.SingleOrDefault(c => c.IsCommander);
         public IEnumerable<PersistentCharacter> LivingMembers => members.Where(c => c.Status != PersistentCharacterStatus.Dead);
 
-        public PersistentFormation(string formationId, Side side, IEnumerable<PersistentCharacter> characters)
+        public PersistentFormation(string formationId, Side side, IEnumerable<PersistentCharacter> characters, string assignedCommanderId = null, bool explicitAssignment = false)
         {
             if (string.IsNullOrWhiteSpace(formationId)) throw new ArgumentException("Formation ID is required.", nameof(formationId));
             if (side != Side.West && side != Side.East) throw new ArgumentOutOfRangeException(nameof(side));
             members = (characters ?? throw new ArgumentNullException(nameof(characters))).ToList();
-            if (members.Count == 0 || members.Any(c => c == null) || members.Select(c => c.CharacterId).Distinct().Count() != members.Count)
+            if (!explicitAssignment && members.Count == 0 || members.Any(c => c == null) || members.Select(c => c.CharacterId).Distinct().Count() != members.Count)
                 throw new ArgumentException("Persistent roster needs unique non-null characters.");
-            if (members.Count(c => c.IsCommander) > 1) throw new ArgumentException("Slice supports at most one Commander.");
-            FormationId = formationId; Side = side; Members = members.AsReadOnly(); RefreshCommanderState();
+            if (!explicitAssignment && members.Count(c => c.IsCommander) > 1) throw new ArgumentException("Slice supports at most one Commander.");
+            FormationId = formationId; Side = side; ExplicitAssignment=explicitAssignment; AssignedCommanderId=assignedCommanderId; Members = members.AsReadOnly(); RefreshCommanderState();
         }
         internal void AddRecruit(PersistentCharacter recruit)
         {
@@ -116,7 +119,8 @@ namespace RPG.Core
                 throw new InvalidOperationException("Invalid persistent recruit addition.");
             members.Add(recruit);
         }
-        internal void RefreshCommanderState() { Commanderless = Commander != null && Commander.Status == PersistentCharacterStatus.Dead; }
+        internal void ReplaceMembers(IEnumerable<PersistentCharacter> characters, string commanderId) { members.Clear(); members.AddRange(characters); ExplicitAssignment=true; AssignedCommanderId=commanderId; RefreshCommanderState(); }
+        internal void RefreshCommanderState() { Commanderless = ExplicitAssignment ? Commander==null || Commander.Status==PersistentCharacterStatus.Dead : Commander != null && Commander.Status == PersistentCharacterStatus.Dead; }
         public void ReturnSafeMembersForNextBattle() { foreach (var member in members) member.ReturnFromSafety(); }
         public void ApplyOneFieldStrategicRefresh() { foreach (var member in members) member.ApplyHpRefresh(PersistentCharacter.FieldRecoveryPercent); }
         public void ApplyOneHealingBuildingStrategicRefresh() { foreach (var member in members) member.ApplyHpRefresh(PersistentCharacter.HealingBuildingRecoveryPercent); }

@@ -1,0 +1,178 @@
+{
+  "task": "Document52 Realm Operations06 A-F",
+  "starting_head": "2dff871481fbf0646aec87a2fae4027d93a782f4",
+  "branch": "feature/realm-operations-06",
+  "worktree": "/Users/bohdanskrypka/UnityProjects/Convergence/Realm-Operations-06",
+  "implementation_commit": "Containing commit: resolve with git log for this manifest; no self-referential hash",
+  "unity": "6000.6.2f1",
+  "source_fingerprint": "final-source-sha256.json",
+  "fingerprint_verified_after_full_regression": true,
+  "configuration": {
+    "runner": "run-tests.sh",
+    "command": "bash /private/tmp/realm-operations-06/run-tests.sh <EditMode|PlayMode> [filter]",
+    "preferences": "/private/tmp/realm-operations-06/test-preferences",
+    "dependencies": "Nine pre-existing dirty scene/settings/meta files excluded from commit; see isolation.json",
+    "temporary_observer_in_final_test_assets": false
+  },
+  "runs": [
+    {
+      "kind": "focused",
+      "scope": "combined Realm/Incident/City",
+      "xml": "tests/EditMode-20260930-170323.xml",
+      "log": "tests/EditMode-20260930-170323.log.gz",
+      "passed": 81,
+      "failed": 0,
+      "skipped": 0,
+      "start": "2026-09-30 21:03:38Z",
+      "end": "2026-09-30 21:03:45Z"
+    },
+    {
+      "kind": "focused",
+      "scope": "Realm",
+      "xml": "tests/EditMode-20260930-171422.xml",
+      "log": "tests/EditMode-20260930-171422.log.gz",
+      "passed": 27,
+      "failed": 0,
+      "skipped": 0,
+      "start": "2026-09-30 21:14:37Z",
+      "end": "2026-09-30 21:14:37Z"
+    },
+    {
+      "kind": "focused",
+      "scope": "Realm Presentation",
+      "xml": "tests/PlayMode-20260930-171544.xml",
+      "log": "tests/PlayMode-20260930-171544.log.gz",
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "start": "2026-09-30 21:15:51Z",
+      "end": "2026-09-30 21:15:53Z"
+    },
+    {
+      "kind": "full",
+      "scope": "full EditMode",
+      "xml": "tests/EditMode-20260930-172035.xml",
+      "log": "tests/EditMode-20260930-172035.log.gz",
+      "passed": 585,
+      "failed": 0,
+      "skipped": 0,
+      "start": "2026-09-30 21:20:51Z",
+      "end": "2026-09-30 21:22:09Z"
+    },
+    {
+      "kind": "full",
+      "scope": "full PlayMode",
+      "xml": "tests/PlayMode-20260930-172226.xml",
+      "log": "tests/PlayMode-20260930-172226.log.gz",
+      "passed": 73,
+      "failed": 0,
+      "skipped": 0,
+      "start": "2026-09-30 21:22:33Z",
+      "end": "2026-09-30 21:24:28Z"
+    }
+  ],
+  "full_total": 658,
+  "coverage": {
+    "Assets/_Project/Tests/RealmOperationsTests.cs": [
+      "InitialNumbersProfilesFoodAndHistoricResearchAreScopedTo06",
+      "SelectionIsNotRefreshAndBothArmiesActWithinOneSideTurn",
+      "PreviewAndInvalidCommandsDoNotMutateWorldOrPersistentState",
+      "RoundTripInitialAndMovedActorTurnAreExactAndContinueDeterministically",
+      "FieldHandoverChargesBothAndAntiRelayKeepsSpentCeiling",
+      "CityReserveReformKeepsDebtAndIdentityWithoutFreeProvision",
+      "CommissionExistingElfAndThirdArmyPreservesHistoryNotFreeSoldiers",
+      "ReceiverRaceCapacityIsRealAndTierDoesNotIncreaseLoad",
+      "SharedRecruitQueueTargetsReserveThenPhysicalTransferWithoutAdditionalChannel",
+      "CitySupplyProportionateConservesFractionsAndReserveEatsFirst",
+      "OneHopParticipationChargesEveryAttackerAndDoesNotChain",
+      "DeadFirstArmyDoesNotDefeatSideAndCommanderlessPartialTransferRemainsLegal",
+      "DuplicatePhysicalIdentityLoadRejectedWithoutTouchingLiveState"
+    ],
+    "Assets/_Project/Tests/RealmContinuityTests.cs": [
+      "CommissionRejectsTierIAlreadyCommissionedAbsentAndWrongAuthority",
+      "CommissionPauseReloadFeeOnceAndDeathDoesNotSubstituteCandidate",
+      "TransferFailsAtomicallyForRemoteOrOverCapacityAndDoesNotDestroyFood",
+      "AssignRealOfficerToCommanderlessRetainsDeadHistoryAndBudget",
+      "PersonalServicesTargetSameIdsConflictAndRespectPresenceAndNoFreeHeal",
+      "RetiredStaffStillConsumesAndReserveDeprivationPersistsWithoutInventedHpPenalty",
+      "NonrecursiveParticipationAndNegativeAttackerExcludedDefenderIncluded",
+      "EighteenVsEighteenAndThreeSameDirectionFormationsFullyDeploy",
+      "OneArmyWithdrawsWhileAllyContinuesReplayPerArmyDebtNoSubstituteLead",
+      "PrebattleWithdrawalIsPerTargetAndSaveBlockedDuringCommitment",
+      "PressureLegalEndingOncePerObjectiveAndMirroredStartingSide",
+      "DestroyedSelectedArmyNormalizesToSurvivingArmyAfterBattle",
+      "FullyUnsuppliedReserveSuppressesRecoveryButPartialFoodDoesNotInventNewPenalty"
+    ],
+    "Assets/_Project/Tests/PlayMode/RealmPresentationTests.cs": [
+      "ActualRealmHudSelectionSaveRecreateLoadAndContinue",
+      "AuthoredInspectionSnapshotIsLabelledAndOwnNamespace",
+      "JointBattleAuditSerializesWithoutLosingOriginalParticipation"
+    ]
+  },
+  "manual": {
+    "R1": {
+      "status": "PASS",
+      "origin": "Normal starting scenario; real GUI commands",
+      "evidence": [
+        "manual/r1-12-legal-pressure-victory.json",
+        "manual/r1-normal-match-trace.jsonl.gz"
+      ],
+      "result": "West Pressure24:6 Refresh11, actual tactical losses, same World return"
+    },
+    "R2": {
+      "status": "PASS",
+      "origin": "Same normal R1 match",
+      "evidence": [
+        "manual/r2-05-third-army-same-officer.json",
+        "manual/r2-08-transfer-no-food-created.json"
+      ],
+      "result": "Paid same-ID Commission, third army, real Reserve recruit, receiving load9, no new Food"
+    },
+    "R3": {
+      "status": "PASS",
+      "origin": "Explicit authored rare initial states, then real GUI input; no injected result",
+      "evidence": [
+        "manual/r3-commanderless-origin.txt",
+        "manual/r3-joint-origin.txt",
+        "manual/r3-06b-one-army-out-ally-still-fighting.json",
+        "manual/r3-08-no-substitute-lead.json"
+      ],
+      "result": "Real officer remnant recovery, partial transfer, independent allied withdrawal and no substitute Lead"
+    },
+    "R4": {
+      "status": "PASS",
+      "origin": "GUI save/recreate/load and continuation",
+      "evidence": [
+        "manual/r4-01-pending-orders-recreated.json",
+        "manual/r4-04-after-joint-recreated.json",
+        "manual/r4-05-continuation-one-recruit-refresh.json"
+      ],
+      "result": "Checksums match, Commission/research/recruit/aftermath retained, no duplicated Refresh/completion"
+    },
+    "R5": {
+      "status": "PASS",
+      "origin": "Short East-first GUI comparison, not full second balance match",
+      "evidence": [
+        "manual/r5-03-mirrored-refresh.json",
+        "manual/r5-04-physical-concentration-versus-split.json"
+      ],
+      "result": "First Pressure1:1, physical concentration nodes6/9 vs split8/3"
+    }
+  },
+  "determinism": {
+    "status": "PASS",
+    "legacy_journals": 17,
+    "evidence": [
+      "legacy-replays.txt",
+      "replays/"
+    ],
+    "checks": "Ordered save continuation; preview/invalid no mutation; real GUI tactical journals"
+  },
+  "deviations": "None identified; scenario adapters and finite battlefield capacity documented in report",
+  "manual_gaps": [],
+  "player_acceptance": "PENDING",
+  "coordinator_acceptance": "PENDING",
+  "isolation": "isolation.json",
+  "push": "NOT PERFORMED",
+  "main_integration": "NOT PERFORMED"
+}

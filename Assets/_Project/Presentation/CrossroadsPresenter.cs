@@ -16,7 +16,9 @@ namespace RPG.Presentation
         public static string IncidentSlot=>Path.Combine(Application.persistentDataPath,"CrossroadsIncident04","manual.json");
         public static string CitySlot(bool combined)=>Path.Combine(Application.persistentDataPath,combined?"CityCombat05B":"CityFoundations05A","manual.json");
         public void StartCity(bool combined=false,CombatPreset west=CombatPreset.Fire,CombatPreset east=CombatPreset.Ice,Side first=Side.West)=>ShowDuel(new CrossroadsScenario(first,foundations:true,combined:combined,westPreset:west,eastPreset:east));
-        private string CurrentDuelSlot=>Duel?.Foundations!=null?CitySlot(Duel.Foundations.Combined):Duel?.Incident!=null?IncidentSlot:DuelSlot;
+        public static string RealmSlot=>Path.Combine(Application.persistentDataPath,"RealmOperations06","manual.json");
+        public void StartRealm(Side first=Side.West,CombatPreset west=CombatPreset.Fire,CombatPreset east=CombatPreset.Ice)=>ShowDuel(new CrossroadsScenario(first,realm:true,westPreset:west,eastPreset:east));
+        private string CurrentDuelSlot=>Duel?.Realm!=null?RealmSlot:Duel?.Foundations!=null?CitySlot(Duel.Foundations.Combined):Duel?.Incident!=null?IncidentSlot:DuelSlot;
         public void StartIncident(Side first=Side.West,bool enabled=true)=>ShowDuel(new CrossroadsScenario(first,incident:true,incidentsEnabled:enabled));
         public bool LoadIncident()=>LoadDuel(IncidentSlot);
         public void StartDuel(Side first=Side.West,bool economy=true)=>ShowDuel(new CrossroadsScenario(first,economy:economy));
@@ -27,8 +29,8 @@ namespace RPG.Presentation
         }
         public string TacticalSideLabel(Side? side)
         {
-            if(!side.HasValue)return "None";var e=Duel?.Encounter;if(Duel?.Incident==null||e==null)return side.ToString();
-            return string.Join(" + ",e.Participants.Where(f=>e.TacticalSides[f.Formation.FormationId]==side).Select(f=>f==Duel.West?"West human":f==Duel.East?"East human":f.Formation.FormationId.EndsWith("A")?"Raider A AI":"Raider B AI"));
+            if(!side.HasValue)return "None";var e=Duel?.Encounter;if(e==null||e.Participants==null)return side.ToString();
+            return string.Join(" + ",e.Participants.Where(f=>e.TacticalSides[f.Formation.FormationId]==side).Select(f=>Duel.Realm!=null?f.Formation.FormationId:f==Duel.West?"West human":f==Duel.East?"East human":f.Formation.FormationId.EndsWith("A")?"Raider A AI":"Raider B AI"));
         }
         public void DuelChanged()
         {

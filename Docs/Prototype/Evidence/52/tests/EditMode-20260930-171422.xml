@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="27" result="Passed" total="27" passed="27" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-09-30 21:14:37Z" end-time="2026-09-30 21:14:37Z" duration="0.1942479">
+  <test-suite type="TestSuite" id="1000" name="My project" fullname="My project" runstate="Runnable" testcasecount="585" result="Passed" start-time="2026-09-30 21:14:37Z" end-time="2026-09-30 21:14:37Z" duration="0.194248" total="27" passed="27" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1703" name="RPG.Tests.dll" fullname="/Users/bohdanskrypka/UnityProjects/Convergence/Realm-Operations-06/Library/ScriptAssemblies/RPG.Tests.dll" runstate="Runnable" testcasecount="585" result="Passed" start-time="2026-09-30 21:14:37Z" end-time="2026-09-30 21:14:37Z" duration="0.187758" total="27" passed="27" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="94531" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1704" name="RPG" fullname="RPG" runstate="Runnable" testcasecount="585" result="Passed" start-time="2026-09-30 21:14:37Z" end-time="2026-09-30 21:14:37Z" duration="0.181859" total="27" passed="27" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1705" name="Tests" fullname="RPG.Tests" runstate="Runnable" testcasecount="585" result="Passed" start-time="2026-09-30 21:14:37Z" end-time="2026-09-30 21:14:37Z" duration="0.173909" total="27" passed="27" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestFixture" id="1484" name="RealmContinuityTests" fullname="RPG.Tests.RealmContinuityTests" classname="RPG.Tests.RealmContinuityTests" runstate="Runnable" testcasecount="14" result="Passed" start-time="2026-09-30 21:14:37Z" end-time="2026-09-30 21:14:37Z" duration="0.150267" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1488" name="AssignRealOfficerToCommanderlessRetainsDeadHistoryAndBudget" fullname="RPG.Tests.RealmContinuityTests.AssignRealOfficerToCommanderlessRetainsDeadHistoryAndBudget" methodname="AssignRealOfficerToCommanderlessRetainsDeadHistoryAndBudget" classname="RPG.Tests.RealmContinuityTests" runstate="Runnable" seed="1731795906" result="Passed" start-time="2026-09-30 21:14:37Z" end-time="2026-09-30 21:14:37Z" duration="0.031651" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1486" name="CommissionPauseReloadFeeOnceAndDeathDoesNotSubstituteCandidate" fullname="RPG.Tests.RealmContinuityTests.CommissionPauseReloadFeeOnceAndDeathDoesNotSubstituteCandidate" methodname="CommissionPauseReloadFeeOnceAndDeathDoesNotSubstituteCandidate" classname="RPG.Tests.RealmContinuityTests" runstate="Runnable" seed="1014118105" result="Passed" start-time="2026-09-30 21:14:37Z" end-time="2026-09-30 21:14:37Z" duration="0.014088" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1485" name="CommissionRejectsTierIAlreadyCommissionedAbsentAndWrongAuthority" fullname="RPG.Tests.RealmContinuityTests.CommissionRejectsTierIAlreadyCommissionedAbsentAndWrongAuthority" methodname="CommissionRejectsTierIAlreadyCommissionedAbsentAndWrongAuthority" classname="RPG.Tests.RealmContinuityTests" runstate="Runnable" seed="454958461" result="Passed" start-time="2026-09-30 21:14:37Z" end-time="2026-09-30 21:14:37Z" duration="0.000555" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1498" name="DestroyedSelectedArmyNormalizesToSurvivingArmyAfterBattle" fullname="RPG.Tests.RealmContinuityTests.DestroyedSelectedArmyNormalizesToSurvivingArmyAfterBattle" methodname="DestroyedSelectedArmyNormalizesToSurvivingArmyAfterBattle" classname="RPG.Tests.RealmContinuityTests" runstate="Runnable" seed="1936299307" result="Passed" start-time="2026-09-30 21:14:37Z" end-time="2026-09-30 21:14:37Z" duration="0.024549" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1492" name="EighteenVsEighteenAndThreeSameDirectionFormationsFullyDeploy" fullname="RPG.Tests.RealmContinuityTests.EighteenVsEighteenAndThreeSameDirectionFormationsFullyDeploy" methodname="EighteenVsEighteenAndThreeSameDirectionFormationsFullyDeploy" classname="RPG.Tests.RealmContinuityTests" runstate="Runnable" seed="1965956279" result="Passed" start-time="2026-09-30 21:14:37Z" end-time="2026-09-30 21:14:37Z" duration="0.001283" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1499" name="FullyUnsuppliedReserveSuppressesRecoveryButPartialFoodDoesNotInventNewPenalty" fullname="RPG.Tests.RealmContinuityTests.FullyUnsuppliedReserveSuppressesRecoveryButPartialFoodDoesNotInventNewPenalty" methodname="FullyUnsuppliedReserveSuppressesRecoveryButPartialFoodDoesNotInventNewPenalty" classname="RPG.Tests.RealmContinuityTests" runstate="Runnable" seed="1296715447" result="Passed" start-time="2026-09-30 21:14:37Z" end-time="2026-09-30 21:14:37Z" duration="0.001542" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1491" name="NonrecursiveParticipationAndNegativeAttackerExcludedDefenderIncluded" fullname="RPG.Tests.RealmContinuityTests.NonrecursiveParticipationAndNegativeAttackerExcludedDefenderIncluded" methodname="NonrecursiveParticipationAndNegativeAttackerExcludedDefenderIncluded" classname="RPG.Tests.RealmContinuityTests" runstate="Runnable" seed="2116177789" result="Passed" start-time="2026-09-30 21:14:37Z" end-time="2026-09-30 21:14:37Z" duration="0.000272" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1493" name="OneArmyWithdrawsWhileAllyContinuesReplayPerArmyDebtNoSubstituteLead" fullname="RPG.Tests.RealmContinuityTests.OneArmyWithdrawsWhileAllyContinuesReplayPerArmyDebtNoSubstituteLead" methodname="OneArmyWithdrawsWhileAllyContinuesReplayPerArmyDebtNoSubstituteLead" classname="RPG.Tests.RealmContinuityTests" runstate="Runnable" seed="556514837" result="Passed" start-time="2026-09-30 21:14:37Z" end-time="2026-09-30 21:14:37Z" duration="0.046946" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1489" name="PersonalServicesTargetSameIdsConflictAndRespectPresenceAndNoFreeHeal" fullname="RPG.Tests.RealmContinuityTests.PersonalServicesTargetSameIdsConflictAndRespectPresenceAndNoFreeHeal" methodname="PersonalServicesTargetSameIdsConflictAndRespectPresenceAndNoFreeHeal" classname="RPG.Tests.RealmContinuityTests" runstate="Runnable" seed="314027437" result="Passed" start-time="2026-09-30 21:14:37Z" end-time="2026-09-30 21:14:37Z" duration="0.004245" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1494" name="PrebattleWithdrawalIsPerTargetAndSaveBlockedDuringCommitment" fullname="RPG.Tests.RealmContinuityTests.PrebattleWithdrawalIsPerTargetAndSaveBlockedDuringCommitment" methodname="PrebattleWithdrawalIsPerTargetAndSaveBlockedDuringCommitment" classname="RPG.Tests.RealmContinuityTests" runstate="Runnable" seed="317668339" result="Passed" start-time="2026-09-30 21:14:37Z" end-time="2026-09-30 21:14:37Z" duration="0.001651" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1497" name="PressureLegalEndingOncePerObjectiveAndMirroredStartingSide" fullname="RPG.Tests.RealmContinuityTests.PressureLegalEndingOncePerObjectiveAndMirroredStartingSide" classname="RPG.Tests.RealmContinuityTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-09-30 21:14:37Z" end-time="2026-09-30 21:14:37Z" duration="0.010275" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1495" name="PressureLegalEndingOncePerObjectiveAndMirroredStartingSide(West)" fullname="RPG.Tests.RealmContinuityTests.PressureLegalEndingOncePerObjectiveAndMirroredStartingSide(West)" methodname="PressureLegalEndingOncePerObjectiveAndMirroredStartingSide" classname="RPG.Tests.RealmContinuityTests" runstate="Runnable" seed="1281713541" result="Passed" start-time="2026-09-30 21:14:37Z" end-time="2026-09-30 21:14:37Z" duration="0.001832" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1496" name="PressureLegalEndingOncePerObjectiveAndMirroredStartingSide(East)" fullname="RPG.Tests.RealmContinuityTests.PressureLegalEndingOncePerObjectiveAndMirroredStartingSide(East)" methodname="PressureLegalEndingOncePerObjectiveAndMirroredStartingSide" classname="RPG.Tests.RealmContinuityTests" runstate="Runnable" seed="2132233562" result="Passed" start-time="2026-09-30 21:14:37Z" end-time="2026-09-30 21:14:37Z" duration="0.003541" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-case id="1490" name="RetiredStaffStillConsumesAndReserveDeprivationPersistsWithoutInventedHpPenalty" fullname="RPG.Tests.RealmContinuityTests.RetiredStaffStillConsumesAndReserveDeprivationPersistsWithoutInventedHpPenalty" methodname="RetiredStaffStillConsumesAndReserveDeprivationPersistsWithoutInventedHpPenalty" classname="RPG.Tests.RealmContinuityTests" runstate="Runnable" seed="1620625106" result="Passed" start-time="2026-09-30 21:14:37Z" end-time="2026-09-30 21:14:37Z" duration="0.000921" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1487" name="TransferFailsAtomicallyForRemoteOrOverCapacityAndDoesNotDestroyFood" fullname="RPG.Tests.RealmContinuityTests.TransferFailsAtomicallyForRemoteOrOverCapacityAndDoesNotDestroyFood" methodname="TransferFailsAtomicallyForRemoteOrOverCapacityAndDoesNotDestroyFood" classname="RPG.Tests.RealmContinuityTests" runstate="Runnable" seed="1402536997" result="Passed" start-time="2026-09-30 21:14:37Z" end-time="2026-09-30 21:14:37Z" duration="0.000618" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1500" name="RealmOperationsTests" fullname="RPG.Tests.RealmOperationsTests" classname="RPG.Tests.RealmOperationsTests" runstate="Runnable" testcasecount="13" result="Passed" start-time="2026-09-30 21:14:37Z" end-time="2026-09-30 21:14:37Z" duration="0.011547" total="13" passed="13" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1506" name="CityReserveReformKeepsDebtAndIdentityWithoutFreeProvision" fullname="RPG.Tests.RealmOperationsTests.CityReserveReformKeepsDebtAndIdentityWithoutFreeProvision" methodname="CityReserveReformKeepsDebtAndIdentityWithoutFreeProvision" classname="RPG.Tests.RealmOperationsTests" runstate="Runnable" seed="445131940" result="Passed" start-time="2026-09-30 21:14:37Z" end-time="2026-09-30 21:14:37Z" duration="0.002322" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1510" name="CitySupplyProportionateConservesFractionsAndReserveEatsFirst" fullname="RPG.Tests.RealmOperationsTests.CitySupplyProportionateConservesFractionsAndReserveEatsFirst" methodname="CitySupplyProportionateConservesFractionsAndReserveEatsFirst" classname="RPG.Tests.RealmOperationsTests" runstate="Runnable" seed="4322439" result="Passed" start-time="2026-09-30 21:14:37Z" end-time="2026-09-30 21:14:37Z" duration="0.000709" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1507" name="CommissionExistingElfAndThirdArmyPreservesHistoryNotFreeSoldiers" fullname="RPG.Tests.RealmOperationsTests.CommissionExistingElfAndThirdArmyPreservesHistoryNotFreeSoldiers" methodname="CommissionExistingElfAndThirdArmyPreservesHistoryNotFreeSoldiers" classname="RPG.Tests.RealmOperationsTests" runstate="Runnable" seed="1047987090" result="Passed" start-time="2026-09-30 21:14:37Z" end-time="2026-09-30 21:14:37Z" duration="0.000634" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1512" name="DeadFirstArmyDoesNotDefeatSideAndCommanderlessPartialTransferRemainsLegal" fullname="RPG.Tests.RealmOperationsTests.DeadFirstArmyDoesNotDefeatSideAndCommanderlessPartialTransferRemainsLegal" methodname="DeadFirstArmyDoesNotDefeatSideAndCommanderlessPartialTransferRemainsLegal" classname="RPG.Tests.RealmOperationsTests" runstate="Runnable" seed="727094273" result="Passed" start-time="2026-09-30 21:14:37Z" end-time="2026-09-30 21:14:37Z" duration="0.000310" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1513" name="DuplicatePhysicalIdentityLoadRejectedWithoutTouchingLiveState" fullname="RPG.Tests.RealmOperationsTests.DuplicatePhysicalIdentityLoadRejectedWithoutTouchingLiveState" methodname="DuplicatePhysicalIdentityLoadRejectedWithoutTouchingLiveState" classname="RPG.Tests.RealmOperationsTests" runstate="Runnable" seed="1206772281" result="Passed" start-time="2026-09-30 21:14:37Z" end-time="2026-09-30 21:14:37Z" duration="0.000837" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1505" name="FieldHandoverChargesBothAndAntiRelayKeepsSpentCeiling" fullname="RPG.Tests.RealmOperationsTests.FieldHandoverChargesBothAndAntiRelayKeepsSpentCeiling" methodname="FieldHandoverChargesBothAndAntiRelayKeepsSpentCeiling" classname="RPG.Tests.RealmOperationsTests" runstate="Runnable" seed="1260560872" result="Passed" start-time="2026-09-30 21:14:37Z" end-time="2026-09-30 21:14:37Z" duration="0.000445" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1501" name="InitialNumbersProfilesFoodAndHistoricResearchAreScopedTo06" fullname="RPG.Tests.RealmOperationsTests.InitialNumbersProfilesFoodAndHistoricResearchAreScopedTo06" methodname="InitialNumbersProfilesFoodAndHistoricResearchAreScopedTo06" classname="RPG.Tests.RealmOperationsTests" runstate="Runnable" seed="202664363" result="Passed" start-time="2026-09-30 21:14:37Z" end-time="2026-09-30 21:14:37Z" duration="0.001048" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1511" name="OneHopParticipationChargesEveryAttackerAndDoesNotChain" fullname="RPG.Tests.RealmOperationsTests.OneHopParticipationChargesEveryAttackerAndDoesNotChain" methodname="OneHopParticipationChargesEveryAttackerAndDoesNotChain" classname="RPG.Tests.RealmOperationsTests" runstate="Runnable" seed="1562665397" result="Passed" start-time="2026-09-30 21:14:37Z" end-time="2026-09-30 21:14:37Z" duration="0.000610" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1503" name="PreviewAndInvalidCommandsDoNotMutateWorldOrPersistentState" fullname="RPG.Tests.RealmOperationsTests.PreviewAndInvalidCommandsDoNotMutateWorldOrPersistentState" methodname="PreviewAndInvalidCommandsDoNotMutateWorldOrPersistentState" classname="RPG.Tests.RealmOperationsTests" runstate="Runnable" seed="2131091934" result="Passed" start-time="2026-09-30 21:14:37Z" end-time="2026-09-30 21:14:37Z" duration="0.000810" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1508" name="ReceiverRaceCapacityIsRealAndTierDoesNotIncreaseLoad" fullname="RPG.Tests.RealmOperationsTests.ReceiverRaceCapacityIsRealAndTierDoesNotIncreaseLoad" methodname="ReceiverRaceCapacityIsRealAndTierDoesNotIncreaseLoad" classname="RPG.Tests.RealmOperationsTests" runstate="Runnable" seed="740669398" result="Passed" start-time="2026-09-30 21:14:37Z" end-time="2026-09-30 21:14:37Z" duration="0.000635" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1504" name="RoundTripInitialAndMovedActorTurnAreExactAndContinueDeterministically" fullname="RPG.Tests.RealmOperationsTests.RoundTripInitialAndMovedActorTurnAreExactAndContinueDeterministically" methodname="RoundTripInitialAndMovedActorTurnAreExactAndContinueDeterministically" classname="RPG.Tests.RealmOperationsTests" runstate="Runnable" seed="533699804" result="Passed" start-time="2026-09-30 21:14:37Z" end-time="2026-09-30 21:14:37Z" duration="0.000925" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1502" name="SelectionIsNotRefreshAndBothArmiesActWithinOneSideTurn" fullname="RPG.Tests.RealmOperationsTests.SelectionIsNotRefreshAndBothArmiesActWithinOneSideTurn" methodname="SelectionIsNotRefreshAndBothArmiesActWithinOneSideTurn" classname="RPG.Tests.RealmOperationsTests" runstate="Runnable" seed="696120347" result="Passed" start-time="2026-09-30 21:14:37Z" end-time="2026-09-30 21:14:37Z" duration="0.000372" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1509" name="SharedRecruitQueueTargetsReserveThenPhysicalTransferWithoutAdditionalChannel" fullname="RPG.Tests.RealmOperationsTests.SharedRecruitQueueTargetsReserveThenPhysicalTransferWithoutAdditionalChannel" methodname="SharedRecruitQueueTargetsReserveThenPhysicalTransferWithoutAdditionalChannel" classname="RPG.Tests.RealmOperationsTests" runstate="Runnable" seed="55171270" result="Passed" start-time="2026-09-30 21:14:37Z" end-time="2026-09-30 21:14:37Z" duration="0.000780" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[Saving results to: /tmp/realm-operations-06/test-preferences/Library/Application Support/DefaultCompany/My project/TestResults.xml
+]]></output>
+            </test-case>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

@@ -45,9 +45,10 @@ namespace RPG.Presentation
             string key=loadedEncounter.UnitIds.FirstOrDefault(k=>k.Value==id).Key;
             return World.Player.Members.Concat(World.Actors.SelectMany(a=>a.Formation.Members)).FirstOrDefault(c=>c.CharacterId==key);
         }
+        public string ConnectedArmyName(UnitId id) {var c=ConnectedCharacter(id);return Duel?.Realm==null||c==null?"":Duel.Realm.Armies.FirstOrDefault(f=>f.Formation.Members.Contains(c))?.Formation.FormationId??"";}
         public string UnitName(UnitId id)
-        {var c=ConnectedCharacter(id);return c==null?(Lab.HasValue||State.FindUnit(id).Profile.IsCaster||State.FindUnit(id).Profile.HasGracefulExit?State.FindUnit(id).Profile.Id+" #"+id:PrototypeFixture.Name(id)):c.CharacterId+" · "+c.Profile.Id+(c.IsCommander?" *":"");}
-        public bool IsCommander(UnitId id)=>World==null&&Duel==null?(id.Value==1||id.Value==6||id.Value==19):ConnectedCharacter(id)?.IsCommander==true;
+        {var c=ConnectedCharacter(id);return c==null?(Lab.HasValue||State.FindUnit(id).Profile.IsCaster||State.FindUnit(id).Profile.HasGracefulExit?State.FindUnit(id).Profile.Id+" #"+id:PrototypeFixture.Name(id)):(Duel?.Realm!=null?"["+ConnectedArmyName(id).Replace("realm06-","")+"] ":"")+c.CharacterId+" · "+c.Profile.Id+(IsCommander(id)?" *":"");}
+        public bool IsCommander(UnitId id)=>World==null&&Duel==null?(id.Value==1||id.Value==6||id.Value==19):Duel?.Realm!=null?ConnectedCharacter(id)!=null&&Duel.Realm.Armies.Any(f=>f.Formation.Commander==ConnectedCharacter(id)):ConnectedCharacter(id)?.IsCommander==true;
         public void StartStrategicScenario()
         {StrategicSaveMessage="One manual slot · strategic map only.";ShowStrategicScenario(new StrategicScenario());}
         private void ShowStrategicScenario(StrategicScenario scenario)

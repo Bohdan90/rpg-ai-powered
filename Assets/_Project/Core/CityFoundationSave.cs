@@ -16,13 +16,13 @@ namespace RPG.Core
         public int node,parent,controller,development,tower; public bool functioning,forge,institute,depot,assay,hasActive;
         public string[] stock;public string regional,condition;public int[] queue;public CityProjectData active;
         public static CityLocationData Capture(CityLocation l)=>new CityLocationData{node=l.Node,parent=l.Parent,controller=(int)l.Controller,development=l.Development,tower=l.MageTower,functioning=l.Functioning,forge=l.Forge,institute=l.Institute,depot=l.Depot,assay=l.Assay,stock=l.Stock.Select(CityFoundationData.Number).ToArray(),regional=CityFoundationData.Number(l.Regional),condition=CityFoundationData.Number(l.OutputCondition),queue=l.Queue.Select(k=>(int)k).ToArray(),hasActive=l.Active!=null,active=CityProjectData.Capture(l.Active)};
-        public CityLocation Restore(CityLocation expected,int refresh)
+        public CityLocation Restore(CityLocation expected,int refresh,bool realmMode=false)
         {
             StrategicSaveData.Require(node==expected.Node&&parent==expected.Parent&&CrossroadsScenario.ValidSide((Side)controller)&&(!expected.IsCity||controller==(int)expected.Controller),"Changed fixed parent/protected City.");
             StrategicSaveData.Require(development>=1&&development<=3&&tower>=0&&tower<=2&&stock?.Length==4&&queue!=null&&queue.Length<=8&&queue.Distinct().Count()==queue.Length&&queue.All(k=>Enum.IsDefined(typeof(CityProjectKind),k)),"Invalid location/queue.");
             var l=new CityLocation{Node=node,Parent=parent,Controller=(Side)controller,Development=development,MageTower=tower,Functioning=functioning,Forge=forge,Institute=institute,Depot=depot,Assay=assay,Stock=stock.Select(CityFoundationData.Decimal).ToArray(),Regional=CityFoundationData.Decimal(regional),OutputCondition=CityFoundationData.Decimal(condition),Queue=queue.Select(k=>(CityProjectKind)k).ToList(),Active=hasActive?(active??throw new InvalidDataException("Missing active project")).Restore(refresh):null};
             StrategicSaveData.Require(l.OutputCondition<=1,"Invalid source condition.");
-            for(int i=0;i<4;i++)StrategicSaveData.Require(l.Stock[i]<=CityFoundations.Baseline[i]*(l.IsMinor?4:3),"Stock over capacity.");
+            for(int i=0;i<4;i++)StrategicSaveData.Require(l.Stock[i]<=(realmMode&&i==1?12m:CityFoundations.Baseline[i])*(l.IsMinor?4:3),"Stock over capacity.");
             StrategicSaveData.Require(l.PhysicalLoad+l.ReservedLoad<=l.DeepCapacity,"Overbooked Deep Capacity.");return l;
         }
         public void Write(BinaryWriter w){foreach(int n in new[]{node,parent,controller,development,tower})w.Write(n);foreach(bool b in new[]{functioning,forge,institute,depot,assay})w.Write(b);foreach(var s in stock)w.Write(s);w.Write(regional);w.Write(condition);w.Write(queue.Length);foreach(int k in queue)w.Write(k);w.Write(hasActive);if(hasActive)active.Write(w);}
@@ -59,14 +59,14 @@ namespace RPG.Core
     }
     [Serializable] public sealed class CityFoundationData
     {
-        public bool combined;public CityLocationData[] locations;public CityRealmData west,east;
+        public bool combined,realmMode;public CityLocationData[] locations;public CityRealmData west,east;
         internal static string Number(decimal n)=>n.ToString(CultureInfo.InvariantCulture);
         internal static decimal Decimal(string s){StrategicSaveData.Require(decimal.TryParse(s,NumberStyles.AllowDecimalPoint,CultureInfo.InvariantCulture,out var n)&&n>=0&&n<=1000000000m,"Invalid precise quantity.");return n;}
-        public static CityFoundationData Capture(CityFoundations f)=>new CityFoundationData{combined=f.Combined,locations=f.Locations.Select(CityLocationData.Capture).ToArray(),west=CityRealmData.Capture(f.West),east=CityRealmData.Capture(f.East)};
+        public static CityFoundationData Capture(CityFoundations f)=>new CityFoundationData{combined=f.Combined,realmMode=f.RealmMode,locations=f.Locations.Select(CityLocationData.Capture).ToArray(),west=CityRealmData.Capture(f.West),east=CityRealmData.Capture(f.East)};
         public CityFoundations Restore(int refresh)
         {
-            var f=new CityFoundations(combined);StrategicSaveData.Require(locations?.Length==12&&locations.All(l=>l!=null)&&locations.Select(l=>l.node).Distinct().Count()==12&&west!=null&&east!=null,"Invalid foundation locations.");
-            f.Locations=locations.Select(l=>l.Restore(f.Location(l.node)??throw new InvalidDataException("Unknown location"),refresh)).ToList();f.West=west.Restore(refresh);f.East=east.Restore(refresh);
+            var f=new CityFoundations(combined){RealmMode=realmMode};StrategicSaveData.Require(locations?.Length==12&&locations.All(l=>l!=null)&&locations.Select(l=>l.node).Distinct().Count()==12&&west!=null&&east!=null,"Invalid foundation locations.");
+            f.Locations=locations.Select(l=>l.Restore(f.Location(l.node)??throw new InvalidDataException("Unknown location"),refresh,realmMode)).ToList();f.West=west.Restore(refresh);f.East=east.Restore(refresh);
             if(!combined)StrategicSaveData.Require(f.Locations.All(l=>l.MageTower==0)&&f.West.Training==null&&f.East.Training==null,"Mage data in 05A.");return f;
         }
         public void Write(BinaryWriter w){w.Write(combined);w.Write(locations.Length);foreach(var l in locations)l.Write(w);west.Write(w);east.Write(w);}

@@ -7,6 +7,7 @@ namespace RPG.Core
         public const int RecruitCost=100;
         public string RecruitBlocker(Side side,UnitProfileId profile)
         {
+            if(Realm!=null)return "06 requires an explicit army or Reserve recipient.";
             if(!Economy)return "Economy disabled in Part A fixture.";
             if(!CanAct(side))return "No active side authority.";
             bool mage=profile==UnitProfileId.FireMageTI||profile==UnitProfileId.IceMageTI||profile==UnitProfileId.HumanHealerTI;

@@ -69,10 +69,10 @@ namespace RPG.Core
         public int[] owners;
         public string[] events;
         public DuelSaveForce west,east;
-        public IncidentSaveData incident; public CityFoundationData foundations;
+        public RealmSaveData realm; public IncidentSaveData incident; public CityFoundationData foundations;
         public CrossroadsScenario Restore()
         {
-            StrategicSaveData.Require((version==Version&&scenario==Scenario)||(version==3&&scenario==IncidentState.Id&&incident!=null)||(version==4&&scenario=="CityFoundations-05"&&foundations!=null),"Unsupported Crossroads schema/scenario.");
+            StrategicSaveData.Require((version==Version&&scenario==Scenario)||(version==3&&scenario==IncidentState.Id&&incident!=null)||(version==4&&scenario=="CityFoundations-05"&&foundations!=null)||(version==5&&scenario=="RealmOperations-06"&&foundations!=null&&realm!=null),"Unsupported Crossroads schema/scenario.");
             var candidate=new CrossroadsScenario(this);
             StrategicSaveData.Require(!string.IsNullOrEmpty(checksum)&&checksum==ComputeHash(),"Crossroads checksum mismatch.");return candidate;
         }
@@ -82,7 +82,7 @@ namespace RPG.Core
             {
                 w.Write(version);w.Write(scenario);w.Write(seed);w.Write(refresh);w.Write(startingSide);w.Write(activeSide);w.Write(completed);w.Write(winner);w.Write(battleNumber);w.Write(handoff);w.Write(economy);w.Write(waystationFood);
                 w.Write(owners.Length);foreach(int n in owners)w.Write(n);west.Write(w);east.Write(w);w.Write(events.Length);foreach(var e in events)w.Write(e);
-                if(version==3)incident.Write(w);if(version==4){foundations.Write(w);w.Write(west.goldExact);w.Write(west.foodExact);w.Write(east.goldExact);w.Write(east.foodExact);}
+                if(version==3)incident.Write(w);if(version>=4){foundations.Write(w);w.Write(west.goldExact);w.Write(west.foodExact);w.Write(east.goldExact);w.Write(east.foodExact);if(version==5){w.Write(foundations.realmMode);realm.Write(w);}}
                 w.Flush();using(var sha=SHA256.Create())return Convert.ToBase64String(sha.ComputeHash(stream.ToArray()));
             }
         }
@@ -92,10 +92,10 @@ namespace RPG.Core
         public CrossroadsSaveData CaptureSave()
         {
             if(!CanSave)throw new InvalidOperationException("Finish battle before saving Crossroads.");
-            var d=new CrossroadsSaveData {version=Foundations!=null?4:Incident==null?CrossroadsSaveData.Version:3,scenario=Foundations!=null?"CityFoundations-05":Incident==null?CrossroadsSaveData.Scenario:IncidentState.Id,foundations=Foundations==null?null:CityFoundationData.Capture(Foundations),incident=Incident==null?null:IncidentSaveData.Capture(Incident),seed=Seed,refresh=Refresh,
+            var d=new CrossroadsSaveData {version=Realm!=null?5:Foundations!=null?4:Incident==null?CrossroadsSaveData.Version:3,scenario=Realm!=null?"RealmOperations-06":Foundations!=null?"CityFoundations-05":Incident==null?CrossroadsSaveData.Scenario:IncidentState.Id,foundations=Foundations==null?null:CityFoundationData.Capture(Foundations),incident=Incident==null?null:IncidentSaveData.Capture(Incident),seed=Seed,refresh=Refresh,
                 startingSide=(int)StartingSide,activeSide=(int)ActiveSide,completed=CompletedActivations,handoff=HandoffPending,winner=Winner.HasValue?(int)Winner.Value:-1,
                 battleNumber=battleNumber,economy=Economy,waystationFood=WaystationFood,owners=owners.Select(o=>o.HasValue?(int)o.Value:-1).ToArray(),west=DuelSaveForce.Capture(West),east=DuelSaveForce.Capture(East),events=events.ToArray()};
-            d.checksum=d.ComputeHash();return d;
+            if(Realm!=null)d.realm=RealmSaveData.Capture(Realm);d.checksum=d.ComputeHash();return d;
         }
         internal CrossroadsScenario(CrossroadsSaveData d):this((Side)d.startingSide,d.seed,d.economy,d.version==3,d.version==3&&d.incident.enabled)
         {
@@ -105,7 +105,16 @@ namespace RPG.Core
             StrategicSaveData.Require(d.owners!=null&&d.owners.Length==3&&d.owners.All(o=>o==-1||ValidSide((Side)o)),"Invalid objective owners.");
             StrategicSaveData.Require(d.west!=null&&d.east!=null&&d.events!=null&&d.events.Length<=20000&&d.events.All(e=>e!=null&&e.Length<=4096),"Incomplete snapshot.");
             StrategicSaveData.Require(d.waystationFood>=0&&d.waystationFood<=24&&(d.economy||d.waystationFood==0),"Invalid Waystation Food.");
-            if(d.version==4){StrategicSaveData.Require(d.economy,"05 requires economy.");Foundations=d.foundations.Restore(d.refresh);}
+            if(d.version>=4){StrategicSaveData.Require(d.economy,"05 requires economy.");StrategicSaveData.Require(d.version==5||!d.foundations.realmMode,"06 adapter in legacy save.");Foundations=d.foundations.Restore(d.refresh);}
+            if(d.version==5) {
+                StrategicSaveData.Require(d.foundations.realmMode,"Missing 06 economy adapter.");
+                Refresh=d.refresh;ActiveSide=(Side)d.activeSide;CompletedActivations=d.completed;HandoffPending=d.handoff;Winner=d.winner<0?(Side?)null:(Side)d.winner;battleNumber=d.battleNumber;WaystationFood=d.waystationFood;
+                Realm=d.realm.Restore(this);West=Realm.Armies.Single(f=>f.Formation.FormationId=="realm06-West-army-1");East=Realm.Armies.Single(f=>f.Formation.FormationId=="realm06-East-army-1");
+                West.Gold=CityFoundationData.Decimal(d.west.goldExact);East.Gold=CityFoundationData.Decimal(d.east.goldExact);West.KeepFood=CityFoundationData.Decimal(d.west.foodExact);East.KeepFood=CityFoundationData.Decimal(d.east.foodExact);West.Pressure=d.west.pressure;East.Pressure=d.east.pressure;
+                StrategicSaveData.Require(West.KeepFood<=180&&East.KeepFood<=180&&West.Pressure>=0&&East.Pressure>=0,"Invalid 06 treasury.");
+                for(int i=0;i<3;i++)owners[i]=d.owners[i]<0?(Side?)null:(Side)d.owners[i];events.AddRange(d.events);
+                var expectedWinner=Winner;Realm.CheckVictory();StrategicSaveData.Require(expectedWinner==Winner,"Inconsistent 06 victory.");return;
+            }
             WaystationFood=d.waystationFood;West=d.west.Restore(Side.West,Economy,d.refresh,Graph,Foundations);East=d.east.Restore(Side.East,Economy,d.refresh,Graph,Foundations);
             StrategicSaveData.Require(!West.Continues||!East.Continues||West.Node!=East.Node,"Overlapping formations.");
             bool pressureWin=Math.Max(West.Pressure,East.Pressure)>=TargetPressure&&West.Pressure!=East.Pressure;

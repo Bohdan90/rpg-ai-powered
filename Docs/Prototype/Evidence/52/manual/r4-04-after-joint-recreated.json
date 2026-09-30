@@ -1,0 +1,1993 @@
+{
+  "mode": "r3-joint",
+  "hash": "dFw4/df1UU+zMQZYMnmRYwIlNMEH22TuOpg9zExZCEw=",
+  "plan": "MoveCommand",
+  "contact": "",
+  "hud": "Loaded Crossroads R1\nRestarted with seed 20260921.\nGATE C / HOTSEAT\nBLUE West \u00b7 ORANGE East \u00b7 GOLD active\nGreen: reachable \u00b7 Gold: path \u00b7 Red segment: OA risk\nSword + shield: HW/EW \u00b7 Bow: HA \u00b7 * Commander\nWhite arrow: facing \u00b7 Red border: ZoC ready \u00b7 Gray: spent\nWheel: zoom \u00b7 Right-click: center view\n\u2190 West Retreat \u2014 YOUR ESCAPE\nEast Retreat \u2192\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n0\n1\n2\n3\n4\n5\n6\n7\n8\nHW*\nHP 40/40\nA 16/16\nHW\nHP 40/40\nA 16/16\nHA\nHP 28/28\nA 4/4\nHA\nHP 28/28\nA 4/4\nEW\nHP 32/32\nA 6/6\nHW*\nHP 40/40\nA 16/16\nHW\nHP 40/40\nA 16/16\nHA\nHP 28/28\nA 4/4\nHA\nHP 28/28\nA 4/4\nEW\nHP 32/32\nA 6/6\nTACTICAL GRAYBOX\nHotseat \u00b7 ZoC / OA / physical Retreat\nController\nHotseat\nROUND 1 \u00b7 W EW-Flanker\nWest | HP 32 / Armor 6\nMovement 6 | Action available\nFacing East | Defending no | OA ready\n\nBarrier 0\nAbility\nHover the battlefield.\nNo destination / target selected.\nClick a cell or unit, then confirm. Green cells: Core reachable.\nExplicitly confirm allied target\nInitiative order (\u25ba current):\n\u25ba W EW-Flanker [14] OA ready\n   E EW-Flanker [14] OA ready\n   W HA-Left [12] no OA\n   W HA-Right [12] no OA\n   E HA-Left [12] no OA\n   E HA-Right [12] no OA\n   E HW-Commander * [10] OA ready\n   W HW-Commander * [10] OA ready\n   W HW-Infantry [10] OA ready\n   E HW-Infantry [10] OA ready\nWest: West edge. East: East edge.\nYOUR escape: West edge\nEscaped/Safe:\nNone\nEnd facing\nRestarted with seed 20260921.\nFixture (resets battle)\n05B West preset\n05B East preset\n05 Starting Side\nSize/density experiment \u00b7 no combat retuning. 9v9 = synthetic tactical roster, not strategic Capacity validation. Siege: static fortress; moat proxy has fixed crossings. 41\u00d739 preserves each attacker approach; West = attacker coalition, East = defenders. No real siege mechanics.\nLOCAL REPLAY / TELEMETRY\nReplay file\nRECENT CORE EVENTS\nR0 Battle: BattleStarted\nR1 Battle: RoundStarted\nR1 W EW-Flanker: ActivationStarted\nREALM OPERATIONS 06 \u00b7 two human sides \u00b7 open information\nR1 \u00b7 active SIDE West \u00b7 selected ARMY realm06-West-army-1\nPressure West 0 / East 0 \u00b7 target24 \u00b7 match ongoing\nSelected army\nMove:  cost 0 \u00b7 Occupied or unreachable destination.\nEncounter: Legal hostile contact, nonnegative lead Tempo and an unprotected Battle Target required.\nrealm06-East-army-1 fully withdrew -> 10 debt/Tempo 60\nrealm06-East-army-2 fully withdrew -> 13 debt/Tempo 60\nrealm06-West-army-1 fully withdrew -> 4 debt/Tempo 10\nrealm06-West-army-2 holds origin 3; living 3; Commanderless=False\nOne coalition XP pool; same IDs/HP/Armor/budgets; no Refresh.\nLoaded Crossroads R1\nrealm06-West-army-1 @NW Ridge\nHumanWarriorTI \u00b7 Command L1 Rank I \u00b7 Capacity 12/32\nTempo/debt 10 \u00b7 Prov 30/30 \u00b7 meal 5 incl staff2 \u00b7 due this cycle 5\nHumanWarriorTI Native load6; HumanArcherTI Native load6\n\nrealm06-West-army-2 @West Fork\nFireMageTII \u00b7 Command L1 Rank I \u00b7 Capacity 15/32\nTempo/debt 50 \u00b7 Prov 30/30 \u00b7 meal 5 incl staff2 \u00b7 due this cycle 5\nElfWarriorTII Unfamiliar load9; HumanArcherTI Native load6\n\nCity Reserve: 0 living \u00b7 carried staff meals due 0\nPhysical source\nRecipient / recruit destination\nChoose distinct own source/recipient and real unit IDs.\nReserve officer / Commission candidate\nRecruit L1 profile\nForm preview: Physically present unassigned commissioned officer required.\nCommission: none \u00b7 queued \nCandidate: Existing living Tier II+ uncommissioned character in City Reserve required.\nRecruit: realm06-West-recruit-1 -> Reserve\nRecruit blocker: Shared side recruit queue: at most one completion/order per Refresh.\nServices: \nForge quote: No legal selected damaged local IDs\nTraining: select one HOM\nIntegrated rear City \u00b7 Dev 2 Tower 2 \u00b7 pre-scenario Drills Work6\nGold 200 Wood 30 Iron 20 Food 120/180\nReserve eats first. Own-City army supply <=2\u00d7meal proportionally; HP40% (field15%); no free Armor repair. Waystation Food 24/24, <=6.\nRegional current 40 / last 0 \u00b7 Deep 0+0/0\nBuild Forge: 100G 10W 10I, 2 steps \u00b7 Development II + Forge Organization required.\nActive:  steps  \u00b7 queue \nResearch:  \u00b7 Extraction 0/6; Assay 0/6; ResearchMethod 0/12; ForgeOrganization 0/12; ElementalDrills 6/6\nConstruction at selected City/Minor\nRealm research\nPass to West. No Refresh at handoff.",
+  "spell": "",
+  "persistentPath": "/tmp/realm-operations-06/gui-preferences/Library/Application Support/DefaultCompany/My project",
+  "ff": false,
+  "gx": 2982.0,
+  "gy": 326.0,
+  "gw": 1206.0,
+  "fields": [
+    {
+      "label": "Controller",
+      "name": "controller-mode",
+      "index": 0,
+      "choices": [
+        "Hotseat",
+        "Player West vs AI East",
+        "Player East vs AI West"
+      ],
+      "x": 1337.08642578125,
+      "y": -855.41943359375
+    },
+    {
+      "label": "Ability",
+      "name": "spell-selector",
+      "index": 0,
+      "choices": [
+        "Basic / Move"
+      ],
+      "x": 1337.08642578125,
+      "y": -651.434814453125
+    },
+    {
+      "label": "End facing",
+      "name": "",
+      "index": 0,
+      "choices": [
+        "Keep current",
+        "North",
+        "NorthEast",
+        "East",
+        "SouthEast",
+        "South",
+        "SouthWest",
+        "West",
+        "NorthWest"
+      ],
+      "x": 1337.08642578125,
+      "y": -2.632049560546875
+    },
+    {
+      "label": "Fixture (resets battle)",
+      "name": "fixture-selector",
+      "index": 0,
+      "choices": [
+        "Field_13x9_Control",
+        "Field_17x11_Expanded",
+        "Siege_23x17_Tight",
+        "Siege_27x21_Roomy",
+        "Field_19x13_ExpandedV2",
+        "Siege_31x25_Medium",
+        "Siege_35x27_Large",
+        "Field_23x17_Full_9v9",
+        "Siege_35x27_Full_9v9",
+        "Siege_41x39_West_9v9",
+        "Siege_41x39_East_9v9",
+        "Siege_41x39_North_9v9",
+        "Siege_41x39_South_9v9",
+        "Siege_41x39_WestEast_18v9",
+        "Siege_41x39_NorthSouth_18v9"
+      ],
+      "x": 1337.08642578125,
+      "y": 123.7069091796875
+    },
+    {
+      "label": "05B West preset",
+      "name": "",
+      "index": 0,
+      "choices": [
+        "Fire",
+        "Ice",
+        "Support"
+      ],
+      "x": 1337.08642578125,
+      "y": 310.5831298828125
+    },
+    {
+      "label": "05B East preset",
+      "name": "",
+      "index": 1,
+      "choices": [
+        "Fire",
+        "Ice",
+        "Support"
+      ],
+      "x": 1337.08642578125,
+      "y": 355.32818603515625
+    },
+    {
+      "label": "05 Starting Side",
+      "name": "",
+      "index": 0,
+      "choices": [
+        "West",
+        "East"
+      ],
+      "x": 1337.08642578125,
+      "y": 400.07318115234375
+    },
+    {
+      "label": "Selected army",
+      "name": "realm-selected",
+      "index": 0,
+      "choices": [
+        "realm06-West-army-1",
+        "realm06-West-army-2"
+      ],
+      "x": 432.3158264160156,
+      "y": 119.75872802734375
+    },
+    {
+      "label": "Physical source",
+      "name": "realm-source",
+      "index": 0,
+      "choices": [
+        "Reserve",
+        "realm06-West-army-1",
+        "realm06-West-army-2"
+      ],
+      "x": 1231.8040771484375,
+      "y": 304.0029296875
+    },
+    {
+      "label": "Recipient / recruit destination",
+      "name": "realm-recipient",
+      "index": 0,
+      "choices": [
+        "Reserve",
+        "realm06-West-army-1",
+        "realm06-West-army-2"
+      ],
+      "x": 1231.8040771484375,
+      "y": 348.7479553222656
+    },
+    {
+      "label": "Reserve officer / Commission candidate",
+      "name": "realm-officer",
+      "index": -1,
+      "choices": [],
+      "x": 1231.8040771484375,
+      "y": 474.4288024902344
+    },
+    {
+      "label": "Recruit L1 profile",
+      "name": "realm-profile",
+      "index": 0,
+      "choices": [
+        "HumanWarriorTI",
+        "HumanArcherTI",
+        "FireMageTI",
+        "IceMageTI"
+      ],
+      "x": 1231.8040771484375,
+      "y": 743.556884765625
+    },
+    {
+      "label": "Construction at selected City/Minor",
+      "name": "realm-project",
+      "index": 2,
+      "choices": [
+        "DevelopmentII",
+        "DevelopmentIII",
+        "Forge",
+        "ResearchInstitute",
+        "ExtractionDepot",
+        "AssayOffice",
+        "MageTowerI",
+        "MageTowerII"
+      ],
+      "x": 1231.8040771484375,
+      "y": 1241.0162353515625
+    },
+    {
+      "label": "Realm research",
+      "name": "realm-tech",
+      "index": 3,
+      "choices": [
+        "Extraction",
+        "Assay",
+        "ResearchMethod",
+        "ForgeOrganization",
+        "ElementalDrills"
+      ],
+      "x": 1231.8040771484375,
+      "y": 1464.7413330078125
+    }
+  ],
+  "toggles": [
+    {
+      "label": "Explicitly confirm allied target",
+      "value": false,
+      "x": 1337.08642578125,
+      "y": -445.47607421875
+    }
+  ],
+  "battle": false,
+  "ended": false,
+  "ai": false,
+  "aiTurn": false,
+  "round": 1,
+  "records": 0,
+  "active": 5,
+  "x": 555.2330322265625,
+  "y": 654.5142211914062,
+  "rw": 1587.1322021484375,
+  "rh": 808.0424194335938,
+  "sw": 1206,
+  "sh": 659,
+  "tx": 6,
+  "ty": 0,
+  "buttons": [
+    {
+      "name": "primary-attack",
+      "text": "Basic / Move",
+      "x": 1337.08642578125,
+      "y": -606.689697265625
+    },
+    {
+      "name": "cancel-preview",
+      "text": "Cancel preview",
+      "x": 1337.08642578125,
+      "y": -357.9600524902344
+    },
+    {
+      "name": "defend",
+      "text": "Defend",
+      "x": 1337.08642578125,
+      "y": -50.009124755859375
+    },
+    {
+      "name": "end-activation",
+      "text": "End Activation",
+      "x": 1337.08642578125,
+      "y": 42.113006591796875
+    },
+    {
+      "name": "lab-FireVsIce",
+      "text": "Combat Lab \u00b7 FireVsIce \u00b7 near contact",
+      "x": 1337.08642578125,
+      "y": 168.451904296875
+    },
+    {
+      "name": "lab-SupportVsFire",
+      "text": "Combat Lab \u00b7 SupportVsFire \u00b7 near contact",
+      "x": 1337.08642578125,
+      "y": 215.8289794921875
+    },
+    {
+      "name": "lab-MobileBlades",
+      "text": "Combat Lab \u00b7 MobileBlades \u00b7 near contact",
+      "x": 1337.08642578125,
+      "y": 263.2060546875
+    },
+    {
+      "name": "city-start-a",
+      "text": "City Foundations 05A",
+      "x": 1337.08642578125,
+      "y": 444.8182373046875
+    },
+    {
+      "name": "city-start-b",
+      "text": "City & Combat 05B \u00b7 permanent presets",
+      "x": 1337.08642578125,
+      "y": 492.1953125
+    },
+    {
+      "name": "city-authored",
+      "text": "Load AUTHORED 05B inspection fixture (not a played match)",
+      "x": 1337.08642578125,
+      "y": 539.5723876953125
+    },
+    {
+      "name": "realm-start-west",
+      "text": "Realm Operations 06 \u00b7 West first",
+      "x": 1337.08642578125,
+      "y": 586.949462890625
+    },
+    {
+      "name": "realm-start-east",
+      "text": "Realm Operations 06 \u00b7 East first",
+      "x": 1337.08642578125,
+      "y": 634.3265380859375
+    },
+    {
+      "name": "realm-ice-west",
+      "text": "Realm 06 Ice vs Fire \u00b7 West first",
+      "x": 1337.08642578125,
+      "y": 681.70361328125
+    },
+    {
+      "name": "realm-ice-east",
+      "text": "Realm 06 Ice vs Fire \u00b7 East first",
+      "x": 1337.08642578125,
+      "y": 729.0806884765625
+    },
+    {
+      "name": "realm-load-slot",
+      "text": "Load Realm Operations 06",
+      "x": 1337.08642578125,
+      "y": 776.457763671875
+    },
+    {
+      "name": "city-load-a",
+      "text": "Load City Foundations 05A",
+      "x": 1337.08642578125,
+      "y": 823.8348388671875
+    },
+    {
+      "name": "city-load-b",
+      "text": "Load City & Combat 05B",
+      "x": 1337.08642578125,
+      "y": 871.2119140625
+    },
+    {
+      "name": "persistence-start",
+      "text": "Start Persistence Slice v0.1",
+      "x": 1337.08642578125,
+      "y": 918.5889892578125
+    },
+    {
+      "name": "world-start",
+      "text": "Start Connected Mission 01",
+      "x": 1337.08642578125,
+      "y": 965.966064453125
+    },
+    {
+      "name": "world-load",
+      "text": "Load saved Mission 01",
+      "x": 1337.08642578125,
+      "y": 1013.3431396484375
+    },
+    {
+      "name": "duel-start-west",
+      "text": "Crossroads economy Hotseat \u00b7 West first",
+      "x": 1337.08642578125,
+      "y": 1060.72021484375
+    },
+    {
+      "name": "duel-start-east",
+      "text": "Crossroads economy Hotseat \u00b7 East first",
+      "x": 1337.08642578125,
+      "y": 1108.0972900390625
+    },
+    {
+      "name": "incident-start-west",
+      "text": "Crossroads Incident 04 \u00b7 West first",
+      "x": 1337.08642578125,
+      "y": 1155.4744873046875
+    },
+    {
+      "name": "incident-start-east",
+      "text": "Crossroads Incident 04 \u00b7 East first",
+      "x": 1337.08642578125,
+      "y": 1202.8514404296875
+    },
+    {
+      "name": "incident-control",
+      "text": "Incident 04 \u00b7 control (no incidents)",
+      "x": 1337.08642578125,
+      "y": 1250.2286376953125
+    },
+    {
+      "name": "incident-load",
+      "text": "Load Incident 04",
+      "x": 1337.08642578125,
+      "y": 1297.6055908203125
+    },
+    {
+      "name": "duel-load",
+      "text": "Load Crossroads Hotseat",
+      "x": 1337.08642578125,
+      "y": 1344.9827880859375
+    },
+    {
+      "name": "fit-board",
+      "text": "Fit whole board",
+      "x": 1337.08642578125,
+      "y": 1466.0574951171875
+    },
+    {
+      "name": "focus-unit",
+      "text": "Focus active unit (wheel to zoom)",
+      "x": 1337.08642578125,
+      "y": 1513.4345703125
+    },
+    {
+      "name": "restart",
+      "text": "Restart Same Seed",
+      "x": 1337.08642578125,
+      "y": 1560.8116455078125
+    },
+    {
+      "name": "export-replay",
+      "text": "Export battle + session",
+      "x": 1337.08642578125,
+      "y": 1687.1505126953125
+    },
+    {
+      "name": "verify-replay",
+      "text": "Load / verify replay file",
+      "x": 1337.08642578125,
+      "y": 1734.527587890625
+    },
+    {
+      "name": "realm-select",
+      "text": "Select displayed continuing army",
+      "x": 432.3158264160156,
+      "y": 164.50375366210938
+    },
+    {
+      "name": "realm-node-1",
+      "text": "1 West Keep\n",
+      "x": 48.03509521484375,
+      "y": 392.17694091796875
+    },
+    {
+      "name": "realm-node-2",
+      "text": "2 West Road\n",
+      "x": 140.15719604492188,
+      "y": 392.17694091796875
+    },
+    {
+      "name": "realm-node-3",
+      "text": "3 West Fork\nWest-army-2 (3)",
+      "x": 230.9632568359375,
+      "y": 392.17694091796875
+    },
+    {
+      "name": "realm-node-4",
+      "text": "4 NW Ridge\nWest-army-1 (3)",
+      "x": 323.0853576660156,
+      "y": 252.01974487304688
+    },
+    {
+      "name": "realm-node-5",
+      "text": "5 SW Ford\n",
+      "x": 323.0853576660156,
+      "y": 532.3341064453125
+    },
+    {
+      "name": "realm-node-6",
+      "text": "6 North Mine\n",
+      "x": 414.5494384765625,
+      "y": 252.01974487304688
+    },
+    {
+      "name": "realm-node-7",
+      "text": "7 Central Beacon\n",
+      "x": 414.5494384765625,
+      "y": 392.17694091796875
+    },
+    {
+      "name": "realm-node-8",
+      "text": "8 South Waystation\n",
+      "x": 414.5494384765625,
+      "y": 532.3341064453125
+    },
+    {
+      "name": "realm-node-9",
+      "text": "9 NE Ridge\n",
+      "x": 506.0135192871094,
+      "y": 252.01974487304688
+    },
+    {
+      "name": "realm-node-10",
+      "text": "10 SE Ford\nEast-army-1 (3)",
+      "x": 506.0135192871094,
+      "y": 532.3341064453125
+    },
+    {
+      "name": "realm-node-11",
+      "text": "11 East Fork\n",
+      "x": 598.1356201171875,
+      "y": 392.17694091796875
+    },
+    {
+      "name": "realm-node-12",
+      "text": "12 East Road\n",
+      "x": 689.5997314453125,
+      "y": 392.17694091796875
+    },
+    {
+      "name": "realm-node-13",
+      "text": "13 East Keep\nEast-army-2 (3)",
+      "x": 781.0638427734375,
+      "y": 392.17694091796875
+    },
+    {
+      "name": "realm-node-14",
+      "text": "14 West Minor\n",
+      "x": 140.15719604492188,
+      "y": 671.8333129882812
+    },
+    {
+      "name": "realm-node-15",
+      "text": "15 East Minor\n",
+      "x": 689.5997314453125,
+      "y": 671.8333129882812
+    },
+    {
+      "name": "realm-node-16",
+      "text": "16 W Gold\n",
+      "x": 48.03509521484375,
+      "y": 811.990478515625
+    },
+    {
+      "name": "realm-node-17",
+      "text": "17 W Food\n",
+      "x": 112.52056884765625,
+      "y": 811.990478515625
+    },
+    {
+      "name": "realm-node-18",
+      "text": "18 W Wood\n",
+      "x": 176.3480224609375,
+      "y": 811.990478515625
+    },
+    {
+      "name": "realm-node-19",
+      "text": "19 W Iron\n",
+      "x": 240.17547607421875,
+      "y": 811.990478515625
+    },
+    {
+      "name": "realm-node-20",
+      "text": "20 E Gold\n",
+      "x": 598.1356201171875,
+      "y": 811.990478515625
+    },
+    {
+      "name": "realm-node-21",
+      "text": "21 E Food\n",
+      "x": 662.62109375,
+      "y": 811.990478515625
+    },
+    {
+      "name": "realm-node-22",
+      "text": "22 E Wood\n",
+      "x": 725.79052734375,
+      "y": 811.990478515625
+    },
+    {
+      "name": "realm-node-23",
+      "text": "23 E Iron\n",
+      "x": 790.2760009765625,
+      "y": 811.990478515625
+    },
+    {
+      "name": "realm-withdraw",
+      "text": "Selected army: strategic Withdrawal \u00b7 40 Tempo/debt",
+      "x": 432.3158264160156,
+      "y": 1050.19189453125
+    },
+    {
+      "name": "realm-end",
+      "text": "End Side Turn",
+      "x": 432.3158264160156,
+      "y": 1094.93701171875
+    },
+    {
+      "name": "realm-save",
+      "text": "Save Realm 06 stable World",
+      "x": 1231.8040771484375,
+      "y": 22.372509002685547
+    },
+    {
+      "name": "realm-load",
+      "text": "Load Realm 06",
+      "x": 1231.8040771484375,
+      "y": 67.1175308227539
+    },
+    {
+      "name": "realm-cancel-commission",
+      "text": "Cancel candidate Commission / queue (no refund)",
+      "x": 1231.8040771484375,
+      "y": 564.576904296875
+    },
+    {
+      "name": "realm-assign",
+      "text": "Assign Reserve officer to selected Commanderless army",
+      "x": 1231.8040771484375,
+      "y": 654.06689453125
+    },
+    {
+      "name": "realm-disband",
+      "text": "City disband selected army into Reserve (pending meals remain)",
+      "x": 1231.8040771484375,
+      "y": 698.8118896484375
+    },
+    {
+      "name": "realm-recruit",
+      "text": "Pay recruit \u00b7 HW/HA100 or HOM150 Gold \u00b7 shared queue",
+      "x": 1231.8040771484375,
+      "y": 788.302001953125
+    },
+    {
+      "name": "realm-train",
+      "text": "Train selected HOM L3 \u00b7 75G \u00b7 permanent Fireball/Freeze",
+      "x": 1231.8040771484375,
+      "y": 833.0469970703125
+    },
+    {
+      "name": "realm-repair",
+      "text": "Buy quoted Armor repair for selected IDs",
+      "x": 1231.8040771484375,
+      "y": 877.7919921875
+    },
+    {
+      "name": "realm-cancel-service",
+      "text": "Cancel selected personal service (no refund)",
+      "x": 1231.8040771484375,
+      "y": 922.5369873046875
+    },
+    {
+      "name": "realm-build",
+      "text": "Queue construction \u00b7 pay when requirements met",
+      "x": 1231.8040771484375,
+      "y": 1285.76123046875
+    },
+    {
+      "name": "realm-build-unqueue",
+      "text": "Remove first unpaid construction queue entry",
+      "x": 1231.8040771484375,
+      "y": 1330.50634765625
+    },
+    {
+      "name": "realm-build-pause",
+      "text": "Pause/resume construction",
+      "x": 1231.8040771484375,
+      "y": 1375.2513427734375
+    },
+    {
+      "name": "realm-build-cancel",
+      "text": "Cancel active construction (no refund)",
+      "x": 1231.8040771484375,
+      "y": 1419.996337890625
+    },
+    {
+      "name": "realm-research",
+      "text": "Queue research \u00b7 40 Gold on activation",
+      "x": 1231.8040771484375,
+      "y": 1509.486328125
+    },
+    {
+      "name": "realm-research-unqueue",
+      "text": "Remove first unpaid research queue entry",
+      "x": 1231.8040771484375,
+      "y": 1554.2314453125
+    },
+    {
+      "name": "realm-research-pause",
+      "text": "Pause/resume research",
+      "x": 1231.8040771484375,
+      "y": 1598.9764404296875
+    },
+    {
+      "name": "realm-research-stop",
+      "text": "Stop active research (paid Work retained)",
+      "x": 1231.8040771484375,
+      "y": 1643.721435546875
+    }
+  ],
+  "units": [
+    {
+      "id": 1,
+      "x": 2,
+      "y": 4,
+      "hp": 40,
+      "armor": 16,
+      "movement": 0,
+      "burn": 0,
+      "barrier": 0,
+      "expiry": 0,
+      "action": false,
+      "frozen": false,
+      "fire": false,
+      "exhausted": false,
+      "side": "West",
+      "status": "Active",
+      "persistent": "",
+      "profile": "HumanWarriorTI"
+    },
+    {
+      "id": 2,
+      "x": 2,
+      "y": 3,
+      "hp": 40,
+      "armor": 16,
+      "movement": 0,
+      "burn": 0,
+      "barrier": 0,
+      "expiry": 0,
+      "action": false,
+      "frozen": false,
+      "fire": false,
+      "exhausted": false,
+      "side": "West",
+      "status": "Active",
+      "persistent": "",
+      "profile": "HumanWarriorTI"
+    },
+    {
+      "id": 3,
+      "x": 1,
+      "y": 2,
+      "hp": 28,
+      "armor": 4,
+      "movement": 0,
+      "burn": 0,
+      "barrier": 0,
+      "expiry": 0,
+      "action": false,
+      "frozen": false,
+      "fire": false,
+      "exhausted": false,
+      "side": "West",
+      "status": "Active",
+      "persistent": "",
+      "profile": "HumanArcherTI"
+    },
+    {
+      "id": 4,
+      "x": 1,
+      "y": 6,
+      "hp": 28,
+      "armor": 4,
+      "movement": 0,
+      "burn": 0,
+      "barrier": 0,
+      "expiry": 0,
+      "action": false,
+      "frozen": false,
+      "fire": false,
+      "exhausted": false,
+      "side": "West",
+      "status": "Active",
+      "persistent": "",
+      "profile": "HumanArcherTI"
+    },
+    {
+      "id": 5,
+      "x": 2,
+      "y": 5,
+      "hp": 32,
+      "armor": 6,
+      "movement": 6,
+      "burn": 0,
+      "barrier": 0,
+      "expiry": 0,
+      "action": true,
+      "frozen": false,
+      "fire": false,
+      "exhausted": false,
+      "side": "West",
+      "status": "Active",
+      "persistent": "",
+      "profile": "ElfWarriorTI"
+    },
+    {
+      "id": 6,
+      "x": 10,
+      "y": 4,
+      "hp": 40,
+      "armor": 16,
+      "movement": 0,
+      "burn": 0,
+      "barrier": 0,
+      "expiry": 0,
+      "action": false,
+      "frozen": false,
+      "fire": false,
+      "exhausted": false,
+      "side": "East",
+      "status": "Active",
+      "persistent": "",
+      "profile": "HumanWarriorTI"
+    },
+    {
+      "id": 7,
+      "x": 10,
+      "y": 3,
+      "hp": 40,
+      "armor": 16,
+      "movement": 0,
+      "burn": 0,
+      "barrier": 0,
+      "expiry": 0,
+      "action": false,
+      "frozen": false,
+      "fire": false,
+      "exhausted": false,
+      "side": "East",
+      "status": "Active",
+      "persistent": "",
+      "profile": "HumanWarriorTI"
+    },
+    {
+      "id": 8,
+      "x": 11,
+      "y": 2,
+      "hp": 28,
+      "armor": 4,
+      "movement": 0,
+      "burn": 0,
+      "barrier": 0,
+      "expiry": 0,
+      "action": false,
+      "frozen": false,
+      "fire": false,
+      "exhausted": false,
+      "side": "East",
+      "status": "Active",
+      "persistent": "",
+      "profile": "HumanArcherTI"
+    },
+    {
+      "id": 9,
+      "x": 11,
+      "y": 6,
+      "hp": 28,
+      "armor": 4,
+      "movement": 0,
+      "burn": 0,
+      "barrier": 0,
+      "expiry": 0,
+      "action": false,
+      "frozen": false,
+      "fire": false,
+      "exhausted": false,
+      "side": "East",
+      "status": "Active",
+      "persistent": "",
+      "profile": "HumanArcherTI"
+    },
+    {
+      "id": 10,
+      "x": 10,
+      "y": 5,
+      "hp": 32,
+      "armor": 6,
+      "movement": 0,
+      "burn": 0,
+      "barrier": 0,
+      "expiry": 0,
+      "action": false,
+      "frozen": false,
+      "fire": false,
+      "exhausted": false,
+      "side": "East",
+      "status": "Active",
+      "persistent": "",
+      "profile": "ElfWarriorTI"
+    }
+  ],
+  "world": {
+    "version": 5,
+    "refresh": 1,
+    "startingSide": 0,
+    "activeSide": 0,
+    "completed": 0,
+    "winner": -1,
+    "battleNumber": 1,
+    "seed": 20260929,
+    "handoff": false,
+    "economy": true,
+    "waystationFood": 24,
+    "scenario": "RealmOperations-06",
+    "checksum": "dFw4/df1UU+zMQZYMnmRYwIlNMEH22TuOpg9zExZCEw=",
+    "owners": [
+      -1,
+      -1,
+      -1
+    ],
+    "events": [
+      "AUTHORED rare-case initial fixture: joint. No played history claimed. Subsequent commands use ordinary GUI controls.",
+      "R1 Paid recruit queued for Reserve; existing side queue, same-cycle Refresh completion, no extra activation.",
+      "R1 Battle contact; all participants at start; each attacker paid Attack Cost.",
+      "R1 realm06-East-army-1 fully withdrew -> 10 debt/Tempo 60\nrealm06-East-army-2 fully withdrew -> 13 debt/Tempo 60\nrealm06-West-army-1 fully withdrew -> 4 debt/Tempo 10\nrealm06-West-army-2 holds origin 3; living 3; Commanderless=False\nOne coalition XP pool; same IDs/HP/Armor/budgets; no Refresh."
+    ],
+    "west": {
+      "node": 4,
+      "tempo": 10,
+      "provisions": 0,
+      "pressure": 0,
+      "gold": 200,
+      "keepFood": 120,
+      "nextRecruit": 1,
+      "pendingProfile": -1,
+      "lastRecruitRefresh": 0,
+      "pendingId": "",
+      "goldExact": "200",
+      "foodExact": "120",
+      "formation": {
+        "id": "realm06-West-army-1",
+        "side": 0,
+        "commanderless": false,
+        "rosterLocked": false,
+        "members": [
+          {
+            "id": "realm06-West-army-1-unit-1",
+            "personalXp": "0.085000",
+            "commandXp": "0.0364285714285714285714285714",
+            "profile": 0,
+            "hp": 40,
+            "armor": 16,
+            "status": 1,
+            "personalLevel": 1,
+            "commandLevel": 1,
+            "commandRank": 0,
+            "recoveryRemainder": 0,
+            "commander": true,
+            "fireballUsed": 0,
+            "freezeUsed": 0,
+            "closeHealUsed": 0
+          },
+          {
+            "id": "realm06-West-army-1-unit-2",
+            "personalXp": "0.085000",
+            "commandXp": "0",
+            "profile": 0,
+            "hp": 40,
+            "armor": 16,
+            "status": 1,
+            "personalLevel": 1,
+            "commandLevel": 1,
+            "commandRank": 0,
+            "recoveryRemainder": 0,
+            "commander": false,
+            "fireballUsed": 0,
+            "freezeUsed": 0,
+            "closeHealUsed": 0
+          },
+          {
+            "id": "realm06-West-army-1-unit-3",
+            "personalXp": "0.085000",
+            "commandXp": "0",
+            "profile": 1,
+            "hp": 28,
+            "armor": 4,
+            "status": 1,
+            "personalLevel": 1,
+            "commandLevel": 1,
+            "commandRank": 0,
+            "recoveryRemainder": 0,
+            "commander": false,
+            "fireballUsed": 0,
+            "freezeUsed": 0,
+            "closeHealUsed": 0
+          }
+        ]
+      }
+    },
+    "east": {
+      "node": 10,
+      "tempo": 60,
+      "provisions": 0,
+      "pressure": 0,
+      "gold": 300,
+      "keepFood": 120,
+      "nextRecruit": 1,
+      "pendingProfile": -1,
+      "lastRecruitRefresh": 0,
+      "pendingId": "",
+      "goldExact": "300",
+      "foodExact": "120",
+      "formation": {
+        "id": "realm06-East-army-1",
+        "side": 1,
+        "commanderless": false,
+        "rosterLocked": false,
+        "members": [
+          {
+            "id": "realm06-East-army-1-unit-1",
+            "personalXp": "0.0191250",
+            "commandXp": "0.0081964285714285714285714286",
+            "profile": 0,
+            "hp": 40,
+            "armor": 16,
+            "status": 1,
+            "personalLevel": 1,
+            "commandLevel": 1,
+            "commandRank": 0,
+            "recoveryRemainder": 0,
+            "commander": true,
+            "fireballUsed": 0,
+            "freezeUsed": 0,
+            "closeHealUsed": 0
+          },
+          {
+            "id": "realm06-East-army-1-unit-2",
+            "personalXp": "0.0191250",
+            "commandXp": "0",
+            "profile": 0,
+            "hp": 40,
+            "armor": 16,
+            "status": 1,
+            "personalLevel": 1,
+            "commandLevel": 1,
+            "commandRank": 0,
+            "recoveryRemainder": 0,
+            "commander": false,
+            "fireballUsed": 0,
+            "freezeUsed": 0,
+            "closeHealUsed": 0
+          },
+          {
+            "id": "realm06-East-army-1-unit-3",
+            "personalXp": "0.0191250",
+            "commandXp": "0",
+            "profile": 1,
+            "hp": 28,
+            "armor": 4,
+            "status": 1,
+            "personalLevel": 1,
+            "commandLevel": 1,
+            "commandRank": 0,
+            "recoveryRemainder": 0,
+            "commander": false,
+            "fireballUsed": 0,
+            "freezeUsed": 0,
+            "closeHealUsed": 0
+          }
+        ]
+      }
+    },
+    "realm": {
+      "hasLastBattle": true,
+      "lastBattle": {
+        "number": 1,
+        "seed": 20260930,
+        "lead": "realm06-West-army-1",
+        "target": "realm06-East-army-1",
+        "advanced": "",
+        "attackingPool": "2.0400",
+        "defendingPool": "0.45900",
+        "finalTacticalHash": "O+YxEwclRt9qZPmq+0XSFWhD0A3V3iWiYEzvM+uluZ8=",
+        "armies": [
+          "realm06-West-army-1",
+          "realm06-West-army-2",
+          "realm06-East-army-1",
+          "realm06-East-army-2"
+        ],
+        "unitIds": [
+          "realm06-West-army-1-unit-1",
+          "realm06-West-army-1-unit-2",
+          "realm06-West-army-1-unit-3",
+          "realm06-West-army-2-unit-1",
+          "realm06-West-army-2-unit-2",
+          "realm06-West-army-2-unit-3",
+          "realm06-East-army-1-unit-1",
+          "realm06-East-army-1-unit-2",
+          "realm06-East-army-1-unit-3",
+          "realm06-East-army-2-unit-1",
+          "realm06-East-army-2-unit-2",
+          "realm06-East-army-2-unit-3"
+        ],
+        "unitArmies": [
+          "realm06-West-army-1",
+          "realm06-West-army-1",
+          "realm06-West-army-1",
+          "realm06-West-army-2",
+          "realm06-West-army-2",
+          "realm06-West-army-2",
+          "realm06-East-army-1",
+          "realm06-East-army-1",
+          "realm06-East-army-1",
+          "realm06-East-army-2",
+          "realm06-East-army-2",
+          "realm06-East-army-2"
+        ],
+        "origins": [
+          6,
+          3,
+          7,
+          11
+        ],
+        "destinations": [
+          4,
+          3,
+          10,
+          13
+        ],
+        "tempos": [
+          10,
+          50,
+          60,
+          60
+        ],
+        "dead": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "escaped": [
+          3,
+          0,
+          3,
+          3
+        ],
+        "active": [
+          0,
+          3,
+          0,
+          0
+        ],
+        "attackers": [
+          true,
+          true,
+          false,
+          false
+        ],
+        "withdrew": [
+          true,
+          false,
+          true,
+          true
+        ]
+      },
+      "armies": [
+        {
+          "id": "realm06-West-army-1",
+          "commander": "realm06-West-army-1-unit-1",
+          "provisions": "30",
+          "side": 0,
+          "node": 4,
+          "tempo": 10,
+          "staff": 2,
+          "units": [
+            {
+              "id": "realm06-West-army-1-unit-1",
+              "personalXp": "0.085000",
+              "commandXp": "0.0364285714285714285714285714",
+              "profile": 0,
+              "hp": 40,
+              "armor": 16,
+              "status": 1,
+              "personalLevel": 1,
+              "commandLevel": 1,
+              "commandRank": 0,
+              "recoveryRemainder": 0,
+              "commander": true,
+              "fireballUsed": 0,
+              "freezeUsed": 0,
+              "closeHealUsed": 0
+            },
+            {
+              "id": "realm06-West-army-1-unit-2",
+              "personalXp": "0.085000",
+              "commandXp": "0",
+              "profile": 0,
+              "hp": 40,
+              "armor": 16,
+              "status": 1,
+              "personalLevel": 1,
+              "commandLevel": 1,
+              "commandRank": 0,
+              "recoveryRemainder": 0,
+              "commander": false,
+              "fireballUsed": 0,
+              "freezeUsed": 0,
+              "closeHealUsed": 0
+            },
+            {
+              "id": "realm06-West-army-1-unit-3",
+              "personalXp": "0.085000",
+              "commandXp": "0",
+              "profile": 1,
+              "hp": 28,
+              "armor": 4,
+              "status": 1,
+              "personalLevel": 1,
+              "commandLevel": 1,
+              "commandRank": 0,
+              "recoveryRemainder": 0,
+              "commander": false,
+              "fireballUsed": 0,
+              "freezeUsed": 0,
+              "closeHealUsed": 0
+            }
+          ]
+        },
+        {
+          "id": "realm06-West-army-2",
+          "commander": "realm06-West-army-2-unit-1",
+          "provisions": "30",
+          "side": 0,
+          "node": 3,
+          "tempo": 50,
+          "staff": 2,
+          "units": [
+            {
+              "id": "realm06-West-army-2-unit-1",
+              "personalXp": "20.3400",
+              "commandXp": "0.1457142857142857142857142857",
+              "profile": 4,
+              "hp": 32,
+              "armor": 0,
+              "status": 0,
+              "personalLevel": 3,
+              "commandLevel": 1,
+              "commandRank": 0,
+              "recoveryRemainder": 0,
+              "commander": true,
+              "fireballUsed": 0,
+              "freezeUsed": 0,
+              "closeHealUsed": 0
+            },
+            {
+              "id": "realm06-West-army-2-unit-2",
+              "personalXp": "20.3400",
+              "commandXp": "0",
+              "profile": 8,
+              "hp": 38,
+              "armor": 8,
+              "status": 0,
+              "personalLevel": 3,
+              "commandLevel": 1,
+              "commandRank": 0,
+              "recoveryRemainder": 0,
+              "commander": false,
+              "fireballUsed": 0,
+              "freezeUsed": 0,
+              "closeHealUsed": 0
+            },
+            {
+              "id": "realm06-West-army-2-unit-3",
+              "personalXp": "0.3400",
+              "commandXp": "0",
+              "profile": 1,
+              "hp": 28,
+              "armor": 4,
+              "status": 0,
+              "personalLevel": 1,
+              "commandLevel": 1,
+              "commandRank": 0,
+              "recoveryRemainder": 0,
+              "commander": false,
+              "fireballUsed": 0,
+              "freezeUsed": 0,
+              "closeHealUsed": 0
+            }
+          ]
+        },
+        {
+          "id": "realm06-East-army-1",
+          "commander": "realm06-East-army-1-unit-1",
+          "provisions": "30",
+          "side": 1,
+          "node": 10,
+          "tempo": 60,
+          "staff": 2,
+          "units": [
+            {
+              "id": "realm06-East-army-1-unit-1",
+              "personalXp": "0.0191250",
+              "commandXp": "0.0081964285714285714285714286",
+              "profile": 0,
+              "hp": 40,
+              "armor": 16,
+              "status": 1,
+              "personalLevel": 1,
+              "commandLevel": 1,
+              "commandRank": 0,
+              "recoveryRemainder": 0,
+              "commander": true,
+              "fireballUsed": 0,
+              "freezeUsed": 0,
+              "closeHealUsed": 0
+            },
+            {
+              "id": "realm06-East-army-1-unit-2",
+              "personalXp": "0.0191250",
+              "commandXp": "0",
+              "profile": 0,
+              "hp": 40,
+              "armor": 16,
+              "status": 1,
+              "personalLevel": 1,
+              "commandLevel": 1,
+              "commandRank": 0,
+              "recoveryRemainder": 0,
+              "commander": false,
+              "fireballUsed": 0,
+              "freezeUsed": 0,
+              "closeHealUsed": 0
+            },
+            {
+              "id": "realm06-East-army-1-unit-3",
+              "personalXp": "0.0191250",
+              "commandXp": "0",
+              "profile": 1,
+              "hp": 28,
+              "armor": 4,
+              "status": 1,
+              "personalLevel": 1,
+              "commandLevel": 1,
+              "commandRank": 0,
+              "recoveryRemainder": 0,
+              "commander": false,
+              "fireballUsed": 0,
+              "freezeUsed": 0,
+              "closeHealUsed": 0
+            }
+          ]
+        },
+        {
+          "id": "realm06-East-army-2",
+          "commander": "realm06-East-army-2-unit-1",
+          "provisions": "30",
+          "side": 1,
+          "node": 13,
+          "tempo": 60,
+          "staff": 2,
+          "units": [
+            {
+              "id": "realm06-East-army-2-unit-1",
+              "personalXp": "20.0191250",
+              "commandXp": "0.0081964285714285714285714286",
+              "profile": 6,
+              "hp": 32,
+              "armor": 0,
+              "status": 1,
+              "personalLevel": 3,
+              "commandLevel": 1,
+              "commandRank": 0,
+              "recoveryRemainder": 0,
+              "commander": true,
+              "fireballUsed": 0,
+              "freezeUsed": 0,
+              "closeHealUsed": 0
+            },
+            {
+              "id": "realm06-East-army-2-unit-2",
+              "personalXp": "20.0191250",
+              "commandXp": "0",
+              "profile": 8,
+              "hp": 38,
+              "armor": 8,
+              "status": 1,
+              "personalLevel": 3,
+              "commandLevel": 1,
+              "commandRank": 0,
+              "recoveryRemainder": 0,
+              "commander": false,
+              "fireballUsed": 0,
+              "freezeUsed": 0,
+              "closeHealUsed": 0
+            },
+            {
+              "id": "realm06-East-army-2-unit-3",
+              "personalXp": "0.0191250",
+              "commandXp": "0",
+              "profile": 1,
+              "hp": 28,
+              "armor": 4,
+              "status": 1,
+              "personalLevel": 1,
+              "commandLevel": 1,
+              "commandRank": 0,
+              "recoveryRemainder": 0,
+              "commander": false,
+              "fireballUsed": 0,
+              "freezeUsed": 0,
+              "closeHealUsed": 0
+            }
+          ]
+        }
+      ],
+      "west": {
+        "hasCommission": false,
+        "hasRecruit": true,
+        "reserve": [],
+        "commissionQueue": [],
+        "commission": {
+          "kind": "",
+          "unit": "",
+          "destination": "",
+          "started": 0,
+          "profile": 0,
+          "ids": [],
+          "amounts": []
+        },
+        "recruit": {
+          "kind": "Recruit",
+          "unit": "realm06-West-recruit-1",
+          "destination": "Reserve",
+          "started": 1,
+          "profile": 0,
+          "ids": [],
+          "amounts": []
+        },
+        "services": [],
+        "nextArmy": 3,
+        "nextRecruit": 2,
+        "lastRecruit": 1,
+        "cityStaff": 0,
+        "selected": "realm06-West-army-1"
+      },
+      "east": {
+        "hasCommission": false,
+        "hasRecruit": false,
+        "reserve": [],
+        "commissionQueue": [],
+        "commission": {
+          "kind": "",
+          "unit": "",
+          "destination": "",
+          "started": 0,
+          "profile": 0,
+          "ids": [],
+          "amounts": []
+        },
+        "recruit": {
+          "kind": "",
+          "unit": "",
+          "destination": "",
+          "started": 0,
+          "profile": 0,
+          "ids": [],
+          "amounts": []
+        },
+        "services": [],
+        "nextArmy": 3,
+        "nextRecruit": 1,
+        "lastRecruit": 0,
+        "cityStaff": 0,
+        "selected": "realm06-East-army-1"
+      },
+      "cycles": [
+        {
+          "id": "realm06-East-army-1-unit-1",
+          "ceiling": 60,
+          "deprivation": 0,
+          "born": 0
+        },
+        {
+          "id": "realm06-East-army-1-unit-2",
+          "ceiling": 60,
+          "deprivation": 0,
+          "born": 0
+        },
+        {
+          "id": "realm06-East-army-1-unit-3",
+          "ceiling": 60,
+          "deprivation": 0,
+          "born": 0
+        },
+        {
+          "id": "realm06-East-army-2-unit-1",
+          "ceiling": 60,
+          "deprivation": 0,
+          "born": 0
+        },
+        {
+          "id": "realm06-East-army-2-unit-2",
+          "ceiling": 60,
+          "deprivation": 0,
+          "born": 0
+        },
+        {
+          "id": "realm06-East-army-2-unit-3",
+          "ceiling": 60,
+          "deprivation": 0,
+          "born": 0
+        },
+        {
+          "id": "realm06-West-army-1-unit-1",
+          "ceiling": 10,
+          "deprivation": 0,
+          "born": 0
+        },
+        {
+          "id": "realm06-West-army-1-unit-2",
+          "ceiling": 10,
+          "deprivation": 0,
+          "born": 0
+        },
+        {
+          "id": "realm06-West-army-1-unit-3",
+          "ceiling": 10,
+          "deprivation": 0,
+          "born": 0
+        },
+        {
+          "id": "realm06-West-army-2-unit-1",
+          "ceiling": 50,
+          "deprivation": 0,
+          "born": 0
+        },
+        {
+          "id": "realm06-West-army-2-unit-2",
+          "ceiling": 50,
+          "deprivation": 0,
+          "born": 0
+        },
+        {
+          "id": "realm06-West-army-2-unit-3",
+          "ceiling": 50,
+          "deprivation": 0,
+          "born": 0
+        }
+      ],
+      "familiarity": [],
+      "appliedBattle": 1,
+      "message": "realm06-East-army-1 fully withdrew -> 10 debt/Tempo 60\nrealm06-East-army-2 fully withdrew -> 13 debt/Tempo 60\nrealm06-West-army-1 fully withdrew -> 4 debt/Tempo 10\nrealm06-West-army-2 holds origin 3; living 3; Commanderless=False\nOne coalition XP pool; same IDs/HP/Armor/budgets; no Refresh."
+    },
+    "incident": {
+      "enabled": false,
+      "worldPhase": false,
+      "ravaged": false,
+      "cycleEligible": false,
+      "continuityBroken": false,
+      "rewardPaid": false,
+      "phase": 0,
+      "whiteout": 0,
+      "cursor": 0,
+      "contract": 0,
+      "holdCycles": 0,
+      "appliedBattle": 0,
+      "id": "",
+      "claimant": "",
+      "holdReason": "",
+      "actorOrder": [],
+      "raiders": []
+    },
+    "foundations": {
+      "combined": true,
+      "realmMode": true,
+      "locations": [
+        {
+          "node": 1,
+          "parent": 0,
+          "controller": 0,
+          "development": 2,
+          "tower": 2,
+          "functioning": true,
+          "forge": false,
+          "institute": false,
+          "depot": false,
+          "assay": false,
+          "hasActive": false,
+          "stock": [
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "regional": "0",
+          "condition": "1",
+          "queue": [],
+          "active": {
+            "kind": 0,
+            "started": 0,
+            "steps": 0,
+            "paused": false
+          }
+        },
+        {
+          "node": 13,
+          "parent": 0,
+          "controller": 1,
+          "development": 2,
+          "tower": 2,
+          "functioning": true,
+          "forge": false,
+          "institute": false,
+          "depot": false,
+          "assay": false,
+          "hasActive": false,
+          "stock": [
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "regional": "0",
+          "condition": "1",
+          "queue": [],
+          "active": {
+            "kind": 0,
+            "started": 0,
+            "steps": 0,
+            "paused": false
+          }
+        },
+        {
+          "node": 14,
+          "parent": 1,
+          "controller": 0,
+          "development": 1,
+          "tower": 0,
+          "functioning": true,
+          "forge": false,
+          "institute": false,
+          "depot": false,
+          "assay": false,
+          "hasActive": false,
+          "stock": [
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "regional": "0",
+          "condition": "1",
+          "queue": [],
+          "active": {
+            "kind": 0,
+            "started": 0,
+            "steps": 0,
+            "paused": false
+          }
+        },
+        {
+          "node": 15,
+          "parent": 13,
+          "controller": 1,
+          "development": 1,
+          "tower": 0,
+          "functioning": true,
+          "forge": false,
+          "institute": false,
+          "depot": false,
+          "assay": false,
+          "hasActive": false,
+          "stock": [
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "regional": "0",
+          "condition": "1",
+          "queue": [],
+          "active": {
+            "kind": 0,
+            "started": 0,
+            "steps": 0,
+            "paused": false
+          }
+        },
+        {
+          "node": 16,
+          "parent": 14,
+          "controller": 0,
+          "development": 1,
+          "tower": 0,
+          "functioning": true,
+          "forge": false,
+          "institute": false,
+          "depot": false,
+          "assay": false,
+          "hasActive": false,
+          "stock": [
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "regional": "0",
+          "condition": "1",
+          "queue": [],
+          "active": {
+            "kind": 0,
+            "started": 0,
+            "steps": 0,
+            "paused": false
+          }
+        },
+        {
+          "node": 17,
+          "parent": 14,
+          "controller": 0,
+          "development": 1,
+          "tower": 0,
+          "functioning": true,
+          "forge": false,
+          "institute": false,
+          "depot": false,
+          "assay": false,
+          "hasActive": false,
+          "stock": [
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "regional": "0",
+          "condition": "1",
+          "queue": [],
+          "active": {
+            "kind": 0,
+            "started": 0,
+            "steps": 0,
+            "paused": false
+          }
+        },
+        {
+          "node": 18,
+          "parent": 14,
+          "controller": 0,
+          "development": 1,
+          "tower": 0,
+          "functioning": true,
+          "forge": false,
+          "institute": false,
+          "depot": false,
+          "assay": false,
+          "hasActive": false,
+          "stock": [
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "regional": "0",
+          "condition": "1",
+          "queue": [],
+          "active": {
+            "kind": 0,
+            "started": 0,
+            "steps": 0,
+            "paused": false
+          }
+        },
+        {
+          "node": 19,
+          "parent": 14,
+          "controller": 0,
+          "development": 1,
+          "tower": 0,
+          "functioning": true,
+          "forge": false,
+          "institute": false,
+          "depot": false,
+          "assay": false,
+          "hasActive": false,
+          "stock": [
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "regional": "0",
+          "condition": "1",
+          "queue": [],
+          "active": {
+            "kind": 0,
+            "started": 0,
+            "steps": 0,
+            "paused": false
+          }
+        },
+        {
+          "node": 20,
+          "parent": 15,
+          "controller": 1,
+          "development": 1,
+          "tower": 0,
+          "functioning": true,
+          "forge": false,
+          "institute": false,
+          "depot": false,
+          "assay": false,
+          "hasActive": false,
+          "stock": [
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "regional": "0",
+          "condition": "1",
+          "queue": [],
+          "active": {
+            "kind": 0,
+            "started": 0,
+            "steps": 0,
+            "paused": false
+          }
+        },
+        {
+          "node": 21,
+          "parent": 15,
+          "controller": 1,
+          "development": 1,
+          "tower": 0,
+          "functioning": true,
+          "forge": false,
+          "institute": false,
+          "depot": false,
+          "assay": false,
+          "hasActive": false,
+          "stock": [
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "regional": "0",
+          "condition": "1",
+          "queue": [],
+          "active": {
+            "kind": 0,
+            "started": 0,
+            "steps": 0,
+            "paused": false
+          }
+        },
+        {
+          "node": 22,
+          "parent": 15,
+          "controller": 1,
+          "development": 1,
+          "tower": 0,
+          "functioning": true,
+          "forge": false,
+          "institute": false,
+          "depot": false,
+          "assay": false,
+          "hasActive": false,
+          "stock": [
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "regional": "0",
+          "condition": "1",
+          "queue": [],
+          "active": {
+            "kind": 0,
+            "started": 0,
+            "steps": 0,
+            "paused": false
+          }
+        },
+        {
+          "node": 23,
+          "parent": 15,
+          "controller": 1,
+          "development": 1,
+          "tower": 0,
+          "functioning": true,
+          "forge": false,
+          "institute": false,
+          "depot": false,
+          "assay": false,
+          "hasActive": false,
+          "stock": [
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "regional": "0",
+          "condition": "1",
+          "queue": [],
+          "active": {
+            "kind": 0,
+            "started": 0,
+            "steps": 0,
+            "paused": false
+          }
+        }
+      ],
+      "west": {
+        "wood": "30",
+        "iron": "20",
+        "preset": 0,
+        "active": -1,
+        "started": 0,
+        "paused": false,
+        "queue": [],
+        "research": [
+          {
+            "tech": 0,
+            "work": "0",
+            "paid": false,
+            "cities": [],
+            "contributions": []
+          },
+          {
+            "tech": 1,
+            "work": "0",
+            "paid": false,
+            "cities": [],
+            "contributions": []
+          },
+          {
+            "tech": 2,
+            "work": "0",
+            "paid": false,
+            "cities": [],
+            "contributions": []
+          },
+          {
+            "tech": 3,
+            "work": "0",
+            "paid": false,
+            "cities": [],
+            "contributions": []
+          },
+          {
+            "tech": 4,
+            "work": "6",
+            "paid": true,
+            "cities": [
+              1
+            ],
+            "contributions": [
+              "6"
+            ]
+          }
+        ],
+        "repairStarted": 0,
+        "trainingStarted": 0,
+        "repairIds": [],
+        "repairs": [],
+        "trainee": ""
+      },
+      "east": {
+        "wood": "30",
+        "iron": "20",
+        "preset": 1,
+        "active": -1,
+        "started": 0,
+        "paused": false,
+        "queue": [],
+        "research": [
+          {
+            "tech": 0,
+            "work": "0",
+            "paid": false,
+            "cities": [],
+            "contributions": []
+          },
+          {
+            "tech": 1,
+            "work": "0",
+            "paid": false,
+            "cities": [],
+            "contributions": []
+          },
+          {
+            "tech": 2,
+            "work": "0",
+            "paid": false,
+            "cities": [],
+            "contributions": []
+          },
+          {
+            "tech": 3,
+            "work": "0",
+            "paid": false,
+            "cities": [],
+            "contributions": []
+          },
+          {
+            "tech": 4,
+            "work": "6",
+            "paid": true,
+            "cities": [
+              13
+            ],
+            "contributions": [
+              "6"
+            ]
+          }
+        ],
+        "repairStarted": 0,
+        "trainingStarted": 0,
+        "repairIds": [],
+        "repairs": [],
+        "trainee": ""
+      }
+    }
+  }
+}

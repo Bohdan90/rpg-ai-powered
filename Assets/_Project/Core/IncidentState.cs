@@ -49,7 +49,7 @@ namespace RPG.Core
     }
     public sealed partial class CrossroadsScenario
     {
-        internal IEnumerable<DuelForce> Occupants => new[]{West,East}.Where(f=>f.Continues).Concat(Incident==null?Enumerable.Empty<DuelForce>():Incident.Raiders.Where(r=>r.OnMap).Select(r=>r.Force));
+        internal IEnumerable<DuelForce> Occupants => Realm!=null?Realm.Armies.Where(f=>f.Continues):new[]{West,East}.Where(f=>f.Continues).Concat(Incident==null?Enumerable.Empty<DuelForce>():Incident.Raiders.Where(r=>r.OnMap).Select(r=>r.Force));
         private void Trace(string text)=>Log("["+IncidentState.Id+" "+Incident.Phase+" cursor="+Incident.Cursor+"] "+text);
         private void BeginIncidentRefresh()
         {

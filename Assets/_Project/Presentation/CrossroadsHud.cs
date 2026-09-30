@@ -10,6 +10,7 @@ namespace RPG.Presentation
     {
         public VisualElement Root { get; }
         private readonly BattlePresenter p;
+        private readonly RealmHud realmHud;
         private readonly VisualElement map,handoff,content;
         private readonly Label status,roster,preview,history,pass,saveStatus;
         private readonly Button move,attack,withdraw,end,accept,recruitWarrior,recruitArcher;
@@ -18,7 +19,7 @@ namespace RPG.Presentation
         private int selected; private readonly CityOverview cityOverview;
         public CrossroadsHud(VisualElement parent,BattlePresenter presenter)
         {
-            p=presenter;Root=new VisualElement {name="duel-world"};Root.style.position=Position.Absolute;
+            p=presenter;if(p.Duel.Realm!=null){realmHud=new RealmHud(parent,p);Root=realmHud.Root;return;}Root=new VisualElement {name="duel-world"};Root.style.position=Position.Absolute;
             Root.style.left=Root.style.right=Root.style.top=Root.style.bottom=0;Root.style.backgroundColor=new Color(.055f,.085f,.11f);parent.Add(Root);
             content=new VisualElement();content.style.flexDirection=FlexDirection.Row;content.style.flexGrow=1;Root.Add(content);
             var left=new ScrollView();left.style.width=Length.Percent(64);content.Add(left);
@@ -58,7 +59,7 @@ namespace RPG.Presentation
         {var pen=c.painter2D;pen.lineWidth=2;pen.strokeColor=Color.gray;foreach(var e in p.Duel.Graph.Edges){pen.BeginPath();pen.MoveTo(map.Q<Button>("duel-node-"+e.A).layout.center);pen.LineTo(map.Q<Button>("duel-node-"+e.B).layout.center);pen.Stroke();}}
         public void Refresh()
         {
-            var s=p.Duel;Root.style.display=s.Encounter==null?DisplayStyle.Flex:DisplayStyle.None;
+            if(realmHud!=null){realmHud.Refresh();return;}var s=p.Duel;Root.style.display=s.Encounter==null?DisplayStyle.Flex:DisplayStyle.None;
             handoff.style.display=s.HandoffPending?DisplayStyle.Flex:DisplayStyle.None;content.SetEnabled(!s.HandoffPending);pass.text="Pass to "+s.ActiveSide+" — Continue";
             var displayedSide=s.PendingContact?.Target.Formation.Side??s.ActiveSide;var f=s.Force(displayedSide);var enemy=s.Force(CrossroadsScenario.Other(displayedSide));var m=s.PreviewMove(s.ActiveSide,selected);
             preview.text=s.PendingContact!=null?"HOSTILE CONTACT — pass control to "+s.PendingContact.Target.Formation.Side+". Choose Fight or Withdrawal. Save blocked until resolved.":"Path "+string.Join(" → ",m.Path)+" · cost "+m.Cost+"\n"+(m.Reason??"Legal movement");move.SetEnabled(m.IsLegal);

@@ -1,0 +1,1 @@
+AUTHORED rare-case initial fixture: commanderless. No played history claimed. Subsequent commands use ordinary GUI controls.

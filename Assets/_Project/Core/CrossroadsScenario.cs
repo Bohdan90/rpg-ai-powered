@@ -11,6 +11,7 @@ namespace RPG.Core
         public int Node { get; internal set; }
         public int Tempo { get; internal set; }=100;
         public int Provisions { get; internal set; }=30;
+        public decimal RealmProvisions { get; internal set; }
         public int Pressure { get; internal set; }
         public decimal Gold { get; internal set; }
         public decimal KeepFood { get; internal set; }
@@ -66,11 +67,12 @@ namespace RPG.Core
                 new StrategicEdge(4,6,20),new StrategicEdge(5,8,20),new StrategicEdge(6,7,25),new StrategicEdge(8,7,25),new StrategicEdge(6,9,20),
                 new StrategicEdge(8,10,20),new StrategicEdge(7,11,35),new StrategicEdge(9,11,20),new StrategicEdge(10,11,20),new StrategicEdge(11,12,20),new StrategicEdge(12,13,20)});
         public const int MaxProvisions=30, PressureTarget=8;
+        public RealmOperations Realm { get; internal set; }
         public CityFoundations Foundations { get; internal set; }
         public StrategicGraph Graph => Foundations!=null?CityFoundations.Map:Incident==null?Map:IncidentState.Map;
         public int TargetPressure => Foundations!=null?24:Incident==null?PressureTarget:16;
         public IncidentState Incident { get; private set; }
-        public IEnumerable<DuelForce> AllForces => new[]{West,East}.Concat(Incident==null?Enumerable.Empty<DuelForce>():Incident.Raiders.Select(r=>r.Force));
+        public IEnumerable<DuelForce> AllForces => Realm!=null?Realm.Armies:new[]{West,East}.Concat(Incident==null?Enumerable.Empty<DuelForce>():Incident.Raiders.Select(r=>r.Force));
         public DuelForce West { get; private set; }=new DuelForce(Side.West);
         public DuelForce East { get; private set; }=new DuelForce(Side.East);
         public Side StartingSide { get; }
@@ -79,7 +81,7 @@ namespace RPG.Core
         public int CompletedActivations { get; private set; }
         public bool HandoffPending { get; private set; }
         public Side? Winner { get; private set; }
-        public bool IsDraw=>!West.Continues&&!East.Continues;
+        public bool IsDraw=>Realm!=null?!Realm.HasMilitary(Side.West)&&!Realm.HasMilitary(Side.East):!West.Continues&&!East.Continues;
         public DuelEncounter Encounter { get; private set; }
         public uint Seed { get; }
         public bool Economy { get; }
@@ -89,8 +91,8 @@ namespace RPG.Core
         private readonly List<string> events=new List<string>();
         public IReadOnlyList<string> Events=>events.AsReadOnly();
         public bool CanSave=>Encounter==null&&PendingContact==null;
-        public CrossroadsScenario(Side startingSide=Side.West,uint seed=20260929,bool economy=false,bool incident=false,bool incidentsEnabled=true,bool foundations=false,bool combined=false,CombatPreset westPreset=CombatPreset.Fire,CombatPreset eastPreset=CombatPreset.Ice)
-        {if(!ValidSide(startingSide))throw new ArgumentOutOfRangeException(nameof(startingSide));StartingSide=ActiveSide=startingSide;Seed=seed;Economy=economy||incident||foundations||combined;if(Economy){West.Gold=East.Gold=300;West.KeepFood=East.KeepFood=36;WaystationFood=24;}if(foundations||combined){if(incident)throw new ArgumentException("05 and 04 are separate scenarios.");Foundations=new CityFoundations(combined,westPreset,eastPreset);Foundations.InitializeCombined(this);Foundations.InitializeRegional(this);}if(incident){Incident=new IncidentState(incidentsEnabled);BeginIncidentRefresh();}}
+        public CrossroadsScenario(Side startingSide=Side.West,uint seed=20260929,bool economy=false,bool incident=false,bool incidentsEnabled=true,bool foundations=false,bool combined=false,CombatPreset westPreset=CombatPreset.Fire,CombatPreset eastPreset=CombatPreset.Ice,bool realm=false)
+        {if(!ValidSide(startingSide))throw new ArgumentOutOfRangeException(nameof(startingSide));StartingSide=ActiveSide=startingSide;Seed=seed;Economy=economy||incident||foundations||combined||realm;if(Economy){West.Gold=East.Gold=300;West.KeepFood=East.KeepFood=36;WaystationFood=24;}if(foundations||combined||realm){if(incident)throw new ArgumentException("05 and 04 are separate scenarios.");Foundations=new CityFoundations(combined||realm,westPreset,eastPreset);Foundations.InitializeCombined(this);Foundations.InitializeRegional(this);}if(incident){Incident=new IncidentState(incidentsEnabled);BeginIncidentRefresh();}if(realm)Realm=new RealmOperations(this,westPreset,eastPreset);}
         internal static bool ValidSide(Side side)=>side==Side.West||side==Side.East;
         public static Side Other(Side side)=>side==Side.West?Side.East:Side.West;
         public DuelForce Force(Side side)=>side==Side.West?West:side==Side.East?East:throw new ArgumentOutOfRangeException(nameof(side));
@@ -98,12 +100,13 @@ namespace RPG.Core
         public int OwnKeep(Side side)=>side==Side.West?1:13;
         public bool KeepAvailable(Side side)=>!Occupants.Any(f=>f!=Force(side)&&f.Node==OwnKeep(side));
         public int RecoveryPercent(Side side)=>Force(side).Node==OwnKeep(side)&&KeepAvailable(side)?40:15;
-        public bool CanAct(Side side)=>ValidSide(side)&&side==ActiveSide&&!HandoffPending&&Encounter==null&&PendingContact==null&&!Winner.HasValue&&(Incident==null||!Incident.WorldPhase)&&Force(side).Continues;
+        public bool CanAct(Side side)=>Realm!=null?Realm.CanAct(side):ValidSide(side)&&side==ActiveSide&&!HandoffPending&&Encounter==null&&PendingContact==null&&!Winner.HasValue&&(Incident==null||!Incident.WorldPhase)&&Force(side).Continues;
         private void Log(string text)=>events.Add("R"+Refresh+" "+text);
         public bool ContinueHandoff(Side side)
-        {if(!HandoffPending||side!=ActiveSide||Winner.HasValue||Encounter!=null)return false;HandoffPending=false;return true;}
+        {if(!HandoffPending||side!=ActiveSide||Winner.HasValue||Encounter!=null)return false;HandoffPending=false;Realm?.EnsureSelection(side);return true;}
         public StrategicMovePreview PreviewMove(Side side,int destination)
         {
+            if(Realm!=null)return Realm.PreviewMove(side,destination);
             var p=new StrategicMovePreview();if(!CanAct(side)){p.Reason="No active side authority.";return p;}
             var f=Force(side);var enemy=Force(Other(side));
             if(Graph.Node(destination)==null||destination==f.Node){p.Reason="Choose another graph node.";return p;}
@@ -112,22 +115,22 @@ namespace RPG.Core
             p.Cost=Graph.PathCost(p.Path,f.Hungry);if(p.Cost>f.Tempo)p.Reason="Insufficient Tempo: "+p.Cost+" required.";return p;
         }
         public bool Move(Side side,int destination)
-        {var p=PreviewMove(side,destination);if(!p.IsLegal)return false;var f=Force(side);f.Tempo-=p.Cost;if(Foundations!=null&&f.Node==OwnKeep(side)){Foundations.LeftCity(side,Refresh);}BreakHold(f,"left site");f.Node=destination;Log(side+" moves to "+destination+" for "+p.Cost);return true;}
+        {if(Realm!=null)return Realm.Move(side,destination);var p=PreviewMove(side,destination);if(!p.IsLegal)return false;var f=Force(side);f.Tempo-=p.Cost;if(Foundations!=null&&f.Node==OwnKeep(side)){Foundations.LeftCity(side,Refresh);}BreakHold(f,"left site");f.Node=destination;Log(side+" moves to "+destination+" for "+p.Cost);return true;}
         public bool HostileContact=>(Foundations==null||West.Node!=1&&East.Node!=13)&&West.Continues&&East.Continues&&Graph.Cost(West.Node,East.Node)>=0;
-        public bool CanAttack(Side side)=>CanAct(side)&&HostileContact&&Force(side).Tempo>=0;
+        public bool CanAttack(Side side)=>Realm==null&&CanAct(side)&&HostileContact&&Force(side).Tempo>=0;
         public bool Attack(Side side)
-        {if(Incident!=null)return AttackNode(side,Force(Other(side)).Node);if(!CanAttack(side))return false;Force(side).Tempo=StrategicScenario.AfterAttackCost(Force(side).Tempo);Encounter=new DuelEncounter(side,West,East,Seed+(uint)++battleNumber);Log(side+" attacks; tactical Hotseat");return true;}
+        {if(Realm!=null)return false;if(Incident!=null)return AttackNode(side,Force(Other(side)).Node);if(!CanAttack(side))return false;Force(side).Tempo=StrategicScenario.AfterAttackCost(Force(side).Tempo);Encounter=new DuelEncounter(side,West,East,Seed+(uint)++battleNumber);Log(side+" attacks; tactical Hotseat");return true;}
         public int RetreatDestination(Side side,int origin,int enemyNode)
         {return Graph.Nodes.Where(n=>n.Id!=origin&&n.Id!=enemyNode&&(Foundations==null||n.Id!=OwnKeep(Other(side)))&&Graph.Hops(origin,n.Id)<=2)
             .OrderByDescending(n=>Graph.Hops(n.Id,enemyNode)).ThenBy(n=>Graph.PathCost(Graph.Path(origin,n.Id))).ThenBy(n=>n.Id).Select(n=>n.Id).DefaultIfEmpty(origin).First();}
         public bool Withdraw(Side side)
         {
-            if(!CanAttack(side))return false;if(Incident!=null)return WithdrawIncident(side);var f=Force(side);Foundations?.LeftCity(side,Refresh);f.Node=RetreatDestination(side,f.Node,Force(Other(side)).Node);f.Tempo-=40;
+            if(Realm!=null)return Realm.Withdraw(side);if(!CanAttack(side))return false;if(Incident!=null)return WithdrawIncident(side);var f=Force(side);Foundations?.LeftCity(side,Refresh);f.Node=RetreatDestination(side,f.Node,Force(Other(side)).Node);f.Tempo-=40;
             Log(side+" strategic Withdrawal to "+f.Node+"; Tempo "+f.Tempo);return true;
         }
         public bool ResolveBattle(BattleState result)
         {
-            if(Incident!=null)return ResolveIncidentBattle(result);var e=Encounter;if(e==null||result==null||!result.Outcome.IsEnded)return false;
+            if(Realm!=null)return Realm.ResolveBattle(result);if(Incident!=null)return ResolveIncidentBattle(result);var e=Encounter;if(e==null||result==null||!result.Outcome.IsEnded)return false;
             var start=e.Battle.State;
             if(result.InitialSeed!=start.InitialSeed||result.Units.Count!=start.Units.Count||result.Units.Any(u=>!start.Units.Any(v=>v.Id==u.Id&&v.Profile.Id==u.Profile.Id&&v.Side==u.Side)))return false;
             e.Battle.Resolve(result);Foundations?.ReconcileCasualties(this);
@@ -144,11 +147,11 @@ namespace RPG.Core
         }
         public bool EndActivation(Side side)
         {
-            if(!CanAct(side))return false;int n=Force(side).Node;
+            if(Realm!=null)return Realm.EndSide(side);if(!CanAct(side))return false;int n=Force(side).Node;
             if(n>=6&&n<=8){if(n==8&&Owner(n)!=side)BreakHold(null,"lost ownership");owners[n-6]=side;Log(side+" claims "+Graph.Node(n).Name);}
             Foundations?.Capture(n,side);
             CompletedActivations++;
-            if(CompletedActivations==2&&Incident!=null){Incident.WorldPhase=true;Incident.Cursor=0;Incident.ActorOrder=Incident.Raiders.Where(r=>r.OnMap).Select(r=>r.Id).OrderBy(id=>id,StringComparer.Ordinal).ToArray();HandoffPending=false;return true;}
+            if(CompletedActivations==2&&Incident!=null){Incident.WorldPhase=true;Incident.Cursor=0;Incident.ActorOrder=Incident.Raiders.Where(r=>r.OnMap).Select(r=>r.Id).OrderBy(id=>id,StringComparer.Ordinal).ToArray();HandoffPending=false;Realm?.EnsureSelection(side);return true;}
             if(CompletedActivations==2)CompleteRefresh();else ActiveSide=Other(StartingSide);
             HandoffPending=!Winner.HasValue;return true;
         }
