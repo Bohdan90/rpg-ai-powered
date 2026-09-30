@@ -88,7 +88,7 @@
   },
   "historical_implementation_head": "3d58f354f5c9764f47fdfa85b2d1b85fd5d5a0c4",
   "audit_start_head": "d84571dc8dc11a2c119045c8d8ae514ae2c8e2d4",
-  "tested_configuration": "Unity 6000.6.2f1; isolated product and CFFIXED_USER_HOME=/private/tmp/convergence-5051/preferences; local APP_UI_EDITOR_ONLY;SENTIS_ANALYTICS_ENABLED defines",
+  "tested_configuration": "Unity 6000.6.2f1; isolated product and CFFIXED_USER_HOME=/private/tmp/convergence-5051/preferences; compiler RPG.Presentation.rsp confirms APP_UI_EDITOR_ONLY, not SENTIS_ANALYTICS_ENABLED. No main-checkout configuration run claimed.",
   "tested_source_sha256": {
     "Assets/_Project/Core/AssemblyInfo.cs": "c84ba0451352a68fe7f3ce3240662f9e04e0ed4dad38ea9d99eec7572e313c13",
     "Assets/_Project/Core/AttackPreview.cs": "e7a220e1530a3c5db4ab475f41f219d4e5f812aed6f6d656e9d3d9f6309b90e2",
@@ -280,5 +280,6 @@
   ],
   "gui_access": "Available after user closed both Unity editors and released input; HID works on second display. PostToPid did not open menu.",
   "main_integration_settings_policy": "Preserve main ProjectSettings/ProjectSettings.asset and EditorBuildSettings.asset baseline in merge tree so original working changes and product/save namespace survive; do not copy feature namespace into main.",
-  "current_original_file_manifest": "/private/tmp/convergence-5051/audit-original-backup/manifest.json"
+  "current_original_file_manifest": "/private/tmp/convergence-5051/audit-original-backup/manifest.json",
+  "feature_local_define_preservation": "Unity normalized the pre-existing local Standalone define delta during tests. Restored APP_UI_EDITOR_ONLY;SENTIS_ANALYTICS_ENABLED after tests to preserve the feature worktree preflight change; not staged. This restored local configuration is not presented as the tested compiler configuration."
 }
