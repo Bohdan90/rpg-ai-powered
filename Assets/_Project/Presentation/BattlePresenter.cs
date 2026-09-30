@@ -154,6 +154,7 @@ namespace RPG.Presentation
         }
         private BattleCommand pending;
         private GridPosition? selected;
+        public GridPosition? PinnedCell => selected;
         public BattleState State { get; private set; }
         public int VisualUnitCount => grid.ActiveVisualCount;
         public string PreviewText { get; private set; } = "Click a cell or a unit to preview.";
@@ -239,17 +240,19 @@ namespace RPG.Presentation
         }
         public void Defend() { if(!IsAiTurn) Submit(new DefendCommand(State.CurrentUnitId.Value)); }
         public void EndActivation(Facing? facing) { if(!IsAiTurn) Submit(new EndActivationCommand(State.CurrentUnitId.Value, facing)); }
-        public void ConfirmPreview() { if (!IsAiTurn && pending != null) Submit(pending); }
+        public void ConfirmPreview() { if (!IsAiTurn && selected.HasValue && pending != null) Submit(pending); }
 
-        public void SelectCell(GridPosition cell, bool friendlyConfirmed = false)
+        public void SelectCell(GridPosition cell, bool friendlyConfirmed = false) => PreviewCell(cell,friendlyConfirmed,true);
+        private void PreviewCell(GridPosition cell, bool friendlyConfirmed, bool pin)
         {
             if (State.Outcome.IsEnded || IsAiTurn) return;
-            selected = cell; aimHover=cell; pending = null; MovementRisk = null; PreviewEscapes = false; spellPreviewCells=null;spellBlockedCells=null;spellCenter=null;
+            selected = pin ? cell : (GridPosition?)null; aimHover=cell; pending = null; MovementRisk = null; PreviewEscapes = false; spellPreviewCells=null;spellBlockedCells=null;spellCenter=null;
             var actor = State.FindUnit(State.CurrentUnitId.Value); var target = State.OccupantAt(cell);
             if(PreviewSelectedSpell(cell,friendlyConfirmed))return;
             if(target!=null&&target.Side==actor.Side&&Primary(actor.Profile).HasValue&&!StaffSelected){PreviewText="Inspect "+UnitName(target.Id)+" · HP "+target.Hp+" / Armor "+target.Armor+". Choose an explicit friendly spell to cast.";ShowViews();return;}
             if (target != null && target.Id != actor.Id)
             {
+                spellPreviewCells=new[]{cell};spellCenter=cell;
                 var kind = BattleResolver.AvailableBasicAttack(State, actor.Id);
                 bool meleeStrike = kind == BasicAttackKind.MeleeStrike;
                 var command = new BasicAttackCommand(actor.Id, target.Id, friendlyConfirmed, kind);
@@ -338,7 +341,7 @@ namespace RPG.Presentation
             else if (State.Battlefield.IsRetreatZone(actor.Side == Side.West ? Side.East : Side.West, cell)) text += "\nOpponent's edge — NOT your escape.";
             return text;
         }
-        private void ClearPreview() { spellPreviewCells=null;spellBlockedCells=null;spellCenter=null;aimHover=null;inspectedSpell=null; pending = null; selected = null; MovementRisk = null; PreviewEscapes = false; PreviewText = "Click a cell or unit, then confirm. Green cells: Core reachable."; hud.ResetChoices(); }
+        private void ClearPreview() { spellPreviewCells=null;spellBlockedCells=null;spellCenter=null;aimHover=null;inspectedSpell=null; pending = null; selected = null; MovementRisk = null; PreviewEscapes = false; PreviewText = "Hover to preview. Click once to pin; click the same cell again to act. Green cells: Core reachable."; hud.ResetChoices(); }
         private void Refresh()
         {
             reachable.Clear(); rangedReach.Clear(); RangedReachMessage=""; threats.Clear();
@@ -368,7 +371,7 @@ namespace RPG.Presentation
         {
             RefreshSpellEnvelope();
             grid.Refresh(State, reachable, (pending as MoveCommand)?.Path, threats, MovementRisk, rangedReach,inspectedSpell.HasValue?null:spellPreviewCells,spellEnvelope,inspectedSpell.HasValue?null:spellBlockedCells,inspectedSpell.HasValue?null:spellCenter);
-            hud.Refresh(State, pending != null && !State.Outcome.IsEnded, selected);
+            hud.Refresh(State, selected.HasValue && pending != null && !State.Outcome.IsEnded, selected);
         }
         private void Append(IEnumerable<BattleEvent> events)
         {

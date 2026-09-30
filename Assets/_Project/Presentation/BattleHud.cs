@@ -39,7 +39,7 @@ namespace RPG.Presentation
             surface.style.overflow = Overflow.Hidden; Root.Add(surface);
             var title = Text(surface, "GATE C / HOTSEAT", 22); title.style.position = Position.Absolute;
             title.name="battle-title"; title.style.left = 20; title.style.top = 16; title.pickingMode = PickingMode.Ignore;
-            var legend = Text(surface, "BLUE West · ORANGE East · GOLD active\nGreen: reachable · Gold: path · Red segment: OA risk\nSword + shield: HW/EW · Bow: HA · * Commander\nWhite arrow: facing · Red border: ZoC ready · Gray: spent\nWheel: zoom · Right-click: center view", 13);
+            var legend = Text(surface, "BLUE West · ORANGE East · GOLD active\nGreen: reachable · Gold: path · Red segment: OA risk\nSword + shield: HW/EW · Bow: HA · * Commander\nWhite arrow: facing · Red border: ZoC ready · Gray: spent\nHover: preview · Click: pin · Same cell again: execute\nWheel: zoom · Right-click: center view", 13);
             legend.style.position = Position.Absolute; legend.style.left = 20; legend.style.bottom = 16; legend.pickingMode = PickingMode.Ignore;
             westEdge = Text(surface, "West Retreat", 13); eastEdge = Text(surface, "East Retreat", 13);
             westEdge.style.position = eastEdge.style.position = Position.Absolute;
@@ -56,7 +56,7 @@ namespace RPG.Presentation
                 if (presenter.State == null || !Pick(surface.WorldToLocal(e.position), out var p)) return;
                 if (e.button == 1) { presenter.CenterView(p); e.StopPropagation(); return; }
                 if (e.button != 0) return;
-                friendly.SetValueWithoutNotify(false); presenter.ClickCell(p); e.StopPropagation();
+                if(presenter.PinnedCell!=p)friendly.SetValueWithoutNotify(false); presenter.ClickCell(p); e.StopPropagation();
             });
 
             panel = new ScrollView { name = "battle-panel" };
@@ -180,7 +180,7 @@ namespace RPG.Presentation
             string ordinary=presenter.PrimarySpell.HasValue?"Primary / Move":"Basic / Move";
             spellSelect.choices=new[]{ordinary}.Concat(SpellRules.Kit(actor.Profile).Select(s=>s.ToString())).ToList();
             spellSelect.SetValueWithoutNotify(presenter.SelectedSpell?.ToString()??ordinary);
-            Root.Q<Button>("primary-attack").text=presenter.PrimarySpell.HasValue?"Primary: "+presenter.PrimarySpell+" · hostile click":"Basic / Move";
+            Root.Q<Button>("primary-attack").text=presenter.PrimarySpell.HasValue?"Primary: "+presenter.PrimarySpell+" · select, then click again":"Basic / Move";
             Root.Q("primary-attack").SetEnabled(playerTurn&&!ended&&(!presenter.PrimarySpell.HasValue||actor.ActionAvailable));Root.Q("staff-attack").style.display=actor.Profile.IsCaster?DisplayStyle.Flex:DisplayStyle.None;Root.Q("staff-attack").SetEnabled(playerTurn&&!ended&&actor.ActionAvailable);
             Root.Q<Label>("spell-details").text=presenter.SpellDetails;
             spellSelect.SetEnabled(playerTurn&&!ended&&actor.ActionAvailable);
@@ -210,7 +210,7 @@ namespace RPG.Presentation
             active.text+="\n"+presenter.ConnectedArmyName(actor.Id)+"\n"+BattlePresenter.CombatStatuses(actor);
             queue.text = ended ? "" : "Initiative order (► current):\n" + string.Join("\n", state.ActivationOrder.Select(id =>
                 (id == actor.Id ? "► " : "   ") + presenter.UnitName(id) + (state.FindUnit(id).OwnRetreatEdge.HasValue?" ("+state.FindUnit(id).OwnRetreatEdge+")":"") + " [" + state.FindUnit(id).Profile.Initiative + "] " + BattlePresenter.OaStatus(state.FindUnit(id))));
-            cell.text = selected.HasValue ? "Selected (" + selected.Value.X + "," + selected.Value.Y + ")" : "No destination / target selected.";
+            cell.text = selected.HasValue ? "Pinned — click again to act (" + selected.Value.X + "," + selected.Value.Y + ")" : "No destination / target selected.";
             preview.text = presenter.PreviewText; confirm.SetEnabled(canConfirm && playerTurn); message.text = presenter.Message;
             int risks = presenter.OpportunityRiskCount;
             riskWarning.text = risks > 0 ? "This path may trigger " + risks + " Opportunity Attack(s). Confirm to accept the risk, or Cancel." : "";

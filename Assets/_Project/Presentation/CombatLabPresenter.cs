@@ -30,7 +30,7 @@ namespace RPG.Presentation
                 return (!actor.ActionAvailable?"UNAVAILABLE: Action spent — end activation; Action resets on the next activation.\n":"")+(inspectedSpell.HasValue?"Inspecting (selected action unchanged): ":SelectedSpell.HasValue?"Selected: ":"Primary attack: ")+s+"\n"+TargetDescription(s)
                     +" · Action"+(SpellRules.Exertion(s)?" + Exertion":" · Spell (not Exertion)")
                     +(limit==int.MaxValue?"":"\nRemaining "+Math.Max(0,limit-SpellRules.Used(actor,s))+"/"+limit+" · resets only on global Strategic Refresh")
-                    +"\n"+(!actor.ActionAvailable?"Spell targeting is hidden until Action is available.":SelectedSpell.HasValue?"Hover a cell for exact effect; click then Confirm. Cancel returns to primary.":"Hover/click a hostile unit for primary spell. Empty ground remains Move; allies are inspected.")
+                    +"\n"+(!actor.ActionAvailable?"Spell targeting is hidden until Action is available.":SelectedSpell.HasValue?"Hover for exact effect; click to pin, click the same cell again to cast. Cancel clears the pin.":"Hover to preview; first click pins, second click on the same enemy casts. Empty ground remains Move; allies are inspected.")
                     +"\nAmber brackets: legal aim geometry (recipient/status checked separately). Magenta: exact effect. Red X: excluded by obstruction. Allies are named below.";
             }
         }
@@ -40,13 +40,13 @@ namespace RPG.Presentation
             if(World!=null||Duel!=null)return;
             Lab=match;ResetAim();
             ConfigureBattle(CombatLab.Units(match,nearContact),CombatLab.Board(match),5051);
-            Message="Combat Lab · "+match+" · "+(nearContact?"AUTHORED near-contact quick-start":"ordinary deployment")+". Hostile click: primary spell; explicit specials: select, aim, confirm.";
+            Message="Combat Lab · "+match+" · "+(nearContact?"AUTHORED near-contact quick-start":"ordinary deployment")+". Hover previews; first click pins; second click on the same cell acts. Specials: select, then aim with the same two clicks.";
             Refresh();
         }
         private void ResetAim(){SelectedSpell=null;StaffSelected=false;inspectedSpell=null;}
         public void SelectSpell(SpellId? spell){ResetAim();SelectedSpell=spell;ClearPreview();Refresh();}
         public void SelectStaff(){ResetAim();StaffSelected=true;ClearPreview();Refresh();}
-        public void InspectSpell(SpellId? spell){inspectedSpell=spell;ShowViews();}
+        public void InspectSpell(SpellId? spell){if(selected.HasValue)return;inspectedSpell=spell;ShowViews();}
         private SpellId? SpellForCell(GridPosition cell)
         {
             if(SelectedSpell.HasValue)return SelectedSpell;
@@ -54,29 +54,23 @@ namespace RPG.Presentation
             var actor=State.FindUnit(State.CurrentUnitId.Value);var target=State.OccupantAt(cell);
             return target!=null&&target.Side!=actor.Side?Primary(actor.Profile):null;
         }
-        // The only one-click adapter. Selection/hover APIs remain read-only previews.
+        // Hover is transient; the first click pins, the second click on the same cell commits.
         public void ClickCell(GridPosition cell)
         {
-            if(State.Outcome.IsEnded||IsAiTurn)return;
-            bool primary=!SelectedSpell.HasValue&&!StaffSelected&&SpellForCell(cell).HasValue;
+            if(State==null||State.Outcome.IsEnded||IsAiTurn)return;
+            if(selected==cell&&pending!=null){ConfirmPreview();return;}
+            inspectedSpell=null;
             SelectCell(cell);
-            if(primary&&pending is CastCommand)ConfirmPreview();
         }
         public void HoverCell(GridPosition cell)
         {
-            if(State==null||State.Outcome.IsEnded||IsAiTurn)return;
-            if(selected.HasValue||aimHover==cell)return;
-            aimHover=cell;
-            pending=null;selected=null;MovementRisk=null;PreviewEscapes=false;
-            var spell=SpellForCell(cell);
-            if(spell.HasValue)PreviewSpellAt(cell,spell.Value,false,false);
-            else {spellPreviewCells=null;spellBlockedCells=null;spellCenter=null;PreviewText=Hover(cell);}
-            ShowViews();
+            if(State==null||State.Outcome.IsEnded||IsAiTurn||selected.HasValue||aimHover==cell)return;
+            PreviewCell(cell,false,false);
         }
         public void LeaveBoard()
         {
-            aimHover=null;
-            if(!selected.HasValue){spellPreviewCells=null;spellBlockedCells=null;spellCenter=null;PreviewText="Hover a target or select an explicit action.";ShowViews();}
+            if(selected.HasValue)return;
+            ClearPreview();ShowViews();
         }
         private bool PreviewSelectedSpell(GridPosition cell,bool friendly)
         {

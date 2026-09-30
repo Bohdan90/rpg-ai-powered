@@ -33,8 +33,8 @@ namespace RPG.Presentation.Tests
         {
             yield return Open();P.ConfigureBattle(new[]{U(1,UnitProfile.FireMageTI,Side.West,8,8),U(2,UnitProfile.HumanWarriorTI,Side.East,12,8),U(3,UnitProfile.HumanWarriorTI,Side.East,10,9)},new Battlefield(23,17),2);Actor(UnitProfile.FireMageTI);
             string hash=BattleStateHash.Compute(P.State);P.ClickCell(new GridPosition(12,8));Assert.That(BattleStateHash.Compute(P.State),Is.EqualTo(hash));Assert.That(P.PreviewText,Does.Contain("Out of range"));
-            int n=P.Journal.Records.Count;P.HoverCell(new GridPosition(10,9));P.ClickCell(new GridPosition(10,9));Assert.That(P.Journal.Records.Count,Is.EqualTo(n+1));Assert.That(P.Journal.Records.Last().command.kind,Is.EqualTo(nameof(CastCommand)));P.ConfirmPreview();Assert.That(P.Journal.Records.Count,Is.EqualTo(n+1));
-            P.EndActivation(null);Actor(UnitProfile.FireMageTI);Assert.That(P.SelectedSpell,Is.Null);Assert.That(P.PrimarySpell,Is.EqualTo(SpellId.FireStream));P.ClickCell(new GridPosition(10,9));Assert.That(P.Journal.Records.Last().command.kind,Is.EqualTo(nameof(CastCommand)));
+            int n=P.Journal.Records.Count;P.HoverCell(new GridPosition(10,9));P.ClickCell(new GridPosition(10,9));Assert.That(P.Journal.Records.Count,Is.EqualTo(n));P.ClickCell(new GridPosition(10,9));Assert.That(P.Journal.Records.Count,Is.EqualTo(n+1));Assert.That(P.Journal.Records.Last().command.kind,Is.EqualTo(nameof(CastCommand)));P.ConfirmPreview();Assert.That(P.Journal.Records.Count,Is.EqualTo(n+1));
+            P.EndActivation(null);Actor(UnitProfile.FireMageTI);Assert.That(P.SelectedSpell,Is.Null);Assert.That(P.PrimarySpell,Is.EqualTo(SpellId.FireStream));P.ClickCell(new GridPosition(10,9));P.ClickCell(new GridPosition(10,9));Assert.That(P.Journal.Records.Last().command.kind,Is.EqualTo(nameof(CastCommand)));
         }
         [UnityTest] public IEnumerator GroundMovementFriendlyInspectionSpecialCancelAndStaffStaySeparate()
         {
@@ -53,7 +53,7 @@ namespace RPG.Presentation.Tests
             foreach(bool explicitAim in new[]{false,true}) {
                 P.ConfigureBattle(new[]{U(1,UnitProfile.FireMageTII,Side.West,8,8),U(2,UnitProfile.HumanWarriorTI,Side.East,10,9)},new Battlefield(23,17),2);Actor(UnitProfile.FireMageTII);
                 var cell=new GridPosition(10,9);if(explicitAim)P.SelectSpell(SpellId.FireStream);
-                Assert.That(P.SpellEnvelope,Is.Not.Empty);P.ClickCell(cell);if(explicitAim)P.ConfirmPreview();
+                Assert.That(P.SpellEnvelope,Is.Not.Empty);P.ClickCell(cell);P.ClickCell(cell);
                 Assert.That(P.State.FindUnit(new UnitId(1)).ActionAvailable,Is.False);
                 string hash=BattleStateHash.Compute(P.State);int count=P.Journal.Records.Count;
                 Assert.That(BattleResolver.Validate(P.State,new CastCommand(new UnitId(1),SpellId.FireStream,cell)),Is.EqualTo(CommandError.NoAction));
@@ -67,6 +67,37 @@ namespace RPG.Presentation.Tests
                 P.EndActivation(null);Actor(UnitProfile.FireMageTII);Assert.That(P.SpellEnvelope,Is.Not.Empty);Assert.That(root.Q<Button>("spell-FireStream").enabledSelf,Is.True);
                 Assert.That(ReplayVerification.Verify(P.Journal.Header,P.Journal.Records,P.Journal.Footer()).Matches,Is.True);
             }
+        }
+        [UnityTest] public IEnumerator HoverPathTracksCursorPinnedPathSurvivesLeaveAndSecondClickMovesOnce()
+        {
+            yield return Open();P.ConfigureBattle(new[]{U(1,UnitProfile.HumanWarriorTI,Side.West,8,8),U(2,UnitProfile.HumanWarriorTI,Side.East,15,8)},new Battlefield(23,17),2);
+            var actor=P.State.CurrentUnitId.Value;var pos=P.State.FindUnit(actor).Position;var a=new GridPosition(pos.X,pos.Y+1);var b=new GridPosition(pos.X,pos.Y+2);
+            string hash=BattleStateHash.Compute(P.State);P.HoverCell(a);Assert.That(P.HasMovePreview,Is.True);Assert.That(P.PinnedCell,Is.Null);string first=P.PreviewText;
+            P.ConfirmPreview();Assert.That(BattleStateHash.Compute(P.State),Is.EqualTo(hash),"Hover must never arm Confirm");P.HoverCell(b);Assert.That(P.PreviewText,Is.Not.EqualTo(first));P.LeaveBoard();Assert.That(P.HasMovePreview,Is.False);
+            P.ClickCell(a);Assert.That(P.PinnedCell,Is.EqualTo(a));first=P.PreviewText;P.HoverCell(b);P.LeaveBoard();Assert.That(P.PreviewText,Is.EqualTo(first));Assert.That(P.HasMovePreview,Is.True);Assert.That(BattleStateHash.Compute(P.State),Is.EqualTo(hash));
+            P.ClickCell(b);Assert.That(P.PinnedCell,Is.EqualTo(b));Assert.That(P.Journal.Records.Count,Is.Zero);P.ClickCell(b);Assert.That(P.State.FindUnit(actor).Position,Is.EqualTo(b));Assert.That(P.Journal.Records.Count,Is.EqualTo(1));P.ConfirmPreview();Assert.That(P.Journal.Records.Count,Is.EqualTo(1));Assert.That(P.PinnedCell,Is.Null);
+            Assert.That(ReplayVerification.Verify(P.Journal.Header,P.Journal.Records,P.Journal.Footer()).Matches,Is.True);
+        }
+        [UnityTest] public IEnumerator EveryAttackPinsBeforeCommitAndTargetChangeNeverAttacksOldTarget()
+        {
+            yield return Open();
+            foreach(var profile in new[]{UnitProfile.FireMageTI,UnitProfile.IceMageTI,UnitProfile.HumanWarriorTI,UnitProfile.HumanArcherTI}) {
+                var a=profile.IsArcher?new GridPosition(11,8):new GridPosition(9,8);var b=profile.IsArcher?new GridPosition(10,10):new GridPosition(8,9);
+                P.ConfigureBattle(new[]{U(1,profile,Side.West,8,8),U(2,UnitProfile.ElfWarriorTI,Side.East,a.X,a.Y),U(3,UnitProfile.ElfWarriorTI,Side.East,b.X,b.Y)},new Battlefield(23,17),2);Actor(profile);int n=P.Journal.Records.Count;string hash=BattleStateHash.Compute(P.State);
+                P.HoverCell(a);Assert.That(P.SpellFootprint,Is.Not.Empty);P.LeaveBoard();Assert.That(P.SpellFootprint,Is.Empty);
+                P.ClickCell(a);var footprint=P.SpellFootprint.ToArray();P.HoverCell(b);P.LeaveBoard();P.InspectSpell(SpellId.FireArmor);Assert.That(P.SpellFootprint,Is.EqualTo(footprint));Assert.That(P.PinnedCell,Is.EqualTo(a));
+                P.ClickCell(b);Assert.That(P.PinnedCell,Is.EqualTo(b));Assert.That(BattleStateHash.Compute(P.State),Is.EqualTo(hash));Assert.That(P.Journal.Records.Count,Is.EqualTo(n));
+                P.ClickCell(b);Assert.That(P.Journal.Records.Count,Is.EqualTo(n+1));P.ConfirmPreview();Assert.That(P.Journal.Records.Count,Is.EqualTo(n+1));Assert.That(P.PinnedCell,Is.Null);
+            }
+        }
+        [UnityTest] public IEnumerator GroundSpellPinCancelActionSwitchAndFriendlyFireConsentRemainExplicit()
+        {
+            yield return Open();P.ConfigureBattle(new[]{U(1,UnitProfile.FireMageTII,Side.West,8,8),U(2,UnitProfile.HumanWarriorTI,Side.East,12,8)},new Battlefield(23,17),2);Actor(UnitProfile.FireMageTII);
+            var empty=new GridPosition(11,7);P.SelectSpell(SpellId.Fireball);string hash=BattleStateHash.Compute(P.State);int n=P.Journal.Records.Count;
+            P.HoverCell(empty);P.ConfirmPreview();Assert.That(BattleStateHash.Compute(P.State),Is.EqualTo(hash));P.ClickCell(empty);P.LeaveBoard();Assert.That(P.SpellFootprint,Is.Not.Empty);P.CancelPreview();Assert.That(P.PinnedCell,Is.Null);Assert.That(P.SpellFootprint,Is.Empty);
+            P.SelectSpell(SpellId.Fireball);P.ClickCell(empty);P.SelectStaff();Assert.That(P.PinnedCell,Is.Null);P.ClickCell(empty);Assert.That(P.Journal.Records.Count,Is.EqualTo(n));P.CancelPreview();
+            P.SelectSpell(SpellId.Fireball);var self=new GridPosition(8,8);P.ClickCell(self);P.ClickCell(self);Assert.That(BattleStateHash.Compute(P.State),Is.EqualTo(hash));Assert.That(P.PreviewText,Does.Contain("Friendly Fire confirmation"));
+            P.Repreview(true);P.LeaveBoard();P.ClickCell(self);Assert.That(P.Journal.Records.Count,Is.EqualTo(n+1));Assert.That(P.State.FindUnit(new UnitId(1)).FireballUsed,Is.EqualTo(1));
         }
         [Test] public void RetainedV1ReplayFilesStillUseRecordedRules()
         {

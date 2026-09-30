@@ -1,5 +1,9 @@
 # Gate C — working implementation checkpoint
 
+## 2026-09-30 — unified two-click tactical input
+
+User replaces historical single-click primary-spell input: hover previews; first click pins path/target/area; second click on the same cell executes. Another cell replaces the pin, pointer leave preserves pinned geometry, cancel/action/activation changes clear it. Transient hover cannot execute via Confirm. Basic attacks, Bow, primary/special spells and movement use the same contract. Explicit Friendly Fire confirmation retained. Core rules unchanged. Starting main3271802; focused10PlayModePASS; full585 EditMode +77 PlayMode =662 PASS,0 failed/skipped; fresh results and delivery in `TWO_CLICK_TACTICAL.md` / `Evidence/TWO-CLICK-TACTICAL/validation-manifest.json`. NO PUSH.
+
 ## 2026-09-30 — spent spell Action readability
 
 User reported Fire Stream still appearing castable. Actual Presentation regression reproduces stale geometric range/buttons after Core consumes Action; a second Cast is already rejected with NoAction. Presentation now hides spell range/footprint/recipient and disables attack/spell controls with explicit Action-spent guidance; next activation restores eligibility. No combat/Movement/replay/save rule changes. Both primary click and explicit targeting covered, including invalid no-mutation and replay. Fresh results/provenance: `SPELL_ACTION_READABILITY.md` and `Evidence/SPELL-ACTION-READABILITY/validation-manifest.json`. Starts `develop @52827b5`, tested in isolated Realm worktree; main then fast-forwarded to `a87ed99` with identical tested sources. Fresh585 EditMode +74 PlayMode =659 PASS; nine original files unchanged. No mouse-driven validation claimed. NO PUSH.
