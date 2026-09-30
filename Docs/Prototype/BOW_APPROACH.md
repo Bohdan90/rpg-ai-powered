@@ -15,3 +15,5 @@ Mouse-driven manual validation NOT RUN. Automated PlayMode exercises actual Pres
 Regression follow-up: initial fullPlayMode76 PASS/4 FAIL exposed old UI expectations that blocked direct shots must always disable Confirm. Tests now preserve Core OutOfRange/BlockedLineOfSight assertions and verify the lawful movement/shot alternative. Fully sealed, unreachable geometry still disables confirmation. Current-shot refusal reason remains visible alongside the approach. An intermediate focused35 PASS/1 FAIL caught a mistaken positive expectation for that sealed fixture; corrected to retain refusal, focused corner/range7 PASS. No combat geometry was relaxed. Full suites rerun on the final sources.
 
 Final full regression: **603 EditMode +80 PlayMode =683 PASS;0 failed;0 skipped**. Source hashes match the final tested implementation.
+
+Main delivery: `My project/develop` fast-forwarded `8fa995c → b448334`; tested source hashes match. Nine unrelated files preserved. Save verification and exact delivery: `Evidence/BOW-APPROACH/main-integration.json`. No forced Unity restart or push.
