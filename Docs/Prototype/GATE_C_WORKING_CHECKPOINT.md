@@ -3,7 +3,7 @@
 Updated 2026-09-29. Single implementation handoff; Google Drive thematic owners retain
 priority for canon. Follow repository `AGENTS.md` and the efficiency protocol.
 
-## Connected Playable 04 — World Dynamics (document49; manual gate incomplete)
+## Connected Playable 04 — World Dynamics (document49; controlled stage F complete)
 
 - Starting `develop @ 4fe7851`; document49 A–F authorized, latest48/44/46 read. Prior02+03 personal user **KEEP** is closed and unchanged.
 - A–E implemented: separate **Crossroads Incident 04 · West first / East first** selectors in TacticalGraybox Play-mode panel, plus no-incident control. Same original graph plus axis nodes14–16/edges20; target16 only here (original03 stays8).
@@ -11,9 +11,10 @@ priority for canon. Follow repository `AGENTS.md` and the efficiency protocol.
 - Resumable world phase after both humans; stable actor cursor, one initiation/slot; explicit Continue World Phase. Target-centered multi-formation participation, per-army Attack/Withdrawal, directional deployment, same IDs/XP/Commanderless, human Hotseat versus raider AI; pre-battle human Fight/Withdrawal.
 - Shared continuous Hold: same physical owner for2 COMPLETE cycles (first R2), resets on break;150Gold once; ravage fails / R6 expires. No contract spawns or bonus Pressure/healing.
 - Incident schema3/separate slot includes all actor/cursor/Hold/service/economy state; original Crossroads schema2/Mission01 unchanged. Invalid loads preserve live state; battle/modal save disabled. Core previews/replay/invalid-command invariants retained.
-- Automated final: **70 focused EditMode +9 focused PlayMode PASS; full441 EditMode +61 PlayMode =502 PASS, 0 failed/skipped**. Replay/preview/invalid/save continuation checks PASS; see report for fresh XML. Manual **PARTIAL**: launch/R1→R2, NPC contact/deployment and exact mid-Refresh save/recreate/load verified. Full M1, M2/M3/M5 and remaining M4 **NOT RUN** after external mouse-input failure; **do not claim full document49 DoD or manual PASS**.
-- Report/launch/evidence: [STRATEGIC_CONNECTED_PLAYABLE_04_WORLD_DYNAMICS.md](STRATEGIC_CONNECTED_PLAYABLE_04_WORLD_DYNAMICS.md). No balance conclusion from partial manual run. Coordinator acceptance and integrated04 user playtest remain PENDING.
-- Nine unrelated scene/settings/six.meta preserved by SHA-256; own diff isolated. NO PUSH. STOP before Civilization Depth/other systems; remaining controlled manual gate must be completed.
+- Automated final: **70 focused EditMode +9 focused PlayMode PASS; full441 EditMode +61 PlayMode =502 PASS, 0 failed/skipped**. Replay/preview/invalid/save continuation checks PASS; see report for XML from that run. These are historical results for implementation20473ec, not a fresh run in the documentation-only stage-F follow-up. No runtime/test-code changes.
+- Stage F resumed from live `develop @ 20473ec`; current48/latest44/46 and49 §§17–20 read. **M1–M5 controlled mouse PASS**: fullR10 West17:3, two PvE defenses/3 persistent losses, PvP tacticalEscape, Hold150 once; actual post-Hold save → Keep recovery35→40/Armor0 → paid HW recruit → later battle. Ravage/Withdrawal reset/blocked return→Stable remnant, world-cursor/reward/raid/recruit save continuation, short East-first/control comparison PASS. Grouped12-body battle and two battles atR3 with exact32HP/0Armor carry-over PASS. Seven fresh controlled replays match84/145/8/8/21/90/15 commands.
+- Input interruption resolved using existing helper/one Play Mode re-entry after fixture script reload; user clarified manual takeover. Two-monitor incompatibility not proven. No current manual blocker, no game code/tuning fix. Report/launch/evidence and labelled manual JSON fixtures: [STRATEGIC_CONNECTED_PLAYABLE_04_WORLD_DYNAMICS.md](STRATEGIC_CONNECTED_PLAYABLE_04_WORLD_DYNAMICS.md). Coordinator acceptance and integrated04 user playtest remain PENDING; earlier02+03 KEEP unchanged.
+- Nine unrelated scene/settings/six.meta preserved by SHA-256; own diff isolated. Stage-F documentation/manual-fixture commit title `Docs: complete Incident 04 controlled validation`. NO PUSH. STOP for coordinator acceptance and integrated04 user playtest; no Civilization Depth/other systems.
 
 ## Connected Playable 03 — economy/recruitment extension (document47 Part B)
 

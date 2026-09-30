@@ -5,8 +5,9 @@ Authority: Drive 49 (`10IYIP6y-q-vRtqpvJqraxASHjGW1QpScp_3Qx1QBAQg`) read fully,
 48/latest44/46, owner33 §§0/8/10, owner17 participation/placement/Tempo/Withdrawal,
 owner05 supply boundaries, owner26 recovery. Earlier 02+03 user **KEEP** remains closed.
 
-**Status:** A–E implemented. Automated evidence below; F controlled manual gate is
-**INCOMPLETE**. This is not full document-49 DoD acceptance or player acceptance.
+**Status:** A–E implementation `20473ec` preserved; stage F controlled manual
+validation is now **COMPLETE** (resumed 2026-09-29 from that same live HEAD).
+Coordinator acceptance and integrated 04 **PLAYER ACCEPTED remain PENDING**.
 No owner contradiction identified; no new balancing numbers or systems introduced.
 
 ## Launch
@@ -137,42 +138,91 @@ External manual helper is removed from the test project's Assets before batch te
   entry delay/no burst, Whiteout/stranding, lasting supply loss, paid reward once,
   save cursor/economy continuity and terminal transaction/no next release.
 
-## Controlled manual evidence — partial, mandatory gate still open
+## Stage F resumption — controlled mouse evidence completed
 
-External local evidence: `/private/tmp/cp04-20260929/results/`.
-Harness uses actual OS mouse events and existing UI buttons; read-only path/AI command
-suggestions do not execute Core commands. Rare fixtures were prepared but NOT executed.
+Live starting branch/HEAD: `develop @ 20473ece24aab885cd3bd3d8cb0fe48a47e3811a`.
+Read current48/latest44/46 and49 §§17–20; no A–E reimplementation. No runtime or
+automated-test code changed. The prior 70+9 focused /441+61 full results above belong
+to implementation20473ec; their XML was rechecked, **not rerun or claimed as fresh**.
+The current user instruction permits reuse when executable/test code is unchanged.
+This follow-up changes only report/checkpoint and labelled manual starting-state JSON.
 
-| Check | Actual result |
+The original attempt had M1/M4 partial and M2/M3/M5 unfinished. Its valid launch,
+R1→R2 and mid-Refresh save/hash evidence was reused. All remaining cases below were
+subsequently exercised using OS mouse events on the ordinary UI. Human tactical
+commands used read-only legal AI/path suggestions, followed by actual board clicks
+and Confirm/End/Escape; no direct resolver calls or fabricated outcomes. This is a
+controlled developer run, not evidence of an unaided user's strategy or balance verdict.
+
+Input diagnosis: isolated Unity6000.6.2f1, same implementation, seed20260929.
+Target window PID86050, bounds(0,42,1728,1005), maximized Game view; panel-to-screen
+origin(224,228), scale0.84375. A visible selector click produced a runtime PointerDown
+on `incident-start-west`. Full M1/M2 then ran successfully. After external fixture-helper
+assembly reload, pointer delivery stopped despite correct visible cursor coordinates.
+The user clarified concurrent manual takeover; two-monitor incompatibility was NOT
+established. One Play Mode exit/re-entry restored delivery with the existing HID mouse
+helper; M3/M5/supplements then completed. No new permissions mechanism, security bypass,
+general mouse framework, editor restart loop or product input patch. The temporary
+MANUAL BLOCKED diagnosis is superseded; exact reload/takeover cause remains unproven.
+The isolated editor is closed; the user's main editor was not closed or modified.
+
+| Case | Actual result / evidence |
 |---|---|
-| M1 full incident match / legal victory | **PARTIAL, NOT COMPLETED**. Mouse launch; West→08, East→06, both activations; R2 Red/A entry; actual NPC approach16→15→14, defending West chooses Fight. Nine persistent bodies deployed, human West maps tactical Orange/East, NPC maps Blue/West. No completed battle/victory evidence. |
-| M2 successful Hold + recovery/recruit/redeploy | **NOT RUN** to completion. Arrival R1 produced0 full Hold cycles; R2 eligibility visible. No manual reward or later recruit battle claimed. |
-| M3 ignore/ravage/interruption/stranding | **NOT RUN** manually; automated fixtures pass separately. |
-| M4 save/recreate/load | **PARTIAL PASS** mid-R2 human handoff. Exact hash `TCQwIceKXxvw0Pcoe6wVFcbtjOqs5gfl1I7TTn28cj8=` before/after. West08/East06, Provisions30/24, active manifest restored. World-battle continuation and immediate post-reward/raid manual checks **NOT RUN**. |
-| M5 mirror/control comparison | **NOT RUN** manually; automated mirrored/control rules tested. |
+| **M1 PASS** | Continued real R2 save. Two PvE defenses, then PvP Hotseat with East choosing physical tactical Escape; same World throughout. Raider A defeated after84 commands; B after145. West lost `duel-West-3/5/6`, retained3 living bodies. PvP8-command evacuation placed East at04 with Tempo60; West advanced into06. Legal victory **West17:East3 at completedR10**. No forced battle result, healing, casualty or victory. `m1-r2-battle1-*`, `m1-r3-battle1-*`, `m1-pvp-*`, `m1-victory`. |
+| **M2 PASS** | R1 arrival gave0 credit; R2 defense→1 cycle; R3 defense→2. At R4 Gold300→450, reward paid once. Branch from the **actual post-Hold save**, not a damage fixture: damaged West08→ownKeep01; HP of `duel-West-2` stayed35 on arrival and became40 only on completedRefresh, Armor0→0. Paid100 Gold; save/recreate/load pending order; R5 Gold350, KeepFood36→33; recruit `duel-West-recruit-1` joined, old3 Dead records stayedDead. Moved01→07 and attacked06; recruit deployed and returned through an8-command ordinary Escape battle. `m2-reward`, `m2-damaged-expedition-natural-save`, `m2-arrived-keep`, `m2-paid-recruit-*`, `m2-recovered-recruit`, `m2-recruit-deployed`, `m2-redeployed-return`. |
+| **M3 PASS** | Ordinary ignore run: West07/East06; A armed08 atR2, ravaged onR3 slot; R4 UI RAVAGED, inaccessibleFood24, HoldFailed, no winner. R5 still24/inaccessible, match continues. Labelled Hold fixture: lawful Withdrawal08→03, Tempo100→60, Hold1→0, Gold300/no reward. Labelled blocked-return fixture: R5 A15/Tempo−40, East16; R6 Closure leaves same3-member A at15/StrandedReturn/Tempo60. Contact→human Withdrawal; East later leaves area to08. At R8 Stable A physically16/GuardingClosedAnchor, not erased/exited; B remainsUnreleased. `m3-ravaged*`, `m3-lawful-withdrawal`, `m3-reset-after`, `m3-closure-survivor`, `m3-blocked-return-contact`, `m3-stable-remnant`. |
+| **M4 PASS** | Prior mid-R2 save/recreate/load retained. New save/recreate/load after first world battle at its stable cursor: same hash, R2/Pressure1:1/Food18, A defeated, B staged. Continue finished that phase once: R3/Pressure2:2/Food12/Hold1 and B entered. Immediate post-reward save/load kept Gold450/HoldCompleted; later totals matched only ordinary income or recruitment, no repeated150. Post-raid save/load kept inaccessibleFood24/Failed; next cycle did not ravage/pay twice. Pending recruit save/load completed exactly once. Actual HUD/screenshots plus hashes below, not hashes alone. |
+| **M5 PASS (short comparison)** | East-first: East reached/owned08, West06; R2 first/activeEast and A entry16, so Waystation obligation swapped side. No claim of a full mirrored combat match. No-incidents control used same map/target16 throughR4: portalStable, HoldDisabled, no active raiders,6 intact West figures, Food6, ProvisionsW30/E12. `m5-east-first`, `m5-no-incident`. |
+| **Grouped raiders PASS** | Labelled R3 fixture: West08 attacksA14 with alliedB15 adjacent. **All12 initial bodies**, header `West human / Raider A AI + Raider B AI`; one shared encounter, no serial replacement battles. Actual North-edge Escape resolved21 commands; West→03/Tempo10. Both distinct raider Commanders earned0.131142857… CommandXP. `grouped-12-deployed`, `grouped-raiders-*`. |
+| **Two battles / no Refresh PASS** | Labelled R3 fixture West07, A06, B08 (not adjacent to each other). First real90-command fight defeatedA. Return atR3/Tempo50; Commander `duel-West-1` **HP32/Armor0**. Move06→07, attackB08; second deployment retained all6 IDs and exact pools, including32/0. Ordinary15-command Escape completed; return stillR3/Tempo−40, Provisions30. No End Refresh/recovery or state injection between fights. `two-battles-before`, `two-battles-between`, `two-battles-second-start`, `two-battles-second-world`. |
 
-Screenshots/JSON: `m1-r2-begin`, `m4-mid-refresh-saved`,
-`m4-mid-refresh-loaded`, `m1-r2-contact`, `m1-r2-battle1-start`.
-No full manual balance findings are inferred from those partial steps.
+Save/recreate/load hashes matched exactly:
 
-Manual limitation: first tactical click exposed an external helper's XZ projection
-error (fixed outside repo). During subsequent editor reload/restart, OS mouse harness
-stopped delivering runtime pointer events; foreground activation also failed until
-AX focus was applied. Accessibility reported trusted; clicks still produced no runtime
-pointer callback. The cause of that remaining GUI-input failure is not established as
-an implementation defect. Do not mark M1–M5 PASS from automated tests/screenshots.
-Initial standalone load-error visibility and misleading fixed West/East Retreat
-labels were improved as bounded Presentation correctness fixes; final manual recheck
-of those changes remains pending. No production art or UI redesign.
+| Boundary | SHA-256 representation used by prototype |
+|---|---|
+| Prior mid-R2 | `TCQwIceKXxvw0Pcoe6wVFcbtjOqs5gfl1I7TTn28cj8=` |
+| Resolved world battle cursor | `Sa/IAlkBf2kcyN0JNYdBH05a6X93drk+EB3+zCcB7q8=` |
+| Immediately after reward | `QKzUoQwcX/vSOMnDxZGEJlycbJOBZwCaMPjfwSsfigI=` |
+| Immediately after raid | `O/RIcouPDTLeIV0o/GJBU75WLNEf+huYAWncUaeksTg=` |
+| Paid pending recruit | `Fcpa+29MV9mPqYx10R+gjHYoYO8PTDl/4+V41N7ipl4=` |
+
+Seven exported tactical replays matched all attempts: **84,145,8,8,21,90,15** commands,
+respectively M1 PvE-A/PvE-B/PvP, M2 recruit battle, grouped, two-battles first/second.
+This is fresh replay verification of the controlled runs, separate from the historical
+502-test regression. Original preview/invalid/RNG automated evidence remains unchanged.
+
+Artifacts: `/private/tmp/cp04-20260929/results/` contains each named `.png`/`.json`,
+`*-replay` exports and `*-verification.txt`; `/private/tmp/cp04-20260929/stage-f/`
+contains input diagnosis and the isolated editor log. Only the primary Unity screenshots
+are evidence; incidental desktop/secondary-screen captures are not gameplay proof.
+Reproducible rare-case files and exact human actions: [manual fixtures](Fixtures/Incident04/README.md).
+Only their starting states were injected; their observed movement, Withdrawal, combat,
+XP, lifecycle and outcomes followed mouse-driven commands. No manual cases remain NOT RUN.
+
+### Observations, not automatic balance changes
+
+- In the main run the Waystation defender West bore the incident cost:3 real deaths;
+  East held Mine and reached525 Gold byR4. The150 reward did not pay for replacing all3
+  lost bodies. This run does not establish optimal defense or overall reward dominance.
+- Mirroring changed who arrived first/held08; it does not prove first-mover fairness.
+  No Anchor camping was used in the main match. Ignore/control runs demonstrate it is
+  possible to continue without intervention; strategic desirability is not proven.
+- Target16 allowed a full return/recruit/redeploy branch atR4–R5 before the mainR10
+  ending. Attrition changed the roster from6 to3 and left Armor4/0/11, making return
+  and paid replacement materially different from a free reset.
+- After incidents ended, the deliberately passive opponent allowed repeated objective
+  scoring; late waiting involved repetitive End/Continue clicks. No active stalemate
+  was observed, but this controlled ending is not a competitive camping/turtling test.
+- Save/load caused no observed outcome change or duplicate reward/raid/economy/recruit.
+  Production UX and integrated user acceptance remain outside this developer verdict.
 
 ## Deviations, observations, limitations and handoff
 
 - No numerical/scope/canon deviation. One coherent local commit is appropriate because
   incident scheduler, bridge, save DTO and UI are interdependent; no empty A–F milestones.
-- F is not complete until the remaining controlled M1–M5 are run. Coordinator acceptance
+- Stage F controlled M1–M5 and supplements are complete. Coordinator acceptance
   and integrated **04** player KEEP remain **PENDING**. Earlier02+03 KEEP is unaffected.
-- First mover, intervention/Anchor camping necessity, reward dominance, turtling,
-  target16 match pacing and repetitive waiting are **not manually assessed**. No retuning.
+- Observations above are from bounded controlled runs, not final balance acceptance. No retuning.
 - Explicit Continue World Phase exposes stable continuation boundaries. This is graybox
   UX, not automatic world AI/framework. No online/fog, cities/research, full portal travel,
   Loot/repair, new classes, production save profiles or unrelated systems.
@@ -181,7 +231,8 @@ of those changes remains pending. No production art or UI redesign.
   Their existing scene diff includes trailing whitespace; it is not part of this package.
 - Local implementation commit title: `World: add Crossroads Incident 04 lifecycle and persistent aftermath`.
   Read actual final hash with `git rev-parse HEAD`; report does not invent its own hash.
-- **NO PUSH. STOP**; finish manual gate/coordinator review before any new systems.
+- Stage-F commit title: `Docs: complete Incident 04 controlled validation`; documentation/manual fixtures only, implementation remains20473ec.
+- **NO PUSH. STOP** for coordinator review and one integrated04 user playtest before new systems.
 
 Exact preserved working-tree status after committing own files:
 
