@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 
 namespace RPG.Core
@@ -16,7 +17,7 @@ namespace RPG.Core
                 ||!actor.Profile.HasMeleeBasic||actor.Profile.IsCaster||actor.Profile.IsArcher||!actor.ActionAvailable)return null;
             var attack=new BasicAttackCommand(actorId,targetId);
             if(BattleResolver.Validate(state,attack)==CommandError.None)return null; // Already in contact: attack directly.
-            MeleeApproachPreview best=null;int bestRisk=int.MaxValue;
+            MeleeApproachPreview best=null;int bestRisk=int.MaxValue;long bestDeviation=long.MaxValue;
             for(int x=target.Position.X-1;x<=target.Position.X+1;x++)
             for(int y=target.Position.Y-1;y<=target.Position.Y+1;y++) {
                 var destination=new GridPosition(x,y);
@@ -30,9 +31,13 @@ namespace RPG.Core
                 arrival.MovementRemaining-=path.Cost;arrival.MovementSpentThisActivation+=path.Cost;
                 var hit=BattleResolver.PreviewAttack(projected,attack);if(!hit.IsLegal)continue;
                 int risks=risk.Exposures.Sum(e=>e.Threats.Count(t=>t.WouldReact));
-                // Shortest legal approach, fewer OA triggers on ties, then stable x/y enumeration.
-                if(best!=null&&(path.Cost>best.Movement.Path.Count||path.Cost==best.Movement.Path.Count&&risks>=bestRisk))continue;
-                best=new MeleeApproachPreview{Movement=move,Attack=attack,OnArrival=hit,Risk=risk};bestRisk=risks;
+                long dx=target.Position.X-actor.Position.X,dy=target.Position.Y-actor.Position.Y;
+                long deviation=path.Steps.Sum(step=>Math.Abs(dx*(step.Y-actor.Position.Y)-dy*(step.X-actor.Position.X)));
+                // Shortest approach, fewer OA triggers, then closest to the direct enemy line.
+                // Stable x/y is only the final tie-break, not a reason to step sideways on open ground.
+                if(best!=null&&(path.Cost>best.Movement.Path.Count||path.Cost==best.Movement.Path.Count
+                    &&(risks>bestRisk||risks==bestRisk&&deviation>=bestDeviation)))continue;
+                best=new MeleeApproachPreview{Movement=move,Attack=attack,OnArrival=hit,Risk=risk};bestRisk=risks;bestDeviation=deviation;
             }
             return best;
         }

@@ -20,6 +20,14 @@ namespace RPG.Tests
             Assert.That(BattleResolver.PreviewAttack(moved.State,p.Attack).ContactChance,Is.EqualTo(p.OnArrival.ContactChance));
             Assert.That(BattleResolver.Apply(moved.State,p.Attack).IsApplied,Is.True);
         }
+        [TestCase(1,0)][TestCase(-1,0)][TestCase(0,1)][TestCase(0,-1)]
+        [TestCase(1,1)][TestCase(-1,1)][TestCase(1,-1)][TestCase(-1,-1)]
+        public void EqualCostUnobstructedApproachKeepsTheDirectLine(int dx,int dy)
+        {
+            var s=BattleTestFixtures.ToActor(BattleResolver.StartBattle(new[]{BattleTestFixtures.Unit(1,UnitProfile.HumanWarriorTI,x:8,y:8),BattleTestFixtures.Unit(2,UnitProfile.HumanArcherTI,Side.East,8+4*dx,8+4*dy)},2,new Battlefield(23,17)).State,A);
+            var p=MeleeApproachPreview.Query(s,A,B);Assert.That(p,Is.Not.Null);
+            Assert.That(p.Movement.Path,Is.EqualTo(Enumerable.Range(1,3).Select(i=>new GridPosition(8+i*dx,8+i*dy))));
+        }
         [Test] public void WallsCornerGeometryAndRetreatCellsAreNeverBypassed()
         {
             var wall=Enumerable.Range(1,15).Select(y=>new GridPosition(10,y));var s=State(12,new Battlefield(23,17,wall));Assert.That(MeleeApproachPreview.Query(s,A,B),Is.Null);

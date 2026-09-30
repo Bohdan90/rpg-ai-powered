@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="13" result="Passed" total="13" passed="13" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-09-30 22:39:45Z" end-time="2026-09-30 22:39:45Z" duration="0.0888716">
+  <test-suite type="TestSuite" id="1000" name="My project" fullname="My project" runstate="Runnable" testcasecount="598" result="Passed" start-time="2026-09-30 22:39:45Z" end-time="2026-09-30 22:39:45Z" duration="0.088872" total="13" passed="13" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1719" name="RPG.Tests.dll" fullname="/Users/bohdanskrypka/UnityProjects/Convergence/Realm-Operations-06/Library/ScriptAssemblies/RPG.Tests.dll" runstate="Runnable" testcasecount="598" result="Passed" start-time="2026-09-30 22:39:45Z" end-time="2026-09-30 22:39:45Z" duration="0.083239" total="13" passed="13" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="4410" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1720" name="RPG" fullname="RPG" runstate="Runnable" testcasecount="598" result="Passed" start-time="2026-09-30 22:39:45Z" end-time="2026-09-30 22:39:45Z" duration="0.081604" total="13" passed="13" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1721" name="Tests" fullname="RPG.Tests" runstate="Runnable" testcasecount="598" result="Passed" start-time="2026-09-30 22:39:45Z" end-time="2026-09-30 22:39:45Z" duration="0.080130" total="13" passed="13" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestFixture" id="1361" name="MeleeApproachTests" fullname="RPG.Tests.MeleeApproachTests" classname="RPG.Tests.MeleeApproachTests" runstate="Runnable" testcasecount="13" result="Passed" start-time="2026-09-30 22:39:45Z" end-time="2026-09-30 22:39:45Z" duration="0.073436" total="13" passed="13" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="ParameterizedMethod" id="1365" name="ApproachRespectsRemainingMovementAndDoesNotMutate" fullname="RPG.Tests.MeleeApproachTests.ApproachRespectsRemainingMovementAndDoesNotMutate" classname="RPG.Tests.MeleeApproachTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-09-30 22:39:45Z" end-time="2026-09-30 22:39:45Z" duration="0.039484" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1362" name="ApproachRespectsRemainingMovementAndDoesNotMutate(12,True)" fullname="RPG.Tests.MeleeApproachTests.ApproachRespectsRemainingMovementAndDoesNotMutate(12,True)" methodname="ApproachRespectsRemainingMovementAndDoesNotMutate" classname="RPG.Tests.MeleeApproachTests" runstate="Runnable" seed="958642179" result="Passed" start-time="2026-09-30 22:39:45Z" end-time="2026-09-30 22:39:45Z" duration="0.032965" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1363" name="ApproachRespectsRemainingMovementAndDoesNotMutate(13,True)" fullname="RPG.Tests.MeleeApproachTests.ApproachRespectsRemainingMovementAndDoesNotMutate(13,True)" methodname="ApproachRespectsRemainingMovementAndDoesNotMutate" classname="RPG.Tests.MeleeApproachTests" runstate="Runnable" seed="1780238869" result="Passed" start-time="2026-09-30 22:39:45Z" end-time="2026-09-30 22:39:45Z" duration="0.002307" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1364" name="ApproachRespectsRemainingMovementAndDoesNotMutate(14,False)" fullname="RPG.Tests.MeleeApproachTests.ApproachRespectsRemainingMovementAndDoesNotMutate(14,False)" methodname="ApproachRespectsRemainingMovementAndDoesNotMutate" classname="RPG.Tests.MeleeApproachTests" runstate="Runnable" seed="805298793" result="Passed" start-time="2026-09-30 22:39:45Z" end-time="2026-09-30 22:39:45Z" duration="0.000766" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="ParameterizedMethod" id="1374" name="EqualCostUnobstructedApproachKeepsTheDirectLine" fullname="RPG.Tests.MeleeApproachTests.EqualCostUnobstructedApproachKeepsTheDirectLine" classname="RPG.Tests.MeleeApproachTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-09-30 22:39:45Z" end-time="2026-09-30 22:39:45Z" duration="0.025116" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1366" name="EqualCostUnobstructedApproachKeepsTheDirectLine(1,0)" fullname="RPG.Tests.MeleeApproachTests.EqualCostUnobstructedApproachKeepsTheDirectLine(1,0)" methodname="EqualCostUnobstructedApproachKeepsTheDirectLine" classname="RPG.Tests.MeleeApproachTests" runstate="Runnable" seed="1499542785" result="Passed" start-time="2026-09-30 22:39:45Z" end-time="2026-09-30 22:39:45Z" duration="0.006063" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1367" name="EqualCostUnobstructedApproachKeepsTheDirectLine(-1,0)" fullname="RPG.Tests.MeleeApproachTests.EqualCostUnobstructedApproachKeepsTheDirectLine(-1,0)" methodname="EqualCostUnobstructedApproachKeepsTheDirectLine" classname="RPG.Tests.MeleeApproachTests" runstate="Runnable" seed="882306957" result="Passed" start-time="2026-09-30 22:39:45Z" end-time="2026-09-30 22:39:45Z" duration="0.004849" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1368" name="EqualCostUnobstructedApproachKeepsTheDirectLine(0,1)" fullname="RPG.Tests.MeleeApproachTests.EqualCostUnobstructedApproachKeepsTheDirectLine(0,1)" methodname="EqualCostUnobstructedApproachKeepsTheDirectLine" classname="RPG.Tests.MeleeApproachTests" runstate="Runnable" seed="1991477192" result="Passed" start-time="2026-09-30 22:39:45Z" end-time="2026-09-30 22:39:45Z" duration="0.001248" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1369" name="EqualCostUnobstructedApproachKeepsTheDirectLine(0,-1)" fullname="RPG.Tests.MeleeApproachTests.EqualCostUnobstructedApproachKeepsTheDirectLine(0,-1)" methodname="EqualCostUnobstructedApproachKeepsTheDirectLine" classname="RPG.Tests.MeleeApproachTests" runstate="Runnable" seed="1752021171" result="Passed" start-time="2026-09-30 22:39:45Z" end-time="2026-09-30 22:39:45Z" duration="0.001197" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1370" name="EqualCostUnobstructedApproachKeepsTheDirectLine(1,1)" fullname="RPG.Tests.MeleeApproachTests.EqualCostUnobstructedApproachKeepsTheDirectLine(1,1)" methodname="EqualCostUnobstructedApproachKeepsTheDirectLine" classname="RPG.Tests.MeleeApproachTests" runstate="Runnable" seed="316731801" result="Passed" start-time="2026-09-30 22:39:45Z" end-time="2026-09-30 22:39:45Z" duration="0.001048" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1371" name="EqualCostUnobstructedApproachKeepsTheDirectLine(-1,1)" fullname="RPG.Tests.MeleeApproachTests.EqualCostUnobstructedApproachKeepsTheDirectLine(-1,1)" methodname="EqualCostUnobstructedApproachKeepsTheDirectLine" classname="RPG.Tests.MeleeApproachTests" runstate="Runnable" seed="831741607" result="Passed" start-time="2026-09-30 22:39:45Z" end-time="2026-09-30 22:39:45Z" duration="0.001128" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1372" name="EqualCostUnobstructedApproachKeepsTheDirectLine(1,-1)" fullname="RPG.Tests.MeleeApproachTests.EqualCostUnobstructedApproachKeepsTheDirectLine(1,-1)" methodname="EqualCostUnobstructedApproachKeepsTheDirectLine" classname="RPG.Tests.MeleeApproachTests" runstate="Runnable" seed="886130703" result="Passed" start-time="2026-09-30 22:39:45Z" end-time="2026-09-30 22:39:45Z" duration="0.001089" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1373" name="EqualCostUnobstructedApproachKeepsTheDirectLine(-1,-1)" fullname="RPG.Tests.MeleeApproachTests.EqualCostUnobstructedApproachKeepsTheDirectLine(-1,-1)" methodname="EqualCostUnobstructedApproachKeepsTheDirectLine" classname="RPG.Tests.MeleeApproachTests" runstate="Runnable" seed="265866070" result="Passed" start-time="2026-09-30 22:39:45Z" end-time="2026-09-30 22:39:45Z" duration="0.007279" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-case id="1376" name="NoAutomaticApproachForMagesArchersSpentActionOrAlreadyLegalContact" fullname="RPG.Tests.MeleeApproachTests.NoAutomaticApproachForMagesArchersSpentActionOrAlreadyLegalContact" methodname="NoAutomaticApproachForMagesArchersSpentActionOrAlreadyLegalContact" classname="RPG.Tests.MeleeApproachTests" runstate="Runnable" seed="1558049397" result="Passed" start-time="2026-09-30 22:39:45Z" end-time="2026-09-30 22:39:45Z" duration="0.000508" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1375" name="WallsCornerGeometryAndRetreatCellsAreNeverBypassed" fullname="RPG.Tests.MeleeApproachTests.WallsCornerGeometryAndRetreatCellsAreNeverBypassed" methodname="WallsCornerGeometryAndRetreatCellsAreNeverBypassed" classname="RPG.Tests.MeleeApproachTests" runstate="Runnable" seed="910152967" result="Passed" start-time="2026-09-30 22:39:45Z" end-time="2026-09-30 22:39:45Z" duration="0.003279" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[Saving results to: /tmp/realm-operations-06/test-preferences/Library/Application Support/DefaultCompany/My project/TestResults.xml
+]]></output>
+            </test-case>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

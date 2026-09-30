@@ -1,5 +1,9 @@
 # Gate C — working implementation checkpoint
 
+## 2026-09-30 — straight melee approach tie-break
+
+Starting `76f60eb`: reproduced equal-cost x/y tie-break selecting a sideways contact cell despite a clear direct route. Query now prefers direct-line alignment after path cost/OA safety; no movement, combat or replay rule change. Focused13 PASS (four reproduced cardinal failures before fix); fresh full598 EditMode+79 PlayMode=677 PASS,0 failed/skipped. Manual NOT RUN. Feature only; main76f60eb and active session preserved. Evidence/report: `MELEE_APPROACH.md`, `Evidence/MELEE-APPROACH/straight-line/validation-manifest.json`. This bounded user-reported fix does not complete or replace the pending document54 package. NO PUSH.
+
 ## 2026-09-30 — melee approach + strike
 
 User extends two-click input for HW/EW: hover/first enemy click shows and pins a reachable legal approach; second click moves then revalidates/executes BasicAttack. Existing Core path/contact/OA rules only; no extra Movement or automatic caster/archer approach. Real death/interruption prevents follow-up. Replay retains ordinary Move+BasicAttack commands. Main delivered by fast-forward49a2a17→029a42e with tested source identical and nine protected files unchanged; focused5 EditMode+12 spell/approach+7 corner PlayModePASS; final590 EditMode+79 PlayMode=669 PASS,0 failed/skipped; results/delivery: `MELEE_APPROACH.md`, `Evidence/MELEE-APPROACH/validation-manifest.json`. NO PUSH.
