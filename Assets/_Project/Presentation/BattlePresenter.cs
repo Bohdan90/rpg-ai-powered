@@ -46,7 +46,7 @@ namespace RPG.Presentation
             return World.Player.Members.Concat(World.Actors.SelectMany(a=>a.Formation.Members)).FirstOrDefault(c=>c.CharacterId==key);
         }
         public string UnitName(UnitId id)
-        {var c=ConnectedCharacter(id);return c==null?PrototypeFixture.Name(id):c.CharacterId+" · "+c.Profile.Id+(c.IsCommander?" *":"");}
+        {var c=ConnectedCharacter(id);return c==null?(State.FindUnit(id).Profile.IsCaster||State.FindUnit(id).Profile.HasGracefulExit?State.FindUnit(id).Profile.Id+" #"+id:PrototypeFixture.Name(id)):c.CharacterId+" · "+c.Profile.Id+(c.IsCommander?" *":"");}
         public bool IsCommander(UnitId id)=>World==null&&Duel==null?(id.Value==1||id.Value==6||id.Value==19):ConnectedCharacter(id)?.IsCommander==true;
         public void StartStrategicScenario()
         {StrategicSaveMessage="One manual slot · strategic map only.";ShowStrategicScenario(new StrategicScenario());}
@@ -225,6 +225,7 @@ namespace RPG.Presentation
             var result = Journal.Apply(command,IsAiTurn?"AI":"Player",IsAiTurn?AiExplanation:null);
             State = result.State;
             Message = result.IsApplied ? command.GetType().Name + " applied." : "Rejected by Core: " + result.Error;
+            if(result.IsApplied)SelectedSpell=null;
             if (result.IsApplied) Append(result.Events); else AddLog(Message);
             if (result.IsApplied && State.Outcome.IsEnded && persistence != null && !persistenceResolved)
             {
@@ -242,6 +243,7 @@ namespace RPG.Presentation
             if (State.Outcome.IsEnded || IsAiTurn) return;
             selected = cell; pending = null; MovementRisk = null; PreviewEscapes = false;
             var actor = State.FindUnit(State.CurrentUnitId.Value); var target = State.OccupantAt(cell);
+            if(PreviewSelectedSpell(cell,friendlyConfirmed))return;
             if (target != null && target.Id != actor.Id)
             {
                 var kind = BattleResolver.AvailableBasicAttack(State, actor.Id);

@@ -34,7 +34,7 @@ namespace RPG.Core
             foreach (var id in Sources(state, mover.Side, from))
             {
                 var source = state.FindUnit(id);
-                if (source.OpportunityAttackAvailable && !Exerts(state, source, to)) result.Add(id);
+                if (!source.IsFrozen && source.OpportunityAttackAvailable && mover.GracefulExitTarget!=id && !Exerts(state, source, to)) result.Add(id);
             }
             return result.AsReadOnly();
         }

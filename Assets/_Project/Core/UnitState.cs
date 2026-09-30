@@ -45,6 +45,23 @@ namespace RPG.Core
             Status = initialHp == 0 ? UnitStatus.Dead : status;
         }
 
+        public int TemporaryBarrier { get; internal set; }
+        public int BarrierActivations { get; internal set; }
+        public bool FireProtection { get; internal set; }
+        public int BurnStacks { get; internal set; }
+        public int BurnTicks { get; internal set; }
+        public int PoisonStacks { get; internal set; }
+        public int BleedStacks { get; internal set; }
+        public int FrozenActivations { get; internal set; }
+        public bool IsFrozen => FrozenActivations > 0;
+        public int ExhaustedActivations { get; internal set; }
+        public bool IsExhausted => ExhaustedActivations > 0;
+        public int FireballUsed { get; internal set; }
+        public int FreezeUsed { get; internal set; }
+        public int CloseHealUsed { get; internal set; }
+        public UnitId? GracefulExitTarget { get; internal set; }
+        // Existing profiles keep their action/movement commitment. New EW II has the explicit exit kit.
+        public bool CanMove => !IsFrozen && (ActionAvailable || Profile.HasGracefulExit);
         internal UnitState Copy() => (UnitState)MemberwiseClone();
     }
 }

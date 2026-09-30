@@ -19,6 +19,7 @@ namespace RPG.Core
         {
             if(state==null||state.Outcome.IsEnded||!state.CurrentUnitId.HasValue)return null;
             var actor=state.FindUnit(state.CurrentUnitId.Value);
+            if(actor.IsFrozen)return Decision(new EndActivationCommand(actor.Id),0,"Frozen; End activation");
             if(!actor.ActionAvailable)return Decision(new EndActivationCommand(actor.Id),0,"Action spent; End");
             var enemies=state.Units.Where(u=>u.IsActive&&u.Side!=actor.Side).OrderBy(u=>u.Id).ToArray();
             if(enemies.Length==0)return Decision(new EndActivationCommand(actor.Id),0,"No enemy; End");
@@ -92,6 +93,7 @@ namespace RPG.Core
                     if(BattleResolver.Validate(projected,attack)==CommandError.None)actions.Add(attack);
                 }
                 if(r.Steps.Count==0&&BattleResolver.Validate(projected,new DefendCommand(actor.Id))==CommandError.None)actions.Add(new DefendCommand(actor.Id));
+                actions.AddRange(SpellAi.Candidates(projected,mover));
                 actions.Add(new EndActivationCommand(actor.Id));
                 foreach(var action in actions)
                 {
@@ -104,6 +106,7 @@ namespace RPG.Core
                         kill=p.HpLossOnUnguardedHit>=projected.FindUnit(attack.Target).Hp?hit:0;
                         mover.Facing=FacingDirections.Toward(mover.Position,projected.FindUnit(attack.Target).Position);
                     }
+                    if(action is CastCommand cast)hp=SpellAi.Value(projected,cast);
                     if(action is DefendCommand)mover.IsDefending=true;
                     string key=r.Position.X+","+r.Position.Y+":"+mover.Facing+":"+mover.IsDefending;
                     if(!incomingCache.TryGetValue(key,out double incoming))incomingCache[key]=incoming=Incoming(projected,mover);

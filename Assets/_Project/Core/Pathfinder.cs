@@ -27,7 +27,7 @@ namespace RPG.Core
         {
             if (state == null) throw new ArgumentNullException(nameof(state));
             var actor = state.FindUnit(actorId);
-            if (state.Outcome.IsEnded || actor == null || !actor.IsActive || state.CurrentUnitId != actorId || !actor.ActionAvailable
+            if (state.Outcome.IsEnded || actor == null || !actor.IsActive || state.CurrentUnitId != actorId || !actor.CanMove
                 || !state.Battlefield.IsWalkable(destination)) return NotFound();
             if (destination == actor.Position) return new PathResult(true, Array.Empty<GridPosition>());
             if (state.OccupantAt(destination) != null) return NotFound();

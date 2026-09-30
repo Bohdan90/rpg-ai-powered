@@ -85,6 +85,11 @@ namespace RPG.Presentation
             escaped = Text(panel, "", 12); escaped.name = "escaped-list";
             map = new DropdownField("Fixture (resets battle)", new List<string>(Enum.GetNames(typeof(SizeExperimentMap))), 0) { name = "fixture-selector" };
             map.RegisterValueChangedCallback(e => presenter.ConfigureFixture((SizeExperimentMap)Enum.Parse(typeof(SizeExperimentMap), e.newValue))); panel.Add(map);
+            foreach(CombatLabMatch lab in Enum.GetValues(typeof(CombatLabMatch))) {
+                var chosen=lab;AddButton(panel,"Combat Lab · "+lab+" · near contact","lab-"+lab,()=>presenter.StartCombatLab(chosen));
+            }
+            var abilities=new DropdownField("Ability",new List<string>{"Basic / Move"},0){name="spell-selector"};
+            abilities.RegisterValueChangedCallback(e=>presenter.SelectSpell(e.newValue=="Basic / Move"?(SpellId?)null:(SpellId)Enum.Parse(typeof(SpellId),e.newValue)));panel.Add(abilities);
             AddButton(panel,"Start Persistence Slice v0.1","persistence-start",presenter.StartPersistenceSlice);
             AddButton(panel,"Start Connected Mission 01","world-start",presenter.StartStrategicScenario);
             AddButton(panel,"Load saved Mission 01","world-load",()=>presenter.LoadStrategic());
@@ -147,6 +152,10 @@ namespace RPG.Presentation
             Root.Q("world-return").style.display=connected?DisplayStyle.Flex:DisplayStyle.None;
             foreach(string controlName in new[]{"fixture-selector","controller-mode","persistence-start","restart","outcome-restart","world-start","world-load","duel-start-west","duel-start-east","duel-load","incident-start-west","incident-start-east","incident-control","incident-load"})Root.Q(controlName).SetEnabled(!connected);
             Root.Q<DropdownField>("controller-mode").SetValueWithoutNotify(presenter.PlayerVsAi?(presenter.AiSide==Side.East?"Player West vs AI East":"Player East vs AI West"):"Hotseat");
+            var spellSelect=Root.Q<DropdownField>("spell-selector");
+            spellSelect.choices=new[]{"Basic / Move"}.Concat(SpellRules.Kit(actor.Profile).Select(s=>s.ToString())).ToList();
+            if(!presenter.SelectedSpell.HasValue||!SpellRules.Has(actor.Profile,presenter.SelectedSpell.Value))spellSelect.SetValueWithoutNotify("Basic / Move");
+            foreach(CombatLabMatch lab in Enum.GetValues(typeof(CombatLabMatch)))Root.Q("lab-"+lab).SetEnabled(!connected);
             aiInfo.text=presenter.PlayerVsAi?presenter.AiExplanation:"Hotseat";
             rangeInfo.text=presenter.RangedReachMessage;
             attackOutcome.text = presenter.LastAttackOutcome.Length == 0 ? "" : "LAST ATTACK RESULT\n" + presenter.LastAttackOutcome;
@@ -167,6 +176,7 @@ namespace RPG.Presentation
                 + " | HP " + actor.Hp + " / Armor " + actor.Armor + "\nMovement " + actor.MovementRemaining
                 + " | Action " + (actor.ActionAvailable ? "available" : "spent")
                 + "\nFacing " + actor.Facing + " | Defending " + (actor.IsDefending ? "yes" : "no") + " | " + BattlePresenter.OaStatus(actor);
+            active.text+="\n"+BattlePresenter.CombatStatuses(actor);
             queue.text = ended ? "" : "Initiative order (► current):\n" + string.Join("\n", state.ActivationOrder.Select(id =>
                 (id == actor.Id ? "► " : "   ") + presenter.UnitName(id) + (state.FindUnit(id).OwnRetreatEdge.HasValue?" ("+state.FindUnit(id).OwnRetreatEdge+")":"") + " [" + state.FindUnit(id).Profile.Initiative + "] " + BattlePresenter.OaStatus(state.FindUnit(id))));
             cell.text = selected.HasValue ? "Selected (" + selected.Value.X + "," + selected.Value.Y + ")" : "No destination / target selected.";

@@ -39,6 +39,7 @@ namespace RPG.Core
             var mover = state.FindUnit(command.Actor);
             var spent = new HashSet<UnitId>();
             var from = mover.Position;
+            var graceful=mover.GracefulExitTarget;
             for (int i = 0; i < command.Path.Count; i++)
             {
                 var to = command.Path[i];
@@ -47,7 +48,8 @@ namespace RPG.Core
                 {
                     var responder = state.FindUnit(id);
                     if (ZoneOfControl.Exerts(state, responder, to)) continue;
-                    bool available = responder.OpportunityAttackAvailable;
+                    bool available = responder.OpportunityAttackAvailable && !responder.IsFrozen;
+                    if(graceful==id){graceful=null;threats.Add(new OpportunityThreat(id,available,false));continue;}
                     bool wouldReact = available && spent.Add(id);
                     threats.Add(new OpportunityThreat(id, available, wouldReact));
                 }

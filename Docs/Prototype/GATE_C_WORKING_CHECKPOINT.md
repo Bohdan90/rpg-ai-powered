@@ -164,3 +164,7 @@ Escaped/Safe, Withdrawal/Eliminated and outcome HUD.
 [Field V2/melee](FIELD_V2_CORNER_CONTACT.md) · [Siege V2](SIEGE_SCALE_V2_EXPERIMENT.md) · [Size experiment](BATTLEFIELD_SIZE_EXPERIMENT.md) ·
 [Path/Cover corrections](MILESTONE_2B_1_CORRECTIONS.md) ·
 [3A Core](MILESTONE_3A_IMPLEMENTATION.md) · [3B Presentation](MILESTONE_3B_IMPLEMENTATION.md).
+
+## 2026-09-29 isolated 50+51 early Lab (IN PROGRESS)
+
+Feature `feature/50-51-connected` in `../Isolated-50-51`, based on `045707f`. Separate company/product/preferences/save namespace; original checkout untouched. Combat Lab three direct near-contact entries implemented; focused 33 EditMode + 1 PlayMode PASS. This is not full regression or manual acceptance. 50 economy and combined 05B remain in progress. See `COMBAT_VARIETY_AND_CONNECTED_05B.md`. Continue the authorized batch; no merge into develop or push.

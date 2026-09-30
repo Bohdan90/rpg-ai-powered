@@ -43,10 +43,10 @@ namespace RPG.Presentation
         }
         public void Refresh(UnitState unit,bool commander,bool current)
         {
-            title.text=Mission01Intel.ProfileLabel(unit.Profile)+(commander?"*":"")+(unit.Status==UnitStatus.Dead?" DEAD":unit.IsDefending?" DEF":"");
+            title.text=Mission01Intel.ProfileLabel(unit.Profile)+(commander?"*":"")+(unit.Status==UnitStatus.Dead?" DEAD":unit.IsFrozen?" FRZ":unit.BurnStacks>0?" B"+unit.BurnStacks:unit.IsDefending?" DEF":"");
             title.style.color=unit.Status==UnitStatus.Dead?new Color(1,.4f,.4f):current?new Color(1,.86f,.3f):Color.white;
             hpText.text="HP "+unit.Hp+"/"+unit.Profile.MaxHp;
-            armorText.text="A "+unit.Armor+"/"+unit.Profile.MaxArmor;
+            armorText.text=unit.TemporaryBarrier>0?"B "+unit.TemporaryBarrier+" · A "+unit.Armor:"A "+unit.Armor+"/"+unit.Profile.MaxArmor;
             hpFill.style.width=Length.Percent(100f*unit.Hp/unit.Profile.MaxHp);
             armorFill.style.width=Length.Percent(unit.Profile.MaxArmor==0?0:100f*unit.Armor/unit.Profile.MaxArmor);
             tooltip=title.text+" · "+hpText.text+" · Armor "+unit.Armor+"/"+unit.Profile.MaxArmor;
