@@ -1,5 +1,7 @@
 # Gate C — working implementation checkpoint
 
+Latest delivery (2026-09-30): user explicitly authorized ending the current party and integrating FIRE-TARGETING-02. `My project / develop` fast-forwarded `008e58f → 7ae088c`. Main Unity now runs the new cell-directed Stream/allied Fire Armor; actual off-axis `(3,2)` hit verified, HP26→15. Original nine files and campaign saves preserved.628 PASS is retained pre-integration evidence for identical gameplay/test source, not a new run. Feature-only delivery limitation below is superseded. See [delivery evidence](Evidence/FIRE-TARGETING-02/main-integration.json). NO PUSH.
+
 ## 2026-09-30 — FIRE-TARGETING-02 / document51 §16
 
 Latest bounded implementation starts at accepted `My project / develop @008e58f`; own work is isolated in `Convergence/Fire-Targeting-02`, `feature/fire-targeting-02`. The containing commit delivers this delta (use live `git log -1`); main remains008e58f, open user session and all nine unrelated files preserved byte-for-byte. No automatic main integration; NO PUSH.

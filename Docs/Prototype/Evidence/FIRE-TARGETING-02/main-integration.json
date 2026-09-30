@@ -1,0 +1,18 @@
+{
+  "startingHEAD": "008e58f2a94a6eda0b79f25a2330ba5a3e64d482",
+  "gameplayHEAD": "7ae088c4717f6758bfd15f009f95353956fc4fd3",
+  "branch": "develop",
+  "path": "/Users/bohdanskrypka/UnityProjects/Convergence/My project",
+  "authorization": "User explicitly permitted ending current play session and integrating into main.",
+  "integration": "git merge --ff-only feature/fire-targeting-02",
+  "gameplayAndTestsMatchVerifiedSource": true,
+  "regression": "558 EditMode +70 PlayMode=628 PASS retained pre-integration run; not rerun or claimed fresh after fast-forward",
+  "protectedNineFilesUnchanged": true,
+  "existingCampaignSaveFilesUnchanged": true,
+  "changedUnityTelemetryFiles": [
+    "Unity/1d314123-600d-4682-904e-160db984c9cd/Insights/ArchivedEvents/Session/session_end_event"
+  ],
+  "gui": "Main editor launched; Gate C/Combat Lab/Fire vs Ice started; FireII at9,6 hit IceI at12,8, HP26->15. Self/Ally label and full ring3 envelope visible. Editor left open.",
+  "screenshot": "main-delivery-offaxis-hit.png",
+  "push": "NOT PERFORMED"
+}
