@@ -99,7 +99,7 @@ namespace RPG.Presentation.Tests
                 var target = new UnitState(new UnitId(7), Side.East, UnitProfile.HumanWarriorTI, new GridPosition(2+distance,2), Facing.East);
                 presenter.ConfigureBattle(new[] { shooter, target }, new Battlefield(19,13), 1);
                 presenter.SelectCell(target.Position);
-                Assert.That(presenter.HudRoot.Q<Button>("confirm-command").enabledSelf, Is.EqualTo(distance == 10));
+                Assert.That(presenter.HudRoot.Q<Button>("confirm-command").enabledSelf, Is.True);
                 if (distance == 10)
                 {
                     Assert.That(presenter.PreviewText, Does.Contain("Effective range 10"));
@@ -112,7 +112,11 @@ namespace RPG.Presentation.Tests
                     presenter.ConfirmPreview();
                     Assert.That(presenter.State.FindUnit(shooter.Id).ActionAvailable, Is.False);
                 }
-                else Assert.That(presenter.PreviewText, Does.Contain("OutOfRange"));
+                else {
+                    Assert.That(presenter.PreviewText, Does.Contain("OutOfRange"));Assert.That(presenter.HasApproachPreview,Is.True);
+                    Assert.That(BattleResolver.Validate(presenter.State,new BasicAttackCommand(shooter.Id,target.Id)),Is.EqualTo(CommandError.OutOfRange));
+                    presenter.ConfirmPreview();Assert.That(presenter.State.FindUnit(shooter.Id).Position.DistanceTo(target.Position),Is.EqualTo(10));Assert.That(presenter.State.FindUnit(shooter.Id).ActionAvailable,Is.False);
+                }
                 LogAssert.NoUnexpectedReceived();
             }
         }
@@ -135,7 +139,10 @@ namespace RPG.Presentation.Tests
                 var before = presenter.State;
                 presenter.SelectCell(target.Position);
                 Assert.That(presenter.State, Is.SameAs(before));
-                Assert.That(presenter.HudRoot.Q<Button>("confirm-command").enabledSelf, Is.EqualTo(geometry == 0));
+                Assert.That(presenter.HudRoot.Q<Button>("confirm-command").enabledSelf, Is.EqualTo(geometry!=2));
+                Assert.That(BattleResolver.Validate(presenter.State,new BasicAttackCommand(shooter.Id,target.Id)),Is.EqualTo(geometry==0?CommandError.None:CommandError.BlockedLineOfSight));
+                if(geometry==2)Assert.That(presenter.HasApproachPreview,Is.False,"Sealed geometry has no reachable shooting position within remaining Movement.");
+                if(geometry==1){Assert.That(presenter.HasApproachPreview,Is.True);var approach=MeleeApproachPreview.QueryBow(presenter.State,shooter.Id,target.Id);var moved=BattleResolver.Apply(presenter.State,approach.Movement);Assert.That(moved.IsApplied,Is.True);Assert.That(BattleResolver.Validate(moved.State,approach.Attack),Is.EqualTo(CommandError.None));}
                 Assert.That(presenter.PreviewText, Does.Contain(geometry != 0 ? "BlockedLineOfSight" : "LoS / corner: clear"));
                 if (geometry == 0)
                 {

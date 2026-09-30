@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="7" result="Passed" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-09-30 23:01:05Z" end-time="2026-09-30 23:01:32Z" duration="27.601743">
+  <test-suite type="TestSuite" id="1107" name="My project" fullname="My project" runstate="Runnable" testcasecount="80" result="Passed" start-time="2026-09-30 23:01:05Z" end-time="2026-09-30 23:01:32Z" duration="27.601743" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <test-suite type="Assembly" id="1207" name="RPG.Presentation.Tests.dll" fullname="/Users/bohdanskrypka/UnityProjects/Convergence/Realm-Operations-06/Library/ScriptAssemblies/RPG.Presentation.Tests.dll" runstate="Runnable" testcasecount="80" result="Passed" start-time="2026-09-30 23:01:05Z" end-time="2026-09-30 23:01:32Z" duration="27.597291" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="7124" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <test-suite type="TestSuite" id="1208" name="RPG" fullname="RPG" runstate="Runnable" testcasecount="80" result="Passed" start-time="2026-09-30 23:01:05Z" end-time="2026-09-30 23:01:32Z" duration="27.596639" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1209" name="Presentation" fullname="RPG.Presentation" runstate="Runnable" testcasecount="80" result="Passed" start-time="2026-09-30 23:01:05Z" end-time="2026-09-30 23:01:32Z" duration="27.596200" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1210" name="Tests" fullname="RPG.Presentation.Tests" runstate="Runnable" testcasecount="80" result="Passed" start-time="2026-09-30 23:01:05Z" end-time="2026-09-30 23:01:32Z" duration="27.595775" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1166" name="SizeExperimentPresentationTests" fullname="RPG.Presentation.Tests.SizeExperimentPresentationTests" classname="RPG.Presentation.Tests.SizeExperimentPresentationTests" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-09-30 23:01:05Z" end-time="2026-09-30 23:01:32Z" duration="27.589047" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1170" name="ArcherHudUsesRangeTenAndAccuracyOnlyAim" fullname="RPG.Presentation.Tests.SizeExperimentPresentationTests.ArcherHudUsesRangeTenAndAccuracyOnlyAim" methodname="ArcherHudUsesRangeTenAndAccuracyOnlyAim" classname="RPG.Presentation.Tests.SizeExperimentPresentationTests" runstate="Runnable" seed="1153614155" result="Passed" start-time="2026-09-30 23:01:05Z" end-time="2026-09-30 23:01:05Z" duration="0.522079" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1172" name="CornerAttackAndOaPreviewReflectSharedCoreRule" fullname="RPG.Presentation.Tests.SizeExperimentPresentationTests.CornerAttackAndOaPreviewReflectSharedCoreRule" methodname="CornerAttackAndOaPreviewReflectSharedCoreRule" classname="RPG.Presentation.Tests.SizeExperimentPresentationTests" runstate="Runnable" seed="1789502558" result="Passed" start-time="2026-09-30 23:01:05Z" end-time="2026-09-30 23:01:06Z" duration="0.407125" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1167" name="DensityNamesAndViewsResetWithoutGhosts" fullname="RPG.Presentation.Tests.SizeExperimentPresentationTests.DensityNamesAndViewsResetWithoutGhosts" methodname="DensityNamesAndViewsResetWithoutGhosts" classname="RPG.Presentation.Tests.SizeExperimentPresentationTests" runstate="Runnable" seed="151155571" result="Passed" start-time="2026-09-30 23:01:06Z" end-time="2026-09-30 23:01:07Z" duration="1.835807" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1169" name="EngagedArcherHudShowsFallbackAndDisengagementRestoresBow" fullname="RPG.Presentation.Tests.SizeExperimentPresentationTests.EngagedArcherHudShowsFallbackAndDisengagementRestoresBow" methodname="EngagedArcherHudShowsFallbackAndDisengagementRestoresBow" classname="RPG.Presentation.Tests.SizeExperimentPresentationTests" runstate="Runnable" seed="790013249" result="Passed" start-time="2026-09-30 23:01:07Z" end-time="2026-09-30 23:01:08Z" duration="0.511238" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1168" name="LargerSiegeFixturesLoadFrameAndUseCoreCrossingPreview" fullname="RPG.Presentation.Tests.SizeExperimentPresentationTests.LargerSiegeFixturesLoadFrameAndUseCoreCrossingPreview" methodname="LargerSiegeFixturesLoadFrameAndUseCoreCrossingPreview" classname="RPG.Presentation.Tests.SizeExperimentPresentationTests" runstate="Runnable" seed="315072869" result="Passed" start-time="2026-09-30 23:01:08Z" end-time="2026-09-30 23:01:11Z" duration="2.901204" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1171" name="RangedPreviewAllowsExposedCornersButRejectsInteriorAndSealedVertices" fullname="RPG.Presentation.Tests.SizeExperimentPresentationTests.RangedPreviewAllowsExposedCornersButRejectsInteriorAndSealedVertices" methodname="RangedPreviewAllowsExposedCornersButRejectsInteriorAndSealedVertices" classname="RPG.Presentation.Tests.SizeExperimentPresentationTests" runstate="Runnable" seed="1722769273" result="Passed" start-time="2026-09-30 23:01:11Z" end-time="2026-09-30 23:01:12Z" duration="0.739969" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1173" name="SelectorLoadsAllComparisonFixturesAndRestartPreservesSelection" fullname="RPG.Presentation.Tests.SizeExperimentPresentationTests.SelectorLoadsAllComparisonFixturesAndRestartPreservesSelection" methodname="SelectorLoadsAllComparisonFixturesAndRestartPreservesSelection" classname="RPG.Presentation.Tests.SizeExperimentPresentationTests" runstate="Runnable" seed="593017194" result="Passed" start-time="2026-09-30 23:01:12Z" end-time="2026-09-30 23:01:32Z" duration="20.665157" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: /tmp/realm-operations-06/test-preferences/Library/Application Support/DefaultCompany/My project/TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

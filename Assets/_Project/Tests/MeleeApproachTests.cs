@@ -36,6 +36,39 @@ namespace RPG.Tests
             s=State(12,new Battlefield(23,17,new[]{new GridPosition(10,8)}));var p=MeleeApproachPreview.Query(s,A,B);Assert.That(p,Is.Not.Null);
             var at=s.FindUnit(A).Position;foreach(var cell in p.Movement.Path){Assert.That(MovementRules.ValidateStep(s,A,at,cell),Is.EqualTo(CommandError.None));Assert.That(s.Battlefield.IsRetreatZone(s.FindUnit(A),cell),Is.False);at=cell;}
         }
+        static BattleState BowState(int x=15,Battlefield board=null)=>BattleTestFixtures.ToActor(BattleResolver.StartBattle(new[]{
+            BattleTestFixtures.Unit(1,UnitProfile.HumanArcherTI,x:2,y:8),
+            BattleTestFixtures.Unit(2,UnitProfile.HumanWarriorTI,Side.East,x,8)},2,board??new Battlefield(23,17)).State,A);
+        [TestCase(15,3)][TestCase(16,4)][TestCase(17,-1)]
+        public void BowApproachUsesMinimumMovementForRangeAndActualMovingAccuracy(int x,int steps)
+        {
+            var s=BowState(x);string hash=BattleStateHash.Compute(s);var p=MeleeApproachPreview.QueryBow(s,A,B);
+            Assert.That(BattleStateHash.Compute(s),Is.EqualTo(hash));
+            if(steps<0){Assert.That(p,Is.Null);return;}
+            Assert.That(p.Movement.Path.Count,Is.EqualTo(steps));Assert.That(p.Movement.Path.Last(),Is.EqualTo(new GridPosition(x-10,8)));
+            Assert.That(p.OnArrival.Distance,Is.EqualTo(10));Assert.That(p.OnArrival.SteadyAim,Is.False);Assert.That(p.OnArrival.AimModifier,Is.Zero);
+            Assert.That(p.Movement.Path,Is.EqualTo(MeleeApproachPreview.QueryBow(s,A,B).Movement.Path));
+            var moved=BattleResolver.Apply(s,p.Movement);Assert.That(moved.IsApplied,Is.True);
+            var actual=BattleResolver.PreviewAttack(moved.State,p.Attack);Assert.That(actual.IsLegal,Is.True);Assert.That(actual.ContactChance,Is.EqualTo(p.OnArrival.ContactChance));
+            Assert.That(BattleResolver.Apply(moved.State,p.Attack).IsApplied,Is.True);
+        }
+        [Test] public void BowApproachRequiresClearLineAndDoesNotWalkThroughWalls()
+        {
+            var s=BowState(15,new Battlefield(23,17,new[]{new GridPosition(8,8)}));
+            var p=MeleeApproachPreview.QueryBow(s,A,B);Assert.That(p,Is.Not.Null);
+            var moved=BattleResolver.Apply(s,p.Movement);Assert.That(moved.IsApplied,Is.True);Assert.That(BattleResolver.PreviewAttack(moved.State,p.Attack).IsLegal,Is.True);
+            s=BowState(15,new Battlefield(23,17,Enumerable.Range(0,17).Select(y=>new GridPosition(8,y))));
+            string hash=BattleStateHash.Compute(s);Assert.That(MeleeApproachPreview.QueryBow(s,A,B),Is.Null);Assert.That(BattleStateHash.Compute(s),Is.EqualTo(hash));
+        }
+        [Test] public void BowApproachDoesNotReplaceExistingShotOrBypassSpentActionMovementOrEngagement()
+        {
+            Assert.That(MeleeApproachPreview.QueryBow(BowState(12),A,B),Is.Null);
+            var s=BowState();s.FindUnit(A).ActionAvailable=false;Assert.That(MeleeApproachPreview.QueryBow(s,A,B),Is.Null);
+            s=BowState();s.FindUnit(A).MovementRemaining=0;Assert.That(MeleeApproachPreview.QueryBow(s,A,B),Is.Null);
+            s=BattleTestFixtures.ToActor(BattleResolver.StartBattle(new[]{BattleTestFixtures.Unit(1,UnitProfile.HumanArcherTI,x:2,y:8),BattleTestFixtures.Unit(2,UnitProfile.HumanWarriorTI,Side.East,15,8),BattleTestFixtures.Unit(3,UnitProfile.HumanWarriorTI,Side.East,1,8)},2,new Battlefield(23,17)).State,A);
+            Assert.That(BattleResolver.IsArcherEngaged(s,A),Is.True);Assert.That(MeleeApproachPreview.QueryBow(s,A,B),Is.Null);
+            Assert.That(MeleeApproachPreview.QueryBow(State(),A,B),Is.Null);
+        }
         [Test] public void NoAutomaticApproachForMagesArchersSpentActionOrAlreadyLegalContact()
         {
             foreach(var profile in new[]{UnitProfile.FireMageTI,UnitProfile.HumanArcherTI})Assert.That(MeleeApproachPreview.Query(State(profile:profile),A,B),Is.Null);

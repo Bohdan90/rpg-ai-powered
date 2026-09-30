@@ -294,17 +294,19 @@ namespace RPG.Presentation
                     pending = command;
                 }
                 else {
-                    if(!SelectedSpell.HasValue&&!StaffSelected)pendingApproach=MeleeApproachPreview.Query(State,actor.Id,target.Id);
+                    if(!SelectedSpell.HasValue&&!StaffSelected)pendingApproach=actor.Profile.IsArcher?MeleeApproachPreview.QueryBow(State,actor.Id,target.Id):MeleeApproachPreview.Query(State,actor.Id,target.Id);
                     if(pendingApproach!=null) {
                         pending=pendingApproach.Movement;MovementRisk=pendingApproach.Risk;
-                        PreviewText="Approach + Attack → "+UnitName(target.Id)
+                        PreviewText=(actor.Profile.IsArcher?"Approach + Bow Shot → ":"Approach + Attack → ")+UnitName(target.Id)
+                            +"\nCurrent attack: "+preview.Error
                             +"\nMovement "+pendingApproach.Movement.Path.Count+" / "+actor.MovementRemaining
                             +"\nPath: "+string.Join(" → ",pendingApproach.Movement.Path.Select(Cell))
+                            +(actor.Profile.IsArcher?"\nBow range "+pendingApproach.OnArrival.MaximumRange+" · distance on arrival "+pendingApproach.OnArrival.Distance+" · Steady Aim inactive after movement":"")
                             +"\nAttack on arrival: contact "+pendingApproach.OnArrival.ContactChance+"% · Guard "+pendingApproach.OnArrival.GuardChance+"%"
                             +"\nOA risks: "+OpportunityRiskCount+". Attack only if movement completes and the survivor can legally hit."
                             +"\nFirst click pins; second click on the enemy approaches and attacks.";
                     } else PreviewText += "\nCore: " + preview.Error
-                        +"\nNo legal attack or reachable melee approach this activation.";
+                        +"\nNo legal attack or reachable attack position this activation.";
                 }
             }
             else

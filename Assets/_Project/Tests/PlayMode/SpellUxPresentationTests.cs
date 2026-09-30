@@ -108,6 +108,16 @@ namespace RPG.Presentation.Tests
             P.ClickCell(cell);Assert.That(P.Journal.Records.Count,Is.EqualTo(n+2));Assert.That(P.Journal.Records[n].command.kind,Is.EqualTo(nameof(MoveCommand)));Assert.That(P.Journal.Records[n+1].command.kind,Is.EqualTo(nameof(BasicAttackCommand)));Assert.That(P.State.FindUnit(new UnitId(1)).Position.DistanceTo(cell),Is.EqualTo(1));Assert.That(P.State.FindUnit(new UnitId(1)).ActionAvailable,Is.False);
             P.ConfirmPreview();Assert.That(P.Journal.Records.Count,Is.EqualTo(n+2));Assert.That(ReplayVerification.Verify(P.Journal.Header,P.Journal.Records,P.Journal.Footer()).Matches,Is.True);
         }
+        [UnityTest] public IEnumerator ArcherPinsMinimumApproachAndFiresOnceWithDeterministicReplay()
+        {
+            yield return Open();P.ConfigureBattle(new[]{U(1,UnitProfile.HumanArcherTI,Side.West,2,8),U(2,UnitProfile.HumanWarriorTI,Side.East,15,8)},new Battlefield(23,17),2);Actor(UnitProfile.HumanArcherTI);
+            var cell=new GridPosition(15,8);string hash=BattleStateHash.Compute(P.State);int n=P.Journal.Records.Count;
+            P.HoverCell(cell);Assert.That(P.HasApproachPreview,Is.True);P.ConfirmPreview();Assert.That(BattleStateHash.Compute(P.State),Is.EqualTo(hash));
+            P.ClickCell(cell);P.CancelPreview();Assert.That(BattleStateHash.Compute(P.State),Is.EqualTo(hash));
+            P.ClickCell(cell);string preview=P.PreviewText;P.HoverCell(new GridPosition(16,9));P.LeaveBoard();Assert.That(P.PreviewText,Is.EqualTo(preview));Assert.That(preview,Does.Contain("Approach + Bow Shot"));Assert.That(preview,Does.Contain("Steady Aim inactive"));Assert.That(P.Journal.Records.Count,Is.EqualTo(n));
+            P.ClickCell(cell);Assert.That(P.Journal.Records.Count,Is.EqualTo(n+2));Assert.That(P.Journal.Records[n].command.kind,Is.EqualTo(nameof(MoveCommand)));Assert.That(P.Journal.Records[n+1].command.kind,Is.EqualTo(nameof(BasicAttackCommand)));Assert.That(P.State.FindUnit(new UnitId(1)).Position,Is.EqualTo(new GridPosition(5,8)));Assert.That(P.State.FindUnit(new UnitId(1)).ActionAvailable,Is.False);
+            P.ConfirmPreview();Assert.That(P.Journal.Records.Count,Is.EqualTo(n+2));Assert.That(ReplayVerification.Verify(P.Journal.Header,P.Journal.Records,P.Journal.Footer()).Matches,Is.True);
+        }
         [UnityTest] public IEnumerator LethalOpportunityAttackStopsApproachWithoutFollowupStrike()
         {
             yield return Open();bool found=false;

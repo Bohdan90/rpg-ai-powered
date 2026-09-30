@@ -188,8 +188,12 @@ namespace RPG.Presentation.Tests
             var units = new[] { Unit(1, UnitProfile.HumanArcherTI, 2, 4), Unit(2, UnitProfile.HumanWarriorTI, 8, 4) };
             presenter.ConfigureBattle(units, Battlefield.BaseMap, 1);
             presenter.SelectCell(P(8, 4)); Assert.That(presenter.PreviewText, Does.Contain("BlockedLineOfSight"));
-            Assert.That(presenter.HudRoot.Q<Button>("confirm-command").enabledSelf, Is.False);
+            Assert.That(presenter.HudRoot.Q<Button>("confirm-command").enabledSelf, Is.True);
+            Assert.That(presenter.HasApproachPreview,Is.True);
             Assert.That(presenter.Submit(new BasicAttackCommand(One, Two)).Error, Is.EqualTo(CommandError.BlockedLineOfSight));
+            presenter.SelectCell(P(8,4));presenter.ConfirmPreview();
+            Assert.That(presenter.State.FindUnit(One).Position,Is.Not.EqualTo(P(2,4)));
+            Assert.That(presenter.State.FindUnit(One).ActionAvailable,Is.False);
             presenter.ConfigureBattle(units.Concat(new[] { Unit(3, UnitProfile.HumanWarriorTI, 5, 4) }), Battlefield.ControlMap, 1);
             presenter.SelectCell(P(8, 4));
             Assert.That(presenter.PreviewText, Does.Contain("Light Cover: -15 pp Accuracy"));

@@ -1,5 +1,9 @@
 # Gate C — working implementation checkpoint
 
+## 2026-09-30 — Archer minimum approach + Bow shot
+
+User extends the two-click attack adapter to HA. First enemy click pins a shortest reachable firing route; second resolves real movement then revalidates the Bow shot. Current legal shots fire in place. Range10, LoS, movement budget, engagement and post-move loss of Steady Aim remain Core rules. No automatic partial movement when no legal shot can be reached, no melee fallback after a failed approach. Preview/cancel remain pure; replay uses existing Move+BasicAttack. Starting main8fa995c; isolated validation in Realm-Operations-06. Final603 EditMode+80 PlayMode=683 PASS,0 failed/skipped. Report: `BOW_APPROACH.md`; exact runs/provenance: `Evidence/BOW-APPROACH/validation-manifest.json`. Manual mouse NOT RUN. No forced Unity restart, no push. Document54 is still pending implementation; this input delta does not replace it.
+
 ## 2026-09-30 — straight melee approach tie-break
 
 Starting `76f60eb`: reproduced equal-cost x/y tie-break selecting a sideways contact cell despite a clear direct route. Query now prefers direct-line alignment after path cost/OA safety; no movement, combat or replay rule change. Focused13 PASS (four reproduced cardinal failures before fix); fresh full598 EditMode+79 PlayMode=677 PASS,0 failed/skipped. Manual NOT RUN. User-authorized main fast-forward76f60eb→e823e08; all tested source hashes match, nine unrelated files and22 non-Unity save files unchanged; no forced restart. Delivery: `Evidence/MELEE-APPROACH/straight-line/main-integration.json`. Evidence/report: `MELEE_APPROACH.md`, `Evidence/MELEE-APPROACH/straight-line/validation-manifest.json`. This bounded user-reported fix does not complete or replace the pending document54 package. NO PUSH.

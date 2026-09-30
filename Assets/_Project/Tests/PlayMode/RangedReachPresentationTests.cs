@@ -69,7 +69,12 @@ namespace RPG.Presentation.Tests
             Assert.That(p.RangedVisualCount,Is.EqualTo(p.RangedReach.Count));
             p.SelectCell(new GridPosition(12,2));
             Assert.That(p.PreviewText,Does.Contain("BlockedLineOfSight"));
-            Assert.That(p.HudRoot.Q<Button>("confirm-command").enabledSelf,Is.False);
+            Assert.That(p.HudRoot.Q<Button>("confirm-command").enabledSelf,Is.True);
+            Assert.That(p.HasApproachPreview,Is.True);
+            var actor=p.State.CurrentUnitId.Value;var target=p.State.OccupantAt(new GridPosition(12,2)).Id;
+            Assert.That(BattleResolver.Validate(p.State,new BasicAttackCommand(actor,target)),Is.EqualTo(CommandError.BlockedLineOfSight));
+            var approach=MeleeApproachPreview.QueryBow(p.State,actor,target);var moved=BattleResolver.Apply(p.State,approach.Movement);
+            Assert.That(moved.IsApplied,Is.True);Assert.That(BattleResolver.Validate(moved.State,approach.Attack),Is.EqualTo(CommandError.None));
             p.SelectCell(new GridPosition(3,2));p.Hover(new GridPosition(13,2));p.CancelPreview();
             Assert.That(p.State,Is.SameAs(before));Assert.That(p.State.RngState,Is.EqualTo(rng));
             Assert.That(BattleStateHash.Compute(p.State),Is.EqualTo(hash));

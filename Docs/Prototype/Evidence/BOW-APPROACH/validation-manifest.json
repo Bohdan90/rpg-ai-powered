@@ -1,0 +1,101 @@
+{
+  "starting_main": "8fa995ce15568d03d903705bac4a0b40dfcb3ea0",
+  "unity": "6000.6.2f1",
+  "worktree": "/Users/bohdanskrypka/UnityProjects/Convergence/Realm-Operations-06",
+  "test_preferences": "/private/tmp/realm-operations-06/test-preferences",
+  "commands": [
+    "bash /private/tmp/realm-operations-06/run-tests.sh EditMode MeleeApproachTests",
+    "bash /private/tmp/realm-operations-06/run-tests.sh PlayMode SpellUxPresentationTests",
+    "bash /private/tmp/realm-operations-06/run-tests.sh EditMode",
+    "bash /private/tmp/realm-operations-06/run-tests.sh PlayMode"
+  ],
+  "runs": [
+    {
+      "kind": "focused approach Core",
+      "xml": "EditMode-20260930-185312.xml",
+      "log": "EditMode-20260930-185312.log.gz",
+      "passed": "18",
+      "failed": "0",
+      "skipped": "0",
+      "start-time": "2026-09-30 22:53:19Z",
+      "end-time": "2026-09-30 22:53:19Z"
+    },
+    {
+      "kind": "focused spell/approach Presentation",
+      "xml": "PlayMode-20260930-185335.xml",
+      "log": "PlayMode-20260930-185335.log.gz",
+      "passed": "13",
+      "failed": "0",
+      "skipped": "0",
+      "start-time": "2026-09-30 22:53:41Z",
+      "end-time": "2026-09-30 22:53:50Z"
+    },
+    {
+      "kind": "full EditMode",
+      "xml": "EditMode-20260930-185402.xml",
+      "log": "EditMode-20260930-185402.log.gz",
+      "passed": "603",
+      "failed": "0",
+      "skipped": "0",
+      "start-time": "2026-09-30 22:54:07Z",
+      "end-time": "2026-09-30 22:55:27Z"
+    },
+    {
+      "kind": "superseded full: four old UI expectations of no legal approach",
+      "xml": "PlayMode-20260930-185541.xml",
+      "log": "PlayMode-20260930-185541.log.gz",
+      "passed": "76",
+      "failed": "4",
+      "skipped": "0",
+      "start-time": "2026-09-30 22:55:47Z",
+      "end-time": "2026-09-30 22:57:51Z"
+    },
+    {
+      "kind": "focused: remaining sealed-case expectation corrected",
+      "xml": "PlayMode-20260930-185902.xml",
+      "log": "PlayMode-20260930-185902.log.gz",
+      "passed": "35",
+      "failed": "1",
+      "skipped": "0",
+      "start-time": "2026-09-30 22:59:10Z",
+      "end-time": "2026-09-30 23:00:15Z"
+    },
+    {
+      "kind": "focused final corner/range",
+      "xml": "PlayMode-20260930-190058.xml",
+      "log": "PlayMode-20260930-190058.log.gz",
+      "passed": "7",
+      "failed": "0",
+      "skipped": "0",
+      "start-time": "2026-09-30 23:01:05Z",
+      "end-time": "2026-09-30 23:01:32Z"
+    },
+    {
+      "kind": "final full EditMode",
+      "xml": "EditMode-20260930-190156.xml",
+      "log": "EditMode-20260930-190156.log.gz",
+      "passed": "603",
+      "failed": "0",
+      "skipped": "0",
+      "start-time": "2026-09-30 23:02:02Z",
+      "end-time": "2026-09-30 23:03:22Z"
+    },
+    {
+      "kind": "final full PlayMode",
+      "xml": "PlayMode-20260930-190348.xml",
+      "log": "PlayMode-20260930-190348.log.gz",
+      "passed": "80",
+      "failed": "0",
+      "skipped": "0",
+      "start-time": "2026-09-30 23:03:55Z",
+      "end-time": "2026-09-30 23:06:22Z"
+    }
+  ],
+  "source_hashes": "source-sha256.json",
+  "manual": "NOT RUN; automated Core and real Presentation validation only",
+  "replay": "PASS: MoveCommand + ProfileBasic Bow; original replay format unchanged",
+  "push": "NOT PERFORMED",
+  "final_full_total": 683,
+  "final_failed": 0,
+  "final_skipped": 0
+}
