@@ -47,6 +47,27 @@ namespace RPG.Presentation.Tests
         {
             yield return Open();P.StartCombatLab(CombatLabMatch.FireVsIce);Actor(UnitProfile.FireMageTII);P.SelectSpell(SpellId.Fireball);var pos=P.State.FindUnit(P.State.CurrentUnitId.Value).Position;string hash=BattleStateHash.Compute(P.State);P.HoverCell(pos);Assert.That(P.PreviewText,Does.Contain("friendly fire"));P.ClickCell(pos);P.ConfirmPreview();Assert.That(BattleStateHash.Compute(P.State),Is.EqualTo(hash));P.Zoom(.9f);Assert.That(P.SpellFootprint,Is.Empty);P.HoverCell(pos);P.FitBoard();Assert.That(P.SpellFootprint,Is.Empty);P.CancelPreview();Assert.That(BattleStateHash.Compute(P.State),Is.EqualTo(hash));P.SelectSpell(SpellId.Fireball);P.EndActivation(null);Assert.That(P.SelectedSpell,Is.Null);Assert.That(P.SpellFootprint,Is.Empty);LogAssert.NoUnexpectedReceived();
         }
+        [UnityTest] public IEnumerator SpentSpellActionHidesAimDisablesAttacksAndReturnsNextActivation()
+        {
+            yield return Open();
+            foreach(bool explicitAim in new[]{false,true}) {
+                P.ConfigureBattle(new[]{U(1,UnitProfile.FireMageTII,Side.West,8,8),U(2,UnitProfile.HumanWarriorTI,Side.East,10,9)},new Battlefield(23,17),2);Actor(UnitProfile.FireMageTII);
+                var cell=new GridPosition(10,9);if(explicitAim)P.SelectSpell(SpellId.FireStream);
+                Assert.That(P.SpellEnvelope,Is.Not.Empty);P.ClickCell(cell);if(explicitAim)P.ConfirmPreview();
+                Assert.That(P.State.FindUnit(new UnitId(1)).ActionAvailable,Is.False);
+                string hash=BattleStateHash.Compute(P.State);int count=P.Journal.Records.Count;
+                Assert.That(BattleResolver.Validate(P.State,new CastCommand(new UnitId(1),SpellId.FireStream,cell)),Is.EqualTo(CommandError.NoAction));
+                P.HoverCell(cell);P.InspectSpell(SpellId.FireStream);
+                Assert.That(P.SpellEnvelope,Is.Empty,"Spent Action must not advertise cast range");Assert.That(P.SpellFootprint,Is.Empty);
+                Assert.That(P.SpellDetails,Does.Contain("Action spent"));
+                var root=Object.FindAnyObjectByType<UIDocument>().rootVisualElement;
+                Assert.That(root.Q<Button>("spell-FireStream").enabledSelf,Is.False);Assert.That(root.Q<Button>("staff-attack").enabledSelf,Is.False);Assert.That(root.Q<Button>("primary-attack").enabledSelf,Is.False);
+                P.ClickCell(cell);P.ConfirmPreview();Assert.That(P.Journal.Records.Count,Is.EqualTo(count));Assert.That(BattleStateHash.Compute(P.State),Is.EqualTo(hash));
+                P.CancelPreview();P.ClickCell(new GridPosition(7,8));Assert.That(P.HasMovePreview,Is.False,"Mage movement still obeys the existing Action rule");Assert.That(BattleStateHash.Compute(P.State),Is.EqualTo(hash));P.CancelPreview();
+                P.EndActivation(null);Actor(UnitProfile.FireMageTII);Assert.That(P.SpellEnvelope,Is.Not.Empty);Assert.That(root.Q<Button>("spell-FireStream").enabledSelf,Is.True);
+                Assert.That(ReplayVerification.Verify(P.Journal.Header,P.Journal.Records,P.Journal.Footer()).Matches,Is.True);
+            }
+        }
         [Test] public void RetainedV1ReplayFilesStillUseRecordedRules()
         {
             int count=0;

@@ -181,10 +181,10 @@ namespace RPG.Presentation
             spellSelect.choices=new[]{ordinary}.Concat(SpellRules.Kit(actor.Profile).Select(s=>s.ToString())).ToList();
             spellSelect.SetValueWithoutNotify(presenter.SelectedSpell?.ToString()??ordinary);
             Root.Q<Button>("primary-attack").text=presenter.PrimarySpell.HasValue?"Primary: "+presenter.PrimarySpell+" · hostile click":"Basic / Move";
-            Root.Q("primary-attack").SetEnabled(playerTurn&&!ended);Root.Q("staff-attack").style.display=actor.Profile.IsCaster?DisplayStyle.Flex:DisplayStyle.None;Root.Q("staff-attack").SetEnabled(playerTurn&&!ended);
+            Root.Q("primary-attack").SetEnabled(playerTurn&&!ended&&(!presenter.PrimarySpell.HasValue||actor.ActionAvailable));Root.Q("staff-attack").style.display=actor.Profile.IsCaster?DisplayStyle.Flex:DisplayStyle.None;Root.Q("staff-attack").SetEnabled(playerTurn&&!ended&&actor.ActionAvailable);
             Root.Q<Label>("spell-details").text=presenter.SpellDetails;
-            spellSelect.SetEnabled(playerTurn&&!ended);
-            foreach(SpellId spell in Enum.GetValues(typeof(SpellId))){var b=Root.Q<Button>("spell-"+spell);b.style.display=SpellRules.Has(actor.Profile,spell)?DisplayStyle.Flex:DisplayStyle.None;b.SetEnabled(playerTurn&&!ended);}
+            spellSelect.SetEnabled(playerTurn&&!ended&&actor.ActionAvailable);
+            foreach(SpellId spell in Enum.GetValues(typeof(SpellId))){var b=Root.Q<Button>("spell-"+spell);b.style.display=SpellRules.Has(actor.Profile,spell)?DisplayStyle.Flex:DisplayStyle.None;b.SetEnabled(playerTurn&&!ended&&actor.ActionAvailable);}
 
             foreach(CombatLabMatch lab in Enum.GetValues(typeof(CombatLabMatch)))Root.Q("lab-"+lab).SetEnabled(!connected);
             aiInfo.text=presenter.PlayerVsAi?presenter.AiExplanation:"Hotseat";

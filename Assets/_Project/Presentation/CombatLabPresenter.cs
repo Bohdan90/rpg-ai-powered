@@ -27,10 +27,10 @@ namespace RPG.Presentation
                 var actor=State.FindUnit(State.CurrentUnitId.Value);var spell=AimSpell;
                 if(!spell.HasValue)return StaffSelected?"Staff Strike · Physical 5 · melee range 1 · Action. Explicit alternative; no automatic fallback.":"";
                 var s=spell.Value;int limit=SpellRules.Limit(s);
-                return (inspectedSpell.HasValue?"Inspecting (selected action unchanged): ":SelectedSpell.HasValue?"Selected: ":"Primary attack: ")+s+"\n"+TargetDescription(s)
+                return (!actor.ActionAvailable?"UNAVAILABLE: Action spent — end activation; Action resets on the next activation.\n":"")+(inspectedSpell.HasValue?"Inspecting (selected action unchanged): ":SelectedSpell.HasValue?"Selected: ":"Primary attack: ")+s+"\n"+TargetDescription(s)
                     +" · Action"+(SpellRules.Exertion(s)?" + Exertion":" · Spell (not Exertion)")
                     +(limit==int.MaxValue?"":"\nRemaining "+Math.Max(0,limit-SpellRules.Used(actor,s))+"/"+limit+" · resets only on global Strategic Refresh")
-                    +"\n"+(SelectedSpell.HasValue?"Hover a cell for exact effect; click then Confirm. Cancel returns to primary.":"Hover/click a hostile unit for primary spell. Empty ground remains Move; allies are inspected.")
+                    +"\n"+(!actor.ActionAvailable?"Spell targeting is hidden until Action is available.":SelectedSpell.HasValue?"Hover a cell for exact effect; click then Confirm. Cancel returns to primary.":"Hover/click a hostile unit for primary spell. Empty ground remains Move; allies are inspected.")
                     +"\nAmber brackets: legal aim geometry (recipient/status checked separately). Magenta: exact effect. Red X: excluded by obstruction. Allies are named below.";
             }
         }
@@ -109,7 +109,9 @@ namespace RPG.Presentation
         {
             var id=State.CurrentUnitId;int current=id?.Value??0;
             if(current!=aimActor||State.Round!=aimRound){ResetAim();spellPreviewCells=null;spellBlockedCells=null;spellCenter=null;aimHover=null;aimActor=current;aimRound=State.Round;}
-            spellEnvelope=!State.Outcome.IsEnded&&!IsAiTurn&&id.HasValue&&AimSpell.HasValue?BattleResolver.SpellAimCells(State,id.Value,AimSpell.Value):Array.Empty<GridPosition>();
+            bool actionAvailable=id.HasValue&&State.FindUnit(id.Value).ActionAvailable;
+            if(!actionAvailable){spellPreviewCells=null;spellBlockedCells=null;spellCenter=null;}
+            spellEnvelope=!State.Outcome.IsEnded&&!IsAiTurn&&actionAvailable&&AimSpell.HasValue?BattleResolver.SpellAimCells(State,id.Value,AimSpell.Value):Array.Empty<GridPosition>();
         }
         public static string CombatStatuses(UnitState u)=>"Barrier "+u.TemporaryBarrier+(u.FireProtection?" Fire Armor":"")
             +(u.BurnStacks>0?" · Burn "+u.BurnStacks+" ("+u.BurnTicks+" ticks)":"")+(u.IsFrozen?" · FROZEN":"")+(u.IsExhausted?" · EXHAUSTED":"")+(u.IsSilenced?" · SILENCED":"");
