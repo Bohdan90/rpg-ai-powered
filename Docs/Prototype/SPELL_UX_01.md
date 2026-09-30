@@ -75,3 +75,7 @@ One own commit: `Spell UX: clarify targeting and make school spells primary`; fi
 ```
 
 All nine originals and task copies match preflight SHA256. No own uncommitted implementation or temporary observer remains after the commit. Main stays `develop @ da9f776`; NO PUSH.
+
+## Main delivery — 2026-09-30
+
+User explicitly requested transfer to the main project. Fast-forward `My project / develop`: `da9f776` → `5eb0f77`. All gameplay/test source SHA256s match the fully tested manifest; no new code or test rerun. The earlier isolated-only/main-da9 delivery limitation is superseded. Main was displaying a Lab battle (not a strategic session); editor closed gracefully before transfer. Nine unrelated files match pre-transfer hashes; on-disk saves backed up under `/private/tmp/spell-ux-main-integration/`. Main editor reopened for the user. Documentation-only delivery checkpoint; no push.
