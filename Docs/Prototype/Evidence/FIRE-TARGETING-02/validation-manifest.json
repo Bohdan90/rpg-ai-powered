@@ -1,0 +1,149 @@
+{
+  "task": "FIRE-TARGETING-02 / doc51 \u00a716",
+  "startingHEAD": "008e58f2a94a6eda0b79f25a2330ba5a3e64d482",
+  "branch": "feature/fire-targeting-02",
+  "worktree": "/Users/bohdanskrypka/UnityProjects/Convergence/Fire-Targeting-02",
+  "implementationCommit": "Containing local commit; resolve with git log -1 -- Assets/_Project/Core/FireStreamGeometry.cs",
+  "main": {
+    "branch": "develop",
+    "HEAD": "008e58f",
+    "integrated": false,
+    "activeEditorPreserved": true,
+    "protectedFilesUnchanged": true
+  },
+  "unity": "6000.6.2f1",
+  "tests": [
+    {
+      "scope": "focused",
+      "platform": "EditMode",
+      "passed": 77,
+      "failed": 0,
+      "skipped": 0,
+      "startUTC": "2026-09-30 18:57:08Z",
+      "endUTC": "2026-09-30 18:57:13Z",
+      "command": "bash /private/tmp/fire-targeting-02/run-tests.sh EditMode \"FireTargetingTests|SpellUxTests|CombatVariety\"",
+      "xml": "EditMode-20260930-145701.xml",
+      "log": "EditMode-20260930-145701.log.gz"
+    },
+    {
+      "scope": "focused",
+      "platform": "PlayMode",
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0,
+      "startUTC": "2026-09-30 18:57:37Z",
+      "endUTC": "2026-09-30 18:57:39Z",
+      "command": "bash /private/tmp/fire-targeting-02/run-tests.sh PlayMode \"SpellUxPresentationTests\"",
+      "xml": "PlayMode-20260930-145730.xml",
+      "log": "PlayMode-20260930-145730.log.gz"
+    },
+    {
+      "scope": "full",
+      "platform": "EditMode",
+      "passed": 558,
+      "failed": 0,
+      "skipped": 0,
+      "startUTC": "2026-09-30 18:58:16Z",
+      "endUTC": "2026-09-30 18:59:34Z",
+      "command": "bash /private/tmp/fire-targeting-02/run-tests.sh EditMode",
+      "xml": "EditMode-20260930-145810.xml",
+      "log": "EditMode-20260930-145810.log.gz"
+    },
+    {
+      "scope": "full",
+      "platform": "PlayMode",
+      "passed": 70,
+      "failed": 0,
+      "skipped": 0,
+      "startUTC": "2026-09-30 19:00:07Z",
+      "endUTC": "2026-09-30 19:02:04Z",
+      "command": "bash /private/tmp/fire-targeting-02/run-tests.sh PlayMode",
+      "xml": "PlayMode-20260930-150000.xml",
+      "log": "PlayMode-20260930-150000.log.gz"
+    }
+  ],
+  "sourceConfiguration": "tested-source-sha256.json",
+  "gui": {
+    "status": "PASS controlled real OS-input",
+    "authorization": "User: input free, separate window allowed",
+    "initialStates": "Explicit authored near-contact fixtures for rare targeting; ordinary new05B for world smoke",
+    "helper": "Existing bounded foreground-checked mouse helper adapted to Fire-Targeting-02 only",
+    "observer": "Temporary read-only state/coordinate observer plus explicitly authored initial fixtures; removed before final suites",
+    "gameplayDeltaAfterGui": "Only additional ring4 diagnostic clarification (no invented LoS blocker) and removal of duplicate idempotent draw cleanup; final code tested by both full suites",
+    "checks": [
+      "default hostile off-axis cast",
+      "empty-center three-cell footprint",
+      "Friendly Fire refusal then explicit consent",
+      "allied HW shield/caster-only cost",
+      "depleted barrier retains fire; melee Burn",
+      "second recipient activation expiry",
+      "05B physical evacuation/return/same Refresh/save/recreate/load"
+    ],
+    "screenshots": [
+      "05-allied-recipient-preview.png",
+      "24-05b-recreated-loaded.png",
+      "07-melee-fire-trigger.png",
+      "03-empty-cell-full-stream-friendly-fire.png",
+      "09-second-recipient-start-expired.png",
+      "01-default-offaxis-preview.png"
+    ]
+  },
+  "replays": {
+    "legacyRecordedFiles": 24,
+    "legacyCompatibility": "RetainedV1ReplayFilesStillUseRecordedRules PlayMode PASS",
+    "current": [
+      {
+        "file": "fire-targeting-05b-replay/gate-c-20260930-185435-b288cbb7.jsonl",
+        "rules": "GateC-v0.1-HA10-fallback5-AI1-directional-retreat-51-spells2-firetargeting02",
+        "commands": 35
+      },
+      {
+        "file": "fire-targeting-gui-replay/gate-c-20260930-185246-3c3cf55b.jsonl",
+        "rules": "GateC-v0.1-HA10-fallback5-AI1-directional-retreat-51-spells2-firetargeting02",
+        "commands": 9
+      },
+      {
+        "file": "fire-targeting-gui-replay/gate-c-20260930-185232-8ae24023.jsonl",
+        "rules": "GateC-v0.1-HA10-fallback5-AI1-directional-retreat-51-spells2-firetargeting02",
+        "commands": 1
+      },
+      {
+        "file": "fire-targeting-gui-replay/gate-c-20260930-185236-d6fce823.jsonl",
+        "rules": "GateC-v0.1-HA10-fallback5-AI1-directional-retreat-51-spells2-firetargeting02",
+        "commands": 1
+      }
+    ]
+  },
+  "save": {
+    "origin": "Actually played new05B smoke, not authored outcome",
+    "refreshBeforeBattle": 2,
+    "refreshAfterReturn": 2,
+    "refreshAfterLoad": 2,
+    "checksum": "W4xOEokssaaIfClODhts6rmczfJ2pUiBdbbiSVnMRJE=",
+    "same10PersistentIDs": true,
+    "fireballUsedAfterLoad": 1,
+    "temporaryProtectionPersisted": false,
+    "file": "played-05b-save.json"
+  },
+  "isolation": {
+    "guiPreferences": "/private/tmp/fire-targeting-02/gui-preferences",
+    "testPreferences": "/private/tmp/fire-targeting-02/test-preferences",
+    "launcherPreferences": "/private/tmp/fire-targeting-02/player-preferences",
+    "protected": "protected-verification.json",
+    "worktreeDependencyNormalization": "Unity removed SENTIS_ANALYTICS_ENABLED from copied ProjectSettings.asset; tested defines APP_UI_EDITOR_ONLY. Copy remains uncommitted; original main file and backup retain both original defines."
+  },
+  "developmentFailures": [
+    "Old self-only and eight-ray expectations: retained as explicit v1 tests; new v2 tests added",
+    "New NUnit assertion overload compile error fixed before focused execution",
+    "Sandbox UPM socket startup and transient project lock; successful runs logged separately",
+    "GUI driver initially tried Fireball while legitimately Exhausted; continued after cooldown",
+    "GUI observer null world serialized as zero-filled object: driver excluded placeholder before comparing actual Refresh"
+  ],
+  "deviations": [],
+  "limitations": [
+    "Feature not integrated into open main project",
+    "Player acceptance pending",
+    "No new independent-barrier source/content; retention checked using fixture state"
+  ],
+  "push": "NOT PERFORMED"
+}

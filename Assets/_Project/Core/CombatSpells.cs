@@ -28,7 +28,7 @@ namespace RPG.Core
     public static class SpellRules
     {
         public static bool Exertion(SpellId s)=>s!=SpellId.FireStream && s!=SpellId.IceShard;
-        public static int Range(SpellId s)=>s==SpellId.FireStream?3:s==SpellId.Fireball||s==SpellId.IceShard?8:s==SpellId.Freeze?6:s==SpellId.IceShield?4:s==SpellId.CloseHeal?1:0;
+        public static int Range(SpellId s,int fireRulesVersion=2)=>s==SpellId.FireArmor?(fireRulesVersion>=2?3:0):s==SpellId.FireStream?3:s==SpellId.Fireball||s==SpellId.IceShard?8:s==SpellId.Freeze?6:s==SpellId.IceShield?4:s==SpellId.CloseHeal?1:0;
         public static int Limit(SpellId s)=>s==SpellId.Fireball||s==SpellId.Freeze?2:s==SpellId.CloseHeal?3:int.MaxValue;
         public static int Used(UnitState u,SpellId s)=>s==SpellId.Fireball?u.FireballUsed:s==SpellId.Freeze?u.FreezeUsed:s==SpellId.CloseHeal?u.CloseHealUsed:0;
         public static int Used(PersistentCharacter u,SpellId s)=>s==SpellId.Fireball?u.FireballUsed:s==SpellId.Freeze?u.FreezeUsed:s==SpellId.CloseHeal?u.CloseHealUsed:0;
@@ -47,6 +47,7 @@ namespace RPG.Core
         {
             var result=new List<GridPosition>();var center=command.Cell;
             if(command.Spell==SpellId.FireStream) {
+                if(state.FireRulesVersion>=2)return FireStreamGeometry.Cells(state.Battlefield,actor.Position,center);
                 int dx=center.X-actor.Position.X,dy=center.Y-actor.Position.Y;
                 if(dx==0&&dy==0 || dx!=0&&dy!=0&&Math.Abs(dx)!=Math.Abs(dy))return result;
                 dx=Math.Sign(dx);dy=Math.Sign(dy);
@@ -74,17 +75,17 @@ namespace RPG.Core
             if(!SpellRules.Has(actor.Profile,command.Spell))errors.Add(CommandError.AbilityUnavailable);
             if(SpellRules.Exertion(command.Spell)&&actor.IsExhausted)errors.Add(CommandError.Exhausted);
             if(SpellRules.Used(actor,command.Spell)>=SpellRules.Limit(command.Spell))errors.Add(CommandError.SourceBudgetSpent);
-            if(command.Spell==SpellId.FireArmor&&command.Cell!=actor.Position)errors.Add(CommandError.SelfOnly);
+            if(state.FireRulesVersion==1&&command.Spell==SpellId.FireArmor&&command.Cell!=actor.Position)errors.Add(CommandError.SelfOnly);
             if(!state.Battlefield.Contains(command.Cell)){errors.Add(CommandError.OutOfBounds);return errors;}
             if(!state.Battlefield.IsWalkable(command.Cell))errors.Add(CommandError.SolidCell);
-            if(actor.Position.DistanceTo(command.Cell)>SpellRules.Range(command.Spell)&&command.Spell!=SpellId.FireArmor)errors.Add(CommandError.OutOfRange);
+            if(actor.Position.DistanceTo(command.Cell)>SpellRules.Range(command.Spell,state.FireRulesVersion)&&(state.FireRulesVersion>=2||command.Spell!=SpellId.FireArmor))errors.Add(CommandError.OutOfRange);
             if(!LineOfSight.IsClear(state,actor.Position,command.Cell))errors.Add(CommandError.BlockedLineOfSight);
             if(SpellRules.Area(command.Spell)) {
                 var cells=SpellCells(state,actor,command);
                 if(command.Spell==SpellId.FireStream) {
                     int dx=command.Cell.X-actor.Position.X,dy=command.Cell.Y-actor.Position.Y;
-                    if(dx==0&&dy==0||dx!=0&&dy!=0&&Math.Abs(dx)!=Math.Abs(dy))errors.Add(CommandError.OutsideSpellLine);
-                    else if(cells.Count==0&&!errors.Contains(CommandError.BlockedLineOfSight)&&!errors.Contains(CommandError.SolidCell))errors.Add(CommandError.BlockedLineOfSight);
+                    if(dx==0&&dy==0||state.FireRulesVersion==1&&dx!=0&&dy!=0&&Math.Abs(dx)!=Math.Abs(dy))errors.Add(CommandError.OutsideSpellLine);
+                    else if(cells.Count==0&&(state.FireRulesVersion==1||actor.Position.DistanceTo(command.Cell)<=3)&&!errors.Contains(CommandError.BlockedLineOfSight)&&!errors.Contains(CommandError.SolidCell))errors.Add(CommandError.BlockedLineOfSight);
                 }
                 if(!command.FriendlyFireConfirmed&&state.Units.Any(u=>u.IsActive&&u.Side==actor.Side&&cells.Contains(u.Position)))errors.Add(CommandError.FriendlyFireNotConfirmed);
                 return errors;
@@ -100,8 +101,8 @@ namespace RPG.Core
         {
             var actor=state.FindUnit(id);var cells=new List<GridPosition>();if(actor==null)return cells;
             for(int x=0;x<state.Battlefield.Columns;x++)for(int y=0;y<state.Battlefield.Rows;y++) {
-                var p=new GridPosition(x,y);if(actor.Position.DistanceTo(p)>SpellRules.Range(spell)||!state.Battlefield.IsWalkable(p)||!LineOfSight.IsClear(state,actor.Position,p))continue;
-                if(spell==SpellId.FireStream){int dx=x-actor.Position.X,dy=y-actor.Position.Y;if(dx==0&&dy==0||dx!=0&&dy!=0&&Math.Abs(dx)!=Math.Abs(dy))continue;}
+                var p=new GridPosition(x,y);if(actor.Position.DistanceTo(p)>SpellRules.Range(spell,state.FireRulesVersion)||!state.Battlefield.IsWalkable(p)||!LineOfSight.IsClear(state,actor.Position,p))continue;
+                if(spell==SpellId.FireStream){int dx=x-actor.Position.X,dy=y-actor.Position.Y;if(dx==0&&dy==0||state.FireRulesVersion==1&&dx!=0&&dy!=0&&Math.Abs(dx)!=Math.Abs(dy))continue;}
                 cells.Add(p);
             }
             return cells.AsReadOnly();
@@ -116,6 +117,7 @@ namespace RPG.Core
             var blocked=new List<GridPosition>();
             if(actor!=null&&SpellRules.Area(command.Spell)) {
                 if(command.Spell==SpellId.Fireball)for(int x=command.Cell.X-1;x<=command.Cell.X+1;x++)for(int y=command.Cell.Y-1;y<=command.Cell.Y+1;y++){var p=new GridPosition(x,y);if(state.Battlefield.Contains(p)&&!cells.Contains(p))blocked.Add(p);}
+                else if(state.FireRulesVersion>=2){foreach(var p in FireStreamGeometry.Candidates(actor.Position,command.Cell))if(state.Battlefield.Contains(p)&&!cells.Contains(p))blocked.Add(p);}
                 else {int dx=command.Cell.X-actor.Position.X,dy=command.Cell.Y-actor.Position.Y;if((dx!=0||dy!=0)&&(dx==0||dy==0||Math.Abs(dx)==Math.Abs(dy)))for(int i=1;i<=3;i++){var p=new GridPosition(actor.Position.X+Math.Sign(dx)*i,actor.Position.Y+Math.Sign(dy)*i);if(state.Battlefield.Contains(p)&&!cells.Contains(p))blocked.Add(p);}}
             }
             var preview=new SpellPreview{Error=error,Blockers=blockers.Distinct().ToArray(),BlockedCells=blocked.AsReadOnly(),Cells=cells.AsReadOnly(),Targets=Array.AsReadOnly(targets.Select(u=>u.Id).ToArray()),Magnitude=actor==null?0:SpellRules.Magnitude(actor.Profile,command.Spell)};
@@ -143,7 +145,8 @@ namespace RPG.Core
                 }
                 switch(command.Spell) {
                     case SpellId.FireArmor:case SpellId.IceShield:
-                        int before=target.TemporaryBarrier;target.TemporaryBarrier=command.Spell==SpellId.FireArmor?6:10;
+                        int before=target.TemporaryBarrier;int grant=command.Spell==SpellId.FireArmor?6:10;
+                        if(state.FireRulesVersion>=2){target.TemporaryBarrier=before-target.PackageBarrier+grant;target.PackageBarrier=grant;}else target.TemporaryBarrier=grant;
                         target.BarrierActivations=2;target.FireProtection=command.Spell==SpellId.FireArmor;
                         events.Add(new BattleEvent(BattleEventKind.BarrierChanged,state.Round,actor.Id,target.Id,before:before,after:target.TemporaryBarrier));break;
                     case SpellId.Freeze:
@@ -166,6 +169,7 @@ namespace RPG.Core
         {
             int remaining=amount,before=target.TemporaryBarrier;
             int barrier=Math.Min(before,remaining);target.TemporaryBarrier-=barrier;remaining-=barrier;
+            if(state.FireRulesVersion>=2)target.PackageBarrier=Math.Max(0,target.PackageBarrier-barrier);
             events.Add(new BattleEvent(BattleEventKind.DamageApplied,state.Round,actor.Id,target.Id,amount:amount));
             if(barrier>0)events.Add(new BattleEvent(BattleEventKind.BarrierChanged,state.Round,actor.Id,target.Id,amount:barrier,before:before,after:target.TemporaryBarrier));
             int armor=type==DamageType.Physical?Math.Min(target.Armor,remaining):0;remaining-=armor;
@@ -174,10 +178,12 @@ namespace RPG.Core
             if(hp>0){before=target.Hp;target.Hp-=hp;events.Add(new BattleEvent(BattleEventKind.HpLost,state.Round,actor.Id,target.Id,amount:hp,before:before,after:target.Hp));}
             int dealt=barrier+armor+hp;
             if(direct&&dealt>0&&target.IsFrozen){target.FrozenActivations=0;events.Add(new BattleEvent(BattleEventKind.FreezeEnded,state.Round,actor.Id,target.Id));}
-            if(target.Hp==0){target.Status=UnitStatus.Dead;target.ActionAvailable=false;target.OpportunityAttackAvailable=false;events.Add(new BattleEvent(BattleEventKind.UnitDied,state.Round,actor.Id,target.Id));}
+            if(target.Hp==0){if(state.FireRulesVersion>=2)ClearProtection(target);target.Status=UnitStatus.Dead;target.ActionAvailable=false;target.OpportunityAttackAvailable=false;events.Add(new BattleEvent(BattleEventKind.UnitDied,state.Round,actor.Id,target.Id));}
             else if(direct&&melee&&type==DamageType.Physical&&dealt>0&&target.FireProtection&&actor.IsActive)AddBurn(state,target,actor,events);
             return dealt;
         }
+        private static void ClearProtection(UnitState u){u.TemporaryBarrier=0;u.PackageBarrier=0;u.BarrierActivations=0;u.FireProtection=false;}
+        private static void ClearBattleProtection(BattleState s){if(s.FireRulesVersion>=2)foreach(var u in s.Units)ClearProtection(u);}
         private static void AddBurn(BattleState state,UnitState actor,UnitState target,List<BattleEvent> events)
         {target.BurnStacks=Math.Min(3,target.BurnStacks+1);target.BurnTicks=2;events.Add(new BattleEvent(BattleEventKind.BurnApplied,state.Round,actor.Id,target.Id,after:target.BurnStacks));}
         private static void EndStatuses(BattleState state,UnitState unit,List<BattleEvent> events)
@@ -188,7 +194,7 @@ namespace RPG.Core
         }
         private static void StartStatuses(BattleState state,UnitState unit,List<BattleEvent> events)
         {
-            if(unit.BarrierActivations>0&&--unit.BarrierActivations==0){int before=unit.TemporaryBarrier;unit.TemporaryBarrier=0;unit.FireProtection=false;events.Add(new BattleEvent(BattleEventKind.BarrierChanged,state.Round,unit.Id,before:before));}
+            if(unit.BarrierActivations>0&&--unit.BarrierActivations==0){int before=unit.TemporaryBarrier;unit.TemporaryBarrier=state.FireRulesVersion>=2?unit.TemporaryBarrier-unit.PackageBarrier:0;unit.PackageBarrier=0;unit.FireProtection=false;events.Add(new BattleEvent(BattleEventKind.BarrierChanged,state.Round,unit.Id,before:before,after:unit.TemporaryBarrier));}
             if(unit.BurnTicks>0){events.Add(new BattleEvent(BattleEventKind.BurnTick,state.Round,unit.Id,amount:unit.BurnStacks*2));DealDamage(state,unit,unit,unit.BurnStacks*2,DamageType.Fire,false,false,events);if(--unit.BurnTicks==0)unit.BurnStacks=0;}
         }
     }

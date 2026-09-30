@@ -1,0 +1,9 @@
+ M Assets/_Project/Scenes/TacticalGraybox.unity
+ M ProjectSettings/EditorBuildSettings.asset
+ M ProjectSettings/ProjectSettings.asset
+?? Assets/_Project/Core/PersistenceSliceScenario.cs.meta
+?? Assets/_Project/Core/PersistentFormation.cs.meta
+?? Assets/_Project/Tests/PersistenceProgressionTests.cs.meta
+?? Assets/_Project/Tests/PersistenceSliceScenarioTests.cs.meta
+?? Assets/_Project/Tests/PersistentFormationTests.cs.meta
+?? Assets/_Project/Tests/PlayMode/PersistenceSlicePresentationTests.cs.meta

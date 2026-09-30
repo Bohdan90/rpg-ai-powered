@@ -1,5 +1,16 @@
 # Gate C — working implementation checkpoint
 
+## 2026-09-30 — FIRE-TARGETING-02 / document51 §16
+
+Latest bounded implementation starts at accepted `My project / develop @008e58f`; own work is isolated in `Convergence/Fire-Targeting-02`, `feature/fire-targeting-02`. The containing commit delivers this delta (use live `git log -1`); main remains008e58f, open user session and all nine unrelated files preserved byte-for-byte. No automatic main integration; NO PUSH.
+
+New-rule Fire Stream uses cell-directed thin integer raster at range3 with true straight-line obstruction, all off-axis offsets and preserved far diagonals. Fire Armor targets self/one living friendly at range3/LoS;6 Barrier plus independent fire state, recipient-second-next-start expiry, caster-only Exertion, shared recipient shield slot preserving unrelated barrier share. UI exact range/footprint/recipient/blockers and primary/special/staff separation retained. AI candidates updated without new architecture or tuning. V1 recorded rules/hashes preserved; new replay explicitly stores rules version/aim/recipient. No economy/profile/damage/budget/recovery change.
+
+Focused77 EditMode+6 PlayMode PASS; full558 EditMode+70 PlayMode=628 PASS,0 failed/skipped. Source/config/XML provenance: [FIRE_TARGETING_02.md](FIRE_TARGETING_02.md), [manifest](Evidence/FIRE-TARGETING-02/validation-manifest.json). Real separate-window GUI: default off-axis hit, empty full beam/FF, allied HW barrier/melee Burn/recipient expiry, normal05B battle→physical Escape→sameRefresh2 World→save/recreate/load PASS.24 retained v1 actual replay files verify; no historical609 counted as fresh.
+
+Launch patched checkout: `bash Tools/launch-fire-targeting-02.sh`, then Gate C/Combat Lab/Fire vs Ice (near contact), or City and Combat05B. Isolated test/GUI/player preference and save roots; main untouched. Player acceptance of targeting PENDING. No scope deviation or technical blocker found; feature-to-main delivery remains separate while the user's game is open. STOP for coordinator review; no new mechanics. Historical entries below retain their original provenance and are superseded only for these targeting rules.
+
+
 Latest delivery (2026-09-30): user explicitly requested SPELL-UX-01 in the main project. `My project / develop` fast-forwarded from `da9f776` to tested implementation `5eb0f77`. Same validated gameplay hashes; 609 PASS remain the actual pre-integration run, not a new run. Main Lab was closed for script reload; nine unrelated files and on-disk saves preserved/backed up. The isolated-only delivery limitation below is superseded. NO PUSH.
 
 Latest accepted main: `My project / develop @ da9f776`, preceding50+51 technical completion accepted; historical585 PASS and completed N/V evidence remain valid for that baseline. User personally tried the new combat: improved, with specific targeting/default-input UX feedback; no blanket economy/balance acceptance inferred.

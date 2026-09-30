@@ -84,7 +84,7 @@ namespace RPG.Presentation
             primary.RegisterCallback<PointerEnterEvent>(e=>presenter.InspectSpell(presenter.PrimarySpell));primary.RegisterCallback<PointerLeaveEvent>(e=>presenter.InspectSpell(null));
             AddButton(panel,"Staff Strike · melee 1 · explicit alternative","staff-attack",presenter.SelectStaff);
             var spellButtons=new VisualElement{name="spell-buttons"};spellButtons.style.flexDirection=FlexDirection.Row;spellButtons.style.flexWrap=Wrap.Wrap;panel.Add(spellButtons);
-            foreach(SpellId spell in Enum.GetValues(typeof(SpellId))){var chosen=spell;var b=AddButton(spellButtons,spell+(spell==SpellId.FireArmor?" · Self":""),"spell-"+spell,()=>presenter.SelectSpell(chosen));b.style.width=Length.Percent(48);b.tooltip=BattlePresenter.TargetDescription(spell);b.RegisterCallback<PointerEnterEvent>(e=>presenter.InspectSpell(chosen));b.RegisterCallback<PointerLeaveEvent>(e=>presenter.InspectSpell(null));}
+            foreach(SpellId spell in Enum.GetValues(typeof(SpellId))){var chosen=spell;var b=AddButton(spellButtons,spell+(spell==SpellId.FireArmor?" · Self / Ally":""),"spell-"+spell,()=>presenter.SelectSpell(chosen));b.style.width=Length.Percent(48);b.tooltip=BattlePresenter.TargetDescription(spell);b.RegisterCallback<PointerEnterEvent>(e=>presenter.InspectSpell(chosen));b.RegisterCallback<PointerLeaveEvent>(e=>presenter.InspectSpell(null));}
             var aimPanel=new VisualElement{name="spell-aim-panel"};panel.Add(aimPanel);
             var details=Text(aimPanel,"",12);details.name="spell-details";
             attackOutcome = Text(panel, "", 14); attackOutcome.name = "attack-outcome";

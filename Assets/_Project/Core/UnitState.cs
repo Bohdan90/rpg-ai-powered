@@ -46,6 +46,8 @@ namespace RPG.Core
         }
 
         public int TemporaryBarrier { get; internal set; }
+        // Subset of TemporaryBarrier owned by the shared Fire Armor / Ice Shield slot.
+        public int PackageBarrier { get; internal set; }
         public int BarrierActivations { get; internal set; }
         public bool FireProtection { get; internal set; }
         public int BurnStacks { get; internal set; }

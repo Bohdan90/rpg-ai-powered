@@ -3,11 +3,12 @@ using NUnit.Framework;
 using RPG.Core;
 namespace RPG.Tests
 {
+    // Historical SPELL-UX-01 rules remain executable for recorded v1 battles.
     public class SpellUxTests
     {
         static readonly UnitId A=new UnitId(1),B=new UnitId(2);
         static BattleState State(UnitProfile profile,params GridPosition[] solids)
-        {return BattleTestFixtures.ToActor(BattleResolver.StartBattle(new[]{BattleTestFixtures.Unit(1,profile,x:8,y:8),BattleTestFixtures.Unit(2,UnitProfile.HumanWarriorTI,Side.East,11,11),BattleTestFixtures.Unit(3,UnitProfile.HumanWarriorTI,Side.West,solids.Contains(new GridPosition(9,8))?7:9,8)},2,new Battlefield(23,17,solids)).State,A);}
+        {return BattleTestFixtures.ToActor(BattleResolver.StartBattle(new[]{BattleTestFixtures.Unit(1,profile,x:8,y:8),BattleTestFixtures.Unit(2,UnitProfile.HumanWarriorTI,Side.East,11,11),BattleTestFixtures.Unit(3,UnitProfile.HumanWarriorTI,Side.West,solids.Contains(new GridPosition(9,8))?7:9,8)},2,new Battlefield(23,17,solids),fireRulesVersion:1).State,A);}
         [Test] public void FireArmorExplainsSelfBeforeRangeAndNeverSpendsOnAlly()
         {
             var s=State(UnitProfile.FireMageTI);string hash=BattleStateHash.Compute(s);var c=new CastCommand(A,SpellId.FireArmor,new GridPosition(9,8));var p=BattleResolver.PreviewSpell(s,c);

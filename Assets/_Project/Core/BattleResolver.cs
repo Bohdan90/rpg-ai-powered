@@ -5,9 +5,10 @@ namespace RPG.Core
 {
     public static partial class BattleResolver
     {
-        public static BattleResult StartBattle(IEnumerable<UnitState> units, uint seed, Battlefield battlefield = null)
+        public static BattleResult StartBattle(IEnumerable<UnitState> units, uint seed, Battlefield battlefield = null, int fireRulesVersion = 2)
         {
-            var state = new BattleState(units, seed, battlefield);
+            if(fireRulesVersion!=1&&fireRulesVersion!=2)throw new ArgumentOutOfRangeException(nameof(fireRulesVersion));
+            var state = new BattleState(units, seed, battlefield){FireRulesVersion=fireRulesVersion};
             var events = new List<BattleEvent> { new BattleEvent(BattleEventKind.BattleStarted, 0) };
             StartNextActivation(state, events);
             return new BattleResult(state, CommandError.None, events);
@@ -170,6 +171,7 @@ namespace RPG.Core
                 foreach(var e in events)if(e.Kind==BattleEventKind.UnitDied&&e.Target.HasValue){if(state.FindUnit(e.Target.Value).Side==Side.West)westDied=true;else eastDied=true;}
                 if(!westDied||!eastDied)throw new InvalidOperationException("Scenario error: both sides have no active units.");
                 state.Outcome=BattleOutcome.Draw;
+                ClearBattleProtection(state);
                 events.Add(new BattleEvent(BattleEventKind.BattleEnded,state.Round,outcome:state.Outcome));return;
             }
             if (west && east) return;
@@ -180,6 +182,7 @@ namespace RPG.Core
             state.Outcome = new BattleOutcome(west ? Side.West : Side.East, west ? Side.East : Side.West, reason);
             // CurrentUnitId is retained as the last actor for existing snapshot/view compatibility.
             // Outcome gates commands and activation advancement; it is authoritative for completion.
+            ClearBattleProtection(state);
             events.Add(new BattleEvent(BattleEventKind.BattleEnded, state.Round, outcome: state.Outcome));
         }
 

@@ -34,7 +34,7 @@ namespace RPG.Presentation
                     +"\nAmber brackets: legal aim geometry (recipient/status checked separately). Magenta: exact effect. Red X: excluded by obstruction. Allies are named below.";
             }
         }
-        public static string TargetDescription(SpellId s)=>s==SpellId.FireArmor?"Target: Self only · 6 temporary Barrier; no Armor repair":s==SpellId.FireStream?"Target: 8 exact directions · line length 3 (including diagonals)":s==SpellId.Fireball?"Target: Ground cell, empty or occupied · center range 8 · blast radius 1":s==SpellId.IceShield?"Target: Self / friendly living unit · range 4":s==SpellId.CloseHeal?"Target: Self / adjacent friendly living unit · range 1":s==SpellId.Freeze?"Target: Hostile living unit · range 6":"Target: Hostile living unit · range 8";
+        public static string TargetDescription(SpellId s)=>s==SpellId.FireArmor?"Target: Self / one friendly living unit · range 3 · 6 temporary Barrier; expires at recipient’s second next activation; no Armor repair":s==SpellId.FireStream?"Target: Direction through cell center · thin line · range 3 (diagonals included)":s==SpellId.Fireball?"Target: Ground cell, empty or occupied · center range 8 · blast radius 1":s==SpellId.IceShield?"Target: Self / friendly living unit · range 4":s==SpellId.CloseHeal?"Target: Self / adjacent friendly living unit · range 1":s==SpellId.Freeze?"Target: Hostile living unit · range 6":"Target: Hostile living unit · range 8";
         public void StartCombatLab(CombatLabMatch match,bool nearContact=true)
         {
             if(World!=null||Duel!=null)return;
@@ -91,7 +91,7 @@ namespace RPG.Presentation
             // A default attack must actually hit the hovered enemy, never silently aim past it.
             bool outside=spell==SpellId.FireStream&&!p.Cells.Contains(cell);
             PreviewText=spell+" · "+TargetDescription(spell)
-                +(spell==SpellId.FireArmor?"":"\nDistance "+actor.Position.DistanceTo(cell)+" / "+SpellRules.Range(spell))
+                +"\nDistance "+actor.Position.DistanceTo(cell)+" / "+SpellRules.Range(spell,State.FireRulesVersion)
                 +"\n"+(p.IsLegal&&!outside?"LEGAL": "Blocked: "+(p.Blockers.Count>0?Reason(p.Blockers[0],spell):"Outside stream footprint"))
                 +"\nEffect cells: "+string.Join(" ",p.Cells.Select(Cell))
                 +"\nAffected: "+(p.Targets.Count==0?"none (a legal empty area cast still spends Action/budget)":string.Join(", ",p.Targets.Select(id=>UnitName(id)+(State.FindUnit(id).Side==actor.Side?(SpellRules.Area(spell)?" [ALLY / SELF — friendly fire]":" [FRIENDLY / SELF]"):""))))
@@ -103,7 +103,7 @@ namespace RPG.Presentation
         }
         private static string Reason(CommandError e,SpellId s)
         {
-            switch(e){case CommandError.SelfOnly:return "Self only — cannot target allies or other cells";case CommandError.OutsideSpellLine:return "Outside stream line — use N/NE/E/SE/S/SW/W/NW";case CommandError.InvalidSpellTarget:return "Wrong target — "+TargetDescription(s);case CommandError.TargetNotFound:return "A living target is required";case CommandError.NoAction:return "Action spent";case CommandError.Silenced:return "Silence blocks Spell actions (staff remains an explicit alternative)";case CommandError.Exhausted:return "Exhausted blocks this Exertion action";case CommandError.SourceBudgetSpent:return "Source budget depleted until global Strategic Refresh";case CommandError.OutOfRange:return "Out of range";case CommandError.BlockedLineOfSight:return "Line of sight blocked / sealed crossing";case CommandError.SolidCell:return "Solid cell cannot be targeted";case CommandError.FriendlyFireNotConfirmed:return "Affected allies/self — explicit Friendly Fire confirmation required";case CommandError.NoUsefulEffect:return "No missing HP or supported harmful condition to cleanse";default:return e.ToString();}
+            switch(e){case CommandError.SelfOnly:return "Legacy Self-only recipient restriction";case CommandError.OutsideSpellLine:return "Choose a direction cell other than the caster cell";case CommandError.InvalidSpellTarget:return "Wrong target — "+TargetDescription(s);case CommandError.TargetNotFound:return "A living target is required";case CommandError.NoAction:return "Action spent";case CommandError.Silenced:return "Silence blocks Spell actions (staff remains an explicit alternative)";case CommandError.Exhausted:return "Exhausted blocks this Exertion action";case CommandError.SourceBudgetSpent:return "Source budget depleted until global Strategic Refresh";case CommandError.OutOfRange:return "Out of range";case CommandError.BlockedLineOfSight:return "Line of sight blocked / sealed crossing";case CommandError.SolidCell:return "Solid cell cannot be targeted";case CommandError.FriendlyFireNotConfirmed:return "Affected allies/self — explicit Friendly Fire confirmation required";case CommandError.NoUsefulEffect:return "No missing HP or supported harmful condition to cleanse";default:return e.ToString();}
         }
         private void RefreshSpellEnvelope()
         {

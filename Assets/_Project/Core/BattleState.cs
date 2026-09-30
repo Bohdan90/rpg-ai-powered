@@ -13,6 +13,7 @@ namespace RPG.Core
         internal readonly List<UnitId> PriorityOrder;
         public ReadOnlyCollection<UnitState> Units { get; }
         public uint InitialSeed { get; }
+        public int FireRulesVersion { get; internal set; } = 2;
         public Battlefield Battlefield { get; }
         public uint RngState => Random.State;
         public int Round { get; internal set; }
@@ -48,7 +49,7 @@ namespace RPG.Core
         {
             units = source.units.Select(u => u.Copy()).ToList(); Units = units.AsReadOnly();
             PriorityOrder = new List<UnitId>(source.PriorityOrder);
-            Battlefield = source.Battlefield; InitialSeed = source.InitialSeed; Random = source.Random; Round = source.Round;
+            FireRulesVersion=source.FireRulesVersion; Battlefield = source.Battlefield; InitialSeed = source.InitialSeed; Random = source.Random; Round = source.Round;
             PriorityIndex = source.PriorityIndex; CurrentUnitId = source.CurrentUnitId; Outcome = source.Outcome;
         }
         public UnitState FindUnit(UnitId id) => units.Find(u => u.Id == id);

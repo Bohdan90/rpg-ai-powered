@@ -21,21 +21,23 @@ namespace RPG.Core
         public uint tie;
         public int TemporaryBarrier,BarrierActivations,BurnStacks,BurnTicks,PoisonStacks,BleedStacks,FrozenActivations,ExhaustedActivations,FireballUsed,FreezeUsed,CloseHealUsed;
         public bool silenced;
+        public int packageBarrier;
         public bool fireProtection; public int exitTarget;
         public static ReplayUnit Capture(UnitState u)=>new ReplayUnit { retreatEdge=u.OwnRetreatEdge.HasValue?(int)u.OwnRetreatEdge.Value:-1,id=u.Id.Value,side=(int)u.Side,profile=(int)u.Profile.Id,
             x=u.Position.X,y=u.Position.Y,facing=(int)u.Facing,hp=u.Hp,armor=u.Armor,status=(int)u.Status,
             movement=u.MovementRemaining,spent=u.MovementSpentThisActivation,action=u.ActionAvailable,oa=u.OpportunityAttackAvailable,
-            defending=u.IsDefending,tie=u.TieKey,silenced=u.IsSilenced,fireProtection=u.FireProtection,exitTarget=u.GracefulExitTarget?.Value??0,
+            defending=u.IsDefending,tie=u.TieKey,silenced=u.IsSilenced,packageBarrier=u.PackageBarrier,fireProtection=u.FireProtection,exitTarget=u.GracefulExitTarget?.Value??0,
             TemporaryBarrier=u.TemporaryBarrier,BarrierActivations=u.BarrierActivations,BurnStacks=u.BurnStacks,BurnTicks=u.BurnTicks,PoisonStacks=u.PoisonStacks,BleedStacks=u.BleedStacks,FrozenActivations=u.FrozenActivations,ExhaustedActivations=u.ExhaustedActivations,FireballUsed=u.FireballUsed,FreezeUsed=u.FreezeUsed,CloseHealUsed=u.CloseHealUsed };
         internal UnitState Restore()
         {
             var p=UnitProfile.Get((UnitProfileId)profile);
             return new UnitState(new UnitId(id),(Side)side,p,new GridPosition(x,y),(Facing)facing,hp,armor,(UnitStatus)status,retreatEdge<0?(RetreatEdge?)null:(RetreatEdge)retreatEdge) {
-                MovementRemaining=movement,MovementSpentThisActivation=spent,ActionAvailable=action,OpportunityAttackAvailable=oa,IsDefending=defending,TieKey=tie,IsSilenced=silenced,FireProtection=fireProtection,GracefulExitTarget=exitTarget==0?(UnitId?)null:new UnitId(exitTarget),TemporaryBarrier=TemporaryBarrier,BarrierActivations=BarrierActivations,BurnStacks=BurnStacks,BurnTicks=BurnTicks,PoisonStacks=PoisonStacks,BleedStacks=BleedStacks,FrozenActivations=FrozenActivations,ExhaustedActivations=ExhaustedActivations,FireballUsed=FireballUsed,FreezeUsed=FreezeUsed,CloseHealUsed=CloseHealUsed };
+                MovementRemaining=movement,MovementSpentThisActivation=spent,ActionAvailable=action,OpportunityAttackAvailable=oa,IsDefending=defending,TieKey=tie,IsSilenced=silenced,PackageBarrier=packageBarrier,FireProtection=fireProtection,GracefulExitTarget=exitTarget==0?(UnitId?)null:new UnitId(exitTarget),TemporaryBarrier=TemporaryBarrier,BarrierActivations=BarrierActivations,BurnStacks=BurnStacks,BurnTicks=BurnTicks,PoisonStacks=PoisonStacks,BleedStacks=BleedStacks,FrozenActivations=FrozenActivations,ExhaustedActivations=ExhaustedActivations,FireballUsed=FireballUsed,FreezeUsed=FreezeUsed,CloseHealUsed=CloseHealUsed };
         }
     }
     [Serializable] public sealed class ReplaySnapshot
     {
+        public int fireRulesVersion; // Absent in v1 recordings => legacy rules, never latest.
         public int columns,rows,round,currentActor,priorityIndex,winner=-1,loser=-1,outcome;
         public uint seed,rng;
         public bool eastPerimeter;
@@ -43,7 +45,7 @@ namespace RPG.Core
         public int[] priority;
         public ReplayUnit[] units;
         public static ReplaySnapshot Capture(BattleState s)=>new ReplaySnapshot {
-            columns=s.Battlefield.Columns,rows=s.Battlefield.Rows,eastPerimeter=s.Battlefield.EastRetreatUsesPerimeter,
+            fireRulesVersion=s.FireRulesVersion,columns=s.Battlefield.Columns,rows=s.Battlefield.Rows,eastPerimeter=s.Battlefield.EastRetreatUsesPerimeter,
             solids=s.Battlefield.SolidCells.OrderBy(p=>p.X).ThenBy(p=>p.Y).Select(p=>new ReplayCell(p)).ToArray(),
             seed=s.InitialSeed,rng=s.RngState,round=s.Round,currentActor=s.CurrentUnitId?.Value??0,priorityIndex=s.PriorityIndex,
             priority=s.PriorityOrder.Select(id=>id.Value).ToArray(),units=s.Units.Select(ReplayUnit.Capture).ToArray(),
@@ -51,7 +53,9 @@ namespace RPG.Core
             loser=s.Outcome.DefeatedSide.HasValue?(int)s.Outcome.DefeatedSide.Value:-1,outcome=(int)s.Outcome.Reason };
         public BattleState Restore()
         {
+            if(fireRulesVersion<0||fireRulesVersion>2)throw new InvalidDataException("Unsupported Fire rules version");
             var s=new BattleState(units.Select(u=>u.Restore()),seed,new Battlefield(columns,rows,solids.Select(p=>p.Position()),eastPerimeter),completedMutualElimination:outcome==(int)BattleEndReason.MutualElimination);
+            s.FireRulesVersion=fireRulesVersion==0?1:fireRulesVersion;
             // Constructor seeds priority for fresh battles; replay restores the explicit initial snapshot.
             foreach(var data in units) { var u=s.FindUnit(new UnitId(data.id));u.TieKey=data.tie;u.OpportunityAttackAvailable=data.oa; }
             s.Random=new CombatRandom(rng);s.Round=round;s.CurrentUnitId=currentActor==0?(UnitId?)null:new UnitId(currentActor);
@@ -84,6 +88,7 @@ namespace RPG.Core
                 }
                 // Optional extension preserves existing no-Silence replay hashes byte-for-byte.
                 if(s.units.Any(u=>u.silenced)){w.Write("Silence");foreach(var u in s.units.Where(u=>u.silenced).OrderBy(u=>u.id))w.Write(u.id);}
+                if(state.FireRulesVersion>=2){w.Write("FireTargeting02");w.Write(state.FireRulesVersion);foreach(var u in s.units.OrderBy(u=>u.id))w.Write(u.packageBarrier);}
                 w.Flush();using(var sha=SHA256.Create())return Convert.ToBase64String(sha.ComputeHash(stream.ToArray()));
             }
         }
@@ -94,11 +99,11 @@ namespace RPG.Core
         public int actor,target,attackKind,facing,spell,cx,cy;
         public bool friendly,hasFacing;
         public ReplayCell[] path;
-        public static ReplayCommand Capture(BattleCommand c)
+        public static ReplayCommand Capture(BattleCommand c,BattleState state=null)
         {
             var d=new ReplayCommand{kind=c?.GetType().Name??"Null",actor=c?.Actor.Value??0};
             if(c is BasicAttackCommand a){d.target=a.Target.Value;d.attackKind=(int)a.Kind;d.friendly=a.FriendlyFireConfirmed;}
-            if(c is CastCommand cast){d.spell=(int)cast.Spell;d.cx=cast.Cell.X;d.cy=cast.Cell.Y;d.friendly=cast.FriendlyFireConfirmed;}
+            if(c is CastCommand cast){d.spell=(int)cast.Spell;d.cx=cast.Cell.X;d.cy=cast.Cell.Y;d.friendly=cast.FriendlyFireConfirmed;if(state?.FireRulesVersion>=2&&SpellRules.Helpful(cast.Spell))d.target=state.OccupantAt(cast.Cell)?.Id.Value??0;}
             if(c is MoveCommand m)d.path=m.Path?.Select(p=>new ReplayCell(p)).ToArray();
             if(c is EndActivationCommand e){d.hasFacing=e.FinalFacing.HasValue;d.facing=(int)(e.FinalFacing??Facing.North);}return d;
         }
@@ -129,7 +134,9 @@ namespace RPG.Core
     [Serializable] public sealed class ReplayChange { public ReplayUnit before,after;public int hpDelta,armorDelta; }
     [Serializable] public sealed class ReplayHeader
     {
-        public string type="header",configVersion="GateC-v0.1-HA10-fallback5-AI1-directional-retreat-51-spells1",buildVersion,fixture,westController,eastController,initialHash;
+        public const string LegacyConfig="GateC-v0.1-HA10-fallback5-AI1-directional-retreat-51-spells1";
+        public const string CurrentConfig="GateC-v0.1-HA10-fallback5-AI1-directional-retreat-51-spells2-firetargeting02";
+        public string type="header",configVersion=CurrentConfig,buildVersion,fixture,westController,eastController,initialHash;
         public int formatVersion=2;
         public uint seed;
         public ReplaySnapshot initial;
@@ -180,7 +187,7 @@ namespace RPG.Core
         private int successful;
         public BattleJournal(BattleState initial,string fixture,string build,string west="Player",string east="Player")
         {
-            State=initial;Header=new ReplayHeader{fixture=fixture,buildVersion=build,westController=west,eastController=east,
+            State=initial;Header=new ReplayHeader{configVersion=initial.FireRulesVersion==1?ReplayHeader.LegacyConfig:ReplayHeader.CurrentConfig,fixture=fixture,buildVersion=build,westController=west,eastController=east,
                 seed=initial.InitialSeed,initial=ReplaySnapshot.Capture(initial),initialHash=BattleStateHash.Compute(initial)};
             Session=new SessionTelemetry{fixture=fixture,rounds=initial.Round,activations=initial.CurrentUnitId.HasValue?1:0};
         }
@@ -189,7 +196,7 @@ namespace RPG.Core
             var before=State;var result=BattleResolver.Apply(before,command);State=result.State;
             if(result.IsApplied)successful++;else Session.invalidAttempts++;
             var record=new ReplayRecord{sequence=records.Count+1,successfulSequence=result.IsApplied?successful:0,round=before.Round,
-                activeActor=before.CurrentUnitId?.Value??0,controller=controller,aiDecision=aiDecision,command=ReplayCommand.Capture(command),
+                activeActor=before.CurrentUnitId?.Value??0,controller=controller,aiDecision=aiDecision,command=ReplayCommand.Capture(command,before),
                 applied=result.IsApplied,error=result.Error.ToString(),rngBefore=before.RngState,rngAfter=State.RngState,
                 stateHash=BattleStateHash.Compute(State),events=result.Events.Select(ReplayEvent.Capture).ToArray(),
                 changes=before.Units.Select(u=>new ReplayChange{before=ReplayUnit.Capture(u),after=ReplayUnit.Capture(State.FindUnit(u.Id)),
@@ -216,14 +223,17 @@ namespace RPG.Core
             var result=new ReplayVerification();int sequence=0,successful=0;
             try
             {
-                if(header.formatVersion!=2||header.configVersion!=new ReplayHeader().configVersion)throw new InvalidDataException("Unsupported replay/config version");
+                if(header.formatVersion!=2||(header.configVersion!=ReplayHeader.CurrentConfig&&header.configVersion!=ReplayHeader.LegacyConfig))throw new InvalidDataException("Unsupported replay/config version");
                 var state=header.initial.Restore();result.State=state;
+                if((state.FireRulesVersion==2)!=(header.configVersion==ReplayHeader.CurrentConfig))throw new InvalidDataException("Rules/config mismatch");
                 if(header.seed!=state.InitialSeed||BattleStateHash.Compute(state)!=header.initialHash)throw new InvalidDataException("Initial state/config hash mismatch");
                 foreach(var record in records)
                 {
                     sequence++;result.DivergentSequence=sequence;
                     if(record.sequence!=sequence||record.round!=state.Round||record.activeActor!=(state.CurrentUnitId?.Value??0)||record.rngBefore!=state.RngState)
                         throw new InvalidDataException("Command sequence/before-state mismatch");
+                    if(state.FireRulesVersion>=2&&record.command.kind==nameof(CastCommand)&&SpellRules.Helpful((SpellId)record.command.spell)
+                        &&record.command.target!=(state.OccupantAt(new GridPosition(record.command.cx,record.command.cy))?.Id.Value??0))throw new InvalidDataException("Effect recipient mismatch");
                     var applied=BattleResolver.Apply(state,record.command.Restore());
                     if(applied.IsApplied)successful++;
                     if(applied.IsApplied!=record.applied||applied.Error.ToString()!=record.error||record.successfulSequence!=(applied.IsApplied?successful:0))
