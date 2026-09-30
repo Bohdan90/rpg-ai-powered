@@ -9,3 +9,5 @@ Presentation-only correction: hide spell aim range/footprint/recipient highlight
 Regression covers default hostile click and explicit Stream selection, Core NoAction, disabled actual UI controls, hover/inspection, repeat click+confirm no state/RNG/journal mutation, existing movement restriction, next-activation recovery and replay. A development test initially assumed movement after Action was legal; corrected to the existing Core rule without changing gameplay.
 
 Focused final:7 PlayMode PASS. Fresh full585 EditMode +74 PlayMode =659 PASS,0 failed,0 skipped. Full results and source hashes: `Evidence/SPELL-ACTION-READABILITY/validation-manifest.json`. Manual mouse validation NOT RUN for this bounded fix; automated checks instantiate the real UI. Existing user Unity was not clicked or restarted for testing.
+
+Delivery: main `My project/develop` fast-forwarded `52827b5 → a87ed99`; tested source hashes match and all nine protected files remain unchanged. No forced Unity restart or mouse input.659 PASS refers to the isolated validation of identical source, not a second main test run. NO PUSH.
