@@ -2,7 +2,7 @@
 
 ## 2026-09-30 — straight melee approach tie-break
 
-Starting `76f60eb`: reproduced equal-cost x/y tie-break selecting a sideways contact cell despite a clear direct route. Query now prefers direct-line alignment after path cost/OA safety; no movement, combat or replay rule change. Focused13 PASS (four reproduced cardinal failures before fix); fresh full598 EditMode+79 PlayMode=677 PASS,0 failed/skipped. Manual NOT RUN. Feature only; main76f60eb and active session preserved. Evidence/report: `MELEE_APPROACH.md`, `Evidence/MELEE-APPROACH/straight-line/validation-manifest.json`. This bounded user-reported fix does not complete or replace the pending document54 package. NO PUSH.
+Starting `76f60eb`: reproduced equal-cost x/y tie-break selecting a sideways contact cell despite a clear direct route. Query now prefers direct-line alignment after path cost/OA safety; no movement, combat or replay rule change. Focused13 PASS (four reproduced cardinal failures before fix); fresh full598 EditMode+79 PlayMode=677 PASS,0 failed/skipped. Manual NOT RUN. User-authorized main fast-forward76f60eb→e823e08; all tested source hashes match, nine unrelated files and22 non-Unity save files unchanged; no forced restart. Delivery: `Evidence/MELEE-APPROACH/straight-line/main-integration.json`. Evidence/report: `MELEE_APPROACH.md`, `Evidence/MELEE-APPROACH/straight-line/validation-manifest.json`. This bounded user-reported fix does not complete or replace the pending document54 package. NO PUSH.
 
 ## 2026-09-30 — melee approach + strike
 
