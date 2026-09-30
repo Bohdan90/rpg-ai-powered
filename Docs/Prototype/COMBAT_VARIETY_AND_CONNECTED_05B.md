@@ -1,5 +1,7 @@
 # Combat Variety 51 + Connected 05B — isolated implementation evidence
 
+**Latest follow-up (2026-09-30): PARTIAL.** User explicitly authorized integration into main after audit. GUI was restored: V1/V2 have partial real-input evidence; N1–N5/V3–V5 remain NOT RUN. Prior “no GUI” statements below describe the original delivery, not the current access state. See [acceptance audit](5051_ACCEPTANCE_AUDIT.md) and the updated validation manifest.
+
 ## Status and commits
 
 - Starting live baseline: `develop @ 045707f81847fb88ac34c724d5f87ce30fba5c39`; gameplay `20473ec`. No 50 implementation existed at entry.
@@ -115,3 +117,7 @@ Original `My project` remains develop `045707f`; its three scene/settings change
 Tests use `CFFIXED_USER_HOME=/private/tmp/convergence-5051/preferences`, independent Library/Temp/logs and `CodexPrototype/Convergence-5051-Isolated` product namespace. The supplied interactive launcher uses a separate `play-preferences` root. 05A,05B, old scenario saves, authored fixtures and replays have distinct directories. Legacy tactical replay configuration is explicitly rejected after the spell config extension rather than silently reinterpreted; old strategic scenario schemas remain loadable and tested.
 
 Stop after this evidence commit for coordinator review and the new integrated player evaluation. No additional Civilization Depth, research expansion, Dominion/Convergence, siege, economy tranche or network multiplayer is authorized by this implementation.
+
+## 2026-09-30 coordinator follow-up
+
+Both contracts remain **PARTIAL**. See [requirement-level acceptance audit](5051_ACCEPTANCE_AUDIT.md) for named-test coverage, unasserted branches, checked numeric values and manual evidence. The prior 553 PASS are valid historical evidence, not complete coverage of every required branch. Main integration was explicitly authorized by the user after the original NO MERGE instruction; integration does not grant technical/manual/player acceptance. Runtime changes in this follow-up are limited to the reproduced tactical ability/command discoverability defect. No rules or balance changes. Fresh validation and manual results are in `Evidence/5051/validation-manifest.json`.

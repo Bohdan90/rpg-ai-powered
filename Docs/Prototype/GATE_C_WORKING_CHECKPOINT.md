@@ -1,6 +1,6 @@
 # Gate C — working implementation checkpoint
 
-Latest isolated 50+51 checkpoint: gameplay `3d58f35` on `feature/50-51-connected`; full 489 EditMode +64 PlayMode =553 PASS, 0 failed/skipped. Manual N1–N5/V1–V5 NOT RUN. This feature is NOT merged into the user checkout. See final 2026-09-29 append and `COMBAT_VARIETY_AND_CONNECTED_05B.md`.
+Latest 50+51 follow-up: **PARTIAL**, not technically/manual/player accepted. User explicitly authorized main integration after audit on 2026-09-30. Ability/command discoverability and spell preview wording fixed; no Core/tuning changes. Current test provenance and partial V1/V2 GUI results: [acceptance audit](5051_ACCEPTANCE_AUDIT.md), `Evidence/5051/validation-manifest.json`. N1–N5/V3–V5 remain NOT RUN; no current GUI-permission blocker is claimed.
 
 Updated 2026-09-29. Single implementation handoff; Google Drive thematic owners retain
 priority for canon. Follow repository `AGENTS.md` and the efficiency protocol.
@@ -186,3 +186,11 @@ Launch isolated editor using `bash Tools/launch-isolated-5051.sh`; choose `Gate 
 Save/preference safety: distinct test and interactive preference roots, unique company/product, independent Library/Temp, separate05A/05B slots; old save namespaces preserved. All nine original scene/settings/persistence metadata files match preflight SHA256. The isolated worktree retains six untracked generated counterpart metadata files; these were not copied from or committed as the user's work.
 
 Reports: `CITY_REGION_RESEARCH_FOUNDATIONS_05A.md`, `COMBAT_VARIETY_AND_CONNECTED_05B.md`. Stop coding here for coordinator review/user playtest. No further Civilization Depth, City/research systems, Dominion/Convergence or siege.
+
+## 2026-09-30 — 50/51 acceptance audit and authorized integration
+
+- Follow-up starts feature `d84571d`; main `develop @ 045707f`. Existing feature scene whitespace, ProjectSettings define delta, launcher executable bit and six untracked metadata preserved. User explicitly overrode pasted NO MERGE and closed both editors.
+- Actual existing tests mapped to individual contract requirements; required coverage gaps found despite historical553 PASS. No numeric mismatch in the checked profile/spell/economy tables; exact adapters, untested branches and spell-Cover ambiguity recorded in `5051_ACCEPTANCE_AUDIT.md`.
+- GUI: menu/Fire-vs-Ice launch, Ability selection, lawful self IceShield (Barrier10/Exhausted), AI Fireball with real damage, directed Freeze on FireTI observed through OS input. Full match, player FF/Burn and the rest of N/V are not passed.
+- Reproduced unreadable Ability/preset labels and distant command controls corrected. Selected-spell confirmation and zero-damage status/protection preview wording corrected. No gameplay rules, profiles, RNG, save formats or economic tuning changed.
+- Full final regression and exact source/config hashes are recorded in the manifest. Main integration keeps original product/save namespace and all nine unrelated files; test/feature preferences and saves stay isolated. User merge permission is not coordinator or player acceptance. NO PUSH. Stop for review; no next system.

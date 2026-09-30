@@ -1,5 +1,7 @@
 # City / Region / Research Foundations 05A — documents 50 + 51 batch
 
+**Latest follow-up (2026-09-30): PARTIAL.** User explicitly authorized integration into main after audit. GUI was restored: V1/V2 have partial real-input evidence; N1–N5/V3–V5 remain NOT RUN. Prior “no GUI” statements below describe the original delivery, not the current access state. See [acceptance audit](5051_ACCEPTANCE_AUDIT.md) and the updated validation manifest.
+
 ## Authority and isolation
 
 Based on live `develop @ 045707f81847fb88ac34c724d5f87ce30fba5c39`, gameplay `20473ec`. No prior 50 implementation existed at entry. Work is confined to `../Isolated-50-51`, branch `feature/50-51-connected`; no integration into develop, no push. Document 50 plus its addendum owns 05A; document 51 independently authorizes Combat Lab and 05B. 04 player acceptance remains PENDING, with the reported combat-variety feedback preserved.
@@ -37,3 +39,7 @@ Manual residual procedure:
 | N5 | Mirror StartingSide and compare alternative development/booster/Forge/research spending. | Record opportunity cost and strategic choices; no balance acceptance inferred from tests. |
 
 No production city system, Cultural Influence/Dominion, siege, resource conversion, research UI beyond this tranche, or recruitment economy outside the authorized profiles was added.
+
+## 2026-09-30 coordinator follow-up
+
+Both contracts remain **PARTIAL**. See [requirement-level acceptance audit](5051_ACCEPTANCE_AUDIT.md) for named-test coverage, unasserted branches, checked numeric values and manual evidence. The prior 553 PASS are valid historical evidence, not complete coverage of every required branch. Main integration was explicitly authorized by the user after the original NO MERGE instruction; integration does not grant technical/manual/player acceptance. Runtime changes in this follow-up are limited to the reproduced tactical ability/command discoverability defect. No rules or balance changes. Fresh validation and manual results are in `Evidence/5051/validation-manifest.json`.
