@@ -20,7 +20,7 @@ namespace RPG.Presentation
         public SpellId? PrimarySpell => State?.CurrentUnitId==null?null:Primary(State.FindUnit(State.CurrentUnitId.Value).Profile);
         private static SpellId? Primary(UnitProfile p)=>p.IsFireMage?SpellId.FireStream:p.IsIceMage?SpellId.IceShard:(SpellId?)null;
         private SpellId? AimSpell => inspectedSpell??SelectedSpell??(StaffSelected?null:PrimarySpell);
-        public string ConfirmActionText => pending is CastCommand c?"Confirm "+c.Spell:HasMovePreview?"Confirm Move":"Confirm Attack";
+        public string ConfirmActionText => HasApproachPreview?"Confirm Approach + Attack":pending is CastCommand c?"Confirm "+c.Spell:HasMovePreview?"Confirm Move":"Confirm Attack";
         public string SpellDetails {
             get {
                 if(State?.CurrentUnitId==null)return "";

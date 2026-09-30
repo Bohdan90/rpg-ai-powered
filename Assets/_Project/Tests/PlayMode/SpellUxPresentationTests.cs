@@ -99,6 +99,26 @@ namespace RPG.Presentation.Tests
             P.SelectSpell(SpellId.Fireball);var self=new GridPosition(8,8);P.ClickCell(self);P.ClickCell(self);Assert.That(BattleStateHash.Compute(P.State),Is.EqualTo(hash));Assert.That(P.PreviewText,Does.Contain("Friendly Fire confirmation"));
             P.Repreview(true);P.LeaveBoard();P.ClickCell(self);Assert.That(P.Journal.Records.Count,Is.EqualTo(n+1));Assert.That(P.State.FindUnit(new UnitId(1)).FireballUsed,Is.EqualTo(1));
         }
+        [UnityTest] public IEnumerator WarriorPinsApproachThenMovesAndAttacksThroughExistingReplayCommands()
+        {
+            yield return Open();P.ConfigureBattle(new[]{U(1,UnitProfile.HumanWarriorTI,Side.West,8,8),U(2,UnitProfile.HumanArcherTI,Side.East,12,8)},new Battlefield(23,17),2);Actor(UnitProfile.HumanWarriorTI);
+            var cell=new GridPosition(12,8);string hash=BattleStateHash.Compute(P.State);int n=P.Journal.Records.Count;
+            P.HoverCell(cell);Assert.That(P.HasApproachPreview,Is.True);P.ConfirmPreview();Assert.That(BattleStateHash.Compute(P.State),Is.EqualTo(hash));
+            P.ClickCell(cell);string preview=P.PreviewText;P.HoverCell(new GridPosition(13,9));P.LeaveBoard();Assert.That(P.PreviewText,Is.EqualTo(preview));Assert.That(P.PreviewText,Does.Contain("Approach + Attack"));Assert.That(P.Journal.Records.Count,Is.EqualTo(n));
+            P.ClickCell(cell);Assert.That(P.Journal.Records.Count,Is.EqualTo(n+2));Assert.That(P.Journal.Records[n].command.kind,Is.EqualTo(nameof(MoveCommand)));Assert.That(P.Journal.Records[n+1].command.kind,Is.EqualTo(nameof(BasicAttackCommand)));Assert.That(P.State.FindUnit(new UnitId(1)).Position.DistanceTo(cell),Is.EqualTo(1));Assert.That(P.State.FindUnit(new UnitId(1)).ActionAvailable,Is.False);
+            P.ConfirmPreview();Assert.That(P.Journal.Records.Count,Is.EqualTo(n+2));Assert.That(ReplayVerification.Verify(P.Journal.Header,P.Journal.Records,P.Journal.Footer()).Matches,Is.True);
+        }
+        [UnityTest] public IEnumerator LethalOpportunityAttackStopsApproachWithoutFollowupStrike()
+        {
+            yield return Open();bool found=false;
+            for(uint seed=1;seed<=32&&!found;seed++) {
+                P.ConfigureBattle(new[]{new UnitState(new UnitId(1),Side.West,UnitProfile.HumanWarriorTI,new GridPosition(8,8),Facing.East,1,0),U(2,UnitProfile.HumanArcherTI,Side.East,12,8),U(3,UnitProfile.ElfWarriorTI,Side.East,7,8)},new Battlefield(23,17),seed);Actor(UnitProfile.HumanWarriorTI);
+                var cell=new GridPosition(12,8);P.ClickCell(cell);Assert.That(P.HasApproachPreview,Is.True);Assert.That(P.OpportunityRiskCount,Is.GreaterThan(0));int n=P.Journal.Records.Count;P.ClickCell(cell);
+                if(P.State.FindUnit(new UnitId(1)).IsActive)continue;
+                found=true;Assert.That(P.Journal.Records.Count,Is.EqualTo(n+1));Assert.That(P.Journal.Records.Last().command.kind,Is.EqualTo(nameof(MoveCommand)));Assert.That(P.State.FindUnit(new UnitId(2)).Hp,Is.EqualTo(UnitProfile.HumanArcherTI.MaxHp));Assert.That(P.HasApproachPreview,Is.False);Assert.That(ReplayVerification.Verify(P.Journal.Header,P.Journal.Records,P.Journal.Footer()).Matches,Is.True);
+            }
+            Assert.That(found,Is.True,"Fixture must exercise a real lethal OA, not an injected outcome");
+        }
         [Test] public void RetainedV1ReplayFilesStillUseRecordedRules()
         {
             int count=0;

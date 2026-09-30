@@ -153,6 +153,8 @@ namespace RPG.Presentation
             var result=ReplayFiles.Verify(path);Message=result.Message;AddLog(Message);Refresh();return result;
         }
         private BattleCommand pending;
+        private MeleeApproachPreview pendingApproach;
+        public bool HasApproachPreview => pendingApproach!=null;
         private GridPosition? selected;
         public GridPosition? PinnedCell => selected;
         public BattleState State { get; private set; }
@@ -164,7 +166,7 @@ namespace RPG.Presentation
         public OpportunityAttackPreview MovementRisk { get; private set; }
         public int OpportunityRiskCount => MovementRisk == null ? 0 : MovementRisk.Exposures.Sum(e => e.Threats.Count(t => t.WouldReact));
         public bool PreviewEscapes { get; private set; }
-        public bool HasMovePreview => pending is MoveCommand;
+        public bool HasMovePreview => pending is MoveCommand && pendingApproach==null;
         private readonly Dictionary<GridPosition, IReadOnlyList<UnitId>> threats = new Dictionary<GridPosition, IReadOnlyList<UnitId>>();
         public IReadOnlyDictionary<GridPosition, IReadOnlyList<UnitId>> ThreatCells => threats;
         public static string Cell(GridPosition p) => "(" + p.X + "," + p.Y + ")";
@@ -240,13 +242,24 @@ namespace RPG.Presentation
         }
         public void Defend() { if(!IsAiTurn) Submit(new DefendCommand(State.CurrentUnitId.Value)); }
         public void EndActivation(Facing? facing) { if(!IsAiTurn) Submit(new EndActivationCommand(State.CurrentUnitId.Value, facing)); }
-        public void ConfirmPreview() { if (!IsAiTurn && selected.HasValue && pending != null) Submit(pending); }
+        public void ConfirmPreview()
+        {
+            if(IsAiTurn||!selected.HasValue||pending==null)return;
+            var approach=pendingApproach;
+            if(approach==null){Submit(pending);return;}
+            var moved=Submit(approach.Movement);
+            // Never execute against a projected state: real OA/death/escape resolves before revalidation.
+            var actor=State.FindUnit(approach.Attack.Actor);
+            if(moved.IsApplied&&actor.IsActive&&actor.Position==approach.Movement.Path.Last()
+                &&BattleResolver.Validate(State,approach.Attack)==CommandError.None)Submit(approach.Attack);
+            else {Message+=" Approach stopped; follow-up attack was not performed.";ShowViews();}
+        }
 
         public void SelectCell(GridPosition cell, bool friendlyConfirmed = false) => PreviewCell(cell,friendlyConfirmed,true);
         private void PreviewCell(GridPosition cell, bool friendlyConfirmed, bool pin)
         {
             if (State.Outcome.IsEnded || IsAiTurn) return;
-            selected = pin ? cell : (GridPosition?)null; aimHover=cell; pending = null; MovementRisk = null; PreviewEscapes = false; spellPreviewCells=null;spellBlockedCells=null;spellCenter=null;
+            selected = pin ? cell : (GridPosition?)null; aimHover=cell; pending = null; pendingApproach=null; MovementRisk = null; PreviewEscapes = false; spellPreviewCells=null;spellBlockedCells=null;spellCenter=null;
             var actor = State.FindUnit(State.CurrentUnitId.Value); var target = State.OccupantAt(cell);
             if(PreviewSelectedSpell(cell,friendlyConfirmed))return;
             if(target!=null&&target.Side==actor.Side&&Primary(actor.Profile).HasValue&&!StaffSelected){PreviewText="Inspect "+UnitName(target.Id)+" · HP "+target.Hp+" / Armor "+target.Armor+". Choose an explicit friendly spell to cast.";ShowViews();return;}
@@ -280,8 +293,19 @@ namespace RPG.Presentation
                         + "\nSteady Aim: " + (preview.SteadyAim ? "active (Accuracy only; no range bonus)" : "inactive");
                     pending = command;
                 }
-                else PreviewText += "\nCore: " + preview.Error
-                    + "\nContact / Guard / damage preview unavailable for this illegal attack.";
+                else {
+                    if(!SelectedSpell.HasValue&&!StaffSelected)pendingApproach=MeleeApproachPreview.Query(State,actor.Id,target.Id);
+                    if(pendingApproach!=null) {
+                        pending=pendingApproach.Movement;MovementRisk=pendingApproach.Risk;
+                        PreviewText="Approach + Attack → "+UnitName(target.Id)
+                            +"\nMovement "+pendingApproach.Movement.Path.Count+" / "+actor.MovementRemaining
+                            +"\nPath: "+string.Join(" → ",pendingApproach.Movement.Path.Select(Cell))
+                            +"\nAttack on arrival: contact "+pendingApproach.OnArrival.ContactChance+"% · Guard "+pendingApproach.OnArrival.GuardChance+"%"
+                            +"\nOA risks: "+OpportunityRiskCount+". Attack only if movement completes and the survivor can legally hit."
+                            +"\nFirst click pins; second click on the enemy approaches and attacks.";
+                    } else PreviewText += "\nCore: " + preview.Error
+                        +"\nNo legal attack or reachable melee approach this activation.";
+                }
             }
             else
             {
@@ -341,7 +365,7 @@ namespace RPG.Presentation
             else if (State.Battlefield.IsRetreatZone(actor.Side == Side.West ? Side.East : Side.West, cell)) text += "\nOpponent's edge — NOT your escape.";
             return text;
         }
-        private void ClearPreview() { spellPreviewCells=null;spellBlockedCells=null;spellCenter=null;aimHover=null;inspectedSpell=null; pending = null; selected = null; MovementRisk = null; PreviewEscapes = false; PreviewText = "Hover to preview. Click once to pin; click the same cell again to act. Green cells: Core reachable."; hud.ResetChoices(); }
+        private void ClearPreview() { pendingApproach=null;spellPreviewCells=null;spellBlockedCells=null;spellCenter=null;aimHover=null;inspectedSpell=null; pending = null; selected = null; MovementRisk = null; PreviewEscapes = false; PreviewText = "Hover to preview. Click once to pin; click the same cell again to act. Green cells: Core reachable."; hud.ResetChoices(); }
         private void Refresh()
         {
             reachable.Clear(); rangedReach.Clear(); RangedReachMessage=""; threats.Clear();

@@ -1,5 +1,9 @@
 # Gate C — working implementation checkpoint
 
+## 2026-09-30 — melee approach + strike
+
+User extends two-click input for HW/EW: hover/first enemy click shows and pins a reachable legal approach; second click moves then revalidates/executes BasicAttack. Existing Core path/contact/OA rules only; no extra Movement or automatic caster/archer approach. Real death/interruption prevents follow-up. Replay retains ordinary Move+BasicAttack commands. Starting49a2a17; focused5 EditMode+12 spell/approach+7 corner PlayModePASS; final590 EditMode+79 PlayMode=669 PASS,0 failed/skipped; results/delivery: `MELEE_APPROACH.md`, `Evidence/MELEE-APPROACH/validation-manifest.json`. NO PUSH.
+
 ## 2026-09-30 — unified two-click tactical input
 
 User replaces historical single-click primary-spell input: hover previews; first click pins path/target/area; second click on the same cell executes. Another cell replaces the pin, pointer leave preserves pinned geometry, cancel/action/activation changes clear it. Transient hover cannot execute via Confirm. Basic attacks, Bow, primary/special spells and movement use the same contract. Explicit Friendly Fire confirmation retained. Core rules unchanged. Main delivered by fast-forward3271802→f33aae1, tested source hashes identical and nine unrelated files unchanged; focused10PlayModePASS; full585 EditMode +77 PlayMode =662 PASS,0 failed/skipped; fresh results and delivery in `TWO_CLICK_TACTICAL.md` / `Evidence/TWO-CLICK-TACTICAL/validation-manifest.json`. NO PUSH.

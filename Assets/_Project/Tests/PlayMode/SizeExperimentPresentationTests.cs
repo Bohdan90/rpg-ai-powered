@@ -162,14 +162,22 @@ namespace RPG.Presentation.Tests
                 presenter.ConfigureBattle(units, board, 2);
                 var before = presenter.State;
                 presenter.SelectCell(units[1].Position);
-                Assert.That(presenter.HudRoot.Q<Button>("confirm-command").enabledSelf, Is.EqualTo(!sealedCorner));
+                Assert.That(BattleResolver.PreviewAttack(before,new BasicAttackCommand(units[0].Id,units[1].Id)).Error,Is.EqualTo(sealedCorner?CommandError.BlockedCorner:CommandError.None));
+                Assert.That(presenter.HasApproachPreview,Is.EqualTo(sealedCorner));
+                Assert.That(presenter.HudRoot.Q<Button>("confirm-command").enabledSelf, Is.True);
                 Assert.That(presenter.State, Is.SameAs(before));
                 if (!sealedCorner)
                 {
                     presenter.ConfirmPreview();
                     Assert.That(presenter.State.FindUnit(units[0].Id).ActionAvailable, Is.False);
                 }
-                else Assert.That(presenter.PreviewText, Does.Contain("BlockedCorner"));
+                else {
+                    var approach=MeleeApproachPreview.Query(before,units[0].Id,units[1].Id);
+                    Assert.That(approach,Is.Not.Null);var at=units[0].Position;
+                    foreach(var step in approach.Movement.Path){Assert.That(MovementRules.ValidateStep(before,units[0].Id,at,step),Is.EqualTo(CommandError.None));at=step;}
+                    presenter.ConfirmPreview();Assert.That(presenter.State.FindUnit(units[0].Id).Position,Is.EqualTo(at));Assert.That(presenter.State.FindUnit(units[0].Id).ActionAvailable,Is.False);
+                    Assert.That(presenter.Journal.Records.Count,Is.EqualTo(2));
+                }
                 presenter.ConfigureBattle(units, board, 2);
                 Assert.That(presenter.ThreatCells.ContainsKey(units[0].Position), Is.EqualTo(!sealedCorner));
                 presenter.SelectCell(new GridPosition(3,4));
