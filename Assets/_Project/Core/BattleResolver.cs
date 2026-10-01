@@ -5,9 +5,9 @@ namespace RPG.Core
 {
     public static partial class BattleResolver
     {
-        public static BattleResult StartBattle(IEnumerable<UnitState> units, uint seed, Battlefield battlefield = null, int fireRulesVersion = 3)
+        public static BattleResult StartBattle(IEnumerable<UnitState> units, uint seed, Battlefield battlefield = null, int fireRulesVersion = 4)
         {
-            if(fireRulesVersion<1||fireRulesVersion>3)throw new ArgumentOutOfRangeException(nameof(fireRulesVersion));
+            if(fireRulesVersion<1||fireRulesVersion>4)throw new ArgumentOutOfRangeException(nameof(fireRulesVersion));
             var state = new BattleState(units, seed, battlefield){FireRulesVersion=fireRulesVersion};
             var events = new List<BattleEvent> { new BattleEvent(BattleEventKind.BattleStarted, 0) };
             StartNextActivation(state, events);

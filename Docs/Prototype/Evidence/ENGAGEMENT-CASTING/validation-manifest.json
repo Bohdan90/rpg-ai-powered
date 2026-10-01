@@ -1,0 +1,33 @@
+{
+  "task": "EngagementCasting",
+  "branch": "feature/engagement-casting",
+  "sourceHead": "5a45bbbe32f65bbafc17d861b256cf9c61ef4e45",
+  "mainHeadAtStart": "f8b8229cc7fadfea8694a5082e0bbb3c3e2f9cf4",
+  "mainCorePresentationTestsIdenticalAtStart": true,
+  "rulesVersion": 4,
+  "gui": "PASS: controlled initial fixtures, real OS mouse input; final ec-final-* snapshots/screenshots",
+  "sourceFingerprint": "final-source.json",
+  "saveProtection": "protected-state.json",
+  "runner": "bash /private/tmp/strategic-map-ux/run-tests.sh <EditMode|PlayMode> [filter]",
+  "unityVersion": "6000.6.2f1",
+  "project": "Convergence/Strategic-Map-UX",
+  "guiPersistentRoot": "/tmp/strategic-map-ux/gui-preferences/Library/Application Support/RPGPrototypeIsolated/Strategic-Map-UX",
+  "testPreferencesRoot": "/private/tmp/strategic-map-ux/test-preferences",
+  "manualObserverRemovedBeforeFullRegression": true,
+  "mainMerge": false,
+  "push": false,
+  "fullEditMode": {
+    "passed": 708,
+    "failed": 0,
+    "skipped": 0,
+    "xml": "tests/EditMode-20261001-130705.xml"
+  },
+  "fullPlayMode": {
+    "passed": 94,
+    "failed": 0,
+    "skipped": 0,
+    "xml": "tests/PlayMode-20261001-130851.xml"
+  },
+  "sourceUnchangedThroughFinalFullSuites": true,
+  "mainMergeAuthorizedAfterValidation": true
+}

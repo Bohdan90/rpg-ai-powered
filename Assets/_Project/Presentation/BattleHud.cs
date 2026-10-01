@@ -185,10 +185,10 @@ namespace RPG.Presentation
             spellSelect.choices=new[]{ordinary}.Concat(SpellRules.Kit(actor.Profile).Select(s=>s.ToString())).ToList();
             spellSelect.SetValueWithoutNotify(presenter.SelectedSpell?.ToString()??ordinary);
             Root.Q<Button>("primary-attack").text=presenter.PrimarySpell.HasValue?"Primary: "+presenter.PrimarySpell+" · select, then click again":"Basic / Move";
-            Root.Q("primary-attack").SetEnabled(playerTurn&&!ended&&(!presenter.PrimarySpell.HasValue||actor.ActionAvailable));Root.Q("staff-attack").style.display=actor.Profile.IsCaster?DisplayStyle.Flex:DisplayStyle.None;Root.Q("staff-attack").SetEnabled(playerTurn&&!ended&&actor.ActionAvailable);
+            Root.Q("primary-attack").SetEnabled(playerTurn&&!ended&&(!presenter.PrimarySpell.HasValue||actor.ActionAvailable&&!BattleResolver.IsSpellEngagementBlocked(state,actor.Id,presenter.PrimarySpell.Value)));Root.Q("staff-attack").style.display=actor.Profile.IsCaster?DisplayStyle.Flex:DisplayStyle.None;Root.Q("staff-attack").SetEnabled(playerTurn&&!ended&&actor.ActionAvailable);
             Root.Q<Label>("spell-details").text=presenter.SpellDetails;
             spellSelect.SetEnabled(playerTurn&&!ended&&actor.ActionAvailable);
-            foreach(SpellId spell in Enum.GetValues(typeof(SpellId))){var b=Root.Q<Button>("spell-"+spell);b.style.display=SpellRules.Has(actor.Profile,spell)?DisplayStyle.Flex:DisplayStyle.None;b.SetEnabled(playerTurn&&!ended&&actor.ActionAvailable);}
+            foreach(SpellId spell in Enum.GetValues(typeof(SpellId))){var b=Root.Q<Button>("spell-"+spell);b.style.display=SpellRules.Has(actor.Profile,spell)?DisplayStyle.Flex:DisplayStyle.None;bool blocked=BattleResolver.IsSpellEngagementBlocked(state,actor.Id,spell);b.style.whiteSpace=WhiteSpace.Normal;b.style.minHeight=blocked?48:28;b.text=spell+(blocked?"\nBlocked while Engaged":spell==SpellId.FireArmor?" · Self / Ally":"");b.tooltip=blocked?"Blocked while Engaged":BattlePresenter.TargetDescription(spell);b.SetEnabled(playerTurn&&!ended&&actor.ActionAvailable&&!blocked);}
 
             foreach(CombatLabMatch lab in Enum.GetValues(typeof(CombatLabMatch)))Root.Q("lab-"+lab).SetEnabled(!connected);
             aiInfo.text=presenter.PlayerVsAi?presenter.AiExplanation:"Hotseat";

@@ -1,0 +1,3283 @@
+{
+  "gx": 40.0,
+  "gy": 114.0,
+  "gw": 1400.0,
+  "rw": 1485.84912109375,
+  "rh": 871.3443603515625,
+  "persistentPath": "/tmp/strategic-map-ux/gui-preferences/Library/Application Support/RPGPrototypeIsolated/Strategic-Map-UX",
+  "focus": "Game",
+  "hash": "+JbV8dlJwTisyI9r/Iq00TobGL/2vVnuu6PyRKOlfP4=",
+  "hud": "GATE C / HOTSEAT\nBLUE West \u00b7 ORANGE East \u00b7 GOLD active\nGreen: reachable \u00b7 Gold: path \u00b7 Red segment: OA risk\nSword + shield: HW/EW \u00b7 Bow: HA \u00b7 * Commander\nWhite arrow: facing \u00b7 Red border: ZoC ready \u00b7 Gray: spent\nHover: preview \u00b7 Click: pin \u00b7 Same cell again: execute\nWheel: zoom \u00b7 Right-click / Escape: cancel\n\u2190 West Retreat \u2014 YOUR ESCAPE\nEast Retreat \u2192\nIce 2*\nHP 20/32\nA 0/0\nHW\nHP 27/40\nA 16/16\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\nTACTICAL GRAYBOX\nHotseat \u00b7 ZoC / OA / physical Retreat\nController\nHotseat\nROUND 1 \u00b7 West IceMageTII #1\nWest\nHP 20/32 | Armor 0/0\nMovement 3 | Action spent\nFacing East | Defending no | no OA\n\n\nAbility\nUNAVAILABLE: Action spent; remaining legal Movement is separate. Action resets on the next activation.\nPrimary attack: IceShard\nLONG SINGLE TARGET \u00b7 hostile living unit \u00b7 range 8 \u00b7 contact roll; no built-in Freeze/Slow \u00b7 Action \u00b7 Spell (not Exertion)\nSpell targeting is hidden until Action is available.\nAmber brackets: legal aim geometry (recipient/status checked separately). Magenta: exact effect. Red X: excluded by obstruction. Allies are named below.\nHover (6,8) East HumanWarriorTI #2 | OA spent\nHP 27/40 | Armor 16/16 | Facing West\nNo destination / target selected.\nHover to preview. Click once to pin; click the same cell again to act. Green cells: Core reachable.\nExplicitly confirm allied target\nLAST COMBAT RESULT\nWest IceMageTII #1 \u2192 East HumanWarriorTI #2\nIce Shard \u00b7 HP -13\nTurn order / Retreat details\nInitiative order (\u25ba current):\n   East HumanWarriorTI #2 [10] OA spent\n\u25ba West IceMageTII #1 [8] no OA\nWest: West edge. East: East edge.\nYOUR escape: West edge\nEscaped/Safe:\nNone\nEnd facing\nCastCommand applied.\nFixture (resets battle)\n05B West preset\n05B East preset\n05 Starting Side\nSize/density experiment \u00b7 no combat retuning. 9v9 = synthetic tactical roster, not strategic Capacity validation. Siege: static fortress; moat proxy has fixed crossings. 41\u00d739 preserves each attacker approach; West = attacker coalition, East = defenders. No real siege mechanics.\nLOCAL REPLAY / TELEMETRY\nReplay file\nCOMBAT OUTCOMES\nWest IceMageTII #1 \u2192 East HumanWarriorTI #2\nIce Shard \u00b7 HP -13\n\nEast HumanWarriorTI #2 \u2192 West IceMageTII #1\nOpportunity attack \u00b7 HP -12\nDeveloper Core events (full detail)\nR0 Battle: BattleStarted\nR1 Battle: RoundStarted\nR1 East HumanWarriorTI #2: ActivationStarted\nR1 East HumanWarriorTI #2: ActionConsumed\nR1 East HumanWarriorTI #2: MovementConsumed\nR1 East HumanWarriorTI #2: ActivationEnded\nR1 West IceMageTII #1: ActivationStarted\nR1 West IceMageTII #1: MovementStarted\nR1 West IceMageTII #1: ZoCExitDetected \u2192 East HumanWarriorTI #2 (5,8) \u2192 (4,8)\nR1 East HumanWarriorTI #2: OpportunityAttackTriggered \u2192 West IceMageTII #1 \u2014 BEFORE the exit step.\nR1 East HumanWarriorTI #2: OpportunityAttackSpent \u2014 unavailable until own activation.\nR1 East HumanWarriorTI #2: ContactRolled \u2192 West IceMageTII #1 [39 < 85: success]\nR1 East HumanWarriorTI #2: DamageApplied \u2192 West IceMageTII #1 12\nR1 East HumanWarriorTI #2: HpLost \u2014 HP damage 12 (32 \u2192 20) \u2192 West IceMageTII #1 32 \u2192 20\nR1 East HumanWarriorTI #2: OpportunityAttackResolved \u2192 West IceMageTII #1\nR1 West IceMageTII #1: FacingChanged\nR1 West IceMageTII #1: MovementConsumed\nR1 West IceMageTII #1: StepMoved (5,8) \u2192 (4,8)\nR1 West IceMageTII #1: ActionConsumed\nR1 West IceMageTII #1: SpellCast IceShard (6,8)\nR1 West IceMageTII #1: FacingChanged\nR1 West IceMageTII #1: ContactRolled \u2192 East HumanWarriorTI #2 [31 < 85: success]\nR1 West IceMageTII #1: DamageApplied \u2192 East HumanWarriorTI #2 13\nR1 West IceMageTII #1: HpLost \u2014 HP damage 13 (40 \u2192 27) \u2192 East HumanWarriorTI #2 40 \u2192 27",
+  "rules": 4,
+  "active": 1,
+  "records": 3,
+  "preview": "Hover to preview. Click once to pin; click the same cell again to act. Green cells: Core reachable.",
+  "units": [
+    {
+      "id": 1,
+      "hp": 20,
+      "armor": 0,
+      "barrier": 0,
+      "burn": 0,
+      "uses": 0,
+      "move": 3,
+      "x": 4,
+      "y": 8,
+      "action": false,
+      "exhausted": false
+    },
+    {
+      "id": 2,
+      "hp": 27,
+      "armor": 16,
+      "barrier": 0,
+      "burn": 0,
+      "uses": 0,
+      "move": 0,
+      "x": 6,
+      "y": 8,
+      "action": false,
+      "exhausted": false
+    }
+  ],
+  "world": {
+    "version": 0,
+    "refresh": 0,
+    "startingSide": 0,
+    "activeSide": 0,
+    "completed": 0,
+    "winner": 0,
+    "battleNumber": 0,
+    "seed": 0,
+    "handoff": false,
+    "economy": false,
+    "waystationFood": 0,
+    "scenario": "",
+    "checksum": "",
+    "owners": [],
+    "events": [],
+    "west": {
+      "node": 0,
+      "tempo": 0,
+      "provisions": 0,
+      "pressure": 0,
+      "gold": 0,
+      "keepFood": 0,
+      "nextRecruit": 0,
+      "pendingProfile": 0,
+      "lastRecruitRefresh": 0,
+      "pendingId": "",
+      "goldExact": "",
+      "foodExact": "",
+      "formation": {
+        "id": "",
+        "side": 0,
+        "commanderless": false,
+        "rosterLocked": false,
+        "members": []
+      }
+    },
+    "east": {
+      "node": 0,
+      "tempo": 0,
+      "provisions": 0,
+      "pressure": 0,
+      "gold": 0,
+      "keepFood": 0,
+      "nextRecruit": 0,
+      "pendingProfile": 0,
+      "lastRecruitRefresh": 0,
+      "pendingId": "",
+      "goldExact": "",
+      "foodExact": "",
+      "formation": {
+        "id": "",
+        "side": 0,
+        "commanderless": false,
+        "rosterLocked": false,
+        "members": []
+      }
+    },
+    "seamless": {
+      "production": false,
+      "dense": false,
+      "journeys": [],
+      "rules": 1,
+      "northFood": 0,
+      "southFood": 0,
+      "beaconOwner": 0,
+      "revision": 0,
+      "temporary": false,
+      "message": "",
+      "westMessage": "",
+      "eastMessage": "",
+      "opaque": [],
+      "west": {
+        "explored": [],
+        "observed": [],
+        "armies": [],
+        "places": [],
+        "links": [],
+        "events": [],
+        "nextSequence": 0,
+        "readThrough": 0,
+        "readByWorld": []
+      },
+      "east": {
+        "explored": [],
+        "observed": [],
+        "armies": [],
+        "places": [],
+        "links": [],
+        "events": [],
+        "nextSequence": 0,
+        "readThrough": 0,
+        "readByWorld": []
+      }
+    },
+    "realm": {
+      "hasLastBattle": false,
+      "lastBattle": {
+        "world": 0,
+        "number": 0,
+        "seed": 0,
+        "lead": "",
+        "target": "",
+        "advanced": "",
+        "attackingPool": "",
+        "defendingPool": "",
+        "finalTacticalHash": "",
+        "armies": [],
+        "unitIds": [],
+        "unitArmies": [],
+        "origins": [],
+        "destinations": [],
+        "tempos": [],
+        "dead": [],
+        "escaped": [],
+        "active": [],
+        "attackers": [],
+        "withdrew": []
+      },
+      "armies": [],
+      "west": {
+        "hasCommission": false,
+        "hasRecruit": false,
+        "reserve": [],
+        "commissionQueue": [],
+        "commission": {
+          "kind": "",
+          "unit": "",
+          "destination": "",
+          "started": 0,
+          "profile": 0,
+          "ids": [],
+          "amounts": []
+        },
+        "recruit": {
+          "kind": "",
+          "unit": "",
+          "destination": "",
+          "started": 0,
+          "profile": 0,
+          "ids": [],
+          "amounts": []
+        },
+        "services": [],
+        "nextArmy": 0,
+        "nextRecruit": 0,
+        "lastRecruit": 0,
+        "cityStaff": 0,
+        "selected": ""
+      },
+      "east": {
+        "hasCommission": false,
+        "hasRecruit": false,
+        "reserve": [],
+        "commissionQueue": [],
+        "commission": {
+          "kind": "",
+          "unit": "",
+          "destination": "",
+          "started": 0,
+          "profile": 0,
+          "ids": [],
+          "amounts": []
+        },
+        "recruit": {
+          "kind": "",
+          "unit": "",
+          "destination": "",
+          "started": 0,
+          "profile": 0,
+          "ids": [],
+          "amounts": []
+        },
+        "services": [],
+        "nextArmy": 0,
+        "nextRecruit": 0,
+        "lastRecruit": 0,
+        "cityStaff": 0,
+        "selected": ""
+      },
+      "cycles": [],
+      "familiarity": [],
+      "appliedBattle": 0,
+      "message": ""
+    },
+    "incident": {
+      "enabled": false,
+      "worldPhase": false,
+      "ravaged": false,
+      "cycleEligible": false,
+      "continuityBroken": false,
+      "rewardPaid": false,
+      "phase": 0,
+      "whiteout": 0,
+      "cursor": 0,
+      "contract": 0,
+      "holdCycles": 0,
+      "appliedBattle": 0,
+      "id": "",
+      "claimant": "",
+      "holdReason": "",
+      "actorOrder": [],
+      "raiders": []
+    },
+    "foundations": {
+      "combined": false,
+      "realmMode": false,
+      "locations": [],
+      "west": {
+        "wood": "",
+        "iron": "",
+        "preset": 0,
+        "active": 0,
+        "started": 0,
+        "paused": false,
+        "queue": [],
+        "research": [],
+        "repairStarted": 0,
+        "trainingStarted": 0,
+        "repairIds": [],
+        "repairs": [],
+        "trainee": ""
+      },
+      "east": {
+        "wood": "",
+        "iron": "",
+        "preset": 0,
+        "active": 0,
+        "started": 0,
+        "paused": false,
+        "queue": [],
+        "research": [],
+        "repairStarted": 0,
+        "trainingStarted": 0,
+        "repairIds": [],
+        "repairs": [],
+        "trainee": ""
+      }
+    }
+  },
+  "buttons": [
+    {
+      "enabled": false,
+      "name": "primary-attack",
+      "text": "Primary: IceShard \u00b7 select, then click again",
+      "x": 1250.7666015625,
+      "y": 373.05426025390625
+    },
+    {
+      "enabled": false,
+      "name": "staff-attack",
+      "text": "Staff Strike \u00b7 melee 1 \u00b7 explicit alternative",
+      "x": 1250.7666015625,
+      "y": 417.6297302246094
+    },
+    {
+      "enabled": false,
+      "name": "spell-IceShard",
+      "text": "IceShard",
+      "x": 1152.594482421875,
+      "y": 462.2052001953125
+    },
+    {
+      "enabled": false,
+      "name": "spell-IceShield",
+      "text": "IceShield",
+      "x": 1152.594482421875,
+      "y": 506.78070068359375
+    },
+    {
+      "enabled": false,
+      "name": "spell-Freeze",
+      "text": "Freeze",
+      "x": 1152.594482421875,
+      "y": 551.3561401367188
+    },
+    {
+      "enabled": false,
+      "name": "confirm-command",
+      "text": "Confirm Attack",
+      "x": 1250.7666015625,
+      "y": 907.9599609375
+    },
+    {
+      "enabled": true,
+      "name": "cancel-preview",
+      "text": "Cancel preview",
+      "x": 1250.7666015625,
+      "y": 952.535400390625
+    },
+    {
+      "enabled": false,
+      "name": "defend",
+      "text": "Defend",
+      "x": 1250.7666015625,
+      "y": 1095.813720703125
+    },
+    {
+      "enabled": true,
+      "name": "end-activation",
+      "text": "End Activation",
+      "x": 1250.7666015625,
+      "y": 1181.78076171875
+    },
+    {
+      "enabled": true,
+      "name": "lab-FireVsIce",
+      "text": "Combat Lab \u00b7 FireVsIce \u00b7 near contact",
+      "x": 1250.7666015625,
+      "y": 1303.8326416015625
+    },
+    {
+      "enabled": true,
+      "name": "lab-SupportVsFire",
+      "text": "Combat Lab \u00b7 SupportVsFire \u00b7 near contact",
+      "x": 1250.7666015625,
+      "y": 1348.4080810546875
+    },
+    {
+      "enabled": true,
+      "name": "lab-MobileBlades",
+      "text": "Combat Lab \u00b7 MobileBlades \u00b7 near contact",
+      "x": 1250.7666015625,
+      "y": 1392.9835205078125
+    },
+    {
+      "enabled": true,
+      "name": "city-start-a",
+      "text": "City Foundations 05A",
+      "x": 1250.7666015625,
+      "y": 1561.7335205078125
+    },
+    {
+      "enabled": true,
+      "name": "city-start-b",
+      "text": "City & Combat 05B \u00b7 permanent presets",
+      "x": 1250.7666015625,
+      "y": 1606.30908203125
+    },
+    {
+      "enabled": true,
+      "name": "city-authored",
+      "text": "Load AUTHORED 05B inspection fixture (not a played match)",
+      "x": 1250.7666015625,
+      "y": 1650.884521484375
+    },
+    {
+      "enabled": true,
+      "name": "realm-start-west",
+      "text": "Realm Operations 06 \u00b7 West first",
+      "x": 1250.7666015625,
+      "y": 1695.4599609375
+    },
+    {
+      "enabled": true,
+      "name": "realm-start-east",
+      "text": "Realm Operations 06 \u00b7 East first",
+      "x": 1250.7666015625,
+      "y": 1740.035400390625
+    },
+    {
+      "enabled": true,
+      "name": "realm-ice-west",
+      "text": "Realm 06 Ice vs Fire \u00b7 West first",
+      "x": 1250.7666015625,
+      "y": 1784.6109619140625
+    },
+    {
+      "enabled": true,
+      "name": "realm-ice-east",
+      "text": "Realm 06 Ice vs Fire \u00b7 East first",
+      "x": 1250.7666015625,
+      "y": 1829.1864013671875
+    },
+    {
+      "enabled": true,
+      "name": "realm-load-slot",
+      "text": "Load Realm Operations 06",
+      "x": 1250.7666015625,
+      "y": 1873.7618408203125
+    },
+    {
+      "enabled": true,
+      "name": "city-load-a",
+      "text": "Load City Foundations 05A",
+      "x": 1250.7666015625,
+      "y": 1918.33740234375
+    },
+    {
+      "enabled": true,
+      "name": "city-load-b",
+      "text": "Load City & Combat 05B",
+      "x": 1250.7666015625,
+      "y": 1962.912841796875
+    },
+    {
+      "enabled": true,
+      "name": "persistence-start",
+      "text": "Start Persistence Slice v0.1",
+      "x": 1250.7666015625,
+      "y": 2007.48828125
+    },
+    {
+      "enabled": true,
+      "name": "world-start",
+      "text": "Start Connected Mission 01",
+      "x": 1250.7666015625,
+      "y": 2052.063720703125
+    },
+    {
+      "enabled": true,
+      "name": "world-load",
+      "text": "Load saved Mission 01",
+      "x": 1250.7666015625,
+      "y": 2096.63916015625
+    },
+    {
+      "enabled": true,
+      "name": "duel-start-west",
+      "text": "Crossroads economy Hotseat \u00b7 West first",
+      "x": 1250.7666015625,
+      "y": 2141.21484375
+    },
+    {
+      "enabled": true,
+      "name": "duel-start-east",
+      "text": "Crossroads economy Hotseat \u00b7 East first",
+      "x": 1250.7666015625,
+      "y": 2185.7900390625
+    },
+    {
+      "enabled": true,
+      "name": "incident-start-west",
+      "text": "Crossroads Incident 04 \u00b7 West first",
+      "x": 1250.7666015625,
+      "y": 2230.36572265625
+    },
+    {
+      "enabled": true,
+      "name": "incident-start-east",
+      "text": "Crossroads Incident 04 \u00b7 East first",
+      "x": 1250.7666015625,
+      "y": 2274.94091796875
+    },
+    {
+      "enabled": true,
+      "name": "incident-control",
+      "text": "Incident 04 \u00b7 control (no incidents)",
+      "x": 1250.7666015625,
+      "y": 2319.5166015625
+    },
+    {
+      "enabled": true,
+      "name": "incident-load",
+      "text": "Load Incident 04",
+      "x": 1250.7666015625,
+      "y": 2364.09228515625
+    },
+    {
+      "enabled": true,
+      "name": "duel-load",
+      "text": "Load Crossroads Hotseat",
+      "x": 1250.7666015625,
+      "y": 2408.66748046875
+    },
+    {
+      "enabled": true,
+      "name": "fit-board",
+      "text": "Fit whole board",
+      "x": 1250.7666015625,
+      "y": 2528.5966796875
+    },
+    {
+      "enabled": true,
+      "name": "focus-unit",
+      "text": "Focus active unit (wheel to zoom)",
+      "x": 1250.7666015625,
+      "y": 2573.17236328125
+    },
+    {
+      "enabled": true,
+      "name": "restart",
+      "text": "Restart Same Seed",
+      "x": 1250.7666015625,
+      "y": 2617.74755859375
+    },
+    {
+      "enabled": true,
+      "name": "export-replay",
+      "text": "Export battle + session",
+      "x": 1250.7666015625,
+      "y": 2739.7998046875
+    },
+    {
+      "enabled": true,
+      "name": "verify-replay",
+      "text": "Load / verify replay file",
+      "x": 1250.7666015625,
+      "y": 2784.375
+    }
+  ],
+  "cells": [
+    {
+      "enabled": false,
+      "name": "0,0",
+      "text": "",
+      "x": 107.36881256103516,
+      "y": 735.8018188476562
+    },
+    {
+      "enabled": false,
+      "name": "1,0",
+      "text": "",
+      "x": 144.88504028320312,
+      "y": 735.8018188476562
+    },
+    {
+      "enabled": false,
+      "name": "2,0",
+      "text": "",
+      "x": 182.40126037597656,
+      "y": 735.8018188476562
+    },
+    {
+      "enabled": false,
+      "name": "3,0",
+      "text": "",
+      "x": 219.91744995117188,
+      "y": 735.8018188476562
+    },
+    {
+      "enabled": false,
+      "name": "4,0",
+      "text": "",
+      "x": 257.4336853027344,
+      "y": 735.8018188476562
+    },
+    {
+      "enabled": false,
+      "name": "5,0",
+      "text": "",
+      "x": 294.94989013671875,
+      "y": 735.8018188476562
+    },
+    {
+      "enabled": false,
+      "name": "6,0",
+      "text": "",
+      "x": 332.4660949707031,
+      "y": 735.8018188476562
+    },
+    {
+      "enabled": false,
+      "name": "7,0",
+      "text": "",
+      "x": 369.9823303222656,
+      "y": 735.8018188476562
+    },
+    {
+      "enabled": false,
+      "name": "8,0",
+      "text": "",
+      "x": 407.49853515625,
+      "y": 735.8018188476562
+    },
+    {
+      "enabled": false,
+      "name": "9,0",
+      "text": "",
+      "x": 445.0147705078125,
+      "y": 735.8018188476562
+    },
+    {
+      "enabled": false,
+      "name": "10,0",
+      "text": "",
+      "x": 482.5309753417969,
+      "y": 735.8018188476562
+    },
+    {
+      "enabled": false,
+      "name": "11,0",
+      "text": "",
+      "x": 520.0471801757812,
+      "y": 735.8018188476562
+    },
+    {
+      "enabled": false,
+      "name": "12,0",
+      "text": "",
+      "x": 557.5633544921875,
+      "y": 735.8018188476562
+    },
+    {
+      "enabled": false,
+      "name": "13,0",
+      "text": "",
+      "x": 595.0796508789062,
+      "y": 735.8018188476562
+    },
+    {
+      "enabled": false,
+      "name": "14,0",
+      "text": "",
+      "x": 632.5958251953125,
+      "y": 735.8018188476562
+    },
+    {
+      "enabled": false,
+      "name": "15,0",
+      "text": "",
+      "x": 670.112060546875,
+      "y": 735.8018188476562
+    },
+    {
+      "enabled": false,
+      "name": "16,0",
+      "text": "",
+      "x": 707.6282958984375,
+      "y": 735.8018188476562
+    },
+    {
+      "enabled": false,
+      "name": "17,0",
+      "text": "",
+      "x": 745.1444702148438,
+      "y": 735.8018188476562
+    },
+    {
+      "enabled": false,
+      "name": "18,0",
+      "text": "",
+      "x": 782.6607055664062,
+      "y": 735.8018188476562
+    },
+    {
+      "enabled": false,
+      "name": "19,0",
+      "text": "",
+      "x": 820.1768798828125,
+      "y": 735.8018188476562
+    },
+    {
+      "enabled": false,
+      "name": "20,0",
+      "text": "",
+      "x": 857.6931762695312,
+      "y": 735.8018188476562
+    },
+    {
+      "enabled": false,
+      "name": "21,0",
+      "text": "",
+      "x": 895.2093505859375,
+      "y": 735.8018188476562
+    },
+    {
+      "enabled": false,
+      "name": "22,0",
+      "text": "",
+      "x": 932.7255249023438,
+      "y": 735.8018188476562
+    },
+    {
+      "enabled": false,
+      "name": "0,1",
+      "text": "",
+      "x": 107.36881256103516,
+      "y": 698.2855834960938
+    },
+    {
+      "enabled": false,
+      "name": "1,1",
+      "text": "",
+      "x": 144.88504028320312,
+      "y": 698.2855834960938
+    },
+    {
+      "enabled": false,
+      "name": "2,1",
+      "text": "",
+      "x": 182.40126037597656,
+      "y": 698.2855834960938
+    },
+    {
+      "enabled": false,
+      "name": "3,1",
+      "text": "",
+      "x": 219.91744995117188,
+      "y": 698.2855834960938
+    },
+    {
+      "enabled": false,
+      "name": "4,1",
+      "text": "",
+      "x": 257.4336853027344,
+      "y": 698.2855834960938
+    },
+    {
+      "enabled": false,
+      "name": "5,1",
+      "text": "",
+      "x": 294.94989013671875,
+      "y": 698.2855834960938
+    },
+    {
+      "enabled": false,
+      "name": "6,1",
+      "text": "",
+      "x": 332.4660949707031,
+      "y": 698.2855834960938
+    },
+    {
+      "enabled": false,
+      "name": "7,1",
+      "text": "",
+      "x": 369.9823303222656,
+      "y": 698.2855834960938
+    },
+    {
+      "enabled": false,
+      "name": "8,1",
+      "text": "",
+      "x": 407.49853515625,
+      "y": 698.2855834960938
+    },
+    {
+      "enabled": false,
+      "name": "9,1",
+      "text": "",
+      "x": 445.0147705078125,
+      "y": 698.2855834960938
+    },
+    {
+      "enabled": false,
+      "name": "10,1",
+      "text": "",
+      "x": 482.5309753417969,
+      "y": 698.2855834960938
+    },
+    {
+      "enabled": false,
+      "name": "11,1",
+      "text": "",
+      "x": 520.0471801757812,
+      "y": 698.2855834960938
+    },
+    {
+      "enabled": false,
+      "name": "12,1",
+      "text": "",
+      "x": 557.5633544921875,
+      "y": 698.2855834960938
+    },
+    {
+      "enabled": false,
+      "name": "13,1",
+      "text": "",
+      "x": 595.0796508789062,
+      "y": 698.2855834960938
+    },
+    {
+      "enabled": false,
+      "name": "14,1",
+      "text": "",
+      "x": 632.5958251953125,
+      "y": 698.2855834960938
+    },
+    {
+      "enabled": false,
+      "name": "15,1",
+      "text": "",
+      "x": 670.112060546875,
+      "y": 698.2855834960938
+    },
+    {
+      "enabled": false,
+      "name": "16,1",
+      "text": "",
+      "x": 707.6282958984375,
+      "y": 698.2855834960938
+    },
+    {
+      "enabled": false,
+      "name": "17,1",
+      "text": "",
+      "x": 745.1444702148438,
+      "y": 698.2855834960938
+    },
+    {
+      "enabled": false,
+      "name": "18,1",
+      "text": "",
+      "x": 782.6607055664062,
+      "y": 698.2855834960938
+    },
+    {
+      "enabled": false,
+      "name": "19,1",
+      "text": "",
+      "x": 820.1768798828125,
+      "y": 698.2855834960938
+    },
+    {
+      "enabled": false,
+      "name": "20,1",
+      "text": "",
+      "x": 857.6931762695312,
+      "y": 698.2855834960938
+    },
+    {
+      "enabled": false,
+      "name": "21,1",
+      "text": "",
+      "x": 895.2093505859375,
+      "y": 698.2855834960938
+    },
+    {
+      "enabled": false,
+      "name": "22,1",
+      "text": "",
+      "x": 932.7255249023438,
+      "y": 698.2855834960938
+    },
+    {
+      "enabled": false,
+      "name": "0,2",
+      "text": "",
+      "x": 107.36881256103516,
+      "y": 660.7694091796875
+    },
+    {
+      "enabled": false,
+      "name": "1,2",
+      "text": "",
+      "x": 144.88504028320312,
+      "y": 660.7694091796875
+    },
+    {
+      "enabled": false,
+      "name": "2,2",
+      "text": "",
+      "x": 182.40126037597656,
+      "y": 660.7694091796875
+    },
+    {
+      "enabled": false,
+      "name": "3,2",
+      "text": "",
+      "x": 219.91744995117188,
+      "y": 660.7694091796875
+    },
+    {
+      "enabled": false,
+      "name": "4,2",
+      "text": "",
+      "x": 257.4336853027344,
+      "y": 660.7694091796875
+    },
+    {
+      "enabled": false,
+      "name": "5,2",
+      "text": "",
+      "x": 294.94989013671875,
+      "y": 660.7694091796875
+    },
+    {
+      "enabled": false,
+      "name": "6,2",
+      "text": "",
+      "x": 332.4660949707031,
+      "y": 660.7694091796875
+    },
+    {
+      "enabled": false,
+      "name": "7,2",
+      "text": "",
+      "x": 369.9823303222656,
+      "y": 660.7694091796875
+    },
+    {
+      "enabled": false,
+      "name": "8,2",
+      "text": "",
+      "x": 407.49853515625,
+      "y": 660.7694091796875
+    },
+    {
+      "enabled": false,
+      "name": "9,2",
+      "text": "",
+      "x": 445.0147705078125,
+      "y": 660.7694091796875
+    },
+    {
+      "enabled": false,
+      "name": "10,2",
+      "text": "",
+      "x": 482.5309753417969,
+      "y": 660.7694091796875
+    },
+    {
+      "enabled": false,
+      "name": "11,2",
+      "text": "",
+      "x": 520.0471801757812,
+      "y": 660.7694091796875
+    },
+    {
+      "enabled": false,
+      "name": "12,2",
+      "text": "",
+      "x": 557.5633544921875,
+      "y": 660.7694091796875
+    },
+    {
+      "enabled": false,
+      "name": "13,2",
+      "text": "",
+      "x": 595.0796508789062,
+      "y": 660.7694091796875
+    },
+    {
+      "enabled": false,
+      "name": "14,2",
+      "text": "",
+      "x": 632.5958251953125,
+      "y": 660.7694091796875
+    },
+    {
+      "enabled": false,
+      "name": "15,2",
+      "text": "",
+      "x": 670.112060546875,
+      "y": 660.7694091796875
+    },
+    {
+      "enabled": false,
+      "name": "16,2",
+      "text": "",
+      "x": 707.6282958984375,
+      "y": 660.7694091796875
+    },
+    {
+      "enabled": false,
+      "name": "17,2",
+      "text": "",
+      "x": 745.1444702148438,
+      "y": 660.7694091796875
+    },
+    {
+      "enabled": false,
+      "name": "18,2",
+      "text": "",
+      "x": 782.6607055664062,
+      "y": 660.7694091796875
+    },
+    {
+      "enabled": false,
+      "name": "19,2",
+      "text": "",
+      "x": 820.1768798828125,
+      "y": 660.7694091796875
+    },
+    {
+      "enabled": false,
+      "name": "20,2",
+      "text": "",
+      "x": 857.6931762695312,
+      "y": 660.7694091796875
+    },
+    {
+      "enabled": false,
+      "name": "21,2",
+      "text": "",
+      "x": 895.2093505859375,
+      "y": 660.7694091796875
+    },
+    {
+      "enabled": false,
+      "name": "22,2",
+      "text": "",
+      "x": 932.7255249023438,
+      "y": 660.7694091796875
+    },
+    {
+      "enabled": false,
+      "name": "0,3",
+      "text": "",
+      "x": 107.36881256103516,
+      "y": 623.253173828125
+    },
+    {
+      "enabled": false,
+      "name": "1,3",
+      "text": "",
+      "x": 144.88504028320312,
+      "y": 623.253173828125
+    },
+    {
+      "enabled": false,
+      "name": "2,3",
+      "text": "",
+      "x": 182.40126037597656,
+      "y": 623.253173828125
+    },
+    {
+      "enabled": false,
+      "name": "3,3",
+      "text": "",
+      "x": 219.91744995117188,
+      "y": 623.253173828125
+    },
+    {
+      "enabled": false,
+      "name": "4,3",
+      "text": "",
+      "x": 257.4336853027344,
+      "y": 623.253173828125
+    },
+    {
+      "enabled": false,
+      "name": "5,3",
+      "text": "",
+      "x": 294.94989013671875,
+      "y": 623.253173828125
+    },
+    {
+      "enabled": false,
+      "name": "6,3",
+      "text": "",
+      "x": 332.4660949707031,
+      "y": 623.253173828125
+    },
+    {
+      "enabled": false,
+      "name": "7,3",
+      "text": "",
+      "x": 369.9823303222656,
+      "y": 623.253173828125
+    },
+    {
+      "enabled": false,
+      "name": "8,3",
+      "text": "",
+      "x": 407.49853515625,
+      "y": 623.253173828125
+    },
+    {
+      "enabled": false,
+      "name": "9,3",
+      "text": "",
+      "x": 445.0147705078125,
+      "y": 623.253173828125
+    },
+    {
+      "enabled": false,
+      "name": "10,3",
+      "text": "",
+      "x": 482.5309753417969,
+      "y": 623.253173828125
+    },
+    {
+      "enabled": false,
+      "name": "11,3",
+      "text": "",
+      "x": 520.0471801757812,
+      "y": 623.253173828125
+    },
+    {
+      "enabled": false,
+      "name": "12,3",
+      "text": "",
+      "x": 557.5633544921875,
+      "y": 623.253173828125
+    },
+    {
+      "enabled": false,
+      "name": "13,3",
+      "text": "",
+      "x": 595.0796508789062,
+      "y": 623.253173828125
+    },
+    {
+      "enabled": false,
+      "name": "14,3",
+      "text": "",
+      "x": 632.5958251953125,
+      "y": 623.253173828125
+    },
+    {
+      "enabled": false,
+      "name": "15,3",
+      "text": "",
+      "x": 670.112060546875,
+      "y": 623.253173828125
+    },
+    {
+      "enabled": false,
+      "name": "16,3",
+      "text": "",
+      "x": 707.6282958984375,
+      "y": 623.253173828125
+    },
+    {
+      "enabled": false,
+      "name": "17,3",
+      "text": "",
+      "x": 745.1444702148438,
+      "y": 623.253173828125
+    },
+    {
+      "enabled": false,
+      "name": "18,3",
+      "text": "",
+      "x": 782.6607055664062,
+      "y": 623.253173828125
+    },
+    {
+      "enabled": false,
+      "name": "19,3",
+      "text": "",
+      "x": 820.1768798828125,
+      "y": 623.253173828125
+    },
+    {
+      "enabled": false,
+      "name": "20,3",
+      "text": "",
+      "x": 857.6931762695312,
+      "y": 623.253173828125
+    },
+    {
+      "enabled": false,
+      "name": "21,3",
+      "text": "",
+      "x": 895.2093505859375,
+      "y": 623.253173828125
+    },
+    {
+      "enabled": false,
+      "name": "22,3",
+      "text": "",
+      "x": 932.7255249023438,
+      "y": 623.253173828125
+    },
+    {
+      "enabled": false,
+      "name": "0,4",
+      "text": "",
+      "x": 107.36881256103516,
+      "y": 585.7369384765625
+    },
+    {
+      "enabled": false,
+      "name": "1,4",
+      "text": "",
+      "x": 144.88504028320312,
+      "y": 585.7369384765625
+    },
+    {
+      "enabled": false,
+      "name": "2,4",
+      "text": "",
+      "x": 182.40126037597656,
+      "y": 585.7369384765625
+    },
+    {
+      "enabled": false,
+      "name": "3,4",
+      "text": "",
+      "x": 219.91744995117188,
+      "y": 585.7369384765625
+    },
+    {
+      "enabled": false,
+      "name": "4,4",
+      "text": "",
+      "x": 257.4336853027344,
+      "y": 585.7369384765625
+    },
+    {
+      "enabled": false,
+      "name": "5,4",
+      "text": "",
+      "x": 294.94989013671875,
+      "y": 585.7369384765625
+    },
+    {
+      "enabled": false,
+      "name": "6,4",
+      "text": "",
+      "x": 332.4660949707031,
+      "y": 585.7369384765625
+    },
+    {
+      "enabled": false,
+      "name": "7,4",
+      "text": "",
+      "x": 369.9823303222656,
+      "y": 585.7369384765625
+    },
+    {
+      "enabled": false,
+      "name": "8,4",
+      "text": "",
+      "x": 407.49853515625,
+      "y": 585.7369384765625
+    },
+    {
+      "enabled": false,
+      "name": "9,4",
+      "text": "",
+      "x": 445.0147705078125,
+      "y": 585.7369384765625
+    },
+    {
+      "enabled": false,
+      "name": "10,4",
+      "text": "",
+      "x": 482.5309753417969,
+      "y": 585.7369384765625
+    },
+    {
+      "enabled": false,
+      "name": "11,4",
+      "text": "",
+      "x": 520.0471801757812,
+      "y": 585.7369384765625
+    },
+    {
+      "enabled": false,
+      "name": "12,4",
+      "text": "",
+      "x": 557.5633544921875,
+      "y": 585.7369384765625
+    },
+    {
+      "enabled": false,
+      "name": "13,4",
+      "text": "",
+      "x": 595.0796508789062,
+      "y": 585.7369384765625
+    },
+    {
+      "enabled": false,
+      "name": "14,4",
+      "text": "",
+      "x": 632.5958251953125,
+      "y": 585.7369384765625
+    },
+    {
+      "enabled": false,
+      "name": "15,4",
+      "text": "",
+      "x": 670.112060546875,
+      "y": 585.7369384765625
+    },
+    {
+      "enabled": false,
+      "name": "16,4",
+      "text": "",
+      "x": 707.6282958984375,
+      "y": 585.7369384765625
+    },
+    {
+      "enabled": false,
+      "name": "17,4",
+      "text": "",
+      "x": 745.1444702148438,
+      "y": 585.7369384765625
+    },
+    {
+      "enabled": false,
+      "name": "18,4",
+      "text": "",
+      "x": 782.6607055664062,
+      "y": 585.7369384765625
+    },
+    {
+      "enabled": false,
+      "name": "19,4",
+      "text": "",
+      "x": 820.1768798828125,
+      "y": 585.7369384765625
+    },
+    {
+      "enabled": false,
+      "name": "20,4",
+      "text": "",
+      "x": 857.6931762695312,
+      "y": 585.7369384765625
+    },
+    {
+      "enabled": false,
+      "name": "21,4",
+      "text": "",
+      "x": 895.2093505859375,
+      "y": 585.7369384765625
+    },
+    {
+      "enabled": false,
+      "name": "22,4",
+      "text": "",
+      "x": 932.7255249023438,
+      "y": 585.7369384765625
+    },
+    {
+      "enabled": false,
+      "name": "0,5",
+      "text": "",
+      "x": 107.36881256103516,
+      "y": 548.2207641601562
+    },
+    {
+      "enabled": false,
+      "name": "1,5",
+      "text": "",
+      "x": 144.88504028320312,
+      "y": 548.2207641601562
+    },
+    {
+      "enabled": false,
+      "name": "2,5",
+      "text": "",
+      "x": 182.40126037597656,
+      "y": 548.2207641601562
+    },
+    {
+      "enabled": false,
+      "name": "3,5",
+      "text": "",
+      "x": 219.91744995117188,
+      "y": 548.2207641601562
+    },
+    {
+      "enabled": false,
+      "name": "4,5",
+      "text": "",
+      "x": 257.4336853027344,
+      "y": 548.2207641601562
+    },
+    {
+      "enabled": false,
+      "name": "5,5",
+      "text": "",
+      "x": 294.94989013671875,
+      "y": 548.2207641601562
+    },
+    {
+      "enabled": false,
+      "name": "6,5",
+      "text": "",
+      "x": 332.4660949707031,
+      "y": 548.2207641601562
+    },
+    {
+      "enabled": false,
+      "name": "7,5",
+      "text": "",
+      "x": 369.9823303222656,
+      "y": 548.2207641601562
+    },
+    {
+      "enabled": false,
+      "name": "8,5",
+      "text": "",
+      "x": 407.49853515625,
+      "y": 548.2207641601562
+    },
+    {
+      "enabled": false,
+      "name": "9,5",
+      "text": "",
+      "x": 445.0147705078125,
+      "y": 548.2207641601562
+    },
+    {
+      "enabled": false,
+      "name": "10,5",
+      "text": "",
+      "x": 482.5309753417969,
+      "y": 548.2207641601562
+    },
+    {
+      "enabled": false,
+      "name": "11,5",
+      "text": "",
+      "x": 520.0471801757812,
+      "y": 548.2207641601562
+    },
+    {
+      "enabled": false,
+      "name": "12,5",
+      "text": "",
+      "x": 557.5633544921875,
+      "y": 548.2207641601562
+    },
+    {
+      "enabled": false,
+      "name": "13,5",
+      "text": "",
+      "x": 595.0796508789062,
+      "y": 548.2207641601562
+    },
+    {
+      "enabled": false,
+      "name": "14,5",
+      "text": "",
+      "x": 632.5958251953125,
+      "y": 548.2207641601562
+    },
+    {
+      "enabled": false,
+      "name": "15,5",
+      "text": "",
+      "x": 670.112060546875,
+      "y": 548.2207641601562
+    },
+    {
+      "enabled": false,
+      "name": "16,5",
+      "text": "",
+      "x": 707.6282958984375,
+      "y": 548.2207641601562
+    },
+    {
+      "enabled": false,
+      "name": "17,5",
+      "text": "",
+      "x": 745.1444702148438,
+      "y": 548.2207641601562
+    },
+    {
+      "enabled": false,
+      "name": "18,5",
+      "text": "",
+      "x": 782.6607055664062,
+      "y": 548.2207641601562
+    },
+    {
+      "enabled": false,
+      "name": "19,5",
+      "text": "",
+      "x": 820.1768798828125,
+      "y": 548.2207641601562
+    },
+    {
+      "enabled": false,
+      "name": "20,5",
+      "text": "",
+      "x": 857.6931762695312,
+      "y": 548.2207641601562
+    },
+    {
+      "enabled": false,
+      "name": "21,5",
+      "text": "",
+      "x": 895.2093505859375,
+      "y": 548.2207641601562
+    },
+    {
+      "enabled": false,
+      "name": "22,5",
+      "text": "",
+      "x": 932.7255249023438,
+      "y": 548.2207641601562
+    },
+    {
+      "enabled": false,
+      "name": "0,6",
+      "text": "",
+      "x": 107.36881256103516,
+      "y": 510.7045593261719
+    },
+    {
+      "enabled": false,
+      "name": "1,6",
+      "text": "",
+      "x": 144.88504028320312,
+      "y": 510.7045593261719
+    },
+    {
+      "enabled": false,
+      "name": "2,6",
+      "text": "",
+      "x": 182.40126037597656,
+      "y": 510.7045593261719
+    },
+    {
+      "enabled": false,
+      "name": "3,6",
+      "text": "",
+      "x": 219.91744995117188,
+      "y": 510.7045593261719
+    },
+    {
+      "enabled": false,
+      "name": "4,6",
+      "text": "",
+      "x": 257.4336853027344,
+      "y": 510.7045593261719
+    },
+    {
+      "enabled": false,
+      "name": "5,6",
+      "text": "",
+      "x": 294.94989013671875,
+      "y": 510.7045593261719
+    },
+    {
+      "enabled": false,
+      "name": "6,6",
+      "text": "",
+      "x": 332.4660949707031,
+      "y": 510.7045593261719
+    },
+    {
+      "enabled": false,
+      "name": "7,6",
+      "text": "",
+      "x": 369.9823303222656,
+      "y": 510.7045593261719
+    },
+    {
+      "enabled": false,
+      "name": "8,6",
+      "text": "",
+      "x": 407.49853515625,
+      "y": 510.7045593261719
+    },
+    {
+      "enabled": false,
+      "name": "9,6",
+      "text": "",
+      "x": 445.0147705078125,
+      "y": 510.7045593261719
+    },
+    {
+      "enabled": false,
+      "name": "10,6",
+      "text": "",
+      "x": 482.5309753417969,
+      "y": 510.7045593261719
+    },
+    {
+      "enabled": false,
+      "name": "11,6",
+      "text": "",
+      "x": 520.0471801757812,
+      "y": 510.7045593261719
+    },
+    {
+      "enabled": false,
+      "name": "12,6",
+      "text": "",
+      "x": 557.5633544921875,
+      "y": 510.7045593261719
+    },
+    {
+      "enabled": false,
+      "name": "13,6",
+      "text": "",
+      "x": 595.0796508789062,
+      "y": 510.7045593261719
+    },
+    {
+      "enabled": false,
+      "name": "14,6",
+      "text": "",
+      "x": 632.5958251953125,
+      "y": 510.7045593261719
+    },
+    {
+      "enabled": false,
+      "name": "15,6",
+      "text": "",
+      "x": 670.112060546875,
+      "y": 510.7045593261719
+    },
+    {
+      "enabled": false,
+      "name": "16,6",
+      "text": "",
+      "x": 707.6282958984375,
+      "y": 510.7045593261719
+    },
+    {
+      "enabled": false,
+      "name": "17,6",
+      "text": "",
+      "x": 745.1444702148438,
+      "y": 510.7045593261719
+    },
+    {
+      "enabled": false,
+      "name": "18,6",
+      "text": "",
+      "x": 782.6607055664062,
+      "y": 510.7045593261719
+    },
+    {
+      "enabled": false,
+      "name": "19,6",
+      "text": "",
+      "x": 820.1768798828125,
+      "y": 510.7045593261719
+    },
+    {
+      "enabled": false,
+      "name": "20,6",
+      "text": "",
+      "x": 857.6931762695312,
+      "y": 510.7045593261719
+    },
+    {
+      "enabled": false,
+      "name": "21,6",
+      "text": "",
+      "x": 895.2093505859375,
+      "y": 510.7045593261719
+    },
+    {
+      "enabled": false,
+      "name": "22,6",
+      "text": "",
+      "x": 932.7255249023438,
+      "y": 510.7045593261719
+    },
+    {
+      "enabled": false,
+      "name": "0,7",
+      "text": "",
+      "x": 107.36881256103516,
+      "y": 473.1883239746094
+    },
+    {
+      "enabled": false,
+      "name": "1,7",
+      "text": "",
+      "x": 144.88504028320312,
+      "y": 473.1883239746094
+    },
+    {
+      "enabled": false,
+      "name": "2,7",
+      "text": "",
+      "x": 182.40126037597656,
+      "y": 473.1883239746094
+    },
+    {
+      "enabled": false,
+      "name": "3,7",
+      "text": "",
+      "x": 219.91744995117188,
+      "y": 473.1883239746094
+    },
+    {
+      "enabled": false,
+      "name": "4,7",
+      "text": "",
+      "x": 257.4336853027344,
+      "y": 473.1883239746094
+    },
+    {
+      "enabled": false,
+      "name": "5,7",
+      "text": "",
+      "x": 294.94989013671875,
+      "y": 473.1883239746094
+    },
+    {
+      "enabled": false,
+      "name": "6,7",
+      "text": "",
+      "x": 332.4660949707031,
+      "y": 473.1883239746094
+    },
+    {
+      "enabled": false,
+      "name": "7,7",
+      "text": "",
+      "x": 369.9823303222656,
+      "y": 473.1883239746094
+    },
+    {
+      "enabled": false,
+      "name": "8,7",
+      "text": "",
+      "x": 407.49853515625,
+      "y": 473.1883239746094
+    },
+    {
+      "enabled": false,
+      "name": "9,7",
+      "text": "",
+      "x": 445.0147705078125,
+      "y": 473.1883239746094
+    },
+    {
+      "enabled": false,
+      "name": "10,7",
+      "text": "",
+      "x": 482.5309753417969,
+      "y": 473.1883239746094
+    },
+    {
+      "enabled": false,
+      "name": "11,7",
+      "text": "",
+      "x": 520.0471801757812,
+      "y": 473.1883239746094
+    },
+    {
+      "enabled": false,
+      "name": "12,7",
+      "text": "",
+      "x": 557.5633544921875,
+      "y": 473.1883239746094
+    },
+    {
+      "enabled": false,
+      "name": "13,7",
+      "text": "",
+      "x": 595.0796508789062,
+      "y": 473.1883239746094
+    },
+    {
+      "enabled": false,
+      "name": "14,7",
+      "text": "",
+      "x": 632.5958251953125,
+      "y": 473.1883239746094
+    },
+    {
+      "enabled": false,
+      "name": "15,7",
+      "text": "",
+      "x": 670.112060546875,
+      "y": 473.1883239746094
+    },
+    {
+      "enabled": false,
+      "name": "16,7",
+      "text": "",
+      "x": 707.6282958984375,
+      "y": 473.1883239746094
+    },
+    {
+      "enabled": false,
+      "name": "17,7",
+      "text": "",
+      "x": 745.1444702148438,
+      "y": 473.1883239746094
+    },
+    {
+      "enabled": false,
+      "name": "18,7",
+      "text": "",
+      "x": 782.6607055664062,
+      "y": 473.1883239746094
+    },
+    {
+      "enabled": false,
+      "name": "19,7",
+      "text": "",
+      "x": 820.1768798828125,
+      "y": 473.1883239746094
+    },
+    {
+      "enabled": false,
+      "name": "20,7",
+      "text": "",
+      "x": 857.6931762695312,
+      "y": 473.1883239746094
+    },
+    {
+      "enabled": false,
+      "name": "21,7",
+      "text": "",
+      "x": 895.2093505859375,
+      "y": 473.1883239746094
+    },
+    {
+      "enabled": false,
+      "name": "22,7",
+      "text": "",
+      "x": 932.7255249023438,
+      "y": 473.1883239746094
+    },
+    {
+      "enabled": false,
+      "name": "0,8",
+      "text": "",
+      "x": 107.36881256103516,
+      "y": 435.6720886230469
+    },
+    {
+      "enabled": false,
+      "name": "1,8",
+      "text": "",
+      "x": 144.88504028320312,
+      "y": 435.6720886230469
+    },
+    {
+      "enabled": false,
+      "name": "2,8",
+      "text": "",
+      "x": 182.40126037597656,
+      "y": 435.6720886230469
+    },
+    {
+      "enabled": false,
+      "name": "3,8",
+      "text": "",
+      "x": 219.91744995117188,
+      "y": 435.6720886230469
+    },
+    {
+      "enabled": false,
+      "name": "4,8",
+      "text": "",
+      "x": 257.4336853027344,
+      "y": 435.6720886230469
+    },
+    {
+      "enabled": false,
+      "name": "5,8",
+      "text": "",
+      "x": 294.94989013671875,
+      "y": 435.6720886230469
+    },
+    {
+      "enabled": false,
+      "name": "6,8",
+      "text": "",
+      "x": 332.4660949707031,
+      "y": 435.6720886230469
+    },
+    {
+      "enabled": false,
+      "name": "7,8",
+      "text": "",
+      "x": 369.9823303222656,
+      "y": 435.6720886230469
+    },
+    {
+      "enabled": false,
+      "name": "8,8",
+      "text": "",
+      "x": 407.49853515625,
+      "y": 435.6720886230469
+    },
+    {
+      "enabled": false,
+      "name": "9,8",
+      "text": "",
+      "x": 445.0147705078125,
+      "y": 435.6720886230469
+    },
+    {
+      "enabled": false,
+      "name": "10,8",
+      "text": "",
+      "x": 482.5309753417969,
+      "y": 435.6720886230469
+    },
+    {
+      "enabled": false,
+      "name": "11,8",
+      "text": "",
+      "x": 520.0471801757812,
+      "y": 435.6720886230469
+    },
+    {
+      "enabled": false,
+      "name": "12,8",
+      "text": "",
+      "x": 557.5633544921875,
+      "y": 435.6720886230469
+    },
+    {
+      "enabled": false,
+      "name": "13,8",
+      "text": "",
+      "x": 595.0796508789062,
+      "y": 435.6720886230469
+    },
+    {
+      "enabled": false,
+      "name": "14,8",
+      "text": "",
+      "x": 632.5958251953125,
+      "y": 435.6720886230469
+    },
+    {
+      "enabled": false,
+      "name": "15,8",
+      "text": "",
+      "x": 670.112060546875,
+      "y": 435.6720886230469
+    },
+    {
+      "enabled": false,
+      "name": "16,8",
+      "text": "",
+      "x": 707.6282958984375,
+      "y": 435.6720886230469
+    },
+    {
+      "enabled": false,
+      "name": "17,8",
+      "text": "",
+      "x": 745.1444702148438,
+      "y": 435.6720886230469
+    },
+    {
+      "enabled": false,
+      "name": "18,8",
+      "text": "",
+      "x": 782.6607055664062,
+      "y": 435.6720886230469
+    },
+    {
+      "enabled": false,
+      "name": "19,8",
+      "text": "",
+      "x": 820.1768798828125,
+      "y": 435.6720886230469
+    },
+    {
+      "enabled": false,
+      "name": "20,8",
+      "text": "",
+      "x": 857.6931762695312,
+      "y": 435.6720886230469
+    },
+    {
+      "enabled": false,
+      "name": "21,8",
+      "text": "",
+      "x": 895.2093505859375,
+      "y": 435.6720886230469
+    },
+    {
+      "enabled": false,
+      "name": "22,8",
+      "text": "",
+      "x": 932.7255249023438,
+      "y": 435.6720886230469
+    },
+    {
+      "enabled": false,
+      "name": "0,9",
+      "text": "",
+      "x": 107.36881256103516,
+      "y": 398.1558837890625
+    },
+    {
+      "enabled": false,
+      "name": "1,9",
+      "text": "",
+      "x": 144.88504028320312,
+      "y": 398.1558837890625
+    },
+    {
+      "enabled": false,
+      "name": "2,9",
+      "text": "",
+      "x": 182.40126037597656,
+      "y": 398.1558837890625
+    },
+    {
+      "enabled": false,
+      "name": "3,9",
+      "text": "",
+      "x": 219.91744995117188,
+      "y": 398.1558837890625
+    },
+    {
+      "enabled": false,
+      "name": "4,9",
+      "text": "",
+      "x": 257.4336853027344,
+      "y": 398.1558837890625
+    },
+    {
+      "enabled": false,
+      "name": "5,9",
+      "text": "",
+      "x": 294.94989013671875,
+      "y": 398.1558837890625
+    },
+    {
+      "enabled": false,
+      "name": "6,9",
+      "text": "",
+      "x": 332.4660949707031,
+      "y": 398.1558837890625
+    },
+    {
+      "enabled": false,
+      "name": "7,9",
+      "text": "",
+      "x": 369.9823303222656,
+      "y": 398.1558837890625
+    },
+    {
+      "enabled": false,
+      "name": "8,9",
+      "text": "",
+      "x": 407.49853515625,
+      "y": 398.1558837890625
+    },
+    {
+      "enabled": false,
+      "name": "9,9",
+      "text": "",
+      "x": 445.0147705078125,
+      "y": 398.1558837890625
+    },
+    {
+      "enabled": false,
+      "name": "10,9",
+      "text": "",
+      "x": 482.5309753417969,
+      "y": 398.1558837890625
+    },
+    {
+      "enabled": false,
+      "name": "11,9",
+      "text": "",
+      "x": 520.0471801757812,
+      "y": 398.1558837890625
+    },
+    {
+      "enabled": false,
+      "name": "12,9",
+      "text": "",
+      "x": 557.5633544921875,
+      "y": 398.1558837890625
+    },
+    {
+      "enabled": false,
+      "name": "13,9",
+      "text": "",
+      "x": 595.0796508789062,
+      "y": 398.1558837890625
+    },
+    {
+      "enabled": false,
+      "name": "14,9",
+      "text": "",
+      "x": 632.5958251953125,
+      "y": 398.1558837890625
+    },
+    {
+      "enabled": false,
+      "name": "15,9",
+      "text": "",
+      "x": 670.112060546875,
+      "y": 398.1558837890625
+    },
+    {
+      "enabled": false,
+      "name": "16,9",
+      "text": "",
+      "x": 707.6282958984375,
+      "y": 398.1558837890625
+    },
+    {
+      "enabled": false,
+      "name": "17,9",
+      "text": "",
+      "x": 745.1444702148438,
+      "y": 398.1558837890625
+    },
+    {
+      "enabled": false,
+      "name": "18,9",
+      "text": "",
+      "x": 782.6607055664062,
+      "y": 398.1558837890625
+    },
+    {
+      "enabled": false,
+      "name": "19,9",
+      "text": "",
+      "x": 820.1768798828125,
+      "y": 398.1558837890625
+    },
+    {
+      "enabled": false,
+      "name": "20,9",
+      "text": "",
+      "x": 857.6931762695312,
+      "y": 398.1558837890625
+    },
+    {
+      "enabled": false,
+      "name": "21,9",
+      "text": "",
+      "x": 895.2093505859375,
+      "y": 398.1558837890625
+    },
+    {
+      "enabled": false,
+      "name": "22,9",
+      "text": "",
+      "x": 932.7255249023438,
+      "y": 398.1558837890625
+    },
+    {
+      "enabled": false,
+      "name": "0,10",
+      "text": "",
+      "x": 107.36881256103516,
+      "y": 360.6396789550781
+    },
+    {
+      "enabled": false,
+      "name": "1,10",
+      "text": "",
+      "x": 144.88504028320312,
+      "y": 360.6396789550781
+    },
+    {
+      "enabled": false,
+      "name": "2,10",
+      "text": "",
+      "x": 182.40126037597656,
+      "y": 360.6396789550781
+    },
+    {
+      "enabled": false,
+      "name": "3,10",
+      "text": "",
+      "x": 219.91744995117188,
+      "y": 360.6396789550781
+    },
+    {
+      "enabled": false,
+      "name": "4,10",
+      "text": "",
+      "x": 257.4336853027344,
+      "y": 360.6396789550781
+    },
+    {
+      "enabled": false,
+      "name": "5,10",
+      "text": "",
+      "x": 294.94989013671875,
+      "y": 360.6396789550781
+    },
+    {
+      "enabled": false,
+      "name": "6,10",
+      "text": "",
+      "x": 332.4660949707031,
+      "y": 360.6396789550781
+    },
+    {
+      "enabled": false,
+      "name": "7,10",
+      "text": "",
+      "x": 369.9823303222656,
+      "y": 360.6396789550781
+    },
+    {
+      "enabled": false,
+      "name": "8,10",
+      "text": "",
+      "x": 407.49853515625,
+      "y": 360.6396789550781
+    },
+    {
+      "enabled": false,
+      "name": "9,10",
+      "text": "",
+      "x": 445.0147705078125,
+      "y": 360.6396789550781
+    },
+    {
+      "enabled": false,
+      "name": "10,10",
+      "text": "",
+      "x": 482.5309753417969,
+      "y": 360.6396789550781
+    },
+    {
+      "enabled": false,
+      "name": "11,10",
+      "text": "",
+      "x": 520.0471801757812,
+      "y": 360.6396789550781
+    },
+    {
+      "enabled": false,
+      "name": "12,10",
+      "text": "",
+      "x": 557.5633544921875,
+      "y": 360.6396789550781
+    },
+    {
+      "enabled": false,
+      "name": "13,10",
+      "text": "",
+      "x": 595.0796508789062,
+      "y": 360.6396789550781
+    },
+    {
+      "enabled": false,
+      "name": "14,10",
+      "text": "",
+      "x": 632.5958251953125,
+      "y": 360.6396789550781
+    },
+    {
+      "enabled": false,
+      "name": "15,10",
+      "text": "",
+      "x": 670.112060546875,
+      "y": 360.6396789550781
+    },
+    {
+      "enabled": false,
+      "name": "16,10",
+      "text": "",
+      "x": 707.6282958984375,
+      "y": 360.6396789550781
+    },
+    {
+      "enabled": false,
+      "name": "17,10",
+      "text": "",
+      "x": 745.1444702148438,
+      "y": 360.6396789550781
+    },
+    {
+      "enabled": false,
+      "name": "18,10",
+      "text": "",
+      "x": 782.6607055664062,
+      "y": 360.6396789550781
+    },
+    {
+      "enabled": false,
+      "name": "19,10",
+      "text": "",
+      "x": 820.1768798828125,
+      "y": 360.6396789550781
+    },
+    {
+      "enabled": false,
+      "name": "20,10",
+      "text": "",
+      "x": 857.6931762695312,
+      "y": 360.6396789550781
+    },
+    {
+      "enabled": false,
+      "name": "21,10",
+      "text": "",
+      "x": 895.2093505859375,
+      "y": 360.6396789550781
+    },
+    {
+      "enabled": false,
+      "name": "22,10",
+      "text": "",
+      "x": 932.7255249023438,
+      "y": 360.6396789550781
+    },
+    {
+      "enabled": false,
+      "name": "0,11",
+      "text": "",
+      "x": 107.36881256103516,
+      "y": 323.12347412109375
+    },
+    {
+      "enabled": false,
+      "name": "1,11",
+      "text": "",
+      "x": 144.88504028320312,
+      "y": 323.12347412109375
+    },
+    {
+      "enabled": false,
+      "name": "2,11",
+      "text": "",
+      "x": 182.40126037597656,
+      "y": 323.12347412109375
+    },
+    {
+      "enabled": false,
+      "name": "3,11",
+      "text": "",
+      "x": 219.91744995117188,
+      "y": 323.12347412109375
+    },
+    {
+      "enabled": false,
+      "name": "4,11",
+      "text": "",
+      "x": 257.4336853027344,
+      "y": 323.12347412109375
+    },
+    {
+      "enabled": false,
+      "name": "5,11",
+      "text": "",
+      "x": 294.94989013671875,
+      "y": 323.12347412109375
+    },
+    {
+      "enabled": false,
+      "name": "6,11",
+      "text": "",
+      "x": 332.4660949707031,
+      "y": 323.12347412109375
+    },
+    {
+      "enabled": false,
+      "name": "7,11",
+      "text": "",
+      "x": 369.9823303222656,
+      "y": 323.12347412109375
+    },
+    {
+      "enabled": false,
+      "name": "8,11",
+      "text": "",
+      "x": 407.49853515625,
+      "y": 323.12347412109375
+    },
+    {
+      "enabled": false,
+      "name": "9,11",
+      "text": "",
+      "x": 445.0147705078125,
+      "y": 323.12347412109375
+    },
+    {
+      "enabled": false,
+      "name": "10,11",
+      "text": "",
+      "x": 482.5309753417969,
+      "y": 323.12347412109375
+    },
+    {
+      "enabled": false,
+      "name": "11,11",
+      "text": "",
+      "x": 520.0471801757812,
+      "y": 323.12347412109375
+    },
+    {
+      "enabled": false,
+      "name": "12,11",
+      "text": "",
+      "x": 557.5633544921875,
+      "y": 323.12347412109375
+    },
+    {
+      "enabled": false,
+      "name": "13,11",
+      "text": "",
+      "x": 595.0796508789062,
+      "y": 323.12347412109375
+    },
+    {
+      "enabled": false,
+      "name": "14,11",
+      "text": "",
+      "x": 632.5958251953125,
+      "y": 323.12347412109375
+    },
+    {
+      "enabled": false,
+      "name": "15,11",
+      "text": "",
+      "x": 670.112060546875,
+      "y": 323.12347412109375
+    },
+    {
+      "enabled": false,
+      "name": "16,11",
+      "text": "",
+      "x": 707.6282958984375,
+      "y": 323.12347412109375
+    },
+    {
+      "enabled": false,
+      "name": "17,11",
+      "text": "",
+      "x": 745.1444702148438,
+      "y": 323.12347412109375
+    },
+    {
+      "enabled": false,
+      "name": "18,11",
+      "text": "",
+      "x": 782.6607055664062,
+      "y": 323.12347412109375
+    },
+    {
+      "enabled": false,
+      "name": "19,11",
+      "text": "",
+      "x": 820.1768798828125,
+      "y": 323.12347412109375
+    },
+    {
+      "enabled": false,
+      "name": "20,11",
+      "text": "",
+      "x": 857.6931762695312,
+      "y": 323.12347412109375
+    },
+    {
+      "enabled": false,
+      "name": "21,11",
+      "text": "",
+      "x": 895.2093505859375,
+      "y": 323.12347412109375
+    },
+    {
+      "enabled": false,
+      "name": "22,11",
+      "text": "",
+      "x": 932.7255249023438,
+      "y": 323.12347412109375
+    },
+    {
+      "enabled": false,
+      "name": "0,12",
+      "text": "",
+      "x": 107.36881256103516,
+      "y": 285.6072998046875
+    },
+    {
+      "enabled": false,
+      "name": "1,12",
+      "text": "",
+      "x": 144.88504028320312,
+      "y": 285.6072998046875
+    },
+    {
+      "enabled": false,
+      "name": "2,12",
+      "text": "",
+      "x": 182.40126037597656,
+      "y": 285.6072998046875
+    },
+    {
+      "enabled": false,
+      "name": "3,12",
+      "text": "",
+      "x": 219.91744995117188,
+      "y": 285.6072998046875
+    },
+    {
+      "enabled": false,
+      "name": "4,12",
+      "text": "",
+      "x": 257.4336853027344,
+      "y": 285.6072998046875
+    },
+    {
+      "enabled": false,
+      "name": "5,12",
+      "text": "",
+      "x": 294.94989013671875,
+      "y": 285.6072998046875
+    },
+    {
+      "enabled": false,
+      "name": "6,12",
+      "text": "",
+      "x": 332.4660949707031,
+      "y": 285.6072998046875
+    },
+    {
+      "enabled": false,
+      "name": "7,12",
+      "text": "",
+      "x": 369.9823303222656,
+      "y": 285.6072998046875
+    },
+    {
+      "enabled": false,
+      "name": "8,12",
+      "text": "",
+      "x": 407.49853515625,
+      "y": 285.6072998046875
+    },
+    {
+      "enabled": false,
+      "name": "9,12",
+      "text": "",
+      "x": 445.0147705078125,
+      "y": 285.6072998046875
+    },
+    {
+      "enabled": false,
+      "name": "10,12",
+      "text": "",
+      "x": 482.5309753417969,
+      "y": 285.6072998046875
+    },
+    {
+      "enabled": false,
+      "name": "11,12",
+      "text": "",
+      "x": 520.0471801757812,
+      "y": 285.6072998046875
+    },
+    {
+      "enabled": false,
+      "name": "12,12",
+      "text": "",
+      "x": 557.5633544921875,
+      "y": 285.6072998046875
+    },
+    {
+      "enabled": false,
+      "name": "13,12",
+      "text": "",
+      "x": 595.0796508789062,
+      "y": 285.6072998046875
+    },
+    {
+      "enabled": false,
+      "name": "14,12",
+      "text": "",
+      "x": 632.5958251953125,
+      "y": 285.6072998046875
+    },
+    {
+      "enabled": false,
+      "name": "15,12",
+      "text": "",
+      "x": 670.112060546875,
+      "y": 285.6072998046875
+    },
+    {
+      "enabled": false,
+      "name": "16,12",
+      "text": "",
+      "x": 707.6282958984375,
+      "y": 285.6072998046875
+    },
+    {
+      "enabled": false,
+      "name": "17,12",
+      "text": "",
+      "x": 745.1444702148438,
+      "y": 285.6072998046875
+    },
+    {
+      "enabled": false,
+      "name": "18,12",
+      "text": "",
+      "x": 782.6607055664062,
+      "y": 285.6072998046875
+    },
+    {
+      "enabled": false,
+      "name": "19,12",
+      "text": "",
+      "x": 820.1768798828125,
+      "y": 285.6072998046875
+    },
+    {
+      "enabled": false,
+      "name": "20,12",
+      "text": "",
+      "x": 857.6931762695312,
+      "y": 285.6072998046875
+    },
+    {
+      "enabled": false,
+      "name": "21,12",
+      "text": "",
+      "x": 895.2093505859375,
+      "y": 285.6072998046875
+    },
+    {
+      "enabled": false,
+      "name": "22,12",
+      "text": "",
+      "x": 932.7255249023438,
+      "y": 285.6072998046875
+    },
+    {
+      "enabled": false,
+      "name": "0,13",
+      "text": "",
+      "x": 107.36881256103516,
+      "y": 248.0909881591797
+    },
+    {
+      "enabled": false,
+      "name": "1,13",
+      "text": "",
+      "x": 144.88504028320312,
+      "y": 248.0909881591797
+    },
+    {
+      "enabled": false,
+      "name": "2,13",
+      "text": "",
+      "x": 182.40126037597656,
+      "y": 248.0909881591797
+    },
+    {
+      "enabled": false,
+      "name": "3,13",
+      "text": "",
+      "x": 219.91744995117188,
+      "y": 248.0909881591797
+    },
+    {
+      "enabled": false,
+      "name": "4,13",
+      "text": "",
+      "x": 257.4336853027344,
+      "y": 248.0909881591797
+    },
+    {
+      "enabled": false,
+      "name": "5,13",
+      "text": "",
+      "x": 294.94989013671875,
+      "y": 248.0909881591797
+    },
+    {
+      "enabled": false,
+      "name": "6,13",
+      "text": "",
+      "x": 332.4660949707031,
+      "y": 248.0909881591797
+    },
+    {
+      "enabled": false,
+      "name": "7,13",
+      "text": "",
+      "x": 369.9823303222656,
+      "y": 248.0909881591797
+    },
+    {
+      "enabled": false,
+      "name": "8,13",
+      "text": "",
+      "x": 407.49853515625,
+      "y": 248.0909881591797
+    },
+    {
+      "enabled": false,
+      "name": "9,13",
+      "text": "",
+      "x": 445.0147705078125,
+      "y": 248.0909881591797
+    },
+    {
+      "enabled": false,
+      "name": "10,13",
+      "text": "",
+      "x": 482.5309753417969,
+      "y": 248.0909881591797
+    },
+    {
+      "enabled": false,
+      "name": "11,13",
+      "text": "",
+      "x": 520.0471801757812,
+      "y": 248.0909881591797
+    },
+    {
+      "enabled": false,
+      "name": "12,13",
+      "text": "",
+      "x": 557.5633544921875,
+      "y": 248.0909881591797
+    },
+    {
+      "enabled": false,
+      "name": "13,13",
+      "text": "",
+      "x": 595.0796508789062,
+      "y": 248.0909881591797
+    },
+    {
+      "enabled": false,
+      "name": "14,13",
+      "text": "",
+      "x": 632.5958251953125,
+      "y": 248.0909881591797
+    },
+    {
+      "enabled": false,
+      "name": "15,13",
+      "text": "",
+      "x": 670.112060546875,
+      "y": 248.0909881591797
+    },
+    {
+      "enabled": false,
+      "name": "16,13",
+      "text": "",
+      "x": 707.6282958984375,
+      "y": 248.0909881591797
+    },
+    {
+      "enabled": false,
+      "name": "17,13",
+      "text": "",
+      "x": 745.1444702148438,
+      "y": 248.0909881591797
+    },
+    {
+      "enabled": false,
+      "name": "18,13",
+      "text": "",
+      "x": 782.6607055664062,
+      "y": 248.0909881591797
+    },
+    {
+      "enabled": false,
+      "name": "19,13",
+      "text": "",
+      "x": 820.1768798828125,
+      "y": 248.0909881591797
+    },
+    {
+      "enabled": false,
+      "name": "20,13",
+      "text": "",
+      "x": 857.6931762695312,
+      "y": 248.0909881591797
+    },
+    {
+      "enabled": false,
+      "name": "21,13",
+      "text": "",
+      "x": 895.2093505859375,
+      "y": 248.0909881591797
+    },
+    {
+      "enabled": false,
+      "name": "22,13",
+      "text": "",
+      "x": 932.7255249023438,
+      "y": 248.0909881591797
+    },
+    {
+      "enabled": false,
+      "name": "0,14",
+      "text": "",
+      "x": 107.36881256103516,
+      "y": 210.5747833251953
+    },
+    {
+      "enabled": false,
+      "name": "1,14",
+      "text": "",
+      "x": 144.88504028320312,
+      "y": 210.5747833251953
+    },
+    {
+      "enabled": false,
+      "name": "2,14",
+      "text": "",
+      "x": 182.40126037597656,
+      "y": 210.5747833251953
+    },
+    {
+      "enabled": false,
+      "name": "3,14",
+      "text": "",
+      "x": 219.91744995117188,
+      "y": 210.5747833251953
+    },
+    {
+      "enabled": false,
+      "name": "4,14",
+      "text": "",
+      "x": 257.4336853027344,
+      "y": 210.5747833251953
+    },
+    {
+      "enabled": false,
+      "name": "5,14",
+      "text": "",
+      "x": 294.94989013671875,
+      "y": 210.5747833251953
+    },
+    {
+      "enabled": false,
+      "name": "6,14",
+      "text": "",
+      "x": 332.4660949707031,
+      "y": 210.5747833251953
+    },
+    {
+      "enabled": false,
+      "name": "7,14",
+      "text": "",
+      "x": 369.9823303222656,
+      "y": 210.5747833251953
+    },
+    {
+      "enabled": false,
+      "name": "8,14",
+      "text": "",
+      "x": 407.49853515625,
+      "y": 210.5747833251953
+    },
+    {
+      "enabled": false,
+      "name": "9,14",
+      "text": "",
+      "x": 445.0147705078125,
+      "y": 210.5747833251953
+    },
+    {
+      "enabled": false,
+      "name": "10,14",
+      "text": "",
+      "x": 482.5309753417969,
+      "y": 210.5747833251953
+    },
+    {
+      "enabled": false,
+      "name": "11,14",
+      "text": "",
+      "x": 520.0471801757812,
+      "y": 210.5747833251953
+    },
+    {
+      "enabled": false,
+      "name": "12,14",
+      "text": "",
+      "x": 557.5633544921875,
+      "y": 210.5747833251953
+    },
+    {
+      "enabled": false,
+      "name": "13,14",
+      "text": "",
+      "x": 595.0796508789062,
+      "y": 210.5747833251953
+    },
+    {
+      "enabled": false,
+      "name": "14,14",
+      "text": "",
+      "x": 632.5958251953125,
+      "y": 210.5747833251953
+    },
+    {
+      "enabled": false,
+      "name": "15,14",
+      "text": "",
+      "x": 670.112060546875,
+      "y": 210.5747833251953
+    },
+    {
+      "enabled": false,
+      "name": "16,14",
+      "text": "",
+      "x": 707.6282958984375,
+      "y": 210.5747833251953
+    },
+    {
+      "enabled": false,
+      "name": "17,14",
+      "text": "",
+      "x": 745.1444702148438,
+      "y": 210.5747833251953
+    },
+    {
+      "enabled": false,
+      "name": "18,14",
+      "text": "",
+      "x": 782.6607055664062,
+      "y": 210.5747833251953
+    },
+    {
+      "enabled": false,
+      "name": "19,14",
+      "text": "",
+      "x": 820.1768798828125,
+      "y": 210.5747833251953
+    },
+    {
+      "enabled": false,
+      "name": "20,14",
+      "text": "",
+      "x": 857.6931762695312,
+      "y": 210.5747833251953
+    },
+    {
+      "enabled": false,
+      "name": "21,14",
+      "text": "",
+      "x": 895.2093505859375,
+      "y": 210.5747833251953
+    },
+    {
+      "enabled": false,
+      "name": "22,14",
+      "text": "",
+      "x": 932.7255249023438,
+      "y": 210.5747833251953
+    },
+    {
+      "enabled": false,
+      "name": "0,15",
+      "text": "",
+      "x": 107.36881256103516,
+      "y": 173.05859375
+    },
+    {
+      "enabled": false,
+      "name": "1,15",
+      "text": "",
+      "x": 144.88504028320312,
+      "y": 173.05859375
+    },
+    {
+      "enabled": false,
+      "name": "2,15",
+      "text": "",
+      "x": 182.40126037597656,
+      "y": 173.05859375
+    },
+    {
+      "enabled": false,
+      "name": "3,15",
+      "text": "",
+      "x": 219.91744995117188,
+      "y": 173.05859375
+    },
+    {
+      "enabled": false,
+      "name": "4,15",
+      "text": "",
+      "x": 257.4336853027344,
+      "y": 173.05859375
+    },
+    {
+      "enabled": false,
+      "name": "5,15",
+      "text": "",
+      "x": 294.94989013671875,
+      "y": 173.05859375
+    },
+    {
+      "enabled": false,
+      "name": "6,15",
+      "text": "",
+      "x": 332.4660949707031,
+      "y": 173.05859375
+    },
+    {
+      "enabled": false,
+      "name": "7,15",
+      "text": "",
+      "x": 369.9823303222656,
+      "y": 173.05859375
+    },
+    {
+      "enabled": false,
+      "name": "8,15",
+      "text": "",
+      "x": 407.49853515625,
+      "y": 173.05859375
+    },
+    {
+      "enabled": false,
+      "name": "9,15",
+      "text": "",
+      "x": 445.0147705078125,
+      "y": 173.05859375
+    },
+    {
+      "enabled": false,
+      "name": "10,15",
+      "text": "",
+      "x": 482.5309753417969,
+      "y": 173.05859375
+    },
+    {
+      "enabled": false,
+      "name": "11,15",
+      "text": "",
+      "x": 520.0471801757812,
+      "y": 173.05859375
+    },
+    {
+      "enabled": false,
+      "name": "12,15",
+      "text": "",
+      "x": 557.5633544921875,
+      "y": 173.05859375
+    },
+    {
+      "enabled": false,
+      "name": "13,15",
+      "text": "",
+      "x": 595.0796508789062,
+      "y": 173.05859375
+    },
+    {
+      "enabled": false,
+      "name": "14,15",
+      "text": "",
+      "x": 632.5958251953125,
+      "y": 173.05859375
+    },
+    {
+      "enabled": false,
+      "name": "15,15",
+      "text": "",
+      "x": 670.112060546875,
+      "y": 173.05859375
+    },
+    {
+      "enabled": false,
+      "name": "16,15",
+      "text": "",
+      "x": 707.6282958984375,
+      "y": 173.05859375
+    },
+    {
+      "enabled": false,
+      "name": "17,15",
+      "text": "",
+      "x": 745.1444702148438,
+      "y": 173.05859375
+    },
+    {
+      "enabled": false,
+      "name": "18,15",
+      "text": "",
+      "x": 782.6607055664062,
+      "y": 173.05859375
+    },
+    {
+      "enabled": false,
+      "name": "19,15",
+      "text": "",
+      "x": 820.1768798828125,
+      "y": 173.05859375
+    },
+    {
+      "enabled": false,
+      "name": "20,15",
+      "text": "",
+      "x": 857.6931762695312,
+      "y": 173.05859375
+    },
+    {
+      "enabled": false,
+      "name": "21,15",
+      "text": "",
+      "x": 895.2093505859375,
+      "y": 173.05859375
+    },
+    {
+      "enabled": false,
+      "name": "22,15",
+      "text": "",
+      "x": 932.7255249023438,
+      "y": 173.05859375
+    },
+    {
+      "enabled": false,
+      "name": "0,16",
+      "text": "",
+      "x": 107.36881256103516,
+      "y": 135.54238891601562
+    },
+    {
+      "enabled": false,
+      "name": "1,16",
+      "text": "",
+      "x": 144.88504028320312,
+      "y": 135.54238891601562
+    },
+    {
+      "enabled": false,
+      "name": "2,16",
+      "text": "",
+      "x": 182.40126037597656,
+      "y": 135.54238891601562
+    },
+    {
+      "enabled": false,
+      "name": "3,16",
+      "text": "",
+      "x": 219.91744995117188,
+      "y": 135.54238891601562
+    },
+    {
+      "enabled": false,
+      "name": "4,16",
+      "text": "",
+      "x": 257.4336853027344,
+      "y": 135.54238891601562
+    },
+    {
+      "enabled": false,
+      "name": "5,16",
+      "text": "",
+      "x": 294.94989013671875,
+      "y": 135.54238891601562
+    },
+    {
+      "enabled": false,
+      "name": "6,16",
+      "text": "",
+      "x": 332.4660949707031,
+      "y": 135.54238891601562
+    },
+    {
+      "enabled": false,
+      "name": "7,16",
+      "text": "",
+      "x": 369.9823303222656,
+      "y": 135.54238891601562
+    },
+    {
+      "enabled": false,
+      "name": "8,16",
+      "text": "",
+      "x": 407.49853515625,
+      "y": 135.54238891601562
+    },
+    {
+      "enabled": false,
+      "name": "9,16",
+      "text": "",
+      "x": 445.0147705078125,
+      "y": 135.54238891601562
+    },
+    {
+      "enabled": false,
+      "name": "10,16",
+      "text": "",
+      "x": 482.5309753417969,
+      "y": 135.54238891601562
+    },
+    {
+      "enabled": false,
+      "name": "11,16",
+      "text": "",
+      "x": 520.0471801757812,
+      "y": 135.54238891601562
+    },
+    {
+      "enabled": false,
+      "name": "12,16",
+      "text": "",
+      "x": 557.5633544921875,
+      "y": 135.54238891601562
+    },
+    {
+      "enabled": false,
+      "name": "13,16",
+      "text": "",
+      "x": 595.0796508789062,
+      "y": 135.54238891601562
+    },
+    {
+      "enabled": false,
+      "name": "14,16",
+      "text": "",
+      "x": 632.5958251953125,
+      "y": 135.54238891601562
+    },
+    {
+      "enabled": false,
+      "name": "15,16",
+      "text": "",
+      "x": 670.112060546875,
+      "y": 135.54238891601562
+    },
+    {
+      "enabled": false,
+      "name": "16,16",
+      "text": "",
+      "x": 707.6282958984375,
+      "y": 135.54238891601562
+    },
+    {
+      "enabled": false,
+      "name": "17,16",
+      "text": "",
+      "x": 745.1444702148438,
+      "y": 135.54238891601562
+    },
+    {
+      "enabled": false,
+      "name": "18,16",
+      "text": "",
+      "x": 782.6607055664062,
+      "y": 135.54238891601562
+    },
+    {
+      "enabled": false,
+      "name": "19,16",
+      "text": "",
+      "x": 820.1768798828125,
+      "y": 135.54238891601562
+    },
+    {
+      "enabled": false,
+      "name": "20,16",
+      "text": "",
+      "x": 857.6931762695312,
+      "y": 135.54238891601562
+    },
+    {
+      "enabled": false,
+      "name": "21,16",
+      "text": "",
+      "x": 895.2093505859375,
+      "y": 135.54238891601562
+    },
+    {
+      "enabled": false,
+      "name": "22,16",
+      "text": "",
+      "x": 932.7255249023438,
+      "y": 135.54238891601562
+    }
+  ]
+}

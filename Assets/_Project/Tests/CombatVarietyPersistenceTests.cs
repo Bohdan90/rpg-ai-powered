@@ -59,7 +59,7 @@ namespace RPG.Tests
 
         [Test] public void ConfirmedAreaCanCauseActualMutualEliminationAndReplay()
         {
-            var s=BattleResolver.StartBattle(new[]{BattleTestFixtures.Unit(1,UnitProfile.FireMageTII,x:8,y:8,hp:1),BattleTestFixtures.Unit(2,UnitProfile.HumanWarriorTI,Side.East,9,8,hp:1)},2,new Battlefield(23,17)).State;
+            var s=BattleResolver.StartBattle(new[]{BattleTestFixtures.Unit(1,UnitProfile.FireMageTII,x:8,y:8,hp:1),BattleTestFixtures.Unit(2,UnitProfile.HumanWarriorTI,Side.East,10,8,hp:1)},2,new Battlefield(23,17)).State;
             s=BattleTestFixtures.ToActor(s,new UnitId(1));var j=new BattleJournal(s,"mutual-area","test");
             Assert.That(j.Apply(new CastCommand(new UnitId(1),SpellId.Fireball,new GridPosition(9,8),true)).IsApplied,Is.True);
             Assert.That(j.State.Outcome.Reason,Is.EqualTo(BattleEndReason.MutualElimination));Assert.That(j.State.Outcome.VictorySide,Is.Null);
