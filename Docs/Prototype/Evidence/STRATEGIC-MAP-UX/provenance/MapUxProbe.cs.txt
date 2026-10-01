@@ -1,0 +1,32 @@
+using System;
+using System.IO;
+using System.Linq;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+using UnityEngine.UIElements;
+using RPG.Core;
+using RPG.Presentation;
+[InitializeOnLoad]public static class MapUxProbe
+{
+ const string Root="/private/tmp/strategic-map-ux/";static double last;static string previous="";static VisualElement watched;static bool reloaded;
+ static MapUxProbe(){EditorApplication.update+=Tick;}
+ public static void Launch(){EditorSceneManager.OpenScene("Assets/_Project/Scenes/TacticalGraybox.unity");EditorApplication.EnterPlaymode();}
+ static bool Shown(VisualElement e){for(var v=e;v!=null;v=v.parent)if(v.resolvedStyle.display==DisplayStyle.None||v.resolvedStyle.visibility==Visibility.Hidden)return false;return true;}
+ static void Tick(){if(Application.isBatchMode||!EditorApplication.isPlaying||EditorApplication.timeSinceStartup-last<.15)return;last=EditorApplication.timeSinceStartup;var p=UnityEngine.Object.FindAnyObjectByType<BattlePresenter>();if(p?.HudRoot==null){if(!reloaded){reloaded=true;EditorSceneManager.LoadSceneInPlayMode("Assets/_Project/Scenes/TacticalGraybox.unity",new UnityEngine.SceneManagement.LoadSceneParameters(UnityEngine.SceneManagement.LoadSceneMode.Single));}return;}
+ var game=EditorWindow.GetWindow(Type.GetType("UnityEditor.GameView,UnityEditor"));
+ if(watched!=p.HudRoot){watched=p.HudRoot;watched.RegisterCallback<PointerDownEvent>(e=>File.AppendAllText(Root+"results/pointers.txt",DateTime.UtcNow.ToString("O")+" "+e.position+" "+((VisualElement)e.target).name+"\n"),TrickleDown.TrickleDown);}
+ if(File.Exists(Root+"command.txt")){string c=File.ReadAllText(Root+"command.txt").Trim();File.Delete(Root+"command.txt");
+ if(c=="view"){game.maximized=true;game.Focus();}
+ if(c=="start08")p.StartProductionRoads();if(c=="start07")p.StartSeamless();
+ if(c=="recreate"){EditorSceneManager.LoadSceneInPlayMode("Assets/_Project/Scenes/TacticalGraybox.unity",new UnityEngine.SceneManagement.LoadSceneParameters(UnityEngine.SceneManagement.LoadSceneMode.Single));return;}
+ if(c.StartsWith("scroll:")){var e=p.HudRoot.Q(c.Substring(7));e?.GetFirstAncestorOfType<ScrollView>()?.ScrollTo(e);}
+ if(c.StartsWith("focus:")){var a=c.Substring(6);p.SeamlessMap?.Focus(new WorldAddress(a[0]=='A'?WorldId.Frontier:WorldId.StoneValley,int.Parse(a.Substring(1))));}
+ if(c.StartsWith("load:"))p.LoadDuel(c.Substring(5));
+ }
+ var w=p.Duel;var d=new Data{gx=game.position.x,gy=game.position.y,gw=game.position.width,rw=p.HudRoot.worldBound.width,rh=p.HudRoot.worldBound.height,persistentPath=Application.persistentDataPath,focus=EditorWindow.focusedWindow?.titleContent.text,world=w!=null&&w.CanSave?w.CaptureSave():null,hash=w!=null&&w.CanSave?w.CaptureSave().checksum:"",buttons=p.HudRoot.Query<Button>().ToList().Where(b=>Shown(b)&&b.enabledInHierarchy&&b.worldBound.width>0).Select(b=>new Btn{name=b.name,text=b.text,x=b.worldBound.center.x,y=b.worldBound.center.y}).ToArray(),hud=string.Join("\n",p.HudRoot.Query<Label>().ToList().Where(Shown).Select(l=>l.text))};
+ string json=JsonUtility.ToJson(d);File.WriteAllText(Root+"state.json",json);if(d.hash!=previous){previous=d.hash;File.AppendAllText(Root+"results/gui-trace.jsonl",json+"\n");}
+ }
+ [Serializable]class Btn{public string name,text;public float x,y;}
+ [Serializable]class Data{public float gx,gy,gw,rw,rh;public string persistentPath,focus,hash,hud;public CrossroadsSaveData world;public Btn[] buttons;}
+}

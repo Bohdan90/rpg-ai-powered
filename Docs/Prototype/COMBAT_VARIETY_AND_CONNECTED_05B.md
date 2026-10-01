@@ -150,3 +150,8 @@ Fresh combined07 regression628 EditMode+84 PlayMode=712PASS,0failed/0skipped; ex
 ### INPUT03 GUI follow-up with document54
 
 At unchanged game implementation `1d101cf`, controlled real OS-input Fire/Ice/HH, Exhausted/Freeze and pin/cancel probes completed. Connected B joint battle retained Fireball use1 through Escape, aftermath and save/recreate/load. Previous INPUT03 NOT RUN is superseded; no repeat of old N/V, no new spell/economy changes. See `TACTICAL_INPUT_03.md` and `Evidence/54/manual-followup/`. Main remains20c7f76; no merge/push.
+
+
+## 2026-10-01 — Tactical UX companion delta
+
+Implemented in isolated `feature/strategic-map-ux@b526beb` alongside Production Roads08; main26e0f9a not changed. Protection/readable outcomes and deterministic two-click Move→Close Heal use existing rules. Fire3-line/Ice8-target asymmetry preserved. No Ward/persistent Barrier runtime source exists, so those cases are N/A; no class/number/routing changes. Details and actual GUI/focused coverage: `TACTICAL_UX_COMPANION.md`. Fresh combined full regression: 663 EditMode +91 PlayMode =754 PASS,0failed/skipped; exact XML/config provenance in `Evidence/STRATEGIC-MAP-UX/validation-manifest.json`. No final balance/player acceptance. NO PUSH.

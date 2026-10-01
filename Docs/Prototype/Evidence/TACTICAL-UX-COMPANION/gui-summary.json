@@ -1,0 +1,9 @@
+{
+  "method": "Controlled initial ConfigureBattle fixtures; all actions/activation changes actual OS mouse input, separate editor; no fabricated outcome. Ward/Persistent Barrier absent from runtime and not introduced.",
+  "T1": "PASS for implemented Armor + Temporary Barrier, damage + recipient expiry. Ward N/A.",
+  "T2": "PASS Fire3-cell multi-unit line/allied warning vs Ice range8 single target.",
+  "T3": "PASS first preview pure; ally at distance5 reached in4 Movement then HP10→24; distance7 refused without movement;1 source use.",
+  "T4": "PASS Miss, Guard, Barrier6 absorption+HP4, Armor4+HP8, Heal14, Burn1; actual actor/target/action. Ward N/A.",
+  "finalInspectionCleanup": "Last null-hover reset and connected-feed clear covered by focused/full tests; no new mouse-run claim for these final display-only corrections.",
+  "artifacts": "gui/final-t*.png; paired compressed states; pointer/input logs; provenance/MapUxProbe.cs.txt"
+}

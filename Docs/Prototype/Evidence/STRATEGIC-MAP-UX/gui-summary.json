@@ -1,0 +1,50 @@
+{
+  "G1": {
+    "status": "PASS",
+    "origin": "ordinary ProductionRoads08, seed20261001, real OS mouse input",
+    "firstRoute": [
+      2,
+      3,
+      30,
+      31,
+      41,
+      42,
+      37,
+      19
+    ],
+    "partial": {
+      "node": 42,
+      "tempo": 5,
+      "refresh": 1
+    },
+    "opponentTurn": "same position and Tempo",
+    "resume": {
+      "node": 19,
+      "tempo": 55,
+      "refresh": 2
+    },
+    "finalBuildRepeat": "final-g1-*"
+  },
+  "G2": {
+    "status": "PASS",
+    "cancel": "A08 order removed at A42; new A24 destination issued",
+    "hostile": "A25 -> A12 order paused at A55 when enemy first became observable; remained at A55 on next own activation",
+    "secondDiscovery": "New A08 route paused at A54 after another enemy became observable; player explicitly reissued",
+    "alreadyVisibleContact": "additional automated test, not a separate GUI claim"
+  },
+  "G3": {
+    "status": "PASS",
+    "08": "R3 A24,30Tempo -> unknown destination preview (hash unchanged) -> explicit confirm -> B01,10Tempo. Same IDs; stable save/recreate/load exact. R4 explicit return to A24.",
+    "final07": "A24,40Tempo -> Confirm Traverse Portal -> B01,20Tempo; final-g3-*"
+  },
+  "G4": {
+    "status": "PASS",
+    "ordinaryTour": "West initial A02 -> Iron A19 -> A42 -> Pine Portal A24 -> B01 -> A24 -> A18 -> A14 -> A05 -> A04 -> A31 -> A30 -> A29 -> A24 (complete Uplands loop) -> Mine A06 -> A32/A33/A34/A35/A53 -> A59 -> Ash Portal A25 -> A59/A58/A60/A55 (hostile pause) -> A54 (second pause) -> A57/A56/A09/A43/A50/A51/A48 -> Waystation A08",
+    "endRefresh": 13,
+    "supply": "prolonged deliberate tour becomes Hungry; R13 Waystation stock24->18, carried Provisions0->6",
+    "pendingSaveLoad": "exact checksum, then resumed to A50 and A08 on lawful own activations",
+    "camera": "real pan/wheel, unchanged simulation hash",
+    "limits": "human slots driven by agent; not PLAYER ACCEPTED, not competitive balance proof"
+  },
+  "saveLoadProvenance": "Physical Save click; public presentation recreate/load helpers. Not mouse-only Load UI."
+}

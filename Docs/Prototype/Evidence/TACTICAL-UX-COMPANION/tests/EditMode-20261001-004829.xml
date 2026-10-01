@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="13" result="Passed" total="13" passed="13" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-10-01 04:48:38Z" end-time="2026-10-01 04:48:39Z" duration="0.0751676">
+  <test-suite type="TestSuite" id="1000" name="Strategic-Map-UX" fullname="Strategic-Map-UX" runstate="Runnable" testcasecount="663" result="Passed" start-time="2026-10-01 04:48:38Z" end-time="2026-10-01 04:48:39Z" duration="0.075168" total="13" passed="13" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1797" name="RPG.Tests.dll" fullname="/Users/bohdanskrypka/UnityProjects/Convergence/Strategic-Map-UX/Library/ScriptAssemblies/RPG.Tests.dll" runstate="Runnable" testcasecount="663" result="Passed" start-time="2026-10-01 04:48:38Z" end-time="2026-10-01 04:48:39Z" duration="0.070125" total="13" passed="13" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="53029" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1798" name="RPG" fullname="RPG" runstate="Runnable" testcasecount="663" result="Passed" start-time="2026-10-01 04:48:38Z" end-time="2026-10-01 04:48:39Z" duration="0.068364" total="13" passed="13" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1801" name="Tests" fullname="RPG.Tests" runstate="Runnable" testcasecount="641" result="Passed" start-time="2026-10-01 04:48:38Z" end-time="2026-10-01 04:48:39Z" duration="0.063696" total="13" passed="13" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestFixture" id="1329" name="HealApproachTests" fullname="RPG.Tests.HealApproachTests" classname="RPG.Tests.HealApproachTests" runstate="Runnable" testcasecount="13" result="Passed" start-time="2026-10-01 04:48:38Z" end-time="2026-10-01 04:48:39Z" duration="0.055196" total="13" passed="13" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1342" name="AdjacentAndSelfRemainDirectAndSealedRecipientIsUnreachable" fullname="RPG.Tests.HealApproachTests.AdjacentAndSelfRemainDirectAndSealedRecipientIsUnreachable" methodname="AdjacentAndSelfRemainDirectAndSealedRecipientIsUnreachable" classname="RPG.Tests.HealApproachTests" runstate="Runnable" seed="349601741" result="Passed" start-time="2026-10-01 04:48:38Z" end-time="2026-10-01 04:48:38Z" duration="0.024254" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1344" name="ApproachOaMayKillCasterBeforeAnyHealAndReplayStaysExact" fullname="RPG.Tests.HealApproachTests.ApproachOaMayKillCasterBeforeAnyHealAndReplayStaysExact" methodname="ApproachOaMayKillCasterBeforeAnyHealAndReplayStaysExact" classname="RPG.Tests.HealApproachTests" runstate="Runnable" seed="433733886" result="Passed" start-time="2026-10-01 04:48:38Z" end-time="2026-10-01 04:48:39Z" duration="0.007794" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1341" name="BlockedPlanNeverMutates" fullname="RPG.Tests.HealApproachTests.BlockedPlanNeverMutates" classname="RPG.Tests.HealApproachTests" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-10-01 04:48:39Z" end-time="2026-10-01 04:48:39Z" duration="0.002406" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1334" name="BlockedPlanNeverMutates(&quot;action&quot;)" fullname="RPG.Tests.HealApproachTests.BlockedPlanNeverMutates(&quot;action&quot;)" methodname="BlockedPlanNeverMutates" classname="RPG.Tests.HealApproachTests" runstate="Runnable" seed="1910501118" result="Passed" start-time="2026-10-01 04:48:39Z" end-time="2026-10-01 04:48:39Z" duration="0.000290" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1335" name="BlockedPlanNeverMutates(&quot;budget&quot;)" fullname="RPG.Tests.HealApproachTests.BlockedPlanNeverMutates(&quot;budget&quot;)" methodname="BlockedPlanNeverMutates" classname="RPG.Tests.HealApproachTests" runstate="Runnable" seed="1913031921" result="Passed" start-time="2026-10-01 04:48:39Z" end-time="2026-10-01 04:48:39Z" duration="0.000075" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1336" name="BlockedPlanNeverMutates(&quot;silence&quot;)" fullname="RPG.Tests.HealApproachTests.BlockedPlanNeverMutates(&quot;silence&quot;)" methodname="BlockedPlanNeverMutates" classname="RPG.Tests.HealApproachTests" runstate="Runnable" seed="506884001" result="Passed" start-time="2026-10-01 04:48:39Z" end-time="2026-10-01 04:48:39Z" duration="0.000140" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1337" name="BlockedPlanNeverMutates(&quot;exhausted&quot;)" fullname="RPG.Tests.HealApproachTests.BlockedPlanNeverMutates(&quot;exhausted&quot;)" methodname="BlockedPlanNeverMutates" classname="RPG.Tests.HealApproachTests" runstate="Runnable" seed="1548750935" result="Passed" start-time="2026-10-01 04:48:39Z" end-time="2026-10-01 04:48:39Z" duration="0.000069" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1338" name="BlockedPlanNeverMutates(&quot;frozen&quot;)" fullname="RPG.Tests.HealApproachTests.BlockedPlanNeverMutates(&quot;frozen&quot;)" methodname="BlockedPlanNeverMutates" classname="RPG.Tests.HealApproachTests" runstate="Runnable" seed="2064266380" result="Passed" start-time="2026-10-01 04:48:39Z" end-time="2026-10-01 04:48:39Z" duration="0.000108" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1339" name="BlockedPlanNeverMutates(&quot;movement&quot;)" fullname="RPG.Tests.HealApproachTests.BlockedPlanNeverMutates(&quot;movement&quot;)" methodname="BlockedPlanNeverMutates" classname="RPG.Tests.HealApproachTests" runstate="Runnable" seed="871773105" result="Passed" start-time="2026-10-01 04:48:39Z" end-time="2026-10-01 04:48:39Z" duration="0.000394" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1340" name="BlockedPlanNeverMutates(&quot;full&quot;)" fullname="RPG.Tests.HealApproachTests.BlockedPlanNeverMutates(&quot;full&quot;)" methodname="BlockedPlanNeverMutates" classname="RPG.Tests.HealApproachTests" runstate="Runnable" seed="1299520919" result="Passed" start-time="2026-10-01 04:48:39Z" end-time="2026-10-01 04:48:39Z" duration="0.000072" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-case id="1343" name="DeathOrChangedTargetAfterMovementCannotCreateAFreeHeal" fullname="RPG.Tests.HealApproachTests.DeathOrChangedTargetAfterMovementCannotCreateAFreeHeal" methodname="DeathOrChangedTargetAfterMovementCannotCreateAFreeHeal" classname="RPG.Tests.HealApproachTests" runstate="Runnable" seed="1961785738" result="Passed" start-time="2026-10-01 04:48:39Z" end-time="2026-10-01 04:48:39Z" duration="0.001304" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1333" name="PurePlanExactLimitAndRealMoveCast" fullname="RPG.Tests.HealApproachTests.PurePlanExactLimitAndRealMoveCast" classname="RPG.Tests.HealApproachTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-10-01 04:48:39Z" end-time="2026-10-01 04:48:39Z" duration="0.013456" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1330" name="PurePlanExactLimitAndRealMoveCast(8,2)" fullname="RPG.Tests.HealApproachTests.PurePlanExactLimitAndRealMoveCast(8,2)" methodname="PurePlanExactLimitAndRealMoveCast" classname="RPG.Tests.HealApproachTests" runstate="Runnable" seed="2062466427" result="Passed" start-time="2026-10-01 04:48:39Z" end-time="2026-10-01 04:48:39Z" duration="0.010216" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1331" name="PurePlanExactLimitAndRealMoveCast(10,4)" fullname="RPG.Tests.HealApproachTests.PurePlanExactLimitAndRealMoveCast(10,4)" methodname="PurePlanExactLimitAndRealMoveCast" classname="RPG.Tests.HealApproachTests" runstate="Runnable" seed="849215113" result="Passed" start-time="2026-10-01 04:48:39Z" end-time="2026-10-01 04:48:39Z" duration="0.002172" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1332" name="PurePlanExactLimitAndRealMoveCast(11,-1)" fullname="RPG.Tests.HealApproachTests.PurePlanExactLimitAndRealMoveCast(11,-1)" methodname="PurePlanExactLimitAndRealMoveCast" classname="RPG.Tests.HealApproachTests" runstate="Runnable" seed="885375712" result="Passed" start-time="2026-10-01 04:48:39Z" end-time="2026-10-01 04:48:39Z" duration="0.000683" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: /tmp/strategic-map-ux/test-preferences/Library/Application Support/RPGPrototypeIsolated/Strategic-Map-UX/TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>
