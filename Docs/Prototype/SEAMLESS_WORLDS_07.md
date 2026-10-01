@@ -83,3 +83,12 @@ Additional labelled entries: **Temporary Route - CONTROLLED**, **Opaque edge - C
 Nine original main scene/settings/metadata files are byte-identical to their captured baseline; main saves are audited in the manifest. Separate company/product `RPGPrototypeIsolated/Seamless-Worlds-07`; independent batch/GUI/player preference roots under `/private/tmp/seamless-worlds-07`. Main settings were never overwritten. The main EditorBuildSettings scene entry was copied only as an uncommitted local test dependency; six legacy generated metadata counterparts remain untracked. Isolated ProjectSettings/company/product are deliberate environment configuration; do not copy them wholesale to main.
 
 No deliberate numerical/gameplay deviation from54 identified. Main delivery is pending by design. Required controlled S1–S6 and short INPUT03 GUI checks are completed above. Coordinator acceptance, main delivery and player evaluation remain pending; independent validation is not permission to overwrite the active main session. Coordinator review precedes player evaluation; no next package, no push.
+
+
+## 2026-09-30 — authorized delivery of Seamless Worlds 07 to main
+
+User explicitly requested all completed feature work in the main project. Delivery starts at `My project/develop@20c7f76347a7fd39c45c54542443f0113c7880c5`, source `feature/seamless-worlds-07@af2bd7cf0883755012edd09fa053254f6962893d`. Integration retains the main tracked PlayerSettings rather than importing the isolated company/product/define settings. All gameplay, tests and scenario assets are identical to the validated feature. Existing main local scene/build/settings and six metadata files remain outside this commit; save/preferences namespaces are not migrated.
+
+Validation provenance: source gameplay `1d101cf`, full post-GUI **628 EditMode +84 PlayMode =712 PASS;0failed;0skipped**, recorded in `Evidence/54/tests/EditMode-20260930-222651.xml` and `PlayMode-20260930-222844.xml`. These are the completed feature runs, not a new main test run. S1–S6 controlled GUI evidence is in `Evidence/54/manual-followup/`; integrated player acceptance remains pending. No gameplay changes were introduced for delivery.
+
+Main launch after Unity finishes import: **Gate C → Seamless Worlds 07 → West starts** (East and school variants also available). Open the ordinary **My project**; the isolated launcher is not needed. No forced editor restart and NO PUSH. This delivery supersedes earlier main-pending status; historical entries retain their provenance.

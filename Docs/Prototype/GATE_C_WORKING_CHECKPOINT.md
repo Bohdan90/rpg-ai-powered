@@ -289,3 +289,12 @@ Fresh post-GUI **628 EditMode +84 PlayMode =712 PASS;0failed;0skipped**, after r
 20 actual OS pan/wheel sequences each for one/two known worlds: GameObjects882→882, unchanged simulation hashes; sampled frame medians~1.00/1.10ms, maxima~6.61/6.33ms, no measured display-FPS guarantee. Fresh-view construction snapshot~25ms in warm editor (coarse100ms observer). Long holding eventually exhausted supplies; small labels require zoom. No balance retune or playerKEEP inferred.
 
 Nine protected main files and22 baseline save files remain byte-identical. Separate roots retained, independent GUI closed normally, main left running. Seven pre-existing feature status entries retained. Coordinator review, main delivery and integrated player evaluation are next; no further package begun. NO PUSH.
+
+
+## 2026-09-30 — authorized delivery of Seamless Worlds 07 to main
+
+User explicitly requested all completed feature work in the main project. Delivery starts at `My project/develop@20c7f76347a7fd39c45c54542443f0113c7880c5`, source `feature/seamless-worlds-07@af2bd7cf0883755012edd09fa053254f6962893d`. Integration retains the main tracked PlayerSettings rather than importing the isolated company/product/define settings. All gameplay, tests and scenario assets are identical to the validated feature. Existing main local scene/build/settings and six metadata files remain outside this commit; save/preferences namespaces are not migrated.
+
+Validation provenance: source gameplay `1d101cf`, full post-GUI **628 EditMode +84 PlayMode =712 PASS;0failed;0skipped**, recorded in `Evidence/54/tests/EditMode-20260930-222651.xml` and `PlayMode-20260930-222844.xml`. These are the completed feature runs, not a new main test run. S1–S6 controlled GUI evidence is in `Evidence/54/manual-followup/`; integrated player acceptance remains pending. No gameplay changes were introduced for delivery.
+
+Main launch after Unity finishes import: **Gate C → Seamless Worlds 07 → West starts** (East and school variants also available). Open the ordinary **My project**; the isolated launcher is not needed. No forced editor restart and NO PUSH. This delivery supersedes earlier main-pending status; historical entries retain their provenance.
