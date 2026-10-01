@@ -398,3 +398,9 @@ Runtime now one canonical SkinnedMeshRenderer; explicit candidate swapping prese
 Rendered Unity close/tactical/far, all five clips, hand/shield views, Attack extrema and frozen-pose LOD comparisons inspected. Fixed grip reads closed, no obvious wrist penetration, outside-forearm shield stable; minor close faceting/contact remains. Controlled automated real-Unity playback, not claimed mouse-driven match. Focused11Edit+1Play PASS; **fresh full719EditMode+95PlayMode=814PASS,0failed/skipped**, validated source/config hashes unchanged. Evidence/report: [HW_TI_VISUAL_FIX.md](HW_TI_VISUAL_FIX.md), Evidence/HW_TI_VISUAL_FIX.
 
 Launch same Gate C→Visual Asset Lab→HW_TI Meshy Trial01; Right Grip/Shield/Boots views and labelled102k/75k/50k/50kweighted buttons. Protected9mainfiles/22saves hash-identical; main Unity untouched, user-freed feature editor closed normally. Existing local2settings+6metadata excluded. **HW_TI VISUAL FIX TECHNICAL PASS / NEEDS PLAYER FINAL VISUAL REVIEW**. No PLAYER ACCEPTED/Shared promotion. STOP.
+
+## 2026-10-01 — shield height player correction
+
+Base3b7e0e6, feature/hw-ti-engine. User reviewed provisional12cm lowering and requested half: final single6cm socket+Y toward-hand translation, regenerated prefab. Rotation/size/model/LOD/clips unchanged; main untouched. Commit containing this entry owns the delta.
+
+Follow-up validation: focused11EditMode+1PlayMode; fresh full719EditMode+95PlayMode=814PASS,0failed/skipped. XML provenance in Evidence/HW_TI_SHIELD_HEIGHT/validation.json. No new GUI visual PASS claimed for6cm; user review pending. Protected9mainfiles and22saves/replays hash-unchanged. No merge/push.

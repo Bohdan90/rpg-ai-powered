@@ -75,3 +75,9 @@ Exact changed systems: `Models/HW_TI.fbx`; derived prefab/controller/scene; `Edi
 Launch unchanged: **Strategic-Map-UX → Gate C → Visual Asset Lab → HW_TI Meshy Trial01**. Buttons now include Right Grip, Shield Front/Outside/Opposite/Back, Boots and labelled102k/75k/50k/50kweighted/25kfar. Camera presets avoid needing Scene-view orbit for review. `bash Tools/HW_TI/launch-lab.sh` opens with isolated data/preferences when the project is closed.
 
 Protected9mainfiles/22saved-replay files remain hash-identical. Main Unity untouched. User explicitly freed the feature lab; only that editor was closed normally for import/tests. Feature's two local settings modifications+six pre-existing metadata remain excluded from commit. Separate validation data/preferences maintained. No merge, NO PUSH. Body remains unit-scoped; socket conventions are REUSE CANDIDATE only. STOP for coordinator/player final review.
+
+## Shield height follow-up — 2026-10-01
+
+Player requested better finger coverage, then reviewed a provisional 12 cm lowering and requested exactly half. Final delta from base `3b7e0e6`: one 6 cm socket-local +Y translation toward the hand, baked by the existing prefab builder. Shield rotation, dimensions, outside-forearm mounting, model, LODs and clips are unchanged. No per-clip offsets or additional geometry. This follows the player's positional correction; it is not a claim of final visual acceptance or complete finger occlusion in every pose. Main/develop remains untouched.
+
+Follow-up validation: focused11EditMode+1PlayMode; fresh full719EditMode+95PlayMode=814PASS,0failed/skipped. XML provenance in Evidence/HW_TI_SHIELD_HEIGHT/validation.json. No new GUI visual PASS claimed for6cm; user review pending. Protected9mainfiles and22saves/replays hash-unchanged. No merge/push.

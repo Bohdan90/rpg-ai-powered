@@ -1,0 +1,31 @@
+{
+  "base": "3b7e0e6",
+  "shield_translation_m": 0.06,
+  "tests": [
+    {
+      "source": "/private/tmp/strategic-map-ux/logs/EditMode-20261001-152902.xml",
+      "passed": "11",
+      "failed": "0",
+      "skipped": "0"
+    },
+    {
+      "source": "/private/tmp/strategic-map-ux/logs/PlayMode-20261001-152926.xml",
+      "passed": "1",
+      "failed": "0",
+      "skipped": "0"
+    },
+    {
+      "source": "/private/tmp/strategic-map-ux/logs/EditMode-20261001-152949.xml",
+      "passed": "719",
+      "failed": "0",
+      "skipped": "0"
+    },
+    {
+      "source": "/private/tmp/strategic-map-ux/logs/PlayMode-20261001-153129.xml",
+      "passed": "95",
+      "failed": "0",
+      "skipped": "0"
+    }
+  ],
+  "visual_review": "Pending user review; no new GUI visual PASS claimed"
+}

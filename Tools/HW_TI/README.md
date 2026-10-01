@@ -14,6 +14,8 @@ on that renderer and keeps the same Humanoid skeleton/Avatar. No runtime hand mo
 Socket calibration references are exported from the DCC bind pose. Build resolves Humanoid
 RightHand/LeftLowerArm, converts those calibrated world frames once into bone-local sockets,
 and aligns the explicit GripPoint/ShieldMountPoint. No per-animation attachment adjustments.
+Player-review coverage correction adds a single 6 cm translation along shield socket +Y
+(toward the wrist/fingers) during Build, preserving the calibrated outside-facing orientation.
 Prop convention: local +Z = blade direction / shield outward normal; +Y = calibrated up;
 GripPoint is center of the28mm diameter,130mm-long temporary handle. Weapon root is deliberately
 offset from GripPoint, exercising alignment instead of depending on an accidental mesh origin.

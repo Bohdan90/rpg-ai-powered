@@ -53,6 +53,8 @@ namespace RPG.VisualTrial.Editor
    Transform Find(string n)=>root.GetComponentsInChildren<Transform>().Single(t=>t.name==n);
    var origin=Find(sword?"GripCalibration":"ShieldCalibration");var forward=Find(sword?"GripBladeAxis":"ShieldNormalAxis");var up=Find(sword?"GripUpAxis":"ShieldUpAxis");
    var socket=new GameObject(socketName).transform;socket.SetParent(bone,false);socket.position=origin.position;socket.rotation=Quaternion.LookRotation(forward.position-origin.position,up.position-origin.position);socket.localScale=new Vector3(1/bone.lossyScale.x,1/bone.lossyScale.y,1/bone.lossyScale.z);
+   // One bind-pose adjustment toward the hand; shield remains forearm-mounted in every clip.
+   if(!sword)socket.position+=socket.up*.06f;
    var propRoot=new GameObject(sword?"TEMP Sword":"TEMP Shield").transform;propRoot.SetParent(socket,false);
    var marker=new GameObject(sword?"GripPoint":"ShieldMountPoint").transform;marker.SetParent(propRoot,false);marker.localPosition=new Vector3(0,0,sword?-.4f:-.08f);
    void Part(string name,PrimitiveType type,Vector3 position,Vector3 scale,Quaternion rotation){var p=GameObject.CreatePrimitive(type);p.name=name;p.transform.SetParent(propRoot,false);p.transform.localPosition=position;p.transform.localRotation=rotation;p.transform.localScale=scale;p.GetComponent<Renderer>().sharedMaterial=mat;UnityEngine.Object.DestroyImmediate(p.GetComponent<Collider>());}
