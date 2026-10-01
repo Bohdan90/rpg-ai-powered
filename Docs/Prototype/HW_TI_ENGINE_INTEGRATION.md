@@ -86,3 +86,7 @@ Main9 protected files and22 saved/replay files remain SHA256-identical ([protect
 Feature's existing EditorBuildSettings and6untracked persistence metadata remain uncommitted; Unity additionally adds local `APP_UI_EDITOR_ONLY` scripting symbol in feature ProjectSettings, excluded from delivery. Main retains its exact9 unrelated entries. NO PUSH, no merge.
 
 Body/head/gambeson remain **unit-scoped**. Skeleton/Avatar and clips are **REUSE CANDIDATE** only: Humanoid mapping and shared-avatar clip reuse work; retargeting onto a second distinct consumer is NOT RUN. Nothing promoted to Shared. Run not integrated (optional). No production animation polish, final props, gameplay timing or mass replacement. Primary remaining review questions: small tactical silhouette, existing face/cloth quality, open grip close-up, decimation cracks. No substantial manual art repair was needed for this engine proof.
+
+## 2026-10-01 player-review correction
+
+The preceding report is historical proof97fd3d1. Player rejected wrist penetration, wrong-side shield and open sword hand; its generic attachment assessment is **superseded**. Bounded follow-up now uses Humanoid RightHand+GripPoint, outside LeftLowerArm+ShieldMountPoint, one baked Grip_R correction (same topology/weights/24bones), one runtime skinned renderer,75k and empirically verified boot-preserving50k candidates. Raw source and this original evidence remain intact. Actual correction, new performance and validation provenance: [HW_TI_VISUAL_FIX.md](HW_TI_VISUAL_FIX.md). No main merge or PLAYER ACCEPTED claim.

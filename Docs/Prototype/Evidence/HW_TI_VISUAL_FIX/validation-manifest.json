@@ -1,0 +1,56 @@
+{
+  "baseHead": "97fd3d18b41fe11ef9e252fe1bd2ee076712c03d",
+  "branch": "feature/hw-ti-engine",
+  "delivery": "Commit containing this manifest",
+  "unity": "6000.6.2f1",
+  "sourceConfigHashes": "validated-files-sha256.json",
+  "configurationNote": "Existing local settings are excluded from delivery; actual tested hashes recorded",
+  "unchangedAfterValidation": true,
+  "runs": [
+    {
+      "scope": "focused",
+      "xml": "EditMode-20261001-144922.xml",
+      "sha256": "6c5b33caff665a736bf16f256e0b506585ac1bfec088db853d5b95744f6bf457",
+      "command": "bash /private/tmp/strategic-map-ux/run-tests.sh EditMode RPG.VisualTrial.Tests",
+      "total": 11,
+      "passed": 11,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "scope": "focused",
+      "xml": "PlayMode-20261001-145001.xml",
+      "sha256": "684cbb0840dd62cb88d0a912a62aac2e0b76b3144a4c7b0b777b5e22389ec96d",
+      "command": "bash /private/tmp/strategic-map-ux/run-tests.sh PlayMode RPG.VisualTrial.PlayTests",
+      "total": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "scope": "full",
+      "xml": "EditMode-20261001-145233.xml",
+      "sha256": "a03e6945a83c0b2bbbd150511908dd3b07103742b41e8599927c27e2d4fb79d1",
+      "command": "bash /private/tmp/strategic-map-ux/run-tests.sh EditMode",
+      "total": 719,
+      "passed": 719,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "scope": "full",
+      "xml": "PlayMode-20261001-145421.xml",
+      "sha256": "39f4671a6647f7d6cdc108de990989c60df81d94d21dc631d59eb8179bb34711",
+      "command": "bash /private/tmp/strategic-map-ux/run-tests.sh PlayMode",
+      "total": 95,
+      "passed": 95,
+      "failed": 0,
+      "skipped": 0
+    }
+  ],
+  "gui": "Actual Unity rendered controlled automated playback and visual inspection; not mouse-driven",
+  "sourceMasterDriveId": "1u95z9yi5VUtpvqcx25eQ9p1K9yqtGcPA",
+  "providerCalls": 0,
+  "manualSculptOperations": 0,
+  "scriptAssistedCorrectiveAssets": 1
+}
