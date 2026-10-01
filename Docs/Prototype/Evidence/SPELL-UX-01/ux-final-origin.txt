@@ -1,0 +1,1 @@
+AUTHORED rare-case initial fixture: ux. All following commands use ordinary GUI input; no result injection.

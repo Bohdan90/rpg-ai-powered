@@ -1,0 +1,1 @@
+Exact Core save snapshot captured during the OS-input N3 match at Refresh 7, before UI readability correction; not a fabricated result. Loaded through ordinary 05A Load button for visual verification.

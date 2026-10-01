@@ -1,0 +1,222 @@
+[
+  {
+    "cpu": "Apple M4 Pro",
+    "gpu": "Apple M4 Pro",
+    "frameMs": 0.9937500357627869,
+    "memory": 395973919,
+    "objects": 882,
+    "simHash": "AMQcRQxc/8R7M/nNF9AiINZuhG2nPy6l1E5mrxtQAtM=",
+    "sw": 2800,
+    "sh": 1732,
+    "inputSequenceSeconds": 1.2183085000142455
+  },
+  {
+    "cpu": "Apple M4 Pro",
+    "gpu": "Apple M4 Pro",
+    "frameMs": 0.9149588942527771,
+    "memory": 395973943,
+    "objects": 882,
+    "simHash": "AMQcRQxc/8R7M/nNF9AiINZuhG2nPy6l1E5mrxtQAtM=",
+    "sw": 2800,
+    "sh": 1732,
+    "inputSequenceSeconds": 1.2204372079577297
+  },
+  {
+    "cpu": "Apple M4 Pro",
+    "gpu": "Apple M4 Pro",
+    "frameMs": 0.9163761138916016,
+    "memory": 395973943,
+    "objects": 882,
+    "simHash": "AMQcRQxc/8R7M/nNF9AiINZuhG2nPy6l1E5mrxtQAtM=",
+    "sw": 2800,
+    "sh": 1732,
+    "inputSequenceSeconds": 1.2287862920202315
+  },
+  {
+    "cpu": "Apple M4 Pro",
+    "gpu": "Apple M4 Pro",
+    "frameMs": 0.9893707633018494,
+    "memory": 395973943,
+    "objects": 882,
+    "simHash": "AMQcRQxc/8R7M/nNF9AiINZuhG2nPy6l1E5mrxtQAtM=",
+    "sw": 2800,
+    "sh": 1732,
+    "inputSequenceSeconds": 1.2349640000611544
+  },
+  {
+    "cpu": "Apple M4 Pro",
+    "gpu": "Apple M4 Pro",
+    "frameMs": 1.0192956924438477,
+    "memory": 395974007,
+    "objects": 882,
+    "simHash": "AMQcRQxc/8R7M/nNF9AiINZuhG2nPy6l1E5mrxtQAtM=",
+    "sw": 2800,
+    "sh": 1732,
+    "inputSequenceSeconds": 1.2201762499753386
+  },
+  {
+    "cpu": "Apple M4 Pro",
+    "gpu": "Apple M4 Pro",
+    "frameMs": 0.9052934050559998,
+    "memory": 395973991,
+    "objects": 882,
+    "simHash": "AMQcRQxc/8R7M/nNF9AiINZuhG2nPy6l1E5mrxtQAtM=",
+    "sw": 2800,
+    "sh": 1732,
+    "inputSequenceSeconds": 1.2348577089142054
+  },
+  {
+    "cpu": "Apple M4 Pro",
+    "gpu": "Apple M4 Pro",
+    "frameMs": 1.3854591846466064,
+    "memory": 395973583,
+    "objects": 882,
+    "simHash": "AMQcRQxc/8R7M/nNF9AiINZuhG2nPy6l1E5mrxtQAtM=",
+    "sw": 2800,
+    "sh": 1732,
+    "inputSequenceSeconds": 1.2237237498629838
+  },
+  {
+    "cpu": "Apple M4 Pro",
+    "gpu": "Apple M4 Pro",
+    "frameMs": 0.8926233053207397,
+    "memory": 395973991,
+    "objects": 882,
+    "simHash": "AMQcRQxc/8R7M/nNF9AiINZuhG2nPy6l1E5mrxtQAtM=",
+    "sw": 2800,
+    "sh": 1732,
+    "inputSequenceSeconds": 1.2311572080943733
+  },
+  {
+    "cpu": "Apple M4 Pro",
+    "gpu": "Apple M4 Pro",
+    "frameMs": 0.8920847177505493,
+    "memory": 395973991,
+    "objects": 882,
+    "simHash": "AMQcRQxc/8R7M/nNF9AiINZuhG2nPy6l1E5mrxtQAtM=",
+    "sw": 2800,
+    "sh": 1732,
+    "inputSequenceSeconds": 1.2308254158124328
+  },
+  {
+    "cpu": "Apple M4 Pro",
+    "gpu": "Apple M4 Pro",
+    "frameMs": 1.0146613121032715,
+    "memory": 395975223,
+    "objects": 882,
+    "simHash": "AMQcRQxc/8R7M/nNF9AiINZuhG2nPy6l1E5mrxtQAtM=",
+    "sw": 2800,
+    "sh": 1732,
+    "inputSequenceSeconds": 1.237718083197251
+  },
+  {
+    "cpu": "Apple M4 Pro",
+    "gpu": "Apple M4 Pro",
+    "frameMs": 1.2807893753051758,
+    "memory": 395975231,
+    "objects": 882,
+    "simHash": "AMQcRQxc/8R7M/nNF9AiINZuhG2nPy6l1E5mrxtQAtM=",
+    "sw": 2800,
+    "sh": 1732,
+    "inputSequenceSeconds": 1.2228835839778185
+  },
+  {
+    "cpu": "Apple M4 Pro",
+    "gpu": "Apple M4 Pro",
+    "frameMs": 1.2189979553222656,
+    "memory": 395975821,
+    "objects": 882,
+    "simHash": "AMQcRQxc/8R7M/nNF9AiINZuhG2nPy6l1E5mrxtQAtM=",
+    "sw": 2800,
+    "sh": 1732,
+    "inputSequenceSeconds": 1.220728375017643
+  },
+  {
+    "cpu": "Apple M4 Pro",
+    "gpu": "Apple M4 Pro",
+    "frameMs": 1.085544228553772,
+    "memory": 395975655,
+    "objects": 882,
+    "simHash": "AMQcRQxc/8R7M/nNF9AiINZuhG2nPy6l1E5mrxtQAtM=",
+    "sw": 2800,
+    "sh": 1732,
+    "inputSequenceSeconds": 1.2255015829578042
+  },
+  {
+    "cpu": "Apple M4 Pro",
+    "gpu": "Apple M4 Pro",
+    "frameMs": 0.9088364243507385,
+    "memory": 395975655,
+    "objects": 882,
+    "simHash": "AMQcRQxc/8R7M/nNF9AiINZuhG2nPy6l1E5mrxtQAtM=",
+    "sw": 2800,
+    "sh": 1732,
+    "inputSequenceSeconds": 1.2315903750713915
+  },
+  {
+    "cpu": "Apple M4 Pro",
+    "gpu": "Apple M4 Pro",
+    "frameMs": 1.0023738145828247,
+    "memory": 395975687,
+    "objects": 882,
+    "simHash": "AMQcRQxc/8R7M/nNF9AiINZuhG2nPy6l1E5mrxtQAtM=",
+    "sw": 2800,
+    "sh": 1732,
+    "inputSequenceSeconds": 1.2325185001827776
+  },
+  {
+    "cpu": "Apple M4 Pro",
+    "gpu": "Apple M4 Pro",
+    "frameMs": 6.61016845703125,
+    "memory": 395975453,
+    "objects": 882,
+    "simHash": "AMQcRQxc/8R7M/nNF9AiINZuhG2nPy6l1E5mrxtQAtM=",
+    "sw": 2800,
+    "sh": 1732,
+    "inputSequenceSeconds": 1.2237453749403358
+  },
+  {
+    "cpu": "Apple M4 Pro",
+    "gpu": "Apple M4 Pro",
+    "frameMs": 1.0005457401275635,
+    "memory": 395975687,
+    "objects": 882,
+    "simHash": "AMQcRQxc/8R7M/nNF9AiINZuhG2nPy6l1E5mrxtQAtM=",
+    "sw": 2800,
+    "sh": 1732,
+    "inputSequenceSeconds": 1.220893083140254
+  },
+  {
+    "cpu": "Apple M4 Pro",
+    "gpu": "Apple M4 Pro",
+    "frameMs": 0.9897463321685791,
+    "memory": 395975687,
+    "objects": 882,
+    "simHash": "AMQcRQxc/8R7M/nNF9AiINZuhG2nPy6l1E5mrxtQAtM=",
+    "sw": 2800,
+    "sh": 1732,
+    "inputSequenceSeconds": 1.2274572500027716
+  },
+  {
+    "cpu": "Apple M4 Pro",
+    "gpu": "Apple M4 Pro",
+    "frameMs": 1.1863733530044556,
+    "memory": 395976903,
+    "objects": 882,
+    "simHash": "AMQcRQxc/8R7M/nNF9AiINZuhG2nPy6l1E5mrxtQAtM=",
+    "sw": 2800,
+    "sh": 1732,
+    "inputSequenceSeconds": 1.2224011251237243
+  },
+  {
+    "cpu": "Apple M4 Pro",
+    "gpu": "Apple M4 Pro",
+    "frameMs": 0.9652494192123413,
+    "memory": 395977319,
+    "objects": 882,
+    "simHash": "AMQcRQxc/8R7M/nNF9AiINZuhG2nPy6l1E5mrxtQAtM=",
+    "sw": 2800,
+    "sh": 1732,
+    "inputSequenceSeconds": 1.2284226671326905
+  }
+]

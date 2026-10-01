@@ -1,0 +1,202 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace RPG.Core
+{
+    public enum SpellId { FireStream, FireArmor, Fireball, IceShard, IceShield, Freeze, CloseHeal }
+    public enum DamageType { Physical, Fire, WaterIce }
+    public sealed class CastCommand : BattleCommand
+    {
+        public SpellId Spell { get; }
+        public GridPosition Cell { get; }
+        public bool FriendlyFireConfirmed { get; }
+        public CastCommand(UnitId actor,SpellId spell,GridPosition cell,bool friendlyFireConfirmed=false):base(actor)
+        { Spell=spell;Cell=cell;FriendlyFireConfirmed=friendlyFireConfirmed; }
+    }
+    public sealed class SpellPreview
+    {
+        public CommandError Error { get; internal set; }
+        public bool IsLegal => Error==CommandError.None;
+        public IReadOnlyList<GridPosition> Cells { get; internal set; }
+        public IReadOnlyList<UnitId> Targets { get; internal set; }
+        public int Magnitude { get; internal set; }
+        public int ContactChance { get; internal set; }=100;
+        public IReadOnlyList<CommandError> Blockers { get; internal set; }
+        public IReadOnlyList<GridPosition> BlockedCells { get; internal set; }
+    }
+    public static class SpellRules
+    {
+        public static bool Exertion(SpellId s)=>s!=SpellId.FireStream && s!=SpellId.IceShard;
+        public static int Range(SpellId s,int fireRulesVersion=2)=>s==SpellId.FireArmor?(fireRulesVersion>=2?3:0):s==SpellId.FireStream?3:s==SpellId.Fireball||s==SpellId.IceShard?8:s==SpellId.Freeze?6:s==SpellId.IceShield?4:s==SpellId.CloseHeal?1:0;
+        public static int Limit(SpellId s)=>s==SpellId.Fireball||s==SpellId.Freeze?2:s==SpellId.CloseHeal?3:int.MaxValue;
+        public static int Used(UnitState u,SpellId s)=>s==SpellId.Fireball?u.FireballUsed:s==SpellId.Freeze?u.FreezeUsed:s==SpellId.CloseHeal?u.CloseHealUsed:0;
+        public static int Used(PersistentCharacter u,SpellId s)=>s==SpellId.Fireball?u.FireballUsed:s==SpellId.Freeze?u.FreezeUsed:s==SpellId.CloseHeal?u.CloseHealUsed:0;
+        public static bool Has(UnitProfile p,SpellId s)=>p.IsFireMage && (s==SpellId.FireStream||s==SpellId.FireArmor||s==SpellId.Fireball&&p.Tier==2)
+            ||p.IsIceMage && (s==SpellId.IceShard||s==SpellId.IceShield||s==SpellId.Freeze&&p.Tier==2)
+            ||p.Id==UnitProfileId.HumanHealerTI&&s==SpellId.CloseHeal;
+        public static IEnumerable<SpellId> Kit(UnitProfile p)=>Enum.GetValues(typeof(SpellId)).Cast<SpellId>().Where(s=>Has(p,s));
+        // Same integer-pool policy as physical resistance: scale once, truncate only the final amount.
+        public static int Magnitude(UnitProfile p,SpellId s)=>(int)(p.MagicPower*(s==SpellId.FireStream?10:s==SpellId.IceShard?12:s==SpellId.Fireball||s==SpellId.CloseHeal?14:0));
+        public static bool Area(SpellId s)=>s==SpellId.FireStream||s==SpellId.Fireball;
+        public static bool Helpful(SpellId s)=>s==SpellId.FireArmor||s==SpellId.IceShield||s==SpellId.CloseHeal;
+    }
+    public static partial class BattleResolver
+    {
+        private static List<GridPosition> SpellCells(BattleState state,UnitState actor,CastCommand command)
+        {
+            var result=new List<GridPosition>();var center=command.Cell;
+            if(command.Spell==SpellId.FireStream) {
+                if(state.FireRulesVersion>=2)return FireStreamGeometry.Cells(state.Battlefield,actor.Position,center);
+                int dx=center.X-actor.Position.X,dy=center.Y-actor.Position.Y;
+                if(dx==0&&dy==0 || dx!=0&&dy!=0&&Math.Abs(dx)!=Math.Abs(dy))return result;
+                dx=Math.Sign(dx);dy=Math.Sign(dy);
+                for(int i=1;i<=3;i++) {
+                    var p=new GridPosition(actor.Position.X+dx*i,actor.Position.Y+dy*i);
+                    if(!state.Battlefield.IsWalkable(p)||!LineOfSight.IsClear(state,actor.Position,p))break;
+                    result.Add(p);
+                }
+            } else if(command.Spell==SpellId.Fireball) {
+                for(int x=center.X-1;x<=center.X+1;x++)for(int y=center.Y-1;y<=center.Y+1;y++) {
+                    var p=new GridPosition(x,y);
+                    if(state.Battlefield.IsWalkable(p)&&LineOfSight.IsClear(state,center,p))result.Add(p);
+                }
+            } else result.Add(center);
+            return result;
+        }
+        private static CommandError ValidateCast(BattleState state,UnitState actor,CastCommand command)
+            => CastBlockers(state,actor,command).FirstOrDefault();
+        // One diagnostic/validation path. Read-only; collecting all blockers never probes execution/RNG.
+        private static List<CommandError> CastBlockers(BattleState state,UnitState actor,CastCommand command)
+        {
+            var errors=new List<CommandError>();
+            if(!actor.ActionAvailable)errors.Add(CommandError.NoAction);
+            if(actor.IsSilenced)errors.Add(CommandError.Silenced);
+            if(!SpellRules.Has(actor.Profile,command.Spell))errors.Add(CommandError.AbilityUnavailable);
+            if(SpellRules.Exertion(command.Spell)&&actor.IsExhausted)errors.Add(CommandError.Exhausted);
+            if(SpellRules.Used(actor,command.Spell)>=SpellRules.Limit(command.Spell))errors.Add(CommandError.SourceBudgetSpent);
+            if(state.FireRulesVersion==1&&command.Spell==SpellId.FireArmor&&command.Cell!=actor.Position)errors.Add(CommandError.SelfOnly);
+            if(!state.Battlefield.Contains(command.Cell)){errors.Add(CommandError.OutOfBounds);return errors;}
+            if(!state.Battlefield.IsWalkable(command.Cell))errors.Add(CommandError.SolidCell);
+            if(actor.Position.DistanceTo(command.Cell)>SpellRules.Range(command.Spell,state.FireRulesVersion)&&(state.FireRulesVersion>=2||command.Spell!=SpellId.FireArmor))errors.Add(CommandError.OutOfRange);
+            if(!LineOfSight.IsClear(state,actor.Position,command.Cell))errors.Add(CommandError.BlockedLineOfSight);
+            if(SpellRules.Area(command.Spell)) {
+                var cells=SpellCells(state,actor,command);
+                if(command.Spell==SpellId.FireStream) {
+                    int dx=command.Cell.X-actor.Position.X,dy=command.Cell.Y-actor.Position.Y;
+                    if(dx==0&&dy==0||state.FireRulesVersion==1&&dx!=0&&dy!=0&&Math.Abs(dx)!=Math.Abs(dy))errors.Add(CommandError.OutsideSpellLine);
+                    else if(cells.Count==0&&(state.FireRulesVersion==1||actor.Position.DistanceTo(command.Cell)<=3)&&!errors.Contains(CommandError.BlockedLineOfSight)&&!errors.Contains(CommandError.SolidCell))errors.Add(CommandError.BlockedLineOfSight);
+                }
+                if(!command.FriendlyFireConfirmed&&state.Units.Any(u=>u.IsActive&&u.Side==actor.Side&&cells.Contains(u.Position)))errors.Add(CommandError.FriendlyFireNotConfirmed);
+                return errors;
+            }
+            var target=state.OccupantAt(command.Cell);
+            if(target==null){errors.Add(CommandError.TargetNotFound);return errors;}
+            if(SpellRules.Helpful(command.Spell)?target.Side!=actor.Side:target.Side==actor.Side)errors.Add(CommandError.InvalidSpellTarget);
+            if(command.Spell==SpellId.CloseHeal&&target.Hp==target.Profile.MaxHp&&target.BurnStacks==0&&target.PoisonStacks==0&&target.BleedStacks==0)errors.Add(CommandError.NoUsefulEffect);
+            return errors;
+        }
+        // Legal geometric aim envelope; action/status/budget and recipient eligibility are reported separately.
+        public static IReadOnlyList<GridPosition> SpellAimCells(BattleState state,UnitId id,SpellId spell)
+        {
+            var actor=state.FindUnit(id);var cells=new List<GridPosition>();if(actor==null)return cells;
+            for(int x=0;x<state.Battlefield.Columns;x++)for(int y=0;y<state.Battlefield.Rows;y++) {
+                var p=new GridPosition(x,y);if(actor.Position.DistanceTo(p)>SpellRules.Range(spell,state.FireRulesVersion)||!state.Battlefield.IsWalkable(p)||!LineOfSight.IsClear(state,actor.Position,p))continue;
+                if(spell==SpellId.FireStream){int dx=x-actor.Position.X,dy=y-actor.Position.Y;if(dx==0&&dy==0||state.FireRulesVersion==1&&dx!=0&&dy!=0&&Math.Abs(dx)!=Math.Abs(dy))continue;}
+                cells.Add(p);
+            }
+            return cells.AsReadOnly();
+        }
+        public static SpellPreview PreviewSpell(BattleState state,CastCommand command)
+        {
+            var error=Validate(state,command);var actor=state.FindUnit(command.Actor);
+            var cells=actor==null?new List<GridPosition>():SpellCells(state,actor,command);
+            var targets=state.Units.Where(u=>u.IsActive&&cells.Contains(u.Position)).OrderBy(u=>u.Id).ToArray();
+            var blockers=actor==null?new List<CommandError>():CastBlockers(state,actor,command);
+            if(error!=CommandError.None&&!blockers.Contains(error))blockers.Insert(0,error);
+            var blocked=new List<GridPosition>();
+            if(actor!=null&&SpellRules.Area(command.Spell)) {
+                if(command.Spell==SpellId.Fireball)for(int x=command.Cell.X-1;x<=command.Cell.X+1;x++)for(int y=command.Cell.Y-1;y<=command.Cell.Y+1;y++){var p=new GridPosition(x,y);if(state.Battlefield.Contains(p)&&!cells.Contains(p))blocked.Add(p);}
+                else if(state.FireRulesVersion>=2){foreach(var p in FireStreamGeometry.Candidates(actor.Position,command.Cell))if(state.Battlefield.Contains(p)&&!cells.Contains(p))blocked.Add(p);}
+                else {int dx=command.Cell.X-actor.Position.X,dy=command.Cell.Y-actor.Position.Y;if((dx!=0||dy!=0)&&(dx==0||dy==0||Math.Abs(dx)==Math.Abs(dy)))for(int i=1;i<=3;i++){var p=new GridPosition(actor.Position.X+Math.Sign(dx)*i,actor.Position.Y+Math.Sign(dy)*i);if(state.Battlefield.Contains(p)&&!cells.Contains(p))blocked.Add(p);}}
+            }
+            var preview=new SpellPreview{Error=error,Blockers=blockers.Distinct().ToArray(),BlockedCells=blocked.AsReadOnly(),Cells=cells.AsReadOnly(),Targets=Array.AsReadOnly(targets.Select(u=>u.Id).ToArray()),Magnitude=actor==null?0:SpellRules.Magnitude(actor.Profile,command.Spell)};
+            if(actor!=null&&!SpellRules.Area(command.Spell)&&!SpellRules.Helpful(command.Spell)&&targets.Length==1) {
+                var t=targets[0];int frontal=FacingDirections.IsFrontal(t.Facing,t.Position,actor.Position)?t.Profile.FrontalEvasion:0;
+                preview.ContactChance=Math.Max(5,Math.Min(95,actor.Profile.Accuracy-t.Profile.Dodge-frontal));
+            }
+            return preview;
+        }
+        private static void Cast(BattleState state,UnitState actor,CastCommand command,List<BattleEvent> events)
+        {
+            var preview=PreviewSpell(state,command);
+            ConsumeAction(state,actor,events);
+            if(state.FireRulesVersion>=3)actor.PostSpellMovement=true;
+            if(SpellRules.Exertion(command.Spell)) {actor.ExhaustedActivations=2;events.Add(new BattleEvent(BattleEventKind.ExhaustionChanged,state.Round,actor.Id,after:2));}
+            if(command.Spell==SpellId.Fireball)actor.FireballUsed++;
+            if(command.Spell==SpellId.Freeze)actor.FreezeUsed++;
+            if(command.Spell==SpellId.CloseHeal)actor.CloseHealUsed++;
+            events.Add(new BattleEvent(BattleEventKind.SpellCast,state.Round,actor.Id,amount:(int)command.Spell,to:command.Cell));
+            if(command.Cell!=actor.Position)SetFacing(state,actor,FacingDirections.Toward(actor.Position,command.Cell),events);
+            foreach(var id in preview.Targets) {
+                var target=state.FindUnit(id);
+                if(!SpellRules.Helpful(command.Spell)&&!SpellRules.Area(command.Spell)) {
+                    int roll=state.Random.NextPercent();events.Add(new BattleEvent(BattleEventKind.ContactRolled,state.Round,actor.Id,target.Id,chancePercent:preview.ContactChance,roll:roll));
+                    if(roll>=preview.ContactChance){events.Add(new BattleEvent(BattleEventKind.AttackMissed,state.Round,actor.Id,target.Id));continue;}
+                }
+                switch(command.Spell) {
+                    case SpellId.FireArmor:case SpellId.IceShield:
+                        int before=target.TemporaryBarrier;int grant=command.Spell==SpellId.FireArmor?6:10;
+                        if(state.FireRulesVersion>=2){target.TemporaryBarrier=before-target.PackageBarrier+grant;target.PackageBarrier=grant;}else target.TemporaryBarrier=grant;
+                        target.BarrierActivations=2;target.FireProtection=command.Spell==SpellId.FireArmor;
+                        events.Add(new BattleEvent(BattleEventKind.BarrierChanged,state.Round,actor.Id,target.Id,before:before,after:target.TemporaryBarrier));break;
+                    case SpellId.Freeze:
+                        target.FrozenActivations=1;
+                        events.Add(new BattleEvent(BattleEventKind.FreezeApplied,state.Round,actor.Id,target.Id));break;
+                    case SpellId.CloseHeal:
+                        int hp=target.Hp;target.Hp=Math.Min(target.Profile.MaxHp,target.Hp+preview.Magnitude);
+                        events.Add(new BattleEvent(BattleEventKind.HpHealed,state.Round,actor.Id,target.Id,amount:target.Hp-hp,before:hp,after:target.Hp));
+                        if(target.BurnStacks>0){target.BurnStacks=0;target.BurnTicks=0;}
+                        else if(target.PoisonStacks>0)target.PoisonStacks=0;else if(target.BleedStacks>0)target.BleedStacks=0;else break;
+                        events.Add(new BattleEvent(BattleEventKind.ConditionCleansed,state.Round,actor.Id,target.Id));break;
+                    default:
+                        int dealt=DealDamage(state,actor,target,preview.Magnitude,command.Spell==SpellId.IceShard?DamageType.WaterIce:DamageType.Fire,true,false,events);
+                        if(dealt>0&&target.IsActive&&command.Spell!=SpellId.IceShard&&state.Random.NextPercent()<30)AddBurn(state,actor,target,events);
+                        break;
+                }
+            }
+        }
+        private static int DealDamage(BattleState state,UnitState actor,UnitState target,int amount,DamageType type,bool direct,bool melee,List<BattleEvent> events)
+        {
+            int remaining=amount,before=target.TemporaryBarrier;
+            int barrier=Math.Min(before,remaining);target.TemporaryBarrier-=barrier;remaining-=barrier;
+            if(state.FireRulesVersion>=2)target.PackageBarrier=Math.Max(0,target.PackageBarrier-barrier);
+            events.Add(new BattleEvent(BattleEventKind.DamageApplied,state.Round,actor.Id,target.Id,amount:amount));
+            if(barrier>0)events.Add(new BattleEvent(BattleEventKind.BarrierChanged,state.Round,actor.Id,target.Id,amount:barrier,before:before,after:target.TemporaryBarrier));
+            int armor=type==DamageType.Physical?Math.Min(target.Armor,remaining):0;remaining-=armor;
+            if(armor>0){before=target.Armor;target.Armor-=armor;events.Add(new BattleEvent(BattleEventKind.ArmorLost,state.Round,actor.Id,target.Id,amount:armor,before:before,after:target.Armor));}
+            int hp=Math.Min(target.Hp,remaining);
+            if(hp>0){before=target.Hp;target.Hp-=hp;events.Add(new BattleEvent(BattleEventKind.HpLost,state.Round,actor.Id,target.Id,amount:hp,before:before,after:target.Hp));}
+            int dealt=barrier+armor+hp;
+            if(direct&&dealt>0&&target.IsFrozen){target.FrozenActivations=0;events.Add(new BattleEvent(BattleEventKind.FreezeEnded,state.Round,actor.Id,target.Id));}
+            if(target.Hp==0){if(state.FireRulesVersion>=2)ClearProtection(target);target.Status=UnitStatus.Dead;target.ActionAvailable=false;target.OpportunityAttackAvailable=false;events.Add(new BattleEvent(BattleEventKind.UnitDied,state.Round,actor.Id,target.Id));}
+            else if(direct&&melee&&type==DamageType.Physical&&dealt>0&&target.FireProtection&&actor.IsActive)AddBurn(state,target,actor,events);
+            return dealt;
+        }
+        private static void ClearProtection(UnitState u){u.TemporaryBarrier=0;u.PackageBarrier=0;u.BarrierActivations=0;u.FireProtection=false;}
+        private static void ClearBattleProtection(BattleState s){if(s.FireRulesVersion>=2)foreach(var u in s.Units)ClearProtection(u);}
+        private static void AddBurn(BattleState state,UnitState actor,UnitState target,List<BattleEvent> events)
+        {target.BurnStacks=Math.Min(3,target.BurnStacks+1);target.BurnTicks=2;events.Add(new BattleEvent(BattleEventKind.BurnApplied,state.Round,actor.Id,target.Id,after:target.BurnStacks));}
+        private static void EndStatuses(BattleState state,UnitState unit,List<BattleEvent> events)
+        {
+            unit.GracefulExitTarget=null;
+            if(unit.FrozenActivations>0){unit.FrozenActivations--;events.Add(new BattleEvent(BattleEventKind.FreezeEnded,state.Round,unit.Id));}
+            if(unit.ExhaustedActivations>0){unit.ExhaustedActivations--;events.Add(new BattleEvent(BattleEventKind.ExhaustionChanged,state.Round,unit.Id,after:unit.ExhaustedActivations));}
+        }
+        private static void StartStatuses(BattleState state,UnitState unit,List<BattleEvent> events)
+        {
+            if(unit.BarrierActivations>0&&--unit.BarrierActivations==0){int before=unit.TemporaryBarrier;unit.TemporaryBarrier=state.FireRulesVersion>=2?unit.TemporaryBarrier-unit.PackageBarrier:0;unit.PackageBarrier=0;unit.FireProtection=false;events.Add(new BattleEvent(BattleEventKind.BarrierChanged,state.Round,unit.Id,before:before,after:unit.TemporaryBarrier));}
+            if(unit.BurnTicks>0){events.Add(new BattleEvent(BattleEventKind.BurnTick,state.Round,unit.Id,amount:unit.BurnStacks*2));DealDamage(state,unit,unit,unit.BurnStacks*2,DamageType.Fire,false,false,events);if(--unit.BurnTicks==0)unit.BurnStacks=0;}
+        }
+    }
+}

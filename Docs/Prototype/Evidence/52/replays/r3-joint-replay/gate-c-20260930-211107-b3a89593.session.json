@@ -1,0 +1,16 @@
+{
+    "type": "session",
+    "fixture": "Crossroads_Hotseat",
+    "rounds": 2,
+    "activations": 21,
+    "attacks": 0,
+    "oaExits": 0,
+    "oaTriggers": 0,
+    "defends": 0,
+    "escapes": 9,
+    "deaths": 0,
+    "invalidAttempts": 0,
+    "cancelledPreviews": 0,
+    "attacksBeforeFirstHpLoss": 0,
+    "firstHpLossObserved": false
+}

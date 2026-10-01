@@ -1,0 +1,104 @@
+using System;
+using System.IO;
+using System.Linq;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+using UnityEngine.UIElements;
+using RPG.Core;
+using RPG.Presentation;
+[InitializeOnLoad] public static class SeamlessProbe
+{
+    const string Root="/private/tmp/seamless-worlds-07/";
+    static int perfRemaining;static string perfHash;static readonly System.Collections.Generic.List<Perf> perf=new System.Collections.Generic.List<Perf>();
+    [Serializable]class Perf{public int step,objects;public long memory;public float frameMs;public double viewMs;public string cpu,gpu,hash;}
+    static VisualElement watched;static double last;static string mode="m1",previous="",plan="";static GridPosition? target;static string spell="";static bool ff;
+    static SeamlessProbe(){EditorApplication.update+=Tick;}
+    public static void Launch(){EditorSceneManager.OpenScene("Assets/_Project/Scenes/TacticalGraybox.unity");EditorApplication.EnterPlaymode();}
+    static void Tick()
+    {
+        if(Application.isBatchMode||!EditorApplication.isPlaying||EditorApplication.timeSinceStartup-last<.1)return;last=EditorApplication.timeSinceStartup;
+        var p=UnityEngine.Object.FindAnyObjectByType<BattlePresenter>();if(p==null)return;if(p.State==null){EditorSceneManager.LoadSceneInPlayMode("Assets/_Project/Scenes/TacticalGraybox.unity",new UnityEngine.SceneManagement.LoadSceneParameters(UnityEngine.SceneManagement.LoadSceneMode.Single));return;}
+        if(watched!=p.HudRoot){watched=p.HudRoot;p.HudRoot.RegisterCallback<PointerDownEvent>(e=>File.WriteAllText(Root+"pointer.txt",e.position+" target="+((VisualElement)e.target).name),TrickleDown.TrickleDown);}
+        if(File.Exists(Root+"command.txt"))
+        {
+            string c=File.ReadAllText(Root+"command.txt").Trim();File.Delete(Root+"command.txt");var game=EditorWindow.GetWindow(Type.GetType("UnityEditor.GameView,UnityEditor"));game.maximized=true;game.Focus();
+            if(c.StartsWith("scroll:")){var selector=c.Substring(7);var e=p.HudRoot.Q(selector);if(selector.StartsWith("text:"))e=p.HudRoot.Query<Button>().ToList().FirstOrDefault(b=>b.text.StartsWith(selector.Substring(5)));if(selector.StartsWith("label:"))e=p.HudRoot.Query<DropdownField>().ToList().FirstOrDefault(b=>b.label==selector.Substring(6));if(selector.StartsWith("toggle:"))e=p.HudRoot.Query<Toggle>().ToList().FirstOrDefault(t=>t.label.StartsWith(selector.Substring(7)));e?.GetFirstAncestorOfType<ScrollView>()?.ScrollTo(e);}
+            if(c=="recreate"){EditorSceneManager.LoadSceneInPlayMode("Assets/_Project/Scenes/TacticalGraybox.unity",new UnityEngine.SceneManagement.LoadSceneParameters(UnityEngine.SceneManagement.LoadSceneMode.Single));return;}
+            if(c=="start07")p.StartSeamless();
+            if(c=="perf07"){perfRemaining=100;perf.Clear();perfHash=p.Duel.Seamless.SimulationHash();}
+            if(c=="opaque07")p.StartSeamlessOpaqueProbe();
+            if(c=="mirror07")p.StartSeamless(Side.East);
+            if(c=="temporary07")p.StartSeamless(temporary:true);
+            if(c=="fit07")p.SeamlessMap?.Fit();
+            if(c.StartsWith("mode:"))mode=c.Substring(5);
+            if(c.StartsWith("cell:")){var xy=c.Substring(5).Split(",");target=new GridPosition(int.Parse(xy[0]),int.Parse(xy[1]));}
+            if(c=="plan"&&!p.State.Outcome.IsEnded)
+            {
+                // Read-only legal suggestion. The driver still clicks the ordinary human controls.
+                var a=TacticalAi.Choose(p.State).Command;plan=a.GetType().Name;spell="";ff=false;if(a is CastCommand cast){target=cast.Cell;spell=cast.Spell.ToString();ff=cast.FriendlyFireConfirmed;}
+                if(a is MoveCommand m)target=m.Path.Last();if(a is BasicAttackCommand b)target=p.State.FindUnit(b.Target).Position;
+            }
+            if(c=="escape"&&!p.State.Outcome.IsEnded)
+            {
+                var u=p.State.FindUnit(p.State.CurrentUnitId.Value);var b=p.State.Battlefield;
+                var cells=Enumerable.Range(0,b.Columns*b.Rows).Select(k=>new GridPosition(k%b.Columns,k/b.Columns));
+                var exits=cells.Where(g=>b.IsRetreatZone(u,g)).ToArray();
+                var paths=cells.Select(g=>new{g,r=Pathfinder.FindPath(p.State,u.Id,g)}).Where(a=>a.r.Found&&a.r.Cost>0&&exits.Length>0).OrderBy(a=>exits.Min(e=>e.DistanceTo(a.g))).ThenBy(a=>a.r.Cost).ToArray();
+                plan=paths.Length>0?"MoveCommand":"EndActivationCommand";if(paths.Length>0)target=paths[0].g;
+            }
+            if(c.StartsWith("fixture:")) { Setup(p,c.Substring(8)); }
+            if(c=="old-replays"){
+                var paths=Directory.GetFiles("Docs/Prototype/Evidence/5051/manual-complete","*.jsonl",SearchOption.AllDirectories).Where(path=>path.Contains("-replay/"));
+                File.WriteAllLines(Root+"results/accepted-baseline-replays.txt",paths.Select(path=>path+" | "+ReplayFiles.Verify(path).Matches+" | "+ReplayFiles.Verify(path).Message));
+            }
+            if(c=="export"){string path=p.ExportReplay(Root+"results/"+mode+"-replay");File.WriteAllText(Root+"results/"+mode+"-verification.txt",p.VerifyReplay(path).Message);}
+
+        }
+        if(perfRemaining>0&&p.Duel?.Seamless!=null){
+            var watch=System.Diagnostics.Stopwatch.StartNew();var nodes=p.Duel.Seamless.Knowledge(p.Duel.ActiveSide).KnownNodes;
+            if(perfRemaining%3==0)p.SeamlessMap.Fit();else p.SeamlessMap.Focus(nodes[perfRemaining%nodes.Length]);watch.Stop();
+            perf.Add(new Perf{step=100-perfRemaining,objects=Resources.FindObjectsOfTypeAll<GameObject>().Length,memory=UnityEngine.Profiling.Profiler.GetTotalAllocatedMemoryLong(),frameMs=Time.unscaledDeltaTime*1000,viewMs=watch.Elapsed.TotalMilliseconds,cpu=SystemInfo.processorType,gpu=SystemInfo.graphicsDeviceName,hash=p.Duel.Seamless.SimulationHash()});
+            if(--perfRemaining==0)File.WriteAllLines(Root+"results/"+mode+"-api-camera-perf.jsonl",perf.Select(x=>JsonUtility.ToJson(x)));
+        }
+        var s=p.Duel;bool battle=s?.Encounter!=null;
+        var data=new Data{gw=EditorWindow.GetWindow(Type.GetType("UnityEditor.GameView,UnityEditor")).position.width,rw=p.HudRoot.worldBound.width,rh=p.HudRoot.worldBound.height,sw=Screen.width,sh=Screen.height,tx=target?.X??-1,ty=target?.Y??-1,mode=mode,battle=battle,ended=p.State.Outcome.IsEnded,round=p.State.Round,records=p.Journal.Records.Count,ai=p.PlayerVsAi,aiTurn=p.IsAiTurn,plan=plan,
+            contact=s?.PendingContact?.Target.Formation.Side.ToString()??"",world=s!=null&&s.CanSave?s.CaptureSave():null,
+            hash=s!=null&&s.CanSave?s.CaptureSave().checksum:BattleStateHash.Compute(p.State),active=p.State.CurrentUnitId?.Value??-1,spell=spell,ff=ff,persistentPath=Application.persistentDataPath,focused=Application.isFocused,paused=EditorApplication.isPaused,focusWindow=EditorWindow.focusedWindow?.titleContent.text,cpu=SystemInfo.processorType,gpu=SystemInfo.graphicsDeviceName,simHash=s!=null&&s.CanSave?s.Seamless?.SimulationHash():null,frameMs=Time.unscaledDeltaTime*1000,memory=UnityEngine.Profiling.Profiler.GetTotalAllocatedMemoryLong(),objects=Resources.FindObjectsOfTypeAll<GameObject>().Length,
+            gx=EditorWindow.GetWindow(Type.GetType("UnityEditor.GameView,UnityEditor")).position.x,gy=EditorWindow.GetWindow(Type.GetType("UnityEditor.GameView,UnityEditor")).position.y,
+            buttons=p.HudRoot.Query<Button>().ToList().Where(b=>b.enabledInHierarchy&&b.resolvedStyle.display!=DisplayStyle.None&&b.worldBound.width>0).Select(b=>new Btn{name=b.name,text=b.text,x=b.worldBound.center.x,y=b.worldBound.center.y}).ToArray(),
+            fields=p.HudRoot.Query<DropdownField>().ToList().Select(d=>new Field{label=d.label,name=d.name,index=d.index,choices=d.choices.ToArray(),x=d.worldBound.center.x,y=d.worldBound.center.y}).ToArray(),
+            toggles=p.HudRoot.Query<Toggle>().ToList().Select(t=>new Check{label=t.label,value=t.value,x=t.worldBound.center.x,y=t.worldBound.center.y}).ToArray(),
+            units=p.State.Units.Select(u=>new Unit{id=u.Id.Value,side=u.Side.ToString(),x=u.Position.X,y=u.Position.Y,hp=u.Hp,armor=u.Armor,profile=u.Profile.Id.ToString(),action=u.ActionAvailable,movement=u.MovementRemaining,burn=u.BurnStacks,frozen=u.IsFrozen,barrier=u.TemporaryBarrier,expiry=u.BarrierActivations,fire=u.FireProtection,exhausted=u.IsExhausted,status=u.Status.ToString(),persistent=battle?s.Encounter.Ids[u.Id]:""}).ToArray(),
+            hud=p.DuelSaveMessage+"\n"+p.Message+"\n"+string.Join("\n",p.HudRoot.Query<Label>().ToList().Where(l=>l.text.Length>0).Select(l=>l.text))};
+        if(target.HasValue){var camera=p.GetComponentInChildren<Camera>();var surface=p.HudRoot.Q("board-input").worldBound;var v=camera.WorldToViewportPoint(new Vector3(target.Value.X,0,target.Value.Y));data.x=surface.x+v.x*surface.width;data.y=surface.y+(1-v.y)*surface.height;}
+        string json=JsonUtility.ToJson(data);File.WriteAllText(Root+"state.json",json);if(data.hash!=previous){previous=data.hash;File.AppendAllText(Root+"results/"+mode+"-trace.jsonl",json+"\n");}
+    }
+    // Labelled initial-state fixtures only. All subsequent game commands are physical GUI input.
+    static void Setup(BattlePresenter p,string name)
+    {
+        if(name=="healer"||name=="fire-input"||name=="ice-input"||name=="exhausted-input") {
+            var profile=name=="healer"?UnitProfile.HumanHealerTI:name=="ice-input"?UnitProfile.IceMageTI:UnitProfile.FireMageTII;
+            p.ConfigureBattle(new[]{new UnitState(new UnitId(1),Side.West,profile,new GridPosition(8,8),Facing.East,hp:name=="healer"?10:(int?)null),new UnitState(new UnitId(2),Side.East,UnitProfile.HumanWarriorTI,new GridPosition(name=="healer"?17:10,name=="healer"?8:9),Facing.West)},new Battlefield(23,17),2);
+            File.WriteAllText(Root+"results/"+mode+"-origin.txt","AUTHORED initial tactical INPUT03 fixture: "+name+". No outcome mutation.");return;
+        }
+        var w=SeamlessWorlds.Create(temporary:name=="temporary");
+        Action<DuelForce,WorldId,int> place=(f,id,n)=>{typeof(DuelForce).GetProperty("WorldId").SetValue(f,id);typeof(DuelForce).GetProperty("Node").SetValue(f,n);};
+        if(name=="inspection") {w.Seamless.Move(Side.West,new WorldAddress(WorldId.Frontier,24));w.Seamless.Traverse(Side.West,w.West.Formation.FormationId,w.West.Address);}
+        else if(name=="valley-battle") {place(w.West,WorldId.StoneValley,2);place(w.East,WorldId.StoneValley,3);}
+        else if(name=="joint-b") {place(w.West,WorldId.StoneValley,3);place(w.Realm.Army("realm06-West-army-2"),WorldId.StoneValley,2);place(w.East,WorldId.StoneValley,6);place(w.Realm.Army("realm06-East-army-2"),WorldId.Frontier,6);}
+        else if(name=="blocked") {place(w.West,WorldId.Frontier,24);place(w.East,WorldId.StoneValley,1);}
+        else if(name=="temporary") {place(w.West,WorldId.StoneValley,1);}
+        else throw new Exception("Unknown labelled07 initial fixture");
+        w.Seamless.Observe();
+        var data=w.CaptureSave();string caption="AUTHORED controlled07 initial fixture: "+name+". Subsequent commands are real GUI input; no earned starting history claimed.";
+        string file=Root+"results/"+name+"-authored-start.json";File.WriteAllText(file,JsonUtility.ToJson(data,true));
+        if(!p.LoadDuel(file))throw new Exception(p.DuelSaveMessage);File.WriteAllText(Root+"results/"+mode+"-origin.txt",caption);
+    }
+
+    [Serializable]class Btn{public string name,text;public float x,y;}
+    [Serializable]class Unit{public int id,x,y,hp,armor,movement,burn,barrier,expiry;public bool action,frozen,fire,exhausted;public string side,status,persistent,profile;}
+    [Serializable]class Field{public string label,name;public int index;public string[] choices;public float x,y;}
+    [Serializable]class Check{public string label;public bool value;public float x,y;}
+    [Serializable]class Data{public bool focused,paused;public string focusWindow,cpu,gpu,simHash;public float frameMs;public long memory;public int objects;public string mode,hash,plan,contact,hud,spell,persistentPath;public bool ff;public float gx,gy,gw;public Field[] fields;public Check[] toggles;public bool battle,ended,ai,aiTurn;public int round,records,active;public float x,y,rw,rh;public int sw,sh,tx,ty;public Btn[] buttons;public Unit[] units;public CrossroadsSaveData world;}
+}

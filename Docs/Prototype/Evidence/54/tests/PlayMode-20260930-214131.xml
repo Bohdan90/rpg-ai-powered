@@ -1,0 +1,668 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="84" result="Passed" total="84" passed="84" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-10-01 01:41:38Z" end-time="2026-10-01 01:44:01Z" duration="143.1476395">
+  <test-suite type="TestSuite" id="1112" name="Seamless-Worlds-07" fullname="Seamless-Worlds-07" runstate="Runnable" testcasecount="84" result="Passed" start-time="2026-10-01 01:41:38Z" end-time="2026-10-01 01:44:01Z" duration="143.147640" total="84" passed="84" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <test-suite type="Assembly" id="1217" name="RPG.Presentation.Tests.dll" fullname="/Users/bohdanskrypka/UnityProjects/Convergence/Seamless-Worlds-07/Library/ScriptAssemblies/RPG.Presentation.Tests.dll" runstate="Runnable" testcasecount="84" result="Passed" start-time="2026-10-01 01:41:38Z" end-time="2026-10-01 01:44:01Z" duration="143.143968" total="84" passed="84" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="25630" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <test-suite type="TestSuite" id="1218" name="RPG" fullname="RPG" runstate="Runnable" testcasecount="84" result="Passed" start-time="2026-10-01 01:41:38Z" end-time="2026-10-01 01:44:01Z" duration="143.143563" total="84" passed="84" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1219" name="Presentation" fullname="RPG.Presentation" runstate="Runnable" testcasecount="84" result="Passed" start-time="2026-10-01 01:41:38Z" end-time="2026-10-01 01:44:01Z" duration="143.143323" total="84" passed="84" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1220" name="Tests" fullname="RPG.Presentation.Tests" runstate="Runnable" testcasecount="84" result="Passed" start-time="2026-10-01 01:41:38Z" end-time="2026-10-01 01:44:01Z" duration="143.142966" total="84" passed="84" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1113" name="CityFoundationsPresentationTests" fullname="RPG.Presentation.Tests.CityFoundationsPresentationTests" classname="RPG.Presentation.Tests.CityFoundationsPresentationTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-10-01 01:41:38Z" end-time="2026-10-01 01:41:39Z" duration="0.729515" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1115" name="AuthoredReady05BStateAndVisualEvidence" fullname="RPG.Presentation.Tests.CityFoundationsPresentationTests.AuthoredReady05BStateAndVisualEvidence" methodname="AuthoredReady05BStateAndVisualEvidence" classname="RPG.Presentation.Tests.CityFoundationsPresentationTests" runstate="Runnable" seed="713256038" result="Passed" start-time="2026-10-01 01:41:38Z" end-time="2026-10-01 01:41:38Z" duration="0.447025" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1114" name="CityUiPaidQueuesSaveRecreateLoadAndContinuation" fullname="RPG.Presentation.Tests.CityFoundationsPresentationTests.CityUiPaidQueuesSaveRecreateLoadAndContinuation" methodname="CityUiPaidQueuesSaveRecreateLoadAndContinuation" classname="RPG.Presentation.Tests.CityFoundationsPresentationTests" runstate="Runnable" seed="274446241" result="Passed" start-time="2026-10-01 01:41:38Z" end-time="2026-10-01 01:41:39Z" duration="0.276760" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1116" name="CombatLabPresentationTests" fullname="RPG.Presentation.Tests.CombatLabPresentationTests" classname="RPG.Presentation.Tests.CombatLabPresentationTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-10-01 01:41:39Z" end-time="2026-10-01 01:41:41Z" duration="2.327461" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1117" name="ThreeDirectEntriesLaunchAndSpellCommitsThroughCore" fullname="RPG.Presentation.Tests.CombatLabPresentationTests.ThreeDirectEntriesLaunchAndSpellCommitsThroughCore" methodname="ThreeDirectEntriesLaunchAndSpellCommitsThroughCore" classname="RPG.Presentation.Tests.CombatLabPresentationTests" runstate="Runnable" seed="14564227" result="Passed" start-time="2026-10-01 01:41:39Z" end-time="2026-10-01 01:41:41Z" duration="2.319641" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1118" name="CrossroadsPresentationTests" fullname="RPG.Presentation.Tests.CrossroadsPresentationTests" classname="RPG.Presentation.Tests.CrossroadsPresentationTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-10-01 01:41:41Z" end-time="2026-10-01 01:41:43Z" duration="1.684033" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1121" name="EconomicPendingSaveRecreateCompletesOnceAndRecruitEntersBattle" fullname="RPG.Presentation.Tests.CrossroadsPresentationTests.EconomicPendingSaveRecreateCompletesOnceAndRecruitEntersBattle" methodname="EconomicPendingSaveRecreateCompletesOnceAndRecruitEntersBattle" classname="RPG.Presentation.Tests.CrossroadsPresentationTests" runstate="Runnable" seed="402491418" result="Passed" start-time="2026-10-01 01:41:41Z" end-time="2026-10-01 01:41:41Z" duration="0.302032" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1122" name="IncompatiblePartASaveAndTamperedEconomyLeaveLiveScenarioUnchanged" fullname="RPG.Presentation.Tests.CrossroadsPresentationTests.IncompatiblePartASaveAndTamperedEconomyLeaveLiveScenarioUnchanged" methodname="IncompatiblePartASaveAndTamperedEconomyLeaveLiveScenarioUnchanged" classname="RPG.Presentation.Tests.CrossroadsPresentationTests" runstate="Runnable" seed="1650601908" result="Passed" start-time="2026-10-01 01:41:41Z" end-time="2026-10-01 01:41:41Z" duration="0.152410" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1123" name="InvalidDiskSaveCannotReplaceLiveStateAndMissionSlotRemainsCompatible" fullname="RPG.Presentation.Tests.CrossroadsPresentationTests.InvalidDiskSaveCannotReplaceLiveStateAndMissionSlotRemainsCompatible" methodname="InvalidDiskSaveCannotReplaceLiveStateAndMissionSlotRemainsCompatible" classname="RPG.Presentation.Tests.CrossroadsPresentationTests" runstate="Runnable" seed="1866969354" result="Passed" start-time="2026-10-01 01:41:41Z" end-time="2026-10-01 01:41:42Z" duration="0.193789" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1119" name="MidRefreshSaveRecreateLoadHandoffAndDeterministicContinuation" fullname="RPG.Presentation.Tests.CrossroadsPresentationTests.MidRefreshSaveRecreateLoadHandoffAndDeterministicContinuation" methodname="MidRefreshSaveRecreateLoadHandoffAndDeterministicContinuation" classname="RPG.Presentation.Tests.CrossroadsPresentationTests" runstate="Runnable" seed="2090757597" result="Passed" start-time="2026-10-01 01:41:42Z" end-time="2026-10-01 01:41:42Z" duration="0.195500" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1120" name="TacticalHotseatPhysicalEscapeReturnsSameRosterAndSaves" fullname="RPG.Presentation.Tests.CrossroadsPresentationTests.TacticalHotseatPhysicalEscapeReturnsSameRosterAndSaves" methodname="TacticalHotseatPhysicalEscapeReturnsSameRosterAndSaves" classname="RPG.Presentation.Tests.CrossroadsPresentationTests" runstate="Runnable" seed="2045793149" result="Passed" start-time="2026-10-01 01:41:42Z" end-time="2026-10-01 01:41:43Z" duration="0.740419" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1124" name="EngagementPresentationTests" fullname="RPG.Presentation.Tests.EngagementPresentationTests" classname="RPG.Presentation.Tests.EngagementPresentationTests" runstate="Runnable" testcasecount="9" result="Passed" start-time="2026-10-01 01:41:43Z" end-time="2026-10-01 01:41:44Z" duration="1.721335" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1132" name="CommanderPartialRetreatDoesNotShowDefeatAndRestartRestoresEverything" fullname="RPG.Presentation.Tests.EngagementPresentationTests.CommanderPartialRetreatDoesNotShowDefeatAndRestartRestoresEverything" methodname="CommanderPartialRetreatDoesNotShowDefeatAndRestartRestoresEverything" classname="RPG.Presentation.Tests.EngagementPresentationTests" runstate="Runnable" seed="1824744151" result="Passed" start-time="2026-10-01 01:41:43Z" end-time="2026-10-01 01:41:43Z" duration="0.207300" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1129" name="DeathInterruptionShowsUnexecutedStepAndEliminationPanel" fullname="RPG.Presentation.Tests.EngagementPresentationTests.DeathInterruptionShowsUnexecutedStepAndEliminationPanel" methodname="DeathInterruptionShowsUnexecutedStepAndEliminationPanel" classname="RPG.Presentation.Tests.EngagementPresentationTests" runstate="Runnable" seed="1176146238" result="Passed" start-time="2026-10-01 01:41:43Z" end-time="2026-10-01 01:41:43Z" duration="0.160991" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1128" name="MultipleRespondersAppearInCoreOrderAndEventsStayChronological" fullname="RPG.Presentation.Tests.EngagementPresentationTests.MultipleRespondersAppearInCoreOrderAndEventsStayChronological" methodname="MultipleRespondersAppearInCoreOrderAndEventsStayChronological" classname="RPG.Presentation.Tests.EngagementPresentationTests" runstate="Runnable" seed="978618737" result="Passed" start-time="2026-10-01 01:41:43Z" end-time="2026-10-01 01:41:43Z" duration="0.177899" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1133" name="OutcomeRestartButtonRestoresInitialStateAndNoCommandCanChangeFinishedState" fullname="RPG.Presentation.Tests.EngagementPresentationTests.OutcomeRestartButtonRestoresInitialStateAndNoCommandCanChangeFinishedState" methodname="OutcomeRestartButtonRestoresInitialStateAndNoCommandCanChangeFinishedState" classname="RPG.Presentation.Tests.EngagementPresentationTests" runstate="Runnable" seed="577041453" result="Passed" start-time="2026-10-01 01:41:43Z" end-time="2026-10-01 01:41:43Z" duration="0.215654" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1125" name="PreviewMatchesCoreExposuresAndRequiresExplicitConfirmation" fullname="RPG.Presentation.Tests.EngagementPresentationTests.PreviewMatchesCoreExposuresAndRequiresExplicitConfirmation" methodname="PreviewMatchesCoreExposuresAndRequiresExplicitConfirmation" classname="RPG.Presentation.Tests.EngagementPresentationTests" runstate="Runnable" seed="159441069" result="Passed" start-time="2026-10-01 01:41:43Z" end-time="2026-10-01 01:41:43Z" duration="0.175358" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1130" name="RetreatEdgesFollowCoreSideAndEnemyEdgeIsNotAnEscape" fullname="RPG.Presentation.Tests.EngagementPresentationTests.RetreatEdgesFollowCoreSideAndEnemyEdgeIsNotAnEscape" methodname="RetreatEdgesFollowCoreSideAndEnemyEdgeIsNotAnEscape" classname="RPG.Presentation.Tests.EngagementPresentationTests" runstate="Runnable" seed="196100149" result="Passed" start-time="2026-10-01 01:41:43Z" end-time="2026-10-01 01:41:44Z" duration="0.239586" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1131" name="RiskyRetreatIsConditionalAndEscapedIsSafeNotDead" fullname="RPG.Presentation.Tests.EngagementPresentationTests.RiskyRetreatIsConditionalAndEscapedIsSafeNotDead" methodname="RiskyRetreatIsConditionalAndEscapedIsSafeNotDead" classname="RPG.Presentation.Tests.EngagementPresentationTests" runstate="Runnable" seed="1277612532" result="Passed" start-time="2026-10-01 01:41:44Z" end-time="2026-10-01 01:41:44Z" duration="0.150877" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1126" name="SafePathsHaveNoRiskAndSpentAvailabilityComesFromCore" fullname="RPG.Presentation.Tests.EngagementPresentationTests.SafePathsHaveNoRiskAndSpentAvailabilityComesFromCore" methodname="SafePathsHaveNoRiskAndSpentAvailabilityComesFromCore" classname="RPG.Presentation.Tests.EngagementPresentationTests" runstate="Runnable" seed="1724396439" result="Passed" start-time="2026-10-01 01:41:44Z" end-time="2026-10-01 01:41:44Z" duration="0.184687" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1127" name="ZocOverlayUsesCoreSourcesAndArchersAreNotSources" fullname="RPG.Presentation.Tests.EngagementPresentationTests.ZocOverlayUsesCoreSourcesAndArchersAreNotSources" methodname="ZocOverlayUsesCoreSourcesAndArchersAreNotSources" classname="RPG.Presentation.Tests.EngagementPresentationTests" runstate="Runnable" seed="180453378" result="Passed" start-time="2026-10-01 01:41:44Z" end-time="2026-10-01 01:41:44Z" duration="0.198194" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1134" name="EssentialReadabilityTests" fullname="RPG.Presentation.Tests.EssentialReadabilityTests" classname="RPG.Presentation.Tests.EssentialReadabilityTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-10-01 01:41:44Z" end-time="2026-10-01 01:41:51Z" duration="7.152395" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1135" name="BarsFollowResolvedContactGuardArmorHpSpillDeathAndBattleReset" fullname="RPG.Presentation.Tests.EssentialReadabilityTests.BarsFollowResolvedContactGuardArmorHpSpillDeathAndBattleReset" methodname="BarsFollowResolvedContactGuardArmorHpSpillDeathAndBattleReset" classname="RPG.Presentation.Tests.EssentialReadabilityTests" runstate="Runnable" seed="1409598320" result="Passed" start-time="2026-10-01 01:41:44Z" end-time="2026-10-01 01:41:45Z" duration="0.459495" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1137" name="KnownIntelUsesActualRosterHidesDormantAndRemovedAndSurvivesLoad" fullname="RPG.Presentation.Tests.EssentialReadabilityTests.KnownIntelUsesActualRosterHidesDormantAndRemovedAndSurvivesLoad" methodname="KnownIntelUsesActualRosterHidesDormantAndRemovedAndSurvivesLoad" classname="RPG.Presentation.Tests.EssentialReadabilityTests" runstate="Runnable" seed="357498957" result="Passed" start-time="2026-10-01 01:41:45Z" end-time="2026-10-01 01:41:51Z" duration="6.690830" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1136" name="WithdrawnForceReportsActualSurvivorsIndependentlyOfAiSeedOutcome" fullname="RPG.Presentation.Tests.EssentialReadabilityTests.WithdrawnForceReportsActualSurvivorsIndependentlyOfAiSeedOutcome" methodname="WithdrawnForceReportsActualSurvivorsIndependentlyOfAiSeedOutcome" classname="RPG.Presentation.Tests.EssentialReadabilityTests" runstate="Runnable" seed="1559190712" result="Passed" start-time="2026-10-01 01:41:51Z" end-time="2026-10-01 01:41:51Z" duration="0.001222" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1138" name="GrayboxPlayModeTests" fullname="RPG.Presentation.Tests.GrayboxPlayModeTests" classname="RPG.Presentation.Tests.GrayboxPlayModeTests" runstate="Runnable" testcasecount="12" result="Passed" start-time="2026-10-01 01:41:51Z" end-time="2026-10-01 01:41:54Z" duration="2.375359" total="12" passed="12" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1140" name="AttackOutcomeHudDistinguishesContactGuardArmorHpAndSpillFromCoreEvents" fullname="RPG.Presentation.Tests.GrayboxPlayModeTests.AttackOutcomeHudDistinguishesContactGuardArmorHpAndSpillFromCoreEvents" methodname="AttackOutcomeHudDistinguishesContactGuardArmorHpAndSpillFromCoreEvents" classname="RPG.Presentation.Tests.GrayboxPlayModeTests" runstate="Runnable" seed="1118574739" result="Passed" start-time="2026-10-01 01:41:51Z" end-time="2026-10-01 01:41:52Z" duration="0.419482" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1142" name="BoardPointerAndConfirmButtonDispatchRealUiEvents" fullname="RPG.Presentation.Tests.GrayboxPlayModeTests.BoardPointerAndConfirmButtonDispatchRealUiEvents" methodname="BoardPointerAndConfirmButtonDispatchRealUiEvents" classname="RPG.Presentation.Tests.GrayboxPlayModeTests" runstate="Runnable" seed="1314624928" result="Passed" start-time="2026-10-01 01:41:52Z" end-time="2026-10-01 01:41:52Z" duration="0.118936" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1146" name="CentralWallRejectsMoveAndCoreRouteGoesAroundIt" fullname="RPG.Presentation.Tests.GrayboxPlayModeTests.CentralWallRejectsMoveAndCoreRouteGoesAroundIt" methodname="CentralWallRejectsMoveAndCoreRouteGoesAroundIt" classname="RPG.Presentation.Tests.GrayboxPlayModeTests" runstate="Runnable" seed="499671068" result="Passed" start-time="2026-10-01 01:41:52Z" end-time="2026-10-01 01:41:52Z" duration="0.196750" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1149" name="DeathRemovesTokenAndRestartRestoresIt" fullname="RPG.Presentation.Tests.GrayboxPlayModeTests.DeathRemovesTokenAndRestartRestoresIt" methodname="DeathRemovesTokenAndRestartRestoresIt" classname="RPG.Presentation.Tests.GrayboxPlayModeTests" runstate="Runnable" seed="1951019348" result="Passed" start-time="2026-10-01 01:41:52Z" end-time="2026-10-01 01:41:52Z" duration="0.209373" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1148" name="ElfFrontalEvasionPreviewChangesAfterFlank" fullname="RPG.Presentation.Tests.GrayboxPlayModeTests.ElfFrontalEvasionPreviewChangesAfterFlank" methodname="ElfFrontalEvasionPreviewChangesAfterFlank" classname="RPG.Presentation.Tests.GrayboxPlayModeTests" runstate="Runnable" seed="853994591" result="Passed" start-time="2026-10-01 01:41:52Z" end-time="2026-10-01 01:41:53Z" duration="0.188541" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1144" name="EndActivationUsesCoreNextActorAndRestartRecreatesFixture" fullname="RPG.Presentation.Tests.GrayboxPlayModeTests.EndActivationUsesCoreNextActorAndRestartRecreatesFixture" methodname="EndActivationUsesCoreNextActorAndRestartRecreatesFixture" classname="RPG.Presentation.Tests.GrayboxPlayModeTests" runstate="Runnable" seed="1061046552" result="Passed" start-time="2026-10-01 01:41:53Z" end-time="2026-10-01 01:41:53Z" duration="0.184964" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1150" name="FullRoundActivatesBothSidesAndDefendReflectsCore" fullname="RPG.Presentation.Tests.GrayboxPlayModeTests.FullRoundActivatesBothSidesAndDefendReflectsCore" methodname="FullRoundActivatesBothSidesAndDefendReflectsCore" classname="RPG.Presentation.Tests.GrayboxPlayModeTests" runstate="Runnable" seed="383808329" result="Passed" start-time="2026-10-01 01:41:53Z" end-time="2026-10-01 01:41:53Z" duration="0.211855" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1143" name="InvalidPresentationCommandAndMovedViewCannotChangeCoreTruth" fullname="RPG.Presentation.Tests.GrayboxPlayModeTests.InvalidPresentationCommandAndMovedViewCannotChangeCoreTruth" methodname="InvalidPresentationCommandAndMovedViewCannotChangeCoreTruth" classname="RPG.Presentation.Tests.GrayboxPlayModeTests" runstate="Runnable" seed="1817298538" result="Passed" start-time="2026-10-01 01:41:53Z" end-time="2026-10-01 01:41:53Z" duration="0.114259" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1141" name="LegalSelectionAndConfirmationChangesCoreWithoutPreviewMutation" fullname="RPG.Presentation.Tests.GrayboxPlayModeTests.LegalSelectionAndConfirmationChangesCoreWithoutPreviewMutation" methodname="LegalSelectionAndConfirmationChangesCoreWithoutPreviewMutation" classname="RPG.Presentation.Tests.GrayboxPlayModeTests" runstate="Runnable" seed="417227715" result="Passed" start-time="2026-10-01 01:41:53Z" end-time="2026-10-01 01:41:53Z" duration="0.116297" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1145" name="OrthogonalDiagonalMoveAttackAndOrderRejectionsUseController" fullname="RPG.Presentation.Tests.GrayboxPlayModeTests.OrthogonalDiagonalMoveAttackAndOrderRejectionsUseController" methodname="OrthogonalDiagonalMoveAttackAndOrderRejectionsUseController" classname="RPG.Presentation.Tests.GrayboxPlayModeTests" runstate="Runnable" seed="767133744" result="Passed" start-time="2026-10-01 01:41:53Z" end-time="2026-10-01 01:41:53Z" duration="0.219250" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1147" name="RangedPreviewAndResolutionRespectSolidLosAndUnitCover" fullname="RPG.Presentation.Tests.GrayboxPlayModeTests.RangedPreviewAndResolutionRespectSolidLosAndUnitCover" methodname="RangedPreviewAndResolutionRespectSolidLosAndUnitCover" classname="RPG.Presentation.Tests.GrayboxPlayModeTests" runstate="Runnable" seed="1907620866" result="Passed" start-time="2026-10-01 01:41:53Z" end-time="2026-10-01 01:41:54Z" duration="0.283646" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1139" name="SceneBootsAndVisualCountMatchesCore" fullname="RPG.Presentation.Tests.GrayboxPlayModeTests.SceneBootsAndVisualCountMatchesCore" methodname="SceneBootsAndVisualCountMatchesCore" classname="RPG.Presentation.Tests.GrayboxPlayModeTests" runstate="Runnable" seed="462170011" result="Passed" start-time="2026-10-01 01:41:54Z" end-time="2026-10-01 01:41:54Z" duration="0.093915" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1151" name="IncidentPresentationTests" fullname="RPG.Presentation.Tests.IncidentPresentationTests" classname="RPG.Presentation.Tests.IncidentPresentationTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-10-01 01:41:54Z" end-time="2026-10-01 01:41:54Z" duration="0.702022" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1155" name="CorruptLoadLeavesLiveWorldAndOriginalScenarioSelectable" fullname="RPG.Presentation.Tests.IncidentPresentationTests.CorruptLoadLeavesLiveWorldAndOriginalScenarioSelectable" methodname="CorruptLoadLeavesLiveWorldAndOriginalScenarioSelectable" classname="RPG.Presentation.Tests.IncidentPresentationTests" runstate="Runnable" seed="659087516" result="Passed" start-time="2026-10-01 01:41:54Z" end-time="2026-10-01 01:41:54Z" duration="0.120342" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1154" name="EastInitiatedHumanBattleRemainsHotseatWithExplicitOwnershipLabels" fullname="RPG.Presentation.Tests.IncidentPresentationTests.EastInitiatedHumanBattleRemainsHotseatWithExplicitOwnershipLabels" methodname="EastInitiatedHumanBattleRemainsHotseatWithExplicitOwnershipLabels" classname="RPG.Presentation.Tests.IncidentPresentationTests" runstate="Runnable" seed="1740237858" result="Passed" start-time="2026-10-01 01:41:54Z" end-time="2026-10-01 01:41:54Z" duration="0.185076" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1153" name="NonActiveHumanNpcContactUsesCorrectControllerAndSaveBlocker" fullname="RPG.Presentation.Tests.IncidentPresentationTests.NonActiveHumanNpcContactUsesCorrectControllerAndSaveBlocker" methodname="NonActiveHumanNpcContactUsesCorrectControllerAndSaveBlocker" classname="RPG.Presentation.Tests.IncidentPresentationTests" runstate="Runnable" seed="433516537" result="Passed" start-time="2026-10-01 01:41:54Z" end-time="2026-10-01 01:41:54Z" duration="0.188779" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1152" name="SelectorWorldPhaseHudAndRecreatedSessionContinuation" fullname="RPG.Presentation.Tests.IncidentPresentationTests.SelectorWorldPhaseHudAndRecreatedSessionContinuation" methodname="SelectorWorldPhaseHudAndRecreatedSessionContinuation" classname="RPG.Presentation.Tests.IncidentPresentationTests" runstate="Runnable" seed="373191605" result="Passed" start-time="2026-10-01 01:41:54Z" end-time="2026-10-01 01:41:54Z" duration="0.206949" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1156" name="PersistenceSlicePresentationTests" fullname="RPG.Presentation.Tests.PersistenceSlicePresentationTests" classname="RPG.Presentation.Tests.PersistenceSlicePresentationTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-10-01 01:41:54Z" end-time="2026-10-01 01:41:55Z" duration="0.860775" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1157" name="DeveloperFlowStartsOnAcceptedFieldWithPersistentSummary" fullname="RPG.Presentation.Tests.PersistenceSlicePresentationTests.DeveloperFlowStartsOnAcceptedFieldWithPersistentSummary" methodname="DeveloperFlowStartsOnAcceptedFieldWithPersistentSummary" classname="RPG.Presentation.Tests.PersistenceSlicePresentationTests" runstate="Runnable" seed="5692809" result="Passed" start-time="2026-10-01 01:41:54Z" end-time="2026-10-01 01:41:55Z" duration="0.367142" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1158" name="PreviewAndRejectedCommandDoNotResolveOrMutatePersistence" fullname="RPG.Presentation.Tests.PersistenceSlicePresentationTests.PreviewAndRejectedCommandDoNotResolveOrMutatePersistence" methodname="PreviewAndRejectedCommandDoNotResolveOrMutatePersistence" classname="RPG.Presentation.Tests.PersistenceSlicePresentationTests" runstate="Runnable" seed="1589696709" result="Passed" start-time="2026-10-01 01:41:55Z" end-time="2026-10-01 01:41:55Z" duration="0.486932" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1159" name="RangedReachPresentationTests" fullname="RPG.Presentation.Tests.RangedReachPresentationTests" classname="RPG.Presentation.Tests.RangedReachPresentationTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-10-01 01:41:55Z" end-time="2026-10-01 01:42:16Z" duration="20.219462" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1163" name="EngagedAndSpentActionHideBowAndCoreStillControlsAttack" fullname="RPG.Presentation.Tests.RangedReachPresentationTests.EngagedAndSpentActionHideBowAndCoreStillControlsAttack" methodname="EngagedAndSpentActionHideBowAndCoreStillControlsAttack" classname="RPG.Presentation.Tests.RangedReachPresentationTests" runstate="Runnable" seed="1962711980" result="Passed" start-time="2026-10-01 01:41:55Z" end-time="2026-10-01 01:41:56Z" duration="0.458493" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1162" name="RangeComesFromProfileDataAndMeleeHasNoBowOverlay" fullname="RPG.Presentation.Tests.RangedReachPresentationTests.RangeComesFromProfileDataAndMeleeHasNoBowOverlay" methodname="RangeComesFromProfileDataAndMeleeHasNoBowOverlay" classname="RPG.Presentation.Tests.RangedReachPresentationTests" runstate="Runnable" seed="1217962622" result="Passed" start-time="2026-10-01 01:41:56Z" end-time="2026-10-01 01:41:56Z" duration="0.423306" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1161" name="ReachIsGeometricPreservesMovementAndSelectionCannotChangeReplay" fullname="RPG.Presentation.Tests.RangedReachPresentationTests.ReachIsGeometricPreservesMovementAndSelectionCannotChangeReplay" methodname="ReachIsGeometricPreservesMovementAndSelectionCannotChangeReplay" classname="RPG.Presentation.Tests.RangedReachPresentationTests" runstate="Runnable" seed="1970531929" result="Passed" start-time="2026-10-01 01:41:56Z" end-time="2026-10-01 01:41:56Z" duration="0.276152" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1160" name="SelectedSiegeFixturesPreserveRangeTenAndPreviewDeterminism" fullname="RPG.Presentation.Tests.RangedReachPresentationTests.SelectedSiegeFixturesPreserveRangeTenAndPreviewDeterminism" methodname="SelectedSiegeFixturesPreserveRangeTenAndPreviewDeterminism" classname="RPG.Presentation.Tests.RangedReachPresentationTests" runstate="Runnable" seed="1068604260" result="Passed" start-time="2026-10-01 01:41:56Z" end-time="2026-10-01 01:42:16Z" duration="19.053872" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1164" name="RealmPresentationTests" fullname="RPG.Presentation.Tests.RealmPresentationTests" classname="RPG.Presentation.Tests.RealmPresentationTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-10-01 01:42:16Z" end-time="2026-10-01 01:42:16Z" duration="0.835770" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1165" name="ActualRealmHudSelectionSaveRecreateLoadAndContinue" fullname="RPG.Presentation.Tests.RealmPresentationTests.ActualRealmHudSelectionSaveRecreateLoadAndContinue" methodname="ActualRealmHudSelectionSaveRecreateLoadAndContinue" classname="RPG.Presentation.Tests.RealmPresentationTests" runstate="Runnable" seed="1253809532" result="Passed" start-time="2026-10-01 01:42:16Z" end-time="2026-10-01 01:42:16Z" duration="0.258733" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1166" name="AuthoredInspectionSnapshotIsLabelledAndOwnNamespace" fullname="RPG.Presentation.Tests.RealmPresentationTests.AuthoredInspectionSnapshotIsLabelledAndOwnNamespace" methodname="AuthoredInspectionSnapshotIsLabelledAndOwnNamespace" classname="RPG.Presentation.Tests.RealmPresentationTests" runstate="Runnable" seed="577665253" result="Passed" start-time="2026-10-01 01:42:16Z" end-time="2026-10-01 01:42:16Z" duration="0.121778" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1167" name="JointBattleAuditSerializesWithoutLosingOriginalParticipation" fullname="RPG.Presentation.Tests.RealmPresentationTests.JointBattleAuditSerializesWithoutLosingOriginalParticipation" methodname="JointBattleAuditSerializesWithoutLosingOriginalParticipation" classname="RPG.Presentation.Tests.RealmPresentationTests" runstate="Runnable" seed="1076011913" result="Passed" start-time="2026-10-01 01:42:16Z" end-time="2026-10-01 01:42:16Z" duration="0.448397" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1168" name="ReplayPresentationTests" fullname="RPG.Presentation.Tests.ReplayPresentationTests" classname="RPG.Presentation.Tests.ReplayPresentationTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-10-01 01:42:16Z" end-time="2026-10-01 01:42:19Z" duration="3.010033" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1170" name="FileVerifierRejectsMissingFooterAndMalformedInput" fullname="RPG.Presentation.Tests.ReplayPresentationTests.FileVerifierRejectsMissingFooterAndMalformedInput" methodname="FileVerifierRejectsMissingFooterAndMalformedInput" classname="RPG.Presentation.Tests.ReplayPresentationTests" runstate="Runnable" seed="1423346510" result="Passed" start-time="2026-10-01 01:42:16Z" end-time="2026-10-01 01:42:16Z" duration="0.003440" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1169" name="JsonlRoundTripNormalOaEscapeAndAiUsesActualCoreState" fullname="RPG.Presentation.Tests.ReplayPresentationTests.JsonlRoundTripNormalOaEscapeAndAiUsesActualCoreState" methodname="JsonlRoundTripNormalOaEscapeAndAiUsesActualCoreState" classname="RPG.Presentation.Tests.ReplayPresentationTests" runstate="Runnable" seed="1178950120" result="Passed" start-time="2026-10-01 01:42:16Z" end-time="2026-10-01 01:42:19Z" duration="3.000095" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1171" name="SeamlessPresentationTests" fullname="RPG.Presentation.Tests.SeamlessPresentationTests" classname="RPG.Presentation.Tests.SeamlessPresentationTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-10-01 01:42:19Z" end-time="2026-10-01 01:42:20Z" duration="0.397551" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1172" name="AuthoredInspectionLoadsWithKnownPortalWithoutReapplyingPassage" fullname="RPG.Presentation.Tests.SeamlessPresentationTests.AuthoredInspectionLoadsWithKnownPortalWithoutReapplyingPassage" methodname="AuthoredInspectionLoadsWithKnownPortalWithoutReapplyingPassage" classname="RPG.Presentation.Tests.SeamlessPresentationTests" runstate="Runnable" seed="1616665601" result="Passed" start-time="2026-10-01 01:42:19Z" end-time="2026-10-01 01:42:20Z" duration="0.112008" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1173" name="RealViewUnknownWorldPrivacyPortalsLayoutAndRecreateLoad" fullname="RPG.Presentation.Tests.SeamlessPresentationTests.RealViewUnknownWorldPrivacyPortalsLayoutAndRecreateLoad" methodname="RealViewUnknownWorldPrivacyPortalsLayoutAndRecreateLoad" classname="RPG.Presentation.Tests.SeamlessPresentationTests" runstate="Runnable" seed="462779429" result="Passed" start-time="2026-10-01 01:42:20Z" end-time="2026-10-01 01:42:20Z" duration="0.258361" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1174" name="SizeExperimentPresentationTests" fullname="RPG.Presentation.Tests.SizeExperimentPresentationTests" classname="RPG.Presentation.Tests.SizeExperimentPresentationTests" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-10-01 01:42:20Z" end-time="2026-10-01 01:42:52Z" duration="31.873563" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1178" name="ArcherHudUsesRangeTenAndAccuracyOnlyAim" fullname="RPG.Presentation.Tests.SizeExperimentPresentationTests.ArcherHudUsesRangeTenAndAccuracyOnlyAim" methodname="ArcherHudUsesRangeTenAndAccuracyOnlyAim" classname="RPG.Presentation.Tests.SizeExperimentPresentationTests" runstate="Runnable" seed="853386342" result="Passed" start-time="2026-10-01 01:42:20Z" end-time="2026-10-01 01:42:20Z" duration="0.287228" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1180" name="CornerAttackAndOaPreviewReflectSharedCoreRule" fullname="RPG.Presentation.Tests.SizeExperimentPresentationTests.CornerAttackAndOaPreviewReflectSharedCoreRule" methodname="CornerAttackAndOaPreviewReflectSharedCoreRule" classname="RPG.Presentation.Tests.SizeExperimentPresentationTests" runstate="Runnable" seed="938671152" result="Passed" start-time="2026-10-01 01:42:20Z" end-time="2026-10-01 01:42:21Z" duration="0.440171" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1175" name="DensityNamesAndViewsResetWithoutGhosts" fullname="RPG.Presentation.Tests.SizeExperimentPresentationTests.DensityNamesAndViewsResetWithoutGhosts" methodname="DensityNamesAndViewsResetWithoutGhosts" classname="RPG.Presentation.Tests.SizeExperimentPresentationTests" runstate="Runnable" seed="208246463" result="Passed" start-time="2026-10-01 01:42:21Z" end-time="2026-10-01 01:42:23Z" duration="2.150767" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1177" name="EngagedArcherHudShowsFallbackAndDisengagementRestoresBow" fullname="RPG.Presentation.Tests.SizeExperimentPresentationTests.EngagedArcherHudShowsFallbackAndDisengagementRestoresBow" methodname="EngagedArcherHudShowsFallbackAndDisengagementRestoresBow" classname="RPG.Presentation.Tests.SizeExperimentPresentationTests" runstate="Runnable" seed="507441858" result="Passed" start-time="2026-10-01 01:42:23Z" end-time="2026-10-01 01:42:23Z" duration="0.619281" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1176" name="LargerSiegeFixturesLoadFrameAndUseCoreCrossingPreview" fullname="RPG.Presentation.Tests.SizeExperimentPresentationTests.LargerSiegeFixturesLoadFrameAndUseCoreCrossingPreview" methodname="LargerSiegeFixturesLoadFrameAndUseCoreCrossingPreview" classname="RPG.Presentation.Tests.SizeExperimentPresentationTests" runstate="Runnable" seed="582819112" result="Passed" start-time="2026-10-01 01:42:23Z" end-time="2026-10-01 01:42:27Z" duration="3.503237" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1179" name="RangedPreviewAllowsExposedCornersButRejectsInteriorAndSealedVertices" fullname="RPG.Presentation.Tests.SizeExperimentPresentationTests.RangedPreviewAllowsExposedCornersButRejectsInteriorAndSealedVertices" methodname="RangedPreviewAllowsExposedCornersButRejectsInteriorAndSealedVertices" classname="RPG.Presentation.Tests.SizeExperimentPresentationTests" runstate="Runnable" seed="1436818663" result="Passed" start-time="2026-10-01 01:42:27Z" end-time="2026-10-01 01:42:28Z" duration="0.906807" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1181" name="SelectorLoadsAllComparisonFixturesAndRestartPreservesSelection" fullname="RPG.Presentation.Tests.SizeExperimentPresentationTests.SelectorLoadsAllComparisonFixturesAndRestartPreservesSelection" methodname="SelectorLoadsAllComparisonFixturesAndRestartPreservesSelection" classname="RPG.Presentation.Tests.SizeExperimentPresentationTests" runstate="Runnable" seed="528192397" result="Passed" start-time="2026-10-01 01:42:28Z" end-time="2026-10-01 01:42:52Z" duration="23.957767" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1182" name="SpellUxPresentationTests" fullname="RPG.Presentation.Tests.SpellUxPresentationTests" classname="RPG.Presentation.Tests.SpellUxPresentationTests" runstate="Runnable" testcasecount="15" result="Passed" start-time="2026-10-01 01:42:52Z" end-time="2026-10-01 01:43:01Z" duration="9.310744" total="15" passed="15" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1193" name="ArcherPinsMinimumApproachAndFiresOnceWithDeterministicReplay" fullname="RPG.Presentation.Tests.SpellUxPresentationTests.ArcherPinsMinimumApproachAndFiresOnceWithDeterministicReplay" methodname="ArcherPinsMinimumApproachAndFiresOnceWithDeterministicReplay" classname="RPG.Presentation.Tests.SpellUxPresentationTests" runstate="Runnable" seed="1297475139" result="Passed" start-time="2026-10-01 01:42:52Z" end-time="2026-10-01 01:42:52Z" duration="0.264711" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1196" name="ChangedStateRequiresFreshConfirmationAndFocusLossCancels" fullname="RPG.Presentation.Tests.SpellUxPresentationTests.ChangedStateRequiresFreshConfirmationAndFocusLossCancels" methodname="ChangedStateRequiresFreshConfirmationAndFocusLossCancels" classname="RPG.Presentation.Tests.SpellUxPresentationTests" runstate="Runnable" seed="917345581" result="Passed" start-time="2026-10-01 01:42:52Z" end-time="2026-10-01 01:42:52Z" duration="0.272588" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1190" name="EveryAttackPinsBeforeCommitAndTargetChangeNeverAttacksOldTarget" fullname="RPG.Presentation.Tests.SpellUxPresentationTests.EveryAttackPinsBeforeCommitAndTargetChangeNeverAttacksOldTarget" methodname="EveryAttackPinsBeforeCommitAndTargetChangeNeverAttacksOldTarget" classname="RPG.Presentation.Tests.SpellUxPresentationTests" runstate="Runnable" seed="2080706380" result="Passed" start-time="2026-10-01 01:42:52Z" end-time="2026-10-01 01:42:55Z" duration="2.480076" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1183" name="FireArmorSelectsAllyAndInvalidEnemyDoesNotSpend" fullname="RPG.Presentation.Tests.SpellUxPresentationTests.FireArmorSelectsAllyAndInvalidEnemyDoesNotSpend" methodname="FireArmorSelectsAllyAndInvalidEnemyDoesNotSpend" classname="RPG.Presentation.Tests.SpellUxPresentationTests" runstate="Runnable" seed="993853713" result="Passed" start-time="2026-10-01 01:42:55Z" end-time="2026-10-01 01:42:55Z" duration="0.403923" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1186" name="GroundMovementFriendlyInspectionSpecialCancelAndStaffStaySeparate" fullname="RPG.Presentation.Tests.SpellUxPresentationTests.GroundMovementFriendlyInspectionSpecialCancelAndStaffStaySeparate" methodname="GroundMovementFriendlyInspectionSpecialCancelAndStaffStaySeparate" classname="RPG.Presentation.Tests.SpellUxPresentationTests" runstate="Runnable" seed="1254806744" result="Passed" start-time="2026-10-01 01:42:55Z" end-time="2026-10-01 01:42:55Z" duration="0.359632" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1191" name="GroundSpellPinCancelActionSwitchAndFriendlyFireConsentRemainExplicit" fullname="RPG.Presentation.Tests.SpellUxPresentationTests.GroundSpellPinCancelActionSwitchAndFriendlyFireConsentRemainExplicit" methodname="GroundSpellPinCancelActionSwitchAndFriendlyFireConsentRemainExplicit" classname="RPG.Presentation.Tests.SpellUxPresentationTests" runstate="Runnable" seed="358415759" result="Passed" start-time="2026-10-01 01:42:55Z" end-time="2026-10-01 01:42:56Z" duration="0.612316" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1195" name="HealerSelfTargetUsesTwoClicksActualHealingAndOneSourceUse" fullname="RPG.Presentation.Tests.SpellUxPresentationTests.HealerSelfTargetUsesTwoClicksActualHealingAndOneSourceUse" methodname="HealerSelfTargetUsesTwoClicksActualHealingAndOneSourceUse" classname="RPG.Presentation.Tests.SpellUxPresentationTests" runstate="Runnable" seed="1025073233" result="Passed" start-time="2026-10-01 01:42:56Z" end-time="2026-10-01 01:42:56Z" duration="0.406598" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1187" name="HoverCameraCancelAndFriendlyFireNeverMutateAndTargetingClearsOnHandoff" fullname="RPG.Presentation.Tests.SpellUxPresentationTests.HoverCameraCancelAndFriendlyFireNeverMutateAndTargetingClearsOnHandoff" methodname="HoverCameraCancelAndFriendlyFireNeverMutateAndTargetingClearsOnHandoff" classname="RPG.Presentation.Tests.SpellUxPresentationTests" runstate="Runnable" seed="668821550" result="Passed" start-time="2026-10-01 01:42:56Z" end-time="2026-10-01 01:42:57Z" duration="0.626522" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1189" name="HoverPathTracksCursorPinnedPathSurvivesLeaveAndSecondClickMovesOnce" fullname="RPG.Presentation.Tests.SpellUxPresentationTests.HoverPathTracksCursorPinnedPathSurvivesLeaveAndSecondClickMovesOnce" methodname="HoverPathTracksCursorPinnedPathSurvivesLeaveAndSecondClickMovesOnce" classname="RPG.Presentation.Tests.SpellUxPresentationTests" runstate="Runnable" seed="1005449510" result="Passed" start-time="2026-10-01 01:42:57Z" end-time="2026-10-01 01:42:57Z" duration="0.294065" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1194" name="LethalOpportunityAttackStopsApproachWithoutFollowupStrike" fullname="RPG.Presentation.Tests.SpellUxPresentationTests.LethalOpportunityAttackStopsApproachWithoutFollowupStrike" methodname="LethalOpportunityAttackStopsApproachWithoutFollowupStrike" classname="RPG.Presentation.Tests.SpellUxPresentationTests" runstate="Runnable" seed="162924322" result="Passed" start-time="2026-10-01 01:42:57Z" end-time="2026-10-01 01:42:58Z" duration="1.098229" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1184" name="LiveHoverIsCoreExactAndEmptyFireballCommitsOnlyOnce" fullname="RPG.Presentation.Tests.SpellUxPresentationTests.LiveHoverIsCoreExactAndEmptyFireballCommitsOnlyOnce" methodname="LiveHoverIsCoreExactAndEmptyFireballCommitsOnlyOnce" classname="RPG.Presentation.Tests.SpellUxPresentationTests" runstate="Runnable" seed="2071318685" result="Passed" start-time="2026-10-01 01:42:58Z" end-time="2026-10-01 01:42:59Z" duration="0.499037" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1185" name="PrimarySpellClicksAcrossActivationsAndInvalidTargetNeverWalksOrUsesStaff" fullname="RPG.Presentation.Tests.SpellUxPresentationTests.PrimarySpellClicksAcrossActivationsAndInvalidTargetNeverWalksOrUsesStaff" methodname="PrimarySpellClicksAcrossActivationsAndInvalidTargetNeverWalksOrUsesStaff" classname="RPG.Presentation.Tests.SpellUxPresentationTests" runstate="Runnable" seed="1227412618" result="Passed" start-time="2026-10-01 01:42:59Z" end-time="2026-10-01 01:43:00Z" duration="0.561389" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1197" name="RetainedV1ReplayFilesStillUseRecordedRules" fullname="RPG.Presentation.Tests.SpellUxPresentationTests.RetainedV1ReplayFilesStillUseRecordedRules" methodname="RetainedV1ReplayFilesStillUseRecordedRules" classname="RPG.Presentation.Tests.SpellUxPresentationTests" runstate="Runnable" seed="13584063" result="Passed" start-time="2026-10-01 01:43:00Z" end-time="2026-10-01 01:43:00Z" duration="0.208375" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1188" name="SpentSpellActionHidesAimDisablesAttacksAndReturnsNextActivation" fullname="RPG.Presentation.Tests.SpellUxPresentationTests.SpentSpellActionHidesAimDisablesAttacksAndReturnsNextActivation" methodname="SpentSpellActionHidesAimDisablesAttacksAndReturnsNextActivation" classname="RPG.Presentation.Tests.SpellUxPresentationTests" runstate="Runnable" seed="907488161" result="Passed" start-time="2026-10-01 01:43:00Z" end-time="2026-10-01 01:43:01Z" duration="0.872172" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1192" name="WarriorPinsApproachThenMovesAndAttacksThroughExistingReplayCommands" fullname="RPG.Presentation.Tests.SpellUxPresentationTests.WarriorPinsApproachThenMovesAndAttacksThroughExistingReplayCommands" methodname="WarriorPinsApproachThenMovesAndAttacksThroughExistingReplayCommands" classname="RPG.Presentation.Tests.SpellUxPresentationTests" runstate="Runnable" seed="1578964980" result="Passed" start-time="2026-10-01 01:43:01Z" end-time="2026-10-01 01:43:01Z" duration="0.346961" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1198" name="StrategicPresentationTests" fullname="RPG.Presentation.Tests.StrategicPresentationTests" classname="RPG.Presentation.Tests.StrategicPresentationTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-10-01 01:43:01Z" end-time="2026-10-01 01:43:25Z" duration="24.434245" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1200" name="VillageFailureIsCausalAndDisablesWorldCommands" fullname="RPG.Presentation.Tests.StrategicPresentationTests.VillageFailureIsCausalAndDisablesWorldCommands" methodname="VillageFailureIsCausalAndDisablesWorldCommands" classname="RPG.Presentation.Tests.StrategicPresentationTests" runstate="Runnable" seed="1532357718" result="Passed" start-time="2026-10-01 01:43:01Z" end-time="2026-10-01 01:43:01Z" duration="0.096737" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1199" name="WorldBattleWorldUsesActualPersistentResultsAndKeepsSameSession" fullname="RPG.Presentation.Tests.StrategicPresentationTests.WorldBattleWorldUsesActualPersistentResultsAndKeepsSameSession" methodname="WorldBattleWorldUsesActualPersistentResultsAndKeepsSameSession" classname="RPG.Presentation.Tests.StrategicPresentationTests" runstate="Runnable" seed="1837518024" result="Passed" start-time="2026-10-01 01:43:01Z" end-time="2026-10-01 01:43:25Z" duration="24.331893" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1201" name="StrategicRecoveryPresentationTests" fullname="RPG.Presentation.Tests.StrategicRecoveryPresentationTests" classname="RPG.Presentation.Tests.StrategicRecoveryPresentationTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-10-01 01:43:25Z" end-time="2026-10-01 01:43:50Z" duration="24.914392" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1202" name="ActualBattlesReturnSaveReloadKeepRecoveryAndRedeploy" fullname="RPG.Presentation.Tests.StrategicRecoveryPresentationTests.ActualBattlesReturnSaveReloadKeepRecoveryAndRedeploy" methodname="ActualBattlesReturnSaveReloadKeepRecoveryAndRedeploy" classname="RPG.Presentation.Tests.StrategicRecoveryPresentationTests" runstate="Runnable" seed="603091895" result="Passed" start-time="2026-10-01 01:43:25Z" end-time="2026-10-01 01:43:50Z" duration="24.913707" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1203" name="StrategicSavePresentationTests" fullname="RPG.Presentation.Tests.StrategicSavePresentationTests" classname="RPG.Presentation.Tests.StrategicSavePresentationTests" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-10-01 01:43:50Z" end-time="2026-10-01 01:43:58Z" duration="7.546199" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1210" name="CorruptIncompatibleAndMissingFileNeverReplaceLiveScenario" fullname="RPG.Presentation.Tests.StrategicSavePresentationTests.CorruptIncompatibleAndMissingFileNeverReplaceLiveScenario" methodname="CorruptIncompatibleAndMissingFileNeverReplaceLiveScenario" classname="RPG.Presentation.Tests.StrategicSavePresentationTests" runstate="Runnable" seed="1544307070" result="Passed" start-time="2026-10-01 01:43:50Z" end-time="2026-10-01 01:43:51Z" duration="0.235732" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1209" name="DiskSaveRecreatedSessionLoadAndContinueAfterActualBattle" fullname="RPG.Presentation.Tests.StrategicSavePresentationTests.DiskSaveRecreatedSessionLoadAndContinueAfterActualBattle" methodname="DiskSaveRecreatedSessionLoadAndContinueAfterActualBattle" classname="RPG.Presentation.Tests.StrategicSavePresentationTests" runstate="Runnable" seed="1034319740" result="Passed" start-time="2026-10-01 01:43:51Z" end-time="2026-10-01 01:43:58Z" duration="7.292050" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-suite type="ParameterizedMethod" id="1208" name="JsonRoundTripBeforeAnyBattlePreservesAbsentXpResolution" fullname="RPG.Presentation.Tests.StrategicSavePresentationTests.JsonRoundTripBeforeAnyBattlePreservesAbsentXpResolution" classname="RPG.Presentation.Tests.StrategicSavePresentationTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-10-01 01:43:58Z" end-time="2026-10-01 01:43:58Z" duration="0.012374" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1204" name="JsonRoundTripBeforeAnyBattlePreservesAbsentXpResolution(0)" fullname="RPG.Presentation.Tests.StrategicSavePresentationTests.JsonRoundTripBeforeAnyBattlePreservesAbsentXpResolution(0)" methodname="JsonRoundTripBeforeAnyBattlePreservesAbsentXpResolution" classname="RPG.Presentation.Tests.StrategicSavePresentationTests" runstate="Runnable" seed="1850969562" result="Passed" start-time="2026-10-01 01:43:58Z" end-time="2026-10-01 01:43:58Z" duration="0.001697" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1205" name="JsonRoundTripBeforeAnyBattlePreservesAbsentXpResolution(1)" fullname="RPG.Presentation.Tests.StrategicSavePresentationTests.JsonRoundTripBeforeAnyBattlePreservesAbsentXpResolution(1)" methodname="JsonRoundTripBeforeAnyBattlePreservesAbsentXpResolution" classname="RPG.Presentation.Tests.StrategicSavePresentationTests" runstate="Runnable" seed="53764731" result="Passed" start-time="2026-10-01 01:43:58Z" end-time="2026-10-01 01:43:58Z" duration="0.001224" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1206" name="JsonRoundTripBeforeAnyBattlePreservesAbsentXpResolution(2)" fullname="RPG.Presentation.Tests.StrategicSavePresentationTests.JsonRoundTripBeforeAnyBattlePreservesAbsentXpResolution(2)" methodname="JsonRoundTripBeforeAnyBattlePreservesAbsentXpResolution" classname="RPG.Presentation.Tests.StrategicSavePresentationTests" runstate="Runnable" seed="2060337701" result="Passed" start-time="2026-10-01 01:43:58Z" end-time="2026-10-01 01:43:58Z" duration="0.000885" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1207" name="JsonRoundTripBeforeAnyBattlePreservesAbsentXpResolution(5)" fullname="RPG.Presentation.Tests.StrategicSavePresentationTests.JsonRoundTripBeforeAnyBattlePreservesAbsentXpResolution(5)" methodname="JsonRoundTripBeforeAnyBattlePreservesAbsentXpResolution" classname="RPG.Presentation.Tests.StrategicSavePresentationTests" runstate="Runnable" seed="708780070" result="Passed" start-time="2026-10-01 01:43:58Z" end-time="2026-10-01 01:43:58Z" duration="0.001358" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+            </test-suite>
+            <test-suite type="TestFixture" id="1211" name="TacticalAiPresentationTests" fullname="RPG.Presentation.Tests.TacticalAiPresentationTests" classname="RPG.Presentation.Tests.TacticalAiPresentationTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-10-01 01:43:58Z" end-time="2026-10-01 01:43:59Z" duration="1.006658" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1212" name="ControllerUsesCoreAndReturnsToPlayerWithoutInvalidLoop" fullname="RPG.Presentation.Tests.TacticalAiPresentationTests.ControllerUsesCoreAndReturnsToPlayerWithoutInvalidLoop" methodname="ControllerUsesCoreAndReturnsToPlayerWithoutInvalidLoop" classname="RPG.Presentation.Tests.TacticalAiPresentationTests" runstate="Runnable" seed="1886462665" result="Passed" start-time="2026-10-01 01:43:58Z" end-time="2026-10-01 01:43:59Z" duration="1.005908" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1213" name="TacticalAiRetreatPresentationTests" fullname="RPG.Presentation.Tests.TacticalAiRetreatPresentationTests" classname="RPG.Presentation.Tests.TacticalAiRetreatPresentationTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-10-01 01:43:59Z" end-time="2026-10-01 01:44:01Z" duration="2.039912" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1214" name="EnemyRetreatsFromWallAndOneCellShortNextActivationThroughCore" fullname="RPG.Presentation.Tests.TacticalAiRetreatPresentationTests.EnemyRetreatsFromWallAndOneCellShortNextActivationThroughCore" methodname="EnemyRetreatsFromWallAndOneCellShortNextActivationThroughCore" classname="RPG.Presentation.Tests.TacticalAiRetreatPresentationTests" runstate="Runnable" seed="1786015589" result="Passed" start-time="2026-10-01 01:43:59Z" end-time="2026-10-01 01:44:00Z" duration="0.930041" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1216" name="HealthyWarriorMakesWallDetourAndEventuallyAttacks" fullname="RPG.Presentation.Tests.TacticalAiRetreatPresentationTests.HealthyWarriorMakesWallDetourAndEventuallyAttacks" methodname="HealthyWarriorMakesWallDetourAndEventuallyAttacks" classname="RPG.Presentation.Tests.TacticalAiRetreatPresentationTests" runstate="Runnable" seed="165023438" result="Passed" start-time="2026-10-01 01:44:00Z" end-time="2026-10-01 01:44:01Z" duration="0.709203" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1215" name="PlayerBlocksPredictedExitAndEnemyUsesAnotherLegalCell" fullname="RPG.Presentation.Tests.TacticalAiRetreatPresentationTests.PlayerBlocksPredictedExitAndEnemyUsesAnotherLegalCell" methodname="PlayerBlocksPredictedExitAndEnemyUsesAnotherLegalCell" classname="RPG.Presentation.Tests.TacticalAiRetreatPresentationTests" runstate="Runnable" seed="994584352" result="Passed" start-time="2026-10-01 01:44:01Z" end-time="2026-10-01 01:44:01Z" duration="0.392114" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: /tmp/seamless-worlds-07/test-preferences/Library/Application Support/RPGPrototypeIsolated/Seamless-Worlds-07/TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

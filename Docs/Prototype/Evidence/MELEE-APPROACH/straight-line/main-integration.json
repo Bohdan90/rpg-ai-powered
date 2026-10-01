@@ -1,0 +1,12 @@
+{
+  "starting_main": "76f60eb",
+  "implementation_head": "e823e08",
+  "method": "authorized fast-forward",
+  "tested_source_files": 134,
+  "tested_source_identical": true,
+  "unrelated_files_preserved": 9,
+  "non_Unity_save_files_unchanged": 22,
+  "tests": "Existing fresh 598 EditMode + 79 PlayMode on identical source; no new run claimed",
+  "forced_restart": false,
+  "push": false
+}

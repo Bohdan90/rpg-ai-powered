@@ -1,0 +1,512 @@
+{
+  "mode": "fire-targeting-gui",
+  "hash": "XKPmh3jtglEKJAcAHsGlGdOkoVPW4IoppdyadLGRvzo=",
+  "plan": "",
+  "contact": "",
+  "hud": "Stable map only \u00b7 one Crossroads slot.\nCastCommand applied.\nGATE C / HOTSEAT\nBLUE West \u00b7 ORANGE East \u00b7 GOLD active\nGreen: reachable \u00b7 Gold: path \u00b7 Red segment: OA risk\nSword + shield: HW/EW \u00b7 Bow: HA \u00b7 * Commander\nWhite arrow: facing \u00b7 Red border: ZoC ready \u00b7 Gray: spent\nWheel: zoom \u00b7 Right-click: center view\n\u2190 West Retreat \u2014 YOUR ESCAPE\nEast Retreat \u2192\nFire 2*\nHP 32/32\nA 0/0\nEXH \nHW\nHP 40/40\nA 16/16\nHW\nHP 40/40\nA 16/16\nBarrier 6 \nIce 2\nHP 32/32\nA 0/0\nIce 1\nHP 26/26\nA 0/0\nHW*\nHP 40/40\nA 16/16\nHW\nHP 40/40\nA 16/16\nHA\nHP 28/28\nA 4/4\nHA\nHP 28/28\nA 4/4\nEW\nHP 32/32\nA 6/6\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\nTACTICAL GRAYBOX\nHotseat \u00b7 ZoC / OA / physical Retreat\nController\nHotseat\nROUND 1 \u00b7 FireMageTII #1\nWest | HP 32 / Armor 0\nMovement 4 | Action spent\nFacing NorthEast | Defending no | no OA\nBarrier 0 \u00b7 EXHAUSTED\nAbility\nPrimary attack: FireStream\nTarget: Direction through cell center \u00b7 thin line \u00b7 range 3 (diagonals included) \u00b7 Action \u00b7 Spell (not Exertion)\nHover/click a hostile unit for primary spell. Empty ground remains Move; allies are inspected.\nAmber brackets: legal aim geometry (recipient/status checked separately). Magenta: exact effect. Red X: excluded by obstruction. Allies are named below.\nHover (9,9) HumanWarriorTI #3 | OA ready\nHP 40 / Armor 16 | Facing East\nEnemy ZoC: HumanWarriorTI #2 [OA ready]\nNo destination / target selected.\nClick a cell or unit, then confirm. Green cells: Core reachable.\nExplicitly confirm allied target\nInitiative order (\u25ba current):\n\u25ba FireMageTII #1 [11] no OA\n   IceMageTII #4 [11] no OA\n   HumanWarriorTI #2 [10] OA ready\n   HumanWarriorTI #3 [10] OA ready\nWest: West edge. East: East edge.\nYOUR escape: West edge\nEscaped/Safe:\nNone\nEnd facing\nCastCommand applied.\nFixture (resets battle)\n05B West preset\n05B East preset\n05 Starting Side\nSize/density experiment \u00b7 no combat retuning. 9v9 = synthetic tactical roster, not strategic Capacity validation. Siege: static fortress; moat proxy has fixed crossings. 41\u00d739 preserves each attacker approach; West = attacker coalition, East = defenders. No real siege mechanics.\nLOCAL REPLAY / TELEMETRY\nReplay file\nRECENT CORE EVENTS\nR0 Battle: BattleStarted\nR1 Battle: RoundStarted\nR1 FireMageTII #1: ActivationStarted\nR1 FireMageTII #1: ActionConsumed\nR1 FireMageTII #1: ExhaustionChanged\nR1 FireMageTII #1: SpellCast FireArmor (9,9)\nR1 FireMageTII #1: FacingChanged\nR1 FireMageTII #1: BarrierChanged \u2192 HumanWarriorTI #3 0 \u2192 6",
+  "spell": "",
+  "persistentPath": "/tmp/fire-targeting-02/gui-preferences/Library/Application Support/DefaultCompany/My project",
+  "ff": false,
+  "gx": 522.0,
+  "gy": 339.0,
+  "gw": 1206.0,
+  "fields": [
+    {
+      "label": "Controller",
+      "name": "controller-mode",
+      "index": 0,
+      "choices": [
+        "Hotseat",
+        "Player West vs AI East",
+        "Player East vs AI West"
+      ],
+      "x": 1337.08642578125,
+      "y": -228.98922729492188
+    },
+    {
+      "label": "Ability",
+      "name": "spell-selector",
+      "index": 0,
+      "choices": [
+        "Primary / Move",
+        "FireStream",
+        "FireArmor",
+        "Fireball"
+      ],
+      "x": 1337.08642578125,
+      "y": -43.42900085449219
+    },
+    {
+      "label": "End facing",
+      "name": "",
+      "index": 0,
+      "choices": [
+        "Keep current",
+        "North",
+        "NorthEast",
+        "East",
+        "SouthEast",
+        "South",
+        "SouthWest",
+        "West",
+        "NorthWest"
+      ],
+      "x": 1337.08642578125,
+      "y": 802.7782592773438
+    },
+    {
+      "label": "Fixture (resets battle)",
+      "name": "fixture-selector",
+      "index": 0,
+      "choices": [
+        "Field_13x9_Control",
+        "Field_17x11_Expanded",
+        "Siege_23x17_Tight",
+        "Siege_27x21_Roomy",
+        "Field_19x13_ExpandedV2",
+        "Siege_31x25_Medium",
+        "Siege_35x27_Large",
+        "Field_23x17_Full_9v9",
+        "Siege_35x27_Full_9v9",
+        "Siege_41x39_West_9v9",
+        "Siege_41x39_East_9v9",
+        "Siege_41x39_North_9v9",
+        "Siege_41x39_South_9v9",
+        "Siege_41x39_WestEast_18v9",
+        "Siege_41x39_NorthSouth_18v9"
+      ],
+      "x": 1337.08642578125,
+      "y": 929.1171264648438
+    },
+    {
+      "label": "05B West preset",
+      "name": "",
+      "index": 0,
+      "choices": [
+        "Fire",
+        "Ice",
+        "Support"
+      ],
+      "x": 1337.08642578125,
+      "y": 1115.993408203125
+    },
+    {
+      "label": "05B East preset",
+      "name": "",
+      "index": 1,
+      "choices": [
+        "Fire",
+        "Ice",
+        "Support"
+      ],
+      "x": 1337.08642578125,
+      "y": 1160.7384033203125
+    },
+    {
+      "label": "05 Starting Side",
+      "name": "",
+      "index": 0,
+      "choices": [
+        "West",
+        "East"
+      ],
+      "x": 1337.08642578125,
+      "y": 1205.4833984375
+    }
+  ],
+  "toggles": [
+    {
+      "label": "Explicitly confirm allied target",
+      "value": false,
+      "x": 1337.08642578125,
+      "y": 440.2120361328125
+    }
+  ],
+  "battle": false,
+  "ended": false,
+  "ai": false,
+  "aiTurn": false,
+  "round": 1,
+  "records": 1,
+  "active": 1,
+  "x": 485.6845703125,
+  "y": 369.23040771484375,
+  "rw": 1587.1322021484375,
+  "rh": 808.0424194335938,
+  "sw": 2412,
+  "sh": 1318,
+  "tx": 9,
+  "ty": 9,
+  "buttons": [
+    {
+      "name": "primary-attack",
+      "text": "Primary: FireStream \u00b7 hostile click",
+      "x": 1337.08642578125,
+      "y": 1.316009521484375
+    },
+    {
+      "name": "staff-attack",
+      "text": "Staff Strike \u00b7 melee 1 \u00b7 explicit alternative",
+      "x": 1337.08642578125,
+      "y": 48.693084716796875
+    },
+    {
+      "name": "spell-FireStream",
+      "text": "FireStream",
+      "x": 1231.14599609375,
+      "y": 96.07017517089844
+    },
+    {
+      "name": "spell-FireArmor",
+      "text": "FireArmor \u00b7 Self / Ally",
+      "x": 1442.368896484375,
+      "y": 96.07017517089844
+    },
+    {
+      "name": "spell-Fireball",
+      "text": "Fireball",
+      "x": 1231.14599609375,
+      "y": 143.447265625
+    },
+    {
+      "name": "cancel-preview",
+      "text": "Cancel preview",
+      "x": 1337.08642578125,
+      "y": 527.72802734375
+    },
+    {
+      "name": "end-activation",
+      "text": "End Activation",
+      "x": 1337.08642578125,
+      "y": 847.5233154296875
+    },
+    {
+      "name": "lab-FireVsIce",
+      "text": "Combat Lab \u00b7 FireVsIce \u00b7 near contact",
+      "x": 1337.08642578125,
+      "y": 973.8621826171875
+    },
+    {
+      "name": "lab-SupportVsFire",
+      "text": "Combat Lab \u00b7 SupportVsFire \u00b7 near contact",
+      "x": 1337.08642578125,
+      "y": 1021.2392578125
+    },
+    {
+      "name": "lab-MobileBlades",
+      "text": "Combat Lab \u00b7 MobileBlades \u00b7 near contact",
+      "x": 1337.08642578125,
+      "y": 1068.6163330078125
+    },
+    {
+      "name": "city-start-a",
+      "text": "City Foundations 05A",
+      "x": 1337.08642578125,
+      "y": 1250.228515625
+    },
+    {
+      "name": "city-start-b",
+      "text": "City & Combat 05B \u00b7 permanent presets",
+      "x": 1337.08642578125,
+      "y": 1297.60546875
+    },
+    {
+      "name": "city-authored",
+      "text": "Load AUTHORED 05B inspection fixture (not a played match)",
+      "x": 1337.08642578125,
+      "y": 1344.982666015625
+    },
+    {
+      "name": "city-load-a",
+      "text": "Load City Foundations 05A",
+      "x": 1337.08642578125,
+      "y": 1392.359619140625
+    },
+    {
+      "name": "city-load-b",
+      "text": "Load City & Combat 05B",
+      "x": 1337.08642578125,
+      "y": 1439.73681640625
+    },
+    {
+      "name": "persistence-start",
+      "text": "Start Persistence Slice v0.1",
+      "x": 1337.08642578125,
+      "y": 1487.11376953125
+    },
+    {
+      "name": "world-start",
+      "text": "Start Connected Mission 01",
+      "x": 1337.08642578125,
+      "y": 1534.490966796875
+    },
+    {
+      "name": "world-load",
+      "text": "Load saved Mission 01",
+      "x": 1337.08642578125,
+      "y": 1581.8680419921875
+    },
+    {
+      "name": "duel-start-west",
+      "text": "Crossroads economy Hotseat \u00b7 West first",
+      "x": 1337.08642578125,
+      "y": 1629.2451171875
+    },
+    {
+      "name": "duel-start-east",
+      "text": "Crossroads economy Hotseat \u00b7 East first",
+      "x": 1337.08642578125,
+      "y": 1676.6221923828125
+    },
+    {
+      "name": "incident-start-west",
+      "text": "Crossroads Incident 04 \u00b7 West first",
+      "x": 1337.08642578125,
+      "y": 1723.999267578125
+    },
+    {
+      "name": "incident-start-east",
+      "text": "Crossroads Incident 04 \u00b7 East first",
+      "x": 1337.08642578125,
+      "y": 1771.3763427734375
+    },
+    {
+      "name": "incident-control",
+      "text": "Incident 04 \u00b7 control (no incidents)",
+      "x": 1337.08642578125,
+      "y": 1818.75341796875
+    },
+    {
+      "name": "incident-load",
+      "text": "Load Incident 04",
+      "x": 1337.08642578125,
+      "y": 1866.1304931640625
+    },
+    {
+      "name": "duel-load",
+      "text": "Load Crossroads Hotseat",
+      "x": 1337.08642578125,
+      "y": 1913.507568359375
+    },
+    {
+      "name": "fit-board",
+      "text": "Fit whole board",
+      "x": 1337.08642578125,
+      "y": 2034.582275390625
+    },
+    {
+      "name": "focus-unit",
+      "text": "Focus active unit (wheel to zoom)",
+      "x": 1337.08642578125,
+      "y": 2081.95947265625
+    },
+    {
+      "name": "restart",
+      "text": "Restart Same Seed",
+      "x": 1337.08642578125,
+      "y": 2129.336669921875
+    },
+    {
+      "name": "export-replay",
+      "text": "Export battle + session",
+      "x": 1337.08642578125,
+      "y": 2255.675537109375
+    },
+    {
+      "name": "verify-replay",
+      "text": "Load / verify replay file",
+      "x": 1337.08642578125,
+      "y": 2303.052490234375
+    }
+  ],
+  "units": [
+    {
+      "id": 1,
+      "x": 8,
+      "y": 8,
+      "hp": 32,
+      "armor": 0,
+      "movement": 4,
+      "burn": 0,
+      "barrier": 0,
+      "expiry": 0,
+      "action": false,
+      "frozen": false,
+      "fire": false,
+      "exhausted": true,
+      "side": "West",
+      "status": "Active",
+      "persistent": "",
+      "profile": "FireMageTII"
+    },
+    {
+      "id": 2,
+      "x": 10,
+      "y": 9,
+      "hp": 40,
+      "armor": 16,
+      "movement": 0,
+      "burn": 0,
+      "barrier": 0,
+      "expiry": 0,
+      "action": false,
+      "frozen": false,
+      "fire": false,
+      "exhausted": false,
+      "side": "East",
+      "status": "Active",
+      "persistent": "",
+      "profile": "HumanWarriorTI"
+    },
+    {
+      "id": 3,
+      "x": 9,
+      "y": 9,
+      "hp": 40,
+      "armor": 16,
+      "movement": 0,
+      "burn": 0,
+      "barrier": 6,
+      "expiry": 2,
+      "action": false,
+      "frozen": false,
+      "fire": true,
+      "exhausted": false,
+      "side": "West",
+      "status": "Active",
+      "persistent": "",
+      "profile": "HumanWarriorTI"
+    },
+    {
+      "id": 4,
+      "x": 14,
+      "y": 8,
+      "hp": 32,
+      "armor": 0,
+      "movement": 0,
+      "burn": 0,
+      "barrier": 0,
+      "expiry": 0,
+      "action": false,
+      "frozen": false,
+      "fire": false,
+      "exhausted": false,
+      "side": "East",
+      "status": "Active",
+      "persistent": "",
+      "profile": "IceMageTII"
+    }
+  ],
+  "world": {
+    "version": 0,
+    "refresh": 0,
+    "startingSide": 0,
+    "activeSide": 0,
+    "completed": 0,
+    "winner": 0,
+    "battleNumber": 0,
+    "seed": 0,
+    "handoff": false,
+    "economy": false,
+    "waystationFood": 0,
+    "scenario": "",
+    "checksum": "",
+    "owners": [],
+    "events": [],
+    "west": {
+      "node": 0,
+      "tempo": 0,
+      "provisions": 0,
+      "pressure": 0,
+      "gold": 0,
+      "keepFood": 0,
+      "nextRecruit": 0,
+      "pendingProfile": 0,
+      "lastRecruitRefresh": 0,
+      "pendingId": "",
+      "goldExact": "",
+      "foodExact": "",
+      "formation": {
+        "id": "",
+        "side": 0,
+        "commanderless": false,
+        "rosterLocked": false,
+        "members": []
+      }
+    },
+    "east": {
+      "node": 0,
+      "tempo": 0,
+      "provisions": 0,
+      "pressure": 0,
+      "gold": 0,
+      "keepFood": 0,
+      "nextRecruit": 0,
+      "pendingProfile": 0,
+      "lastRecruitRefresh": 0,
+      "pendingId": "",
+      "goldExact": "",
+      "foodExact": "",
+      "formation": {
+        "id": "",
+        "side": 0,
+        "commanderless": false,
+        "rosterLocked": false,
+        "members": []
+      }
+    },
+    "incident": {
+      "enabled": false,
+      "worldPhase": false,
+      "ravaged": false,
+      "cycleEligible": false,
+      "continuityBroken": false,
+      "rewardPaid": false,
+      "phase": 0,
+      "whiteout": 0,
+      "cursor": 0,
+      "contract": 0,
+      "holdCycles": 0,
+      "appliedBattle": 0,
+      "id": "",
+      "claimant": "",
+      "holdReason": "",
+      "actorOrder": [],
+      "raiders": []
+    },
+    "foundations": {
+      "combined": false,
+      "locations": [],
+      "west": {
+        "wood": "",
+        "iron": "",
+        "preset": 0,
+        "active": 0,
+        "started": 0,
+        "paused": false,
+        "queue": [],
+        "research": [],
+        "repairStarted": 0,
+        "trainingStarted": 0,
+        "repairIds": [],
+        "repairs": [],
+        "trainee": ""
+      },
+      "east": {
+        "wood": "",
+        "iron": "",
+        "preset": 0,
+        "active": 0,
+        "started": 0,
+        "paused": false,
+        "queue": [],
+        "research": [],
+        "repairStarted": 0,
+        "trainingStarted": 0,
+        "repairIds": [],
+        "repairs": [],
+        "trainee": ""
+      }
+    }
+  }
+}

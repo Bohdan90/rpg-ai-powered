@@ -1,0 +1,1559 @@
+{
+  "task": "50+51 acceptance completion in user-authorized main integration",
+  "starting_head": "045707f81847fb88ac34c724d5f87ce30fba5c39",
+  "implementation_head": "commit containing this manifest; exact tested source hashes in manual-complete/final-source-provenance.json",
+  "branch": "develop",
+  "worktree": "/Users/bohdanskrypka/UnityProjects/Convergence/My project",
+  "unity": "6000.6.2f1",
+  "full_regression": {
+    "EditMode": {
+      "passed": 521,
+      "failed": 0,
+      "skipped": 0,
+      "source_xml": "/private/tmp/convergence-5051/logs/EditMode-20260930-105150.xml",
+      "source_log": "/private/tmp/convergence-5051/logs/EditMode-20260930-105150.log",
+      "repo_xml": "Docs/Prototype/Evidence/5051/manual-complete/full-editmode.xml",
+      "repo_log": "Docs/Prototype/Evidence/5051/manual-complete/full-editmode.log",
+      "sha256": "1644d9d569f16e049f06afeb72587626d6167683b758833674b328e8709d88f1",
+      "start_utc": "2026-09-30 14:51:56Z",
+      "end_utc": "2026-09-30 14:53:15Z",
+      "command": "bash /private/tmp/convergence-5051/run-tests.sh EditMode '' '/Users/bohdanskrypka/UnityProjects/Convergence/My project'",
+      "configuration": "Unity6000.6.2f1; main product; CFFIXED_USER_HOME=/private/tmp/convergence-5051/preferences; temporary GUI observer removed"
+    },
+    "PlayMode": {
+      "passed": 64,
+      "failed": 0,
+      "skipped": 0,
+      "source_xml": "/private/tmp/convergence-5051/logs/PlayMode-20260930-105331.xml",
+      "source_log": "/private/tmp/convergence-5051/logs/PlayMode-20260930-105331.log",
+      "repo_xml": "Docs/Prototype/Evidence/5051/manual-complete/full-playmode.xml",
+      "repo_log": "Docs/Prototype/Evidence/5051/manual-complete/full-playmode.log",
+      "sha256": "920bc02513dd59d51e5d608655f6c090d18620e2a00cd19c322859e27e385057",
+      "start_utc": "2026-09-30 14:53:37Z",
+      "end_utc": "2026-09-30 14:55:29Z",
+      "command": "bash /private/tmp/convergence-5051/run-tests.sh PlayMode '' '/Users/bohdanskrypka/UnityProjects/Convergence/My project'",
+      "configuration": "Unity6000.6.2f1; main product; CFFIXED_USER_HOME=/private/tmp/convergence-5051/preferences; temporary GUI observer removed"
+    }
+  },
+  "manual": {
+    "N1": "PASS controlled GUI",
+    "N2": "PASS controlled GUI",
+    "N3": "PASS controlled GUI",
+    "N4": "PASS controlled GUI",
+    "N5": "PASS controlled GUI",
+    "V1": "PASS controlled GUI",
+    "V2": "PASS controlled GUI",
+    "V3": "PASS controlled GUI",
+    "V4": "PASS controlled GUI",
+    "V5": "PASS controlled GUI"
+  },
+  "original_checkout": "/Users/bohdanskrypka/UnityProjects/Convergence/My project",
+  "original_head": "045707f81847fb88ac34c724d5f87ce30fba5c39",
+  "original_status": " M Assets/_Project/Scenes/TacticalGraybox.unity\n M ProjectSettings/EditorBuildSettings.asset\n M ProjectSettings/ProjectSettings.asset\n?? Assets/_Project/Core/PersistenceSliceScenario.cs.meta\n?? Assets/_Project/Core/PersistentFormation.cs.meta\n?? Assets/_Project/Tests/PersistenceProgressionTests.cs.meta\n?? Assets/_Project/Tests/PersistenceSliceScenarioTests.cs.meta\n?? Assets/_Project/Tests/PersistentFormationTests.cs.meta\n?? Assets/_Project/Tests/PlayMode/PersistenceSlicePresentationTests.cs.meta\n",
+  "original_nine_hash_checks": {
+    "Assets/_Project/Scenes/TacticalGraybox.unity": true,
+    "ProjectSettings/EditorBuildSettings.asset": true,
+    "ProjectSettings/ProjectSettings.asset": true,
+    "Assets/_Project/Core/PersistenceSliceScenario.cs.meta": true,
+    "Assets/_Project/Core/PersistentFormation.cs.meta": true,
+    "Assets/_Project/Tests/PersistenceProgressionTests.cs.meta": true,
+    "Assets/_Project/Tests/PersistenceSliceScenarioTests.cs.meta": true,
+    "Assets/_Project/Tests/PersistentFormationTests.cs.meta": true,
+    "Assets/_Project/Tests/PlayMode/PersistenceSlicePresentationTests.cs.meta": true
+  },
+  "save_namespace": {
+    "GUI": "/private/tmp/convergence-5051/manual-complete/preferences/Library/Application Support/DefaultCompany/My project",
+    "batch_preferences": "/private/tmp/convergence-5051/preferences",
+    "main_product_unchanged": true,
+    "user_saves_touched": false
+  },
+  "test_preferences": "/private/tmp/convergence-5051/preferences",
+  "interactive_preferences": "/private/tmp/convergence-5051/play-preferences",
+  "push": "NOT PERFORMED",
+  "develop_merge": "USER-AUTHORIZED LOCAL INTEGRATION",
+  "historical_full_regression": {
+    "EditMode": {
+      "passed": 489,
+      "failed": 0,
+      "skipped": 0,
+      "source_xml": "/private/tmp/convergence-5051/logs/EditMode-20260929-234404.xml",
+      "source_log": "/private/tmp/convergence-5051/logs/EditMode-20260929-234404.log",
+      "repo_xml": "Docs/Prototype/Evidence/5051/final-editmode.xml",
+      "command": "bash /private/tmp/convergence-5051/run-tests.sh EditMode",
+      "sha256": "1a71dbb3dc739e8b28b7719fcb19d5de3979f5d3bff2dca59ebbd6b4bee2b6f8"
+    },
+    "PlayMode": {
+      "passed": 64,
+      "failed": 0,
+      "skipped": 0,
+      "source_xml": "/private/tmp/convergence-5051/logs/PlayMode-20260929-234616.xml",
+      "source_log": "/private/tmp/convergence-5051/logs/PlayMode-20260929-234616.log",
+      "repo_xml": "Docs/Prototype/Evidence/5051/final-playmode.xml",
+      "command": "bash /private/tmp/convergence-5051/run-tests.sh PlayMode",
+      "sha256": "d40a421657e319c419fec58575601f5a459b1aaf5b47b1e1de0860a0cb9947a9"
+    }
+  },
+  "historical_implementation_head": "3d58f354f5c9764f47fdfa85b2d1b85fd5d5a0c4",
+  "audit_start_head": "d84571dc8dc11a2c119045c8d8ae514ae2c8e2d4",
+  "tested_configuration": "Unity 6000.6.2f1; isolated product and CFFIXED_USER_HOME=/private/tmp/convergence-5051/preferences; compiler RPG.Presentation.rsp confirms APP_UI_EDITOR_ONLY, not SENTIS_ANALYTICS_ENABLED. No main-checkout configuration run claimed.",
+  "tested_source_sha256": {
+    "Assets/_Project/Core/AssemblyInfo.cs": "c84ba0451352a68fe7f3ce3240662f9e04e0ed4dad38ea9d99eec7572e313c13",
+    "Assets/_Project/Core/AttackPreview.cs": "e7a220e1530a3c5db4ab475f41f219d4e5f812aed6f6d656e9d3d9f6309b90e2",
+    "Assets/_Project/Core/BattleCommand.cs": "69a14448d3e482ea67370273812134a9427b0a722772d95b834bd321d527d614",
+    "Assets/_Project/Core/BattleEvent.cs": "716af975f0b8a670df74f8c66c601c49b47799e1f4209969c539aa3a0649a018",
+    "Assets/_Project/Core/BattleOutcome.cs": "94bd19d17ffba45bc9290135785a52592f3d10dbd1c8d9a5f7dd57399a49c54d",
+    "Assets/_Project/Core/BattleReplay.cs": "c0750741f1c717362111623801de6f5b9bd1b2729810291e9a3c841b7c0071ef",
+    "Assets/_Project/Core/BattleResolver.cs": "af481545dae75dd72026966eea46949c00fa5a2d05e35f843405dbf78fe6c410",
+    "Assets/_Project/Core/BattleResult.cs": "4f38d778bf1bb6df9226c73d38f982dbd81c60b6c512a802b3ed87506f55fc93",
+    "Assets/_Project/Core/BattleState.cs": "b5910e42a9971408bfcac125d8ae2b422daf3fde31bf14f7d02273206a8f00d3",
+    "Assets/_Project/Core/Battlefield.cs": "c78d67958c569b8e5427a188d2d806b989000846e37a88ed12a73c3c17bf3e7a",
+    "Assets/_Project/Core/CityFoundationSave.cs": "2e2eede8aac199da2a610564c59237208446f9fa286263f811a15696adead664",
+    "Assets/_Project/Core/CityFoundations.cs": "d2a6578182a2e205d15e98836dd7a3316a41159b9d764fcf8bbca66799815093",
+    "Assets/_Project/Core/CombatLab.cs": "f38c6cceec3ecb256ae86b2fa7eff4f46b99cdd08e5fe15814f5c06d337bc0a5",
+    "Assets/_Project/Core/CombatRandom.cs": "6a40ff5fe7b8a2224882981faad8e50d16f26462588cdbdadf30fc1eb83a882c",
+    "Assets/_Project/Core/CombatSpells.cs": "fa621036e02615928b7feec5b03b4fb3b6f89eab02a573fa805c194ecde20618",
+    "Assets/_Project/Core/Cover.cs": "9fde8d4fd36aee46c1ac2fd0f9a0fb17c21f42c4a87b545c0bb15956df944729",
+    "Assets/_Project/Core/CrossroadsEconomy.cs": "e12e3f30f7d89fd3e40fba3d0d54cebc011824c3d5181a8888622b14dae6362a",
+    "Assets/_Project/Core/CrossroadsSaveData.cs": "b8c071e85a1dc642d92786fa33731ed3328e21f85d2fcf9d175a3493a7a71ba1",
+    "Assets/_Project/Core/CrossroadsScenario.cs": "4698ca3f7ed158e41c8901f32341abbca6bbf0a95b0cc99d8d34e2f6649d121b",
+    "Assets/_Project/Core/DeepAccounting.cs": "ba29ae344d617026ff4c01b2f54b9cd3d24f5310e71b6bd0e4b010c1674c1b94",
+    "Assets/_Project/Core/DirectionalSiegeFixture.cs": "896b6fc2c9cea7a85d58152f293a4b0f410e42bfdb0cb5c4d30bb877cdd9b485",
+    "Assets/_Project/Core/Facing.cs": "a0b2ff14ec99419c24fe370c0444e1a2030cf7e7580b04b47be05fc6f0468165",
+    "Assets/_Project/Core/GridPosition.cs": "3e9b98d6056df9e24f7fa25d135129a2c98d1cdb15cbb106f6b388373ab3f862",
+    "Assets/_Project/Core/IncidentBattleBridge.cs": "1ecf512e785e10cfc3f79503afc34591bd2a9ed97603b4a899cc523f01eea89c",
+    "Assets/_Project/Core/IncidentSaveData.cs": "82674ae6bfb674091dd01450d56d933fb8ee0b3e3e5ff48050dd7f9d4e8a8adc",
+    "Assets/_Project/Core/IncidentState.cs": "cb67182b1cc6144d219cac5fa73d87f939cd6d77870f6c00ed0a7b6059368809",
+    "Assets/_Project/Core/LineOfSight.cs": "a9163824088a44c3887281b2dd3eef7c8797d44c7ae67288bb56acdbedbc4044",
+    "Assets/_Project/Core/MoveCommand.cs": "ef0ddc396d15b3d5219c6eb2700bc3e4745789948a02a9a896e0b13e62f7efa9",
+    "Assets/_Project/Core/MovementRules.cs": "f4290cf3bbc6ff78ab2e9319e42e9a0e84a33c031ac0c9c7cba3036dd94d71aa",
+    "Assets/_Project/Core/OpportunityAttackPreview.cs": "e49d368f766a42a526f78ce131896927fc44613d2e5aa73062d8400e8d3be5cb",
+    "Assets/_Project/Core/Pathfinder.cs": "54564d200e7087c905551cce7acb23dcc1c08bffe9601d2dd7c39d7b0336d482",
+    "Assets/_Project/Core/PersistenceSliceScenario.cs": "7698fca97098d4a81a39dec361397c467b8ca88250b598e10fb6ee52607db636",
+    "Assets/_Project/Core/PersistentFormation.cs": "4afac3721f1726252fd8871129275c31a52135b89157f0534a0e1fe5cee69297",
+    "Assets/_Project/Core/ResearchAccounting.cs": "132a071627a25a1b63ea350608e07de36a3d607ce0482d05433bdf8138beb56e",
+    "Assets/_Project/Core/Side.cs": "785f9d47f3d0613ab2dff82dd50995ceb8d1d8ad690764e9a2d748e72b2dee8a",
+    "Assets/_Project/Core/SizeExperimentFixture.cs": "5788858bc0839719544f7e8f7ffc3b1a52b7806594f6ad38540354feee9b8ebe",
+    "Assets/_Project/Core/SpellAi.cs": "06113e174aff21c1529d078597d593b57642a493a58235f41a8217e670bbfab9",
+    "Assets/_Project/Core/StrategicBattleBridge.cs": "4e206ceb5f4223290ef19273c1ccff55212f1fd764125e0bcf0f0b787e300cb0",
+    "Assets/_Project/Core/StrategicGraph.cs": "931057f92e4993abecbf0af56e4fe690458009a1d49fa663968249023522199b",
+    "Assets/_Project/Core/StrategicSaveData.cs": "cbf3d42f83bdbfb570ee89be890c73a82155cde78c641cbb4b2032c228477d0b",
+    "Assets/_Project/Core/StrategicScenario.cs": "7adc8c95d339dd96f27cc26d77428b975ec5641a8e003b185d5c4e6b652ba165",
+    "Assets/_Project/Core/TacticalAi.cs": "b7b80b52fa841bf214284350ff2a82252ec371c5fd8570e48d5cb576bfb7e367",
+    "Assets/_Project/Core/TacticalAiPaths.cs": "a90989a04a161d9651d305566e3e239c399e6e914f6ebbdd9a4085f840e0d734",
+    "Assets/_Project/Core/UnitId.cs": "86ad97574e2a3182c60b739f6c37a1a42fe470b1e80ec02f6211de4e23282246",
+    "Assets/_Project/Core/UnitProfile.cs": "68096a2f4190bcb84439ebf24a2524925dfd9c20e464793ead4c3439b985b21b",
+    "Assets/_Project/Core/UnitState.cs": "e15823f8b1740f24a085349f366d397c80ec0cc8dd68ebdef2123cf54fd2065e",
+    "Assets/_Project/Core/ZoneOfControl.cs": "213a788443eab94321e23ea84b5fef6d3f864d1554a96b1919d2e888608a8c57",
+    "Assets/_Project/Presentation/AssemblyInfo.cs": "2e159caeee71d05282965b16c6cacc240c99fa6a1636d5ffa4745acdba08ca13",
+    "Assets/_Project/Presentation/BattleGridView.cs": "9dd3569e30a40c0e738b9735dfc545bb9ad216d337831b2adc96132f67f031c1",
+    "Assets/_Project/Presentation/BattleHud.cs": "db703ecbc2eea63c44696543cbd8cd66c177d6a658e6ee6729e0d344ebafffca",
+    "Assets/_Project/Presentation/BattlePresenter.cs": "af85a4d1f1a6ccee22f12eb125c82585e7c283be9f40665f47046c264218da06",
+    "Assets/_Project/Presentation/CityOverview.cs": "fdbc3c2e153c04da997d6c044958905cb17232ee95a7d31d013b967a78c6f3db",
+    "Assets/_Project/Presentation/CombatLabPresenter.cs": "d0c6f96d1204be09f352c3f735942eec769d95b1fda1b1b60e69fc4b4f427db5",
+    "Assets/_Project/Presentation/CrossroadsHud.cs": "17c1ddf7cb3f9cc29893e60df9f101d2183b1e178e2b855e9e4d9fce22d96a52",
+    "Assets/_Project/Presentation/CrossroadsPresenter.cs": "f23642fddd0fafd467e562c6bb8d47b32422ac5a113a11cb630d160b062ac2e2",
+    "Assets/_Project/Presentation/Editor/CombatLabLaunch.cs": "de16ae9e52a02e21811520efa5e6a5a3ae790f07dd121740633006ee1be0d65c",
+    "Assets/_Project/Presentation/Editor/GrayboxSceneSetup.cs": "c3bb2934dadf9005a2f8f42d0dd1c5c182afc6b32d310ca0ac03fc3d17a8624e",
+    "Assets/_Project/Presentation/Mission01Intel.cs": "fdccf1274cd6b2ea0459af43955c26ad08bf8d809e886f2904ea439028756511",
+    "Assets/_Project/Presentation/PrototypeFixture.cs": "b11fc3d6647b0dac27943ef1374edbb2f243dc6f118812885af77c1b40ebfee5",
+    "Assets/_Project/Presentation/ReplayFiles.cs": "55bfb708866e1b1c4a2d8420767cb65a65b0e0682bdaab8213f5e2c334b3b72a",
+    "Assets/_Project/Presentation/StrategicHud.cs": "010d3eafdb425499562a9afffba6732e76c9d0cf1d425e53884a81c4dfe75c3d",
+    "Assets/_Project/Presentation/StrategicSaveFiles.cs": "9a885888f8e39ae20181e7526762d0b0a23138ade1950526a725d6cdf70d334b",
+    "Assets/_Project/Presentation/UnitConditionView.cs": "6dd59d2836c3fde4e333b36070b12ef19d4b057519422544cf5fecf2a8bed695",
+    "Assets/_Project/Presentation/UnitSilhouettes.cs": "0b8ff7b9f6292668cd003274cbf9f6bf5bbe12d03775d5bdd8da55c004fd0f23",
+    "Assets/_Project/Tests/ActivationTests.cs": "2645eb749f889caece1d3011ca330d684aafd1cedc475b5d24c6a629ee30d905",
+    "Assets/_Project/Tests/ArcherEngagementTests.cs": "5215da42c27448eed9d255d24f5177d5b9972b26de22eb998e6a4f8185d9514c",
+    "Assets/_Project/Tests/ArcherRangeTuningTests.cs": "fb7c89cfffaaf1c8d999d73a271ce9d7bc88b3ad380c859c9b658b3dff22dda6",
+    "Assets/_Project/Tests/BattleReplayTests.cs": "9381b5eb6be62738337340d0b5394166924cacfbc3299803bfc2a5d6984e95ae",
+    "Assets/_Project/Tests/BattleResolverTests.cs": "f0e26a047f753dc1942116b7ca41b3f41afd2d8e3df77a07c3ed414599f59691",
+    "Assets/_Project/Tests/BattleTestFixtures.cs": "79e8482121210e23c9c31e4c5b94269be70850efbc76c4630780a19720d6c5c1",
+    "Assets/_Project/Tests/CityCombatIntegrationTests.cs": "23768d235ef9f4ed0372878163ba20cb572d9700282ac742e5f4e34c59532b2e",
+    "Assets/_Project/Tests/CityFoundationsTests.cs": "b8605576f522a30aac2434c8ba279bb563e92a41db119884ae3d48a244f63c91",
+    "Assets/_Project/Tests/CombatVarietyPersistenceTests.cs": "2dbb001eb0a457ffbc61654864de3fcc1042f1c305a00fb3e7fe359e560fa16d",
+    "Assets/_Project/Tests/CombatVarietyTests.cs": "cc1c1c979c879425a2b4bbec6a71ae478687f4e08bdb9b79eca79c0985e2229c",
+    "Assets/_Project/Tests/CoreArchitectureTests.cs": "daaf77c62f5c7060728d846ac381942c47f33a82034dee841301a5b22c7c0df4",
+    "Assets/_Project/Tests/CoverTests.cs": "15bad73b6bbd5fb25b2cdec6249a59cd05f0ed3d9bfc098a4f2efcdb99b15ece",
+    "Assets/_Project/Tests/CrossroadsEconomyTests.cs": "fa6a6835cbf57f5a8c8486bd0859d503403d8c5fbc24be573f66cfbad0b4dd27",
+    "Assets/_Project/Tests/CrossroadsTests.cs": "19199d3faf31b6dfbe29ebe0e4103e3231b678c380716511b94d188d39ed412d",
+    "Assets/_Project/Tests/DensityFixtureTests.cs": "6012f887feaa01ead5e8645b1f2484aeb174866f0e9ca3e664982716bac75655",
+    "Assets/_Project/Tests/DeterminismTests.cs": "cec29232e1087dfa0800d51a99bc62efefde6526261e6d14458407973134693f",
+    "Assets/_Project/Tests/IncidentTests.cs": "5c18dc984e9a4c5d7ae957cb14970b9dfa6df5bce11c05264f5007f043df0e5d",
+    "Assets/_Project/Tests/LineOfSightTests.cs": "d6e6cb00e469560997802b35d6fd7d4a31cb7fee267dbd36f8b821a23c2012a4",
+    "Assets/_Project/Tests/MeleeCornerContactTests.cs": "dbe49fe8ab85c0907d967ead72a886ab87b90ec2748a214bd3a35e109b817526",
+    "Assets/_Project/Tests/MovementTests.cs": "9cf8d6ebd6eea1889ae0902ff3085cdc98db7a1600aadc9fe87108b5e5576457",
+    "Assets/_Project/Tests/OpportunityAttackTests.cs": "5586a54bbcfa36da2231149ff45ca957e931e686c83175c1751848a97f575d59",
+    "Assets/_Project/Tests/PathfinderTests.cs": "9d9ea8e45cbd00b2b40b288b25c1d8566d5efcb8b384368f8d38dfa0d4ab6c5d",
+    "Assets/_Project/Tests/PersistenceProgressionTests.cs": "530fce05717ad51c45dfdfb6a64e26204e09b81c438b6289349f68398bfacdf7",
+    "Assets/_Project/Tests/PersistenceSliceScenarioTests.cs": "427730dca2a897130506bee5f3ba104ccbb5796f00799e4665e702a4e10606ff",
+    "Assets/_Project/Tests/PersistentFormationTests.cs": "62b5ba4ef551b55f83cf5145af8414ba391e9e5c12a197d20e050e84da4c2129",
+    "Assets/_Project/Tests/PlayMode/CityFoundationsPresentationTests.cs": "30fdef9c0a0e8810a4e4f8d14d26d1b063f14e309b2c16b77ec394ed3acc615b",
+    "Assets/_Project/Tests/PlayMode/CombatLabPresentationTests.cs": "f3ea27b779e595abcaee1d1e7d454a94c805a3d3b8ed9279368cb49ed0d57229",
+    "Assets/_Project/Tests/PlayMode/CrossroadsPresentationTests.cs": "0be41c0d54b8c7d606d664cf4bbe142924c1254206c67ae52352612a4f6adb2e",
+    "Assets/_Project/Tests/PlayMode/EngagementPresentationTests.cs": "18c87942d5669aee35b6ef9aecbb4efa948352f014e43fe5bc6a07a75621a4a7",
+    "Assets/_Project/Tests/PlayMode/EssentialReadabilityTests.cs": "06e47955277e5f6f77824f5d16b8917f185085af30914b2bed987ab60a145793",
+    "Assets/_Project/Tests/PlayMode/GrayboxPlayModeTests.cs": "eaad90dbb4d977311ee46a70675410af90280535f4fa01211287168cd2b15841",
+    "Assets/_Project/Tests/PlayMode/IncidentPresentationTests.cs": "7d470c87b67591f2d57f4bcd6302fa4bc6a0887742bd25a6d94ff40cda6e5988",
+    "Assets/_Project/Tests/PlayMode/PersistenceSlicePresentationTests.cs": "581da1a8d0e4d4e854f8f9e1bda49840ed4736a55a0e658e41b29a1bae46e58a",
+    "Assets/_Project/Tests/PlayMode/RangedReachPresentationTests.cs": "31b8cdfb1d85a51d726d3a1f56e9b4cb952ae231e373d6c9a6eeb27c9e2a8e22",
+    "Assets/_Project/Tests/PlayMode/ReplayPresentationTests.cs": "6fc638ee8ca0ee25d931ab80dad3f27662367c7807fe3f827b3096d9dd4ba023",
+    "Assets/_Project/Tests/PlayMode/SizeExperimentPresentationTests.cs": "827b1521533fd2dac197d18f3871c1a07a0e66f6335fe2785b51cb1409626b68",
+    "Assets/_Project/Tests/PlayMode/StrategicPresentationTests.cs": "2ff4140a8df6bea96498b87f5e2e0be29234a6c7169a59e4b39b8aed47248890",
+    "Assets/_Project/Tests/PlayMode/StrategicRecoveryPresentationTests.cs": "48dc9bc5050c9d55b4039f6f1dde2ee71f47bf1ef8d8db1058b76b08a01a5837",
+    "Assets/_Project/Tests/PlayMode/StrategicSavePresentationTests.cs": "a2518360745892f02d1e39f84aade394d66467d14e9d0068eca4ab85bb595e39",
+    "Assets/_Project/Tests/PlayMode/TacticalAiPresentationTests.cs": "b15fffc6a5040746e7c943e61c33458d25e035525f555eff99527cccdcd30111",
+    "Assets/_Project/Tests/PlayMode/TacticalAiRetreatPresentationTests.cs": "8448844fce58b84fae328dca55593217a0ac8e1d71b9e2031a9b08348e752b42",
+    "Assets/_Project/Tests/ProvisionsTuningTests.cs": "797e6fefd791d9a66394b9937f46c471f0f04df91eb9ab6c7d49de68f08b03be",
+    "Assets/_Project/Tests/RangedCornerTests.cs": "760fb5ab6a04635f2719717d560f89a91dbe483504f6f2d8ebd27ce90f2983b8",
+    "Assets/_Project/Tests/RetreatOutcomeTests.cs": "9ccff52375967d36bcc73a9a87893a0c450ec7f125b81c07c68892c9566d19c6",
+    "Assets/_Project/Tests/SiegeApproachTests.cs": "3661acfe6d765a241b50b63d84861b841bd511b143e314fa112276407f9b792d",
+    "Assets/_Project/Tests/SiegeScaleV2Tests.cs": "9f2de7cf20fbed71c0b1500fba4dc6d294657c26cb2d9554a41b778c836f2c5b",
+    "Assets/_Project/Tests/SizeExperimentTests.cs": "5f8d9ab9c66ed4d648a9b73e66162f2cee2157e5d9c0aad840f00772c534619a",
+    "Assets/_Project/Tests/StrategicRecoveryTests.cs": "19df20e1325fade75649a1c76b4eea2ef5d73a24fd225669953eb1c27142c72e",
+    "Assets/_Project/Tests/StrategicRouteTests.cs": "d58c71985cae36fff10390cafe1aa766db50a7acf829547349bfe5475b7b565a",
+    "Assets/_Project/Tests/StrategicSaveTests.cs": "ea1eac5e46d18493d57a4d763ccc1e4e3194703930e3d7f6af37b7ca2d7607fa",
+    "Assets/_Project/Tests/StrategicScenarioTests.cs": "2dbd04cf32998ea22b1c4550befd8459f25b0ca4850a7a9905b8eab1a17cd4cd",
+    "Assets/_Project/Tests/TacticalAiRetreatTests.cs": "79e0894928c8de3821f8d5d382c95633983fc37729dcc1858fb7a33bb705bf76",
+    "Assets/_Project/Tests/TacticalAiTests.cs": "cfafde4691d381d75d907af50f1c61e3c7800370d441d0c5fe72df5fb7d43f5b"
+  },
+  "tested_change": "Final gameplay a82e98e6cdad582ea95d3cece78076d59a06c081; C# source SHA256 map binds the full regression to exact tested source.",
+  "focused_followup": {
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "command": "bash /private/tmp/convergence-5051/run-tests.sh PlayMode RPG.Presentation.Tests.CombatLabPresentationTests",
+    "source_xml": "/private/tmp/convergence-5051/logs/PlayMode-20260930-002757.xml"
+  },
+  "acceptance_audit": "Docs/Prototype/5051_ACCEPTANCE_AUDIT.md",
+  "package50_status": "IMPLEMENTED; AUTOMATED PASS; controlled N1-N5 GUI PASS; coordinator/player acceptance PENDING",
+  "package51_status": "IMPLEMENTED; AUTOMATED PASS; controlled V1-V5 GUI PASS; coordinator/player acceptance PENDING",
+  "merge_authorization": "User explicitly confirmed on 2026-09-30: \u0414\u0430, \u043e\u0431\u044a\u0435\u0434\u0438\u043d\u0438\u0442\u044c \u043f\u043e\u0441\u043b\u0435 \u043f\u0440\u043e\u0432\u0435\u0440\u043a\u0438. Overrides pasted NO MERGE only; no waiver of technical/manual gates.",
+  "integration": {
+    "source_feature_head": "f3a3cccad28601d526513409ed1ce22eebb47fb0",
+    "gameplay_head": "a82e98e6cdad582ea95d3cece78076d59a06c081",
+    "target_branch": "develop",
+    "prior_target_head": "045707f81847fb88ac34c724d5f87ce30fba5c39",
+    "method": "Two-parent merge prepared on integration/50-51-main, delivered with git merge --ff-only; resolve final hash via git rev-parse HEAD",
+    "project_settings": "Both tracked settings files retain 045707f content so the original unrelated worktree changes remain unmodified",
+    "tests": "Fresh 553 PASS apply to identical gameplay sources tested in isolated configuration; no separate main-checkout runtime run claimed",
+    "acceptance": "50 PARTIAL; 51 PARTIAL; no manual gate waiver"
+  },
+  "intermediate_followup_regression": {
+    "EditMode": {
+      "passed": 489,
+      "failed": 0,
+      "skipped": 0,
+      "source_xml": "/private/tmp/convergence-5051/logs/EditMode-20260930-002000.xml",
+      "source_log": "/private/tmp/convergence-5051/logs/EditMode-20260930-002000.log",
+      "repo_xml": "Docs/Prototype/Evidence/5051/audit-editmode.xml",
+      "sha256": "3b93a09126a68954f338e87e87095f5c26c8ea74fe7a9520f98b65d361a59d1e",
+      "command": "bash /private/tmp/convergence-5051/run-tests.sh EditMode",
+      "start_utc": "2026-09-30 04:20:06Z",
+      "end_utc": "2026-09-30 04:21:20Z"
+    },
+    "PlayMode": {
+      "passed": 64,
+      "failed": 0,
+      "skipped": 0,
+      "source_xml": "/private/tmp/convergence-5051/logs/PlayMode-20260930-002145.xml",
+      "source_log": "/private/tmp/convergence-5051/logs/PlayMode-20260930-002145.log",
+      "repo_xml": "Docs/Prototype/Evidence/5051/audit-playmode.xml",
+      "sha256": "cbd47d20d707d1b04b2c86171eeeb4a8809471416a8dd42b0d7e3a912fe8e8b8",
+      "command": "bash /private/tmp/convergence-5051/run-tests.sh PlayMode",
+      "start_utc": "2026-09-30 04:21:51Z",
+      "end_utc": "2026-09-30 04:23:31Z"
+    }
+  },
+  "historical_manual": {
+    "N1": "NOT RUN \u2014 no independent GUI/input session; automated fixtures are not manual play",
+    "N2": "NOT RUN \u2014 no independent GUI/input session; automated fixtures are not manual play",
+    "N3": "NOT RUN \u2014 no independent GUI/input session; automated fixtures are not manual play",
+    "N4": "NOT RUN \u2014 no independent GUI/input session; automated fixtures are not manual play",
+    "N5": "NOT RUN \u2014 no independent GUI/input session; automated fixtures are not manual play",
+    "V1": "NOT RUN \u2014 no independent GUI/input session; automated fixtures are not manual play",
+    "V2": "NOT RUN \u2014 no independent GUI/input session; automated fixtures are not manual play",
+    "V3": "NOT RUN \u2014 no independent GUI/input session; automated fixtures are not manual play",
+    "V4": "NOT RUN \u2014 no independent GUI/input session; automated fixtures are not manual play",
+    "V5": "NOT RUN \u2014 no independent GUI/input session; automated fixtures are not manual play"
+  },
+  "manual_source": "Main73caac9 plus exact final source diff; see final-source-provenance.json. Last six additions were EditMode test-only after GUI.",
+  "manual_evidence": "Docs/Prototype/Evidence/5051/manual-complete/",
+  "gui_access": "Available after user closed both Unity editors and released input; HID works on second display. PostToPid did not open menu.",
+  "main_integration_settings_policy": "Preserve main ProjectSettings/ProjectSettings.asset and EditorBuildSettings.asset baseline in merge tree so original working changes and product/save namespace survive; do not copy feature namespace into main.",
+  "current_original_file_manifest": "/private/tmp/convergence-5051/audit-original-backup/manifest.json",
+  "feature_local_define_preservation": "Unity normalized the pre-existing local Standalone define delta during tests. Restored APP_UI_EDITOR_ONLY;SENTIS_ANALYTICS_ENABLED after tests to preserve the feature worktree preflight change; not staged. This restored local configuration is not presented as the tested compiler configuration.",
+  "historical_full_regressions": [
+    {
+      "implementation_head": "a82e98e6cdad582ea95d3cece78076d59a06c081",
+      "results": {
+        "EditMode": {
+          "passed": 489,
+          "failed": 0,
+          "skipped": 0,
+          "source_xml": "/private/tmp/convergence-5051/logs/EditMode-20260930-002833.xml",
+          "source_log": "/private/tmp/convergence-5051/logs/EditMode-20260930-002833.log",
+          "repo_xml": "Docs/Prototype/Evidence/5051/audit-editmode.xml",
+          "sha256": "806d294a99306aff4ee7a46614351604fcdfeb19e6d01d7129e8daa932fe0749",
+          "command": "bash /private/tmp/convergence-5051/run-tests.sh EditMode",
+          "start_utc": "2026-09-30 04:28:39Z",
+          "end_utc": "2026-09-30 04:30:00Z",
+          "implementation_head": "a82e98e6cdad582ea95d3cece78076d59a06c081"
+        },
+        "PlayMode": {
+          "passed": 64,
+          "failed": 0,
+          "skipped": 0,
+          "source_xml": "/private/tmp/convergence-5051/logs/PlayMode-20260930-003108.xml",
+          "source_log": "/private/tmp/convergence-5051/logs/PlayMode-20260930-003108.log",
+          "repo_xml": "Docs/Prototype/Evidence/5051/audit-playmode.xml",
+          "sha256": "d2e50853ecd2ba519914c29f4ec89e3487d38054d133c2345c2c611bd5f5f10c",
+          "command": "bash /private/tmp/convergence-5051/run-tests.sh PlayMode",
+          "start_utc": "2026-09-30 04:31:14Z",
+          "end_utc": "2026-09-30 04:32:44Z",
+          "implementation_head": "a82e98e6cdad582ea95d3cece78076d59a06c081"
+        }
+      }
+    }
+  ],
+  "followup_starting_head": "73caac95ad7eeb4bb8e79b5b109d2d2ea81fa11c",
+  "followup_focused": [
+    {
+      "scope": "EditMode",
+      "passed": 54,
+      "failed": 0,
+      "skipped": 0,
+      "command": "bash /private/tmp/convergence-5051/run-tests.sh EditMode 'RPG.Tests.CombatVarietyAcceptanceTests|RPG.Tests.CityFoundationsAcceptanceTests|RPG.Tests.CityFoundationsTests' '/Users/bohdanskrypka/UnityProjects/Convergence/My project'",
+      "source_xml": "/private/tmp/convergence-5051/logs/EditMode-20260930-105047.xml",
+      "source_log": "/private/tmp/convergence-5051/logs/EditMode-20260930-105047.log",
+      "repo_xml": "Docs/Prototype/Evidence/5051/manual-complete/focused-editmode.xml",
+      "note": "PlayMode focused preceded the last six EditMode-only test additions; final full suite covers all final sources."
+    },
+    {
+      "scope": "PlayMode",
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "command": "bash /private/tmp/convergence-5051/run-tests.sh PlayMode 'RPG.Presentation.Tests.CombatLabPresentationTests|RPG.Presentation.Tests.CityFoundationsPresentationTests' '/Users/bohdanskrypka/UnityProjects/Convergence/My project'",
+      "source_xml": "/private/tmp/convergence-5051/logs/PlayMode-20260930-100427.xml",
+      "source_log": "/private/tmp/convergence-5051/logs/PlayMode-20260930-100427.log",
+      "repo_xml": "Docs/Prototype/Evidence/5051/manual-complete/focused-playmode.xml",
+      "note": "PlayMode focused preceded the last six EditMode-only test additions; final full suite covers all final sources."
+    }
+  ],
+  "followup_manual": {
+    "N1": {
+      "status": "PASS controlled GUI",
+      "method": "Actual macOS pointer/keyboard input; both Hotseat sides agent-controlled; some read-only AI suggestions. Not player balance acceptance.",
+      "evidence_prefix": "n1"
+    },
+    "N2": {
+      "status": "PASS controlled GUI",
+      "method": "Actual macOS pointer/keyboard input; both Hotseat sides agent-controlled; some read-only AI suggestions. Not player balance acceptance.",
+      "evidence_prefix": "n2"
+    },
+    "N3": {
+      "status": "PASS controlled GUI",
+      "method": "Actual macOS pointer/keyboard input; both Hotseat sides agent-controlled; some read-only AI suggestions. Not player balance acceptance.",
+      "evidence_prefix": "n3"
+    },
+    "N4": {
+      "status": "PASS controlled GUI",
+      "method": "Actual macOS pointer/keyboard input; both Hotseat sides agent-controlled; some read-only AI suggestions. Not player balance acceptance.",
+      "evidence_prefix": "n4"
+    },
+    "N5": {
+      "status": "PASS controlled GUI",
+      "method": "Actual macOS pointer/keyboard input; both Hotseat sides agent-controlled; some read-only AI suggestions. Not player balance acceptance.",
+      "evidence_prefix": "n5"
+    },
+    "V1": {
+      "status": "PASS controlled GUI",
+      "method": "Actual macOS pointer/keyboard input; both Hotseat sides agent-controlled; some read-only AI suggestions. Not player balance acceptance.",
+      "evidence_prefix": "v1"
+    },
+    "V2": {
+      "status": "PASS controlled GUI",
+      "method": "Actual macOS pointer/keyboard input; both Hotseat sides agent-controlled; some read-only AI suggestions. Not player balance acceptance.",
+      "evidence_prefix": "v2",
+      "authored_initial_states": [
+        "v2-cleanse-authored-origin.txt",
+        "v2-graceful-authored-origin.txt",
+        "v2-freeze-expiry-authored-origin.txt",
+        "v2-freeze-break-authored-origin.txt"
+      ]
+    },
+    "V3": {
+      "status": "PASS controlled GUI",
+      "method": "Actual macOS pointer/keyboard input; both Hotseat sides agent-controlled; some read-only AI suggestions. Not player balance acceptance.",
+      "evidence_prefix": "v3"
+    },
+    "V4": {
+      "status": "PASS controlled GUI",
+      "method": "Actual macOS pointer/keyboard input; both Hotseat sides agent-controlled; some read-only AI suggestions. Not player balance acceptance.",
+      "evidence_prefix": "v4",
+      "authored_initial_states": [
+        "training-authored-start.json",
+        "two-heals-authored-start.json"
+      ]
+    },
+    "V5": {
+      "status": "PASS controlled GUI",
+      "method": "Actual macOS pointer/keyboard input; both Hotseat sides agent-controlled; some read-only AI suggestions. Not player balance acceptance.",
+      "evidence_prefix": "v5"
+    }
+  },
+  "followup_report": "Docs/Prototype/5051_ACCEPTANCE_COMPLETION.md",
+  "coordinator_acceptance": "PENDING",
+  "player_acceptance": "PENDING",
+  "ready_states": {
+    "authored": "Assets/StreamingAssets/CityCombat05B/authored-ready.json",
+    "earned_GUI_R10": "Docs/Prototype/Evidence/5051/manual-complete/v3-earned-ready-save.json"
+  },
+  "final_evidence_index": [
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/battle-observations.json",
+      "sha256": "386a97691221f411ba836eae91e5a80a31530ad5f171ade26d70b248896fdf91",
+      "bytes": 9717
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/final-source-provenance.json",
+      "sha256": "24a51ba9904ddb5f768d6c78a24ee9c525180d6861f12c390da4e9d9502234e8",
+      "bytes": 15621
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/focused-editmode.xml",
+      "sha256": "d7bac1d3717973632755771e20e0da644a96bfe0f000cc932f6b27cf990a7211",
+      "bytes": 40920
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/focused-playmode.xml",
+      "sha256": "6cabb0219c5bc6d7658d0b3829850deddb1c320369749befc9324590b6b96542",
+      "bytes": 5891
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/full-editmode.log",
+      "sha256": "5c0425d32e3a3874e650e31e878111d47de5c668c327e48a99bc97beca7cc6e2",
+      "bytes": 41170
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/full-editmode.xml",
+      "sha256": "1644d9d569f16e049f06afeb72587626d6167683b758833674b328e8709d88f1",
+      "bytes": 401609
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/full-playmode.log",
+      "sha256": "3f47a0d9075aacd6ba5923c13022454e7f15ec8b25d175e6a771bc0d36ded789",
+      "bytes": 97756
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/full-playmode.xml",
+      "sha256": "920bc02513dd59d51e5d608655f6c090d18620e2a00cd19c322859e27e385057",
+      "bytes": 61007
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n1-05a-hotseat-r1.json",
+      "sha256": "1af408be4dae89bc3e8f34c67a69904c14ab1844a12f6d255a5939ca100789b8",
+      "bytes": 27495
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n1-05a-hotseat-r2.json",
+      "sha256": "de2bb302fa563b270aa4077727e61b2cae27fe8a26c69025edd213598d676f2b",
+      "bytes": 30527
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n1-05a-hotseat-r3.json",
+      "sha256": "3472be6ac24cd42f31a9b7ef5503b873e5f4d9ffceca7f50f328b655e7ec8392",
+      "bytes": 31216
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n1-05a-hotseat-r4.json",
+      "sha256": "a0a523c2a5a2954aa22cfb2eb353e6e3dd9063e0d24b387bba8ea180fe5c4be6",
+      "bytes": 31929
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n1-05a-hotseat-r5.json",
+      "sha256": "3173ed8fe69541ad8db898196370a1c85b4ccb08334f7c298b01b37f6fe9349e",
+      "bytes": 32100
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n1-05a-hotseat-r6.json",
+      "sha256": "5d463014144b8b690424eb3198b5f2bae1bff7d86cab792e7baec1820108759c",
+      "bytes": 32278
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n1-05a-hotseat-r7.json",
+      "sha256": "45ca4a624899f4a339c12a24c997052c66958e2b5ab01f5c43e848c864eeabfd",
+      "bytes": 31126
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n1-05a-hotseat-r8.json",
+      "sha256": "36ce7dcabe12640547946285748eb1f7b25d45b15693529619dd48e16a674951",
+      "bytes": 30766
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n1-05a-hotseat-r9.json",
+      "sha256": "c9a9efd5b0788658b8b46778021985c2e40dc2d530cc84238af103cb9647e7ab",
+      "bytes": 30765
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n1-05a-hotseat-replay/gate-c-20260930-134538-ae24bf12.jsonl",
+      "sha256": "365227791f018c9868ebfe63cb2fd01f35789a438bea518f10f956763f95b22a",
+      "bytes": 2752836
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n1-05a-hotseat-replay/gate-c-20260930-134538-ae24bf12.session.json",
+      "sha256": "d3ae407eeffe65c7bee89b4fd7bec413561e41f65f96ee9a95b82a54cc6fbd99",
+      "bytes": 336
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n1-05a-hotseat-result.json",
+      "sha256": "8056336e701641ec58b42174c13fcb0135c389a542978cd970643ae199b7ff22",
+      "bytes": 31194
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n1-05a-hotseat-start.json",
+      "sha256": "6df06421c5af7fb8c1cca3c4c0100705ce59151cf52197f2c6f1e424d2ff90eb",
+      "bytes": 17298
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n1-05a-hotseat-verification.txt",
+      "sha256": "8b4f6c1bf26b9c95fb1f7cdfa49110cb88306352917554158a1eb86143d89727",
+      "bytes": 54
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n1-contact.json",
+      "sha256": "875a64d5321fbe5ddd981049f0a9caace2ce50bda88fdad2dec6c43f3c72dc18",
+      "bytes": 40389
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n1-devii-tech.json",
+      "sha256": "1f4e12207bdc38fac094eb20b9ebf458fe651661974e3df8b40e5a41c9853928",
+      "bytes": 39536
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n1-forge-complete.json",
+      "sha256": "749a9fce5d057435b04a8e2f2e758e19bd774fc385180e8a12c235019df7c67f",
+      "bytes": 39887
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n1-legal-result.json",
+      "sha256": "1567dd7b3362d75c152a7b5e18fe42ae548276d2f7df775b7c21bf5a03048de3",
+      "bytes": 55955
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n1-legal-result.png",
+      "sha256": "2ecde7dc84ab872ffbf93d1256dad0d7a0394a937dceadda4d1b771adf63d082",
+      "bytes": 1534548
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n1-paid.json",
+      "sha256": "81670c7d63c1bbf2cf282c737a279ad42ddd5e0fc7350d7f9c6b890ce01d949d",
+      "bytes": 38262
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n1-persistent-return.json",
+      "sha256": "7b2048dcfc8307864b970eb377e901c3e24d54c20a532e049b0dd13df4534578",
+      "bytes": 52669
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n1-start.json",
+      "sha256": "1afa96066b1695c1a3c3b58b8960acd1bc170e6040a91306742ab3895b162b07",
+      "bytes": 38234
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n2-attrition-retreat-replay/gate-c-20260930-135129-c70c6f3a.jsonl",
+      "sha256": "e46ccc547d2da238ff54fd66bbb75e1b2a4f4ace9d25be69a282f01ac7feb88a",
+      "bytes": 1585599
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n2-attrition-retreat-replay/gate-c-20260930-135129-c70c6f3a.session.json",
+      "sha256": "8677d312c2541ac1b741943a0b0ba7dcc7da16651cc08cea8c4bb373c6ef8a79",
+      "bytes": 336
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n2-attrition-retreat-result.json",
+      "sha256": "fc18774948a2f2a56d1b162b4533a6c2840c4133a2fa356304bf040a4c62da20",
+      "bytes": 30525
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n2-attrition-retreat-start.json",
+      "sha256": "0bfafecfd0f113e8b1794b0d1998be4fdaec27411fb0a5988599b3a921632945",
+      "bytes": 17203
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n2-attrition-retreat-verification.txt",
+      "sha256": "18982b60a6d2fe7add522571dc13311f0695f081cde53c137fcc26e5ea164ae5",
+      "bytes": 54
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n2-attrition-retreat-world.json",
+      "sha256": "0d6ff4ce69f62e5f6a5335f9719ed709292cb7f167ebcdae6724ea689b23bbc4",
+      "bytes": 52052
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n2-complete.json",
+      "sha256": "a21391f91f90905ae3a5d3e89b9ac80b837380387b1dd993a753226955a381c6",
+      "bytes": 46353
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n2-departure-cancelled.json",
+      "sha256": "09887cc5a9d8105ddd90c5fcbc5a328e33bec128760ef8f9c37855918c05dbe6",
+      "bytes": 42332
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n2-forge-completed.json",
+      "sha256": "bcd9bce6f45e0cb3dc17382e8373be6d8b857ffda38b141d0acc98c03d1fbbdd",
+      "bytes": 42456
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n2-forge-completed.png",
+      "sha256": "f715116f4f06ddd1c0238af8e7794acd98d597f021710c8eea809ea043ada8e4",
+      "bytes": 1546687
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n2-injured-return.json",
+      "sha256": "bd5bd88dcf5fd64f1e76bd4e005b2996b4bd62f033f2edf1951bd823742c4903",
+      "bytes": 53706
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n2-paid-forge.json",
+      "sha256": "79c6e82d63ea4d69955294eecd621023b3ebcfe205c8bd8173de7829999a793f",
+      "bytes": 53655
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n2-paid-forge.png",
+      "sha256": "b977622ced11c24ecc34a2bc694909c0b4544ef8984f245c0544e4e546628c56",
+      "bytes": 1367994
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n2-played-earned-save.json",
+      "sha256": "249c04df313efec9b534e1ed080db6f74d5984623046062f660c6224c5bc1dae",
+      "bytes": 25956
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n2-recruit-armor-battle-replay/gate-c-20260930-135536-e2b0ccbd.jsonl",
+      "sha256": "54da59f4e4602e1888a735667ae9cc76ba1d4d47f9f461bd91a5f6e381055d31",
+      "bytes": 1319398
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n2-recruit-armor-battle-replay/gate-c-20260930-135536-e2b0ccbd.session.json",
+      "sha256": "822a07b15c0510d1137cb6769738e0128f630b02a600f13e90d84d551878f81c",
+      "bytes": 335
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n2-recruit-armor-battle-result.json",
+      "sha256": "ffd42badc3e5fbc699cc269548fa236fbbe5e075cfce802956b8fb5291cd54e2",
+      "bytes": 30610
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n2-recruit-armor-battle-start.json",
+      "sha256": "32f84c2ce161cb0f6f8b3a5b1a268638f01278d1039523b9cb3bf8a0ae78ed83",
+      "bytes": 17563
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n2-recruit-armor-battle-verification.txt",
+      "sha256": "da2e75507a890f2b85a9edea7d77ca6fafa99ff2deb5a248c69f3980464d3e45",
+      "bytes": 54
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n2-recruit-armor-battle-world.json",
+      "sha256": "bae6bfa3c928c82df7cfa9d8ebc64ddb24ee2d9304b24d4c2dc1a3e90eb8a19a",
+      "bytes": 53454
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n2-repaired-redeploy-replay/gate-c-20260930-135707-d9a69ece.jsonl",
+      "sha256": "32070f132143fc342ef2d7aeaaf8168ad20720594e20f83f7e210bc919ad3c79",
+      "bytes": 163830
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n2-repaired-redeploy-replay/gate-c-20260930-135707-d9a69ece.session.json",
+      "sha256": "e9f042f888220792f70a231fbed413a648de88be0ab126ea85f7358d547544ea",
+      "bytes": 335
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n2-repaired-redeploy-result.json",
+      "sha256": "f92ffdbf13267905d9121f94cb763aadf2123b7f4382b7b46d1962173f40d5ad",
+      "bytes": 22702
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n2-repaired-redeploy-start.json",
+      "sha256": "c74edea6e4c3b6fd6a2dc412b30a150820a0ef8530ee0f6f9f03c3bd161c7054",
+      "bytes": 17437
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n2-repaired-redeploy-verification.txt",
+      "sha256": "8031e6905f7223c50d59d95f4535b02fde9cfadf30a8ff3b0262e7afba4607a9",
+      "bytes": 52
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n2-repaired-redeploy-world.json",
+      "sha256": "809a8360d156a08c618137a161e8445916bdb6220bb10e764c75770f0ac35bd2",
+      "bytes": 46366
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n2-repaired-redeployed.json",
+      "sha256": "2947cf4c1f1b4574b0bff51b63f2a8033825d783d1dd29e4a1ec908622f93d4a",
+      "bytes": 17440
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n2-returned-keep.json",
+      "sha256": "68190a716fed32775409e1864033c90708a5dbbfa016aecfe75054845316ff47",
+      "bytes": 52611
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n2-second-order.json",
+      "sha256": "760f9968db329b6e587cfed6d35ad015eff90fe62441b9f7fcd9f3183ce0e6b2",
+      "bytes": 42405
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n3-completed-no-downgrade.json",
+      "sha256": "1d322793536eade8192d800060b9752a007bb9d6ddd8933cf240829445f2adf4",
+      "bytes": 40474
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n3-minor-captured.json",
+      "sha256": "bdad9dc8224f8734cf2eb036eb419370035425a848e9287717c24aed6876053e",
+      "bytes": 39206
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n3-minor-recaptured.json",
+      "sha256": "1664697c4ac18e22993d507524008acb8dbb9466edf42f350832cd1fb84fc98f",
+      "bytes": 39771
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n3-pause-readable.json",
+      "sha256": "c07a3f46a527b2d3a0c30a0cf6e9cda8f7097759a3d20077cf74848b209b08e3",
+      "bytes": 39984
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n3-pause-readable.png",
+      "sha256": "4076f16ef3511a28b2b418d73949bd325f37cc605ab4927952628e2243a870cf",
+      "bytes": 1621223
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n3-paused.json",
+      "sha256": "6a8e111653339a5c1ef40d1c49669a13cd14110ae499a087922661cbf9a9c5ce",
+      "bytes": 39589
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n3-project-completed.json",
+      "sha256": "f564bbbc3f54318df3aa5ede665aefa43c5f560cd58bf5af1b989f67194567ef",
+      "bytes": 40386
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n3-readability-origin.txt",
+      "sha256": "68271c3f7b8a1f64e6e2bfa5786ecfda7b7d89c4ca28c16e7c875cd8da593b6e",
+      "bytes": 200
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n3-source-readable.json",
+      "sha256": "0eadd78205edd01e06c1b2bd40e5a487d85658136423e74fff593a540413ad68",
+      "bytes": 39822
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n3-source-readable.png",
+      "sha256": "234ae89877504c72cf4093018764a8c12363833a5104c415fff97216cbf68798",
+      "bytes": 1553305
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n3-sources-restored.json",
+      "sha256": "1664697c4ac18e22993d507524008acb8dbb9466edf42f350832cd1fb84fc98f",
+      "bytes": 39771
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n4-05a-before-battle-loaded.json",
+      "sha256": "7a7b709e349217e9d6a0dd11176894c1736d747b45870c67ea42df5a9324ff07",
+      "bytes": 40377
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n4-05a-before-battle-saved.json",
+      "sha256": "f8e8aa000982f30680253e77975938724070771eb44486bcc121c15cb194a752",
+      "bytes": 40385
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n4-05a-forge-loaded.json",
+      "sha256": "37ed086948b0665971f7a727f2e5cb3f9e8e52b90fe0537f4ef9d7b36fdc078a",
+      "bytes": 42077
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n4-05a-forge-saved.json",
+      "sha256": "cb208e52b37b51cd5931cd8b343ad14e20beff5e94b4352012046c55110053cc",
+      "bytes": 53642
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n4-05a-paid-loaded.json",
+      "sha256": "78f475a47d991899e9695306616e11a558fbddd3ad8dba2c8346542d3dbc1670",
+      "bytes": 38215
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n4-05a-paid-recruit.json",
+      "sha256": "bee4c6eab5e1180f45de1f09ae4555a7c264bedf36c2821e20aaea4134a15576",
+      "bytes": 47961
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n4-05a-paid-saved.json",
+      "sha256": "fdcda84c347126357440a24aba6ab20fa6a9a335949c391d73aaafee0dd1146f",
+      "bytes": 38212
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n4-05a-recruit-complete.json",
+      "sha256": "e65c75ea7f4b065999dc22b630e353d093a77aa32231fd546bfc2e9785534a5f",
+      "bytes": 41640
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n4-05a-recruit-loaded.json",
+      "sha256": "83565a5dcc1677b9d030dab566d1036dbb36b3dc44f1ea9e54f63abb46cedbbd",
+      "bytes": 36293
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n4-05a-recruit-saved.json",
+      "sha256": "3a512d5892c3ab68a1c6811d38ab09d624fd11e3268737b86458231d06f818f1",
+      "bytes": 47959
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n5-industry-first.json",
+      "sha256": "6114d1513b8bf6fa7c8626e7ab9cbcb55c30ba3945ac15560d5024f70ba1e132",
+      "bytes": 39600
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n5-mirrored-development.json",
+      "sha256": "c03670b6d98c79f0e556b1e6cf9e4931154bcb30c3765a824f2e4b2a09805dfb",
+      "bytes": 39865
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/n5-mirrored-development.png",
+      "sha256": "3f1eb6f756f63cb4deb62b257a2102a12e2e59d68a2d0ac49fae3241cf175ae5",
+      "bytes": 1424739
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/original-files-preserved.json",
+      "sha256": "82cb753bbbb8a2905eaa0d7306ffab3ec11a06d7e29ca071a864b5699b0f548e",
+      "bytes": 898
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/training-authored-start.json",
+      "sha256": "3e7aec8143cb7c4334c12ff413354bf52ffe867e7080356f87ea5484eaf59782",
+      "bytes": 21400
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/two-heals-authored-start.json",
+      "sha256": "8007583d001a6bb19f032fafc54a375282cc6f718f43440f5d0b864095515b08",
+      "bytes": 20699
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v1-fire-ice-ai-r1.json",
+      "sha256": "519451a73ccb3779897829adadf16c7c352c3266a0fa30c26988d7cb630b81f7",
+      "bytes": 13400
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v1-fire-ice-ai-r2.json",
+      "sha256": "b1fb605676223364b1ec656f7db951744b645efc7e74d495b02a9ef67e1865b4",
+      "bytes": 19979
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v1-fire-ice-ai-replay/gate-c-20260930-123402-1a9d3eed.jsonl",
+      "sha256": "a8e71f661d37291994f70e7734b571a8d15c70dd98aff5c2a40f203ecc71fcfd",
+      "bytes": 330866
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v1-fire-ice-ai-replay/gate-c-20260930-123402-1a9d3eed.session.json",
+      "sha256": "931821d80b90dc9e1597ad475dc3def704f6d3a82d56626efbb68b7e109b583a",
+      "bytes": 335
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v1-fire-ice-ai-result.json",
+      "sha256": "7a9396ffd66be1baacdb3cb6b705c0ea324a273be6fe09192f5247f8407364fd",
+      "bytes": 23699
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v1-fire-ice-ai-result.png",
+      "sha256": "c4f355707424d5e669d002fbca843e306f3294639456c463c5b646443d22eb21",
+      "bytes": 1305110
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v1-fire-ice-ai-start.json",
+      "sha256": "a421879bd88c213ed6778031af544b6e999d5c02f553ecc56caf40924707a173",
+      "bytes": 12905
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v1-fire-ice-ai-verification.txt",
+      "sha256": "1c2240c20a20b1be24b6e1d9ebe32962a92ce5bbe0cbe40c93891b435aefa076",
+      "bytes": 52
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v1-player-ff-replay/gate-c-20260930-123433-0f656daa.jsonl",
+      "sha256": "2396405ff968a3467e32e7575116dd6ee5336a85d767edb543cb413f453a07ac",
+      "bytes": 20182
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v1-player-ff-replay/gate-c-20260930-123433-0f656daa.session.json",
+      "sha256": "35a56d381fe8ce5e6e968ccb729b889cd4ee2a05af2a7f352b8a7c99dbf43a12",
+      "bytes": 333
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v1-player-ff-result.json",
+      "sha256": "ea5998746dbdae09b2d190fdd095e2755ddf3cc875dd7e7a553130086e7692cc",
+      "bytes": 13471
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v1-player-ff-result.png",
+      "sha256": "41beb5b1ea65cd6d45a611720903f4818ece84274a60e09366a98fffc56a5435",
+      "bytes": 1318556
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v1-player-ff-verification.txt",
+      "sha256": "1880a13f7db9a97b55a087d8322e7bc6b6dd379aca13ff3c241f17e4db93cfe5",
+      "bytes": 50
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v1-shield.json",
+      "sha256": "a0ec6bef2c5f916240f76680ebd568a68a520a677f711e8e426f6fa3cb0702ad",
+      "bytes": 12899
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v2-cleanse-after.json",
+      "sha256": "825c1cd6b0329e567da0a6f40606033ffa37508cb9254d4b8b61277bc9441e22",
+      "bytes": 12034
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v2-cleanse-after.png",
+      "sha256": "45fd2c5d7b997df2d613b4b1fd03c81a8efd4864bdc6971232164dcd4db58681",
+      "bytes": 1245589
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v2-cleanse-authored-origin.txt",
+      "sha256": "0acf320e07e2fb081cd430ac8249ebf09089c5ce64ab8c170be6ec654f971888",
+      "bytes": 112
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v2-cleanse-authored-replay/gate-c-20260930-133618-b8035799.jsonl",
+      "sha256": "a8845d53acfaa324f079a2e87c309e430e69459310cbf03dae3502d8c0a3f1e4",
+      "bytes": 7563
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v2-cleanse-authored-replay/gate-c-20260930-133618-b8035799.session.json",
+      "sha256": "c707710d6dc46b1e9dfc893b338a1e24c5b331612b3e2a30d41b7560e06a2dec",
+      "bytes": 334
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v2-cleanse-authored-verification.txt",
+      "sha256": "61c2fc8be114e57caf4e1c392aaec5bce74c839d11dcbdd7858f362a910131d2",
+      "bytes": 50
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v2-cleanse-before.json",
+      "sha256": "4b09a10dc255ff94df6643532d33e5369ac98d168f3b26a16da7b176422fe339",
+      "bytes": 11806
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v2-freeze-break-authored-origin.txt",
+      "sha256": "e3a5b7f9032c4483a48d895fd7d2fe52377764d9f1257809d5d0f236106411c3",
+      "bytes": 111
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v2-freeze-break-authored-replay/gate-c-20260930-133715-d51b106e.jsonl",
+      "sha256": "7571cdde21fdba95b6b68f0ac2ea9e1290e3f5dd18fc29b30c99f1c588d82022",
+      "bytes": 20424
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v2-freeze-break-authored-replay/gate-c-20260930-133715-d51b106e.session.json",
+      "sha256": "2cf0dd8702bbece97deaf158983f6fd1313bd223085755c036b779db760637f9",
+      "bytes": 333
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v2-freeze-break-authored-verification.txt",
+      "sha256": "a80dc06ced975a810bc587042f2afed6c9af0870db2a6b5227929e335ddc3394",
+      "bytes": 50
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v2-freeze-broken.json",
+      "sha256": "63cdc8072119096626db2b947cef38bc88be96470f9c941d77af5e8592618313",
+      "bytes": 12828
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v2-freeze-broken.png",
+      "sha256": "2316551b6ac185c303188ee03900e614d154331663f4ca11202d213b89f64933",
+      "bytes": 1267433
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v2-freeze-denied.json",
+      "sha256": "e5ff951de697486c1bea97a097f1a92bc74d1ab655893eb8c06bff150333bbe3",
+      "bytes": 12325
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v2-freeze-denied.png",
+      "sha256": "a4a99db48103ab416b831a11e1c3102168911ce49c8f560255b4b6556b20daab",
+      "bytes": 1252831
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v2-freeze-expired.json",
+      "sha256": "b554cdabc427e9cf922510cb34eb95b4dcbc96e5cf3abfa1ba7e987970e76263",
+      "bytes": 12626
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v2-freeze-expiry-authored-origin.txt",
+      "sha256": "e3a5b7f9032c4483a48d895fd7d2fe52377764d9f1257809d5d0f236106411c3",
+      "bytes": 111
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v2-freeze-expiry-authored-replay/gate-c-20260930-133633-efd3dfeb.jsonl",
+      "sha256": "ea583f8ca4fd8d5114657d2470252ad082a7780cee78d362cd1fa751e3627b9a",
+      "bytes": 19585
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v2-freeze-expiry-authored-replay/gate-c-20260930-133633-efd3dfeb.session.json",
+      "sha256": "d1414f335a291b37084230f1d41867e72e556519e7d79a6c5beddaf900d107dd",
+      "bytes": 334
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v2-freeze-expiry-authored-verification.txt",
+      "sha256": "a80dc06ced975a810bc587042f2afed6c9af0870db2a6b5227929e335ddc3394",
+      "bytes": 50
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v2-graceful-after.json",
+      "sha256": "0bd4ccd04fb4b2ee21b1a7fecaaec019e971a7625a70fc4aa5637599bcb74f92",
+      "bytes": 13380
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v2-graceful-after.png",
+      "sha256": "7bdbf5588751e559a781b0684d791de391e25f2e63887b9fc2257a6018de9a2c",
+      "bytes": 1279120
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v2-graceful-authored-origin.txt",
+      "sha256": "cabf05e48825aa33137f19de5e92c309075a66d2e1be4993e48bd1330f1d6873",
+      "bytes": 113
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v2-graceful-authored-replay/gate-c-20260930-133624-952a1d02.jsonl",
+      "sha256": "df31d51ce3dd107ab62093a3a15301319c64e4e19e4017c2e3d8a4063b41eef4",
+      "bytes": 14151
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v2-graceful-authored-replay/gate-c-20260930-133624-952a1d02.session.json",
+      "sha256": "00f235d2ecc472b00915d36a14247531742030d438389c70e173a103417b3dcb",
+      "bytes": 333
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v2-graceful-authored-verification.txt",
+      "sha256": "1880a13f7db9a97b55a087d8322e7bc6b6dd379aca13ff3c241f17e4db93cfe5",
+      "bytes": 50
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v2-graceful-before.json",
+      "sha256": "a2555e37497eea4f78b51524f82c2bb667e0ed9a0f3dcb717933e30a08d4fba2",
+      "bytes": 11874
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v2-graceful-preview.json",
+      "sha256": "84a5b17612962fe6bffb9f371a2804d37f46f91d7a23ffe5ea3f0bc74ce5bfb0",
+      "bytes": 13329
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v2-heal.json",
+      "sha256": "085de6c56a1d1e852bba6abc55166c70da191daa567ab704da4df262986e512b",
+      "bytes": 13077
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v2-support-ai-r1.json",
+      "sha256": "b3888978d4fe5043770bd37e0f92955c5d87bca33be65d937f1c2967d254fbb8",
+      "bytes": 13424
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v2-support-ai-r2.json",
+      "sha256": "42ed9cac40c0f3b3604766a02534f0a77e9567f5fb41c0bfa381dbfaad4e66dd",
+      "bytes": 19105
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v2-support-ai-replay/gate-c-20260930-123637-0db573e0.jsonl",
+      "sha256": "0658f945186a088bde4418806d1fd15bae097191cf56528fd60eea0a0fd86007",
+      "bytes": 218230
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v2-support-ai-replay/gate-c-20260930-123637-0db573e0.session.json",
+      "sha256": "f1d9b97906e38b6e13ebe3fd42f67e67dc0d16828bb237b61310520d53b87520",
+      "bytes": 334
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v2-support-ai-result.json",
+      "sha256": "3b49d569da7f3b9cc4257b95f37173e3fbb01791a892202be5e07a757ddafd70",
+      "bytes": 22831
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v2-support-ai-start.json",
+      "sha256": "680af5ef45c7fd41da2c24c407891239ef36a57fc09981eae3edbab071ebaa0b",
+      "bytes": 13188
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v2-support-ai-verification.txt",
+      "sha256": "f168ce66c36a47f768f723016f1af734607bd07ab61c650772a555539b80eac2",
+      "bytes": 52
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v2-support-replay/gate-c-20260930-123555-c0804aa5.jsonl",
+      "sha256": "284e2746e13aeff42589a048dca8971b21c3279f2aa5f4633d36ad7694842ad4",
+      "bytes": 19415
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v2-support-replay/gate-c-20260930-123555-c0804aa5.session.json",
+      "sha256": "c707710d6dc46b1e9dfc893b338a1e24c5b331612b3e2a30d41b7560e06a2dec",
+      "bytes": 334
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v2-support-verification.txt",
+      "sha256": "1880a13f7db9a97b55a087d8322e7bc6b6dd379aca13ff3c241f17e4db93cfe5",
+      "bytes": 50
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v3-05b-new-mage-battle-r1.json",
+      "sha256": "caac9f0be487695fe94dbcf4f6933c781764fca017a6c0f0522d412c5e4a52a8",
+      "bytes": 25980
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v3-05b-new-mage-battle-r2.json",
+      "sha256": "7b899b5d41cb4b45279d4fbee79bd7dfbf84ddcfaf98c43ba8aae06de67cf36b",
+      "bytes": 30397
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v3-05b-new-mage-battle-r3.json",
+      "sha256": "3023553fc717d9014b276a7f476ded044bce875fba77455fda0962871e31b2c9",
+      "bytes": 31240
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v3-05b-new-mage-battle-r4.json",
+      "sha256": "dd26ab47bf6b772fe72606a446b14d4e78aa7216a55d96a737d91a2ee08236aa",
+      "bytes": 31644
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v3-05b-new-mage-battle-r5.json",
+      "sha256": "3e31e05d14de9e18b3abbf9f57ed917ebbbd85feaf7d2dbf6da0e55ab0f07893",
+      "bytes": 31914
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v3-05b-new-mage-battle-r6.json",
+      "sha256": "09922fe4e36f8226cfd88e636d13a2ed3e7de0a6cbb473ed3cc75682bacd2cd1",
+      "bytes": 30722
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v3-05b-new-mage-battle-r7.json",
+      "sha256": "b2f5deab7b5b47fb3e01bb212deff1d0795d35bb9b3b528774af352df20755b0",
+      "bytes": 30606
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v3-05b-new-mage-battle-replay/gate-c-20260930-144442-cd0786b6.jsonl",
+      "sha256": "3a8bf6d5e2996d2c05c57ff96db1e1d15d9db8a0fa02a29043de3730f9ee983d",
+      "bytes": 1560257
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v3-05b-new-mage-battle-replay/gate-c-20260930-144442-cd0786b6.session.json",
+      "sha256": "289d686f0f9e624125a01737f493835059c27daa0b831fe0751fd9b1cde96de3",
+      "bytes": 335
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v3-05b-new-mage-battle-result.json",
+      "sha256": "a692a621acdb981f6346606ab7e2a44b77b52a785559096d3ec8ebf36d99f79d",
+      "bytes": 30660
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v3-05b-new-mage-battle-start.json",
+      "sha256": "d20107a16578401079cf159ba69d6753a8f9704118df1264e08ca5f55556a3c7",
+      "bytes": 31510
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v3-05b-new-mage-battle-verification.txt",
+      "sha256": "793e27bd2949476ae72f84d4970a09cc686e21da7db03fdd400df28cdd725be1",
+      "bytes": 54
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v3-earned-ready-save.json",
+      "sha256": "ef29b30eb4a9b61a60fd1b28fda479a20d8f1b58d98796b79a8cbaeda208d910",
+      "bytes": 17161
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v3-earned-ready-state.json",
+      "sha256": "21de628de01e477ddb6f043136d229631729c52d3263c5b8b0c375273609313e",
+      "bytes": 40832
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v3-input-check.json",
+      "sha256": "d20107a16578401079cf159ba69d6753a8f9704118df1264e08ca5f55556a3c7",
+      "bytes": 31510
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v3-legal-result.json",
+      "sha256": "02b6e89ce4ba8d9906d0c3ffb934a2d09bc6a77473c29f2dd53ed4d5161d14e1",
+      "bytes": 51425
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v3-legal-result.png",
+      "sha256": "61d44bac5cfccc6a447f9dbfd28c5a3adc9cee3f0f217fc2dde062e15a546423",
+      "bytes": 1532434
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v3-loss-preserve-commander-replay/gate-c-20260930-143912-ce683026.jsonl",
+      "sha256": "9e15c7987fe8c77e2af2627c8aeac074282709191956ffa392a12e5d5b3d647e",
+      "bytes": 732695
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v3-loss-preserve-commander-replay/gate-c-20260930-143912-ce683026.session.json",
+      "sha256": "80df0cee740e2a55e61c891a45c983347fecef2d44f7086e7217840d4e13ab94",
+      "bytes": 335
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v3-loss-preserve-commander-result.json",
+      "sha256": "12c0b2013a8c80ca94f14835250f48d3ce3ae23c590f3b49edc8f291a77dbc24",
+      "bytes": 29343
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v3-loss-preserve-commander-start.json",
+      "sha256": "245497b2d455eaabcf1a7f8d4252d47176a2da6003404237f94e04352549544e",
+      "bytes": 17006
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v3-loss-preserve-commander-verification.txt",
+      "sha256": "2bd6fc2bb2b0d166ebc93e266592fcc40cbc5826139debb8918e273e5866863f",
+      "bytes": 52
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v3-loss-preserve-commander-world.json",
+      "sha256": "8abea56c15ab30146eae2358a9c83dcfd554edca83d5ff6fb1991f354acebdbb",
+      "bytes": 49570
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v3-new-id-in-battle.json",
+      "sha256": "ffa69c4d06ac5c98196b12b8feffcbb3ee690215c5f21b2e90a5c9f29a22d733",
+      "bytes": 17231
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v3-new-id-in-battle.png",
+      "sha256": "a42d067eb331384e9202d12c4a7a9510569a18ca419a85bd766484b345a124dd",
+      "bytes": 1263023
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v3-paid-infrastructure-complete.json",
+      "sha256": "80a99837083edc28850ba00e3d9bf63522785e354e2adde4553ea285e97e6669",
+      "bytes": 39113
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v3-paid-new-mage.json",
+      "sha256": "14c7cff98fe2d60ed8a4c0ac497b7e77cac83bc1957042cbed2e1d0c5cb6835b",
+      "bytes": 45315
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v3-paid-recruit-loaded.json",
+      "sha256": "3725acdc6f3cb7a32d121781a8376b16652460501b2f31ec527e0157d8c3ebd7",
+      "bytes": 35353
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v3-paid-recruit-saved.json",
+      "sha256": "32913d82422b1e749b99b8798a4b0ef17224f562df9453a12bde90edf7c60134",
+      "bytes": 45267
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v3-persistent-aftermath.json",
+      "sha256": "02b6e89ce4ba8d9906d0c3ffb934a2d09bc6a77473c29f2dd53ed4d5161d14e1",
+      "bytes": 51425
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v3-recruit-arrived.json",
+      "sha256": "b8ffc94ec9b5a5fb60e3db696d2e5ff841922198c9779a596b6b872eb03eea94",
+      "bytes": 40832
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v3-return-spending-choice.json",
+      "sha256": "55f5b6326e55a268302fceebc28e0240be9723784b7094730ff5c8ac0f0c8baf",
+      "bytes": 50240
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v3-start.json",
+      "sha256": "75ecf0f9fa023b0c3bebed1df635250b8de9f16b8d0e1d2d7ef82c5882979296",
+      "bytes": 37964
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v4-after-completion-loaded.json",
+      "sha256": "26174c4d2a304a5da91b669c0fc0ee9b51b048cecb46a877d4611f44a94cc11e",
+      "bytes": 40224
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v4-after-completion-saved.json",
+      "sha256": "46157f2026777f8b8f4784794ac911dc21b70a8e86b5431ba2416158c3fb1a62",
+      "bytes": 40228
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v4-after-heal-1-loaded.json",
+      "sha256": "ab2db4ff17d4da68444a52937c4e6f8795152ea1f7d5718d0bffcd1340448068",
+      "bytes": 38736
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v4-after-heal-1-saved.json",
+      "sha256": "e140fa15379842a849d85d6606214f8e3c957d8ddff08c5e81283b417a9db1dd",
+      "bytes": 42205
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v4-after-heal-2-loaded.json",
+      "sha256": "230ef8b4da6cf24fe1e62e99f95432cf7ba2f99a15e20009760085c4d89d66e5",
+      "bytes": 39125
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v4-after-heal-2-saved.json",
+      "sha256": "f1bd6147c6d3d0a15875332b442569449487870913ed1dd30208bce8dd84459e",
+      "bytes": 42613
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v4-heal-1.json",
+      "sha256": "9ab565b9595d01fff793d679eefe49df7795b9a3ef0e44decce481d8183072b4",
+      "bytes": 17906
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v4-heal-2.json",
+      "sha256": "91bb3b5053a7978a9d52fc7eddab5dd64004d0ad08a30ec16787b8ba7e377ef1",
+      "bytes": 18325
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v4-heal-2.png",
+      "sha256": "34c921cad5f64b065ca53fd6d99a873eefb698df6ce471bb7048c02bb24633c6",
+      "bytes": 1393268
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v4-heal-battle-1-start.json",
+      "sha256": "b2208589430059f957c720a7d31fd823857fd15057c5406e3ead73767fca5fde",
+      "bytes": 16878
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v4-heal-battle-2-start.json",
+      "sha256": "aed4c1fc37c1720e954080329dcad4b6e0eff4479f8211b961ec13c0d2705f1f",
+      "bytes": 17064
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v4-heal-escape-1-replay/gate-c-20260930-144550-25b6a74b.jsonl",
+      "sha256": "f3708c25fc9fbf70099c902997ad2344ba790509cc0cccca81a6540d083f0eee",
+      "bytes": 171587
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v4-heal-escape-1-replay/gate-c-20260930-144550-25b6a74b.session.json",
+      "sha256": "e0d6f2dff9445a66121c88113326389765e50d8998a5f40a825d52a488c1d71b",
+      "bytes": 335
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v4-heal-escape-1-result.json",
+      "sha256": "9c1ec659bd85707935ab5980831baf5a289549bb8cddb729868878a3ea7921c0",
+      "bytes": 22703
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v4-heal-escape-1-start.json",
+      "sha256": "fa0a88e4bf063788096319f722688012bf42a7a542df35c79ec3382e2e009f76",
+      "bytes": 17901
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v4-heal-escape-1-verification.txt",
+      "sha256": "b021224fd7cccb162193a45dd9be0aeb9d96705b76b942a04a4994afa7fec353",
+      "bytes": 52
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v4-heal-escape-1-world.json",
+      "sha256": "37d74c23947174ac467f76fa8d63664f77eb76b3409e06e6bd7f156dda82e29c",
+      "bytes": 42207
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v4-heal-escape-2-replay/gate-c-20260930-144619-d3fb797d.jsonl",
+      "sha256": "488c488884e97464ac2fb1bdf1d15bd118e761667cc7d0d82bc9c0c43203c4d0",
+      "bytes": 171583
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v4-heal-escape-2-replay/gate-c-20260930-144619-d3fb797d.session.json",
+      "sha256": "e0d6f2dff9445a66121c88113326389765e50d8998a5f40a825d52a488c1d71b",
+      "bytes": 335
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v4-heal-escape-2-result.json",
+      "sha256": "54d0adaec2a23323aacc318557835041c1324acae89e3b092f4873c6c6d51a9b",
+      "bytes": 22902
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v4-heal-escape-2-start.json",
+      "sha256": "2555cc5caa545ded434079cbab120503ea90aab5cad537ad91c8c2dd70d3a0ed",
+      "bytes": 18325
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v4-heal-escape-2-verification.txt",
+      "sha256": "b021224fd7cccb162193a45dd9be0aeb9d96705b76b942a04a4994afa7fec353",
+      "bytes": 52
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v4-heal-escape-2-world.json",
+      "sha256": "c16299ebd9eb03eb7caf15e1c7bd6538bfbc17c199ecebb839f58e247c25ccf8",
+      "bytes": 42615
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v4-heal-refresh.json",
+      "sha256": "c088eede4e3a099b12a80aeeafb4680fd43ea649874860d690982773588c7135",
+      "bytes": 39230
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v4-no-duplicate.json",
+      "sha256": "605940b6f45f81926de7f9008e94b22ae5faca5df6342799c648e979af09e605",
+      "bytes": 40356
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v4-paid-training-and-recruit.json",
+      "sha256": "64cfe272f6e650aecb4d215a382251956d53f78ffe4b20770dde9005b1f87f05",
+      "bytes": 34300
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v4-paid-training.json",
+      "sha256": "bb11afbb94a4e8d50bc0c647b7b129472e5ebfc32122bcac7aebbcb469584f46",
+      "bytes": 39275
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v4-paid-training.png",
+      "sha256": "f1a0807a2007a741d52de75d2216e9d914f7a01d1d7bbb3f75e77d002d63913d",
+      "bytes": 1279884
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v4-recruit-resolved.json",
+      "sha256": "d1e3b672ad3dfe72a5f64db7ab922cace63730a573080ca273596aefb62de39c",
+      "bytes": 40067
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v4-training-authored-origin.txt",
+      "sha256": "f741142319efb8efc4de70d6780e09b21a499da55eb07626e0c67d347b0584bc",
+      "bytes": 99
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v4-training-origin.json",
+      "sha256": "206a5fb7d26ac397d4e8aba7b297b2eea2bd7bb05838ed04885735da8c885566",
+      "bytes": 39214
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v4-training-recruit-budget-loaded.json",
+      "sha256": "c0d7d62eebd75ec15664e275d0fc1ac2c8b45843bc3bd96f9c605e9e89b223cd",
+      "bytes": 34303
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v4-training-recruit-budget-saved.json",
+      "sha256": "7cfaf22d98fa47403c9bd362abb8365da29f6a859cfeff615ec0e360cca168ea",
+      "bytes": 34298
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v4-training-resolved.json",
+      "sha256": "6095cf95849be88649eb027f8905c00a32c5307a46c0c126465174b92df2cd2b",
+      "bytes": 40230
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v4-two-heals-authored-origin.txt",
+      "sha256": "e5b73a3163d64c230850fef54107f107f215845dc6fa548b44222906de25b688",
+      "bytes": 100
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v4-two-heals-origin.json",
+      "sha256": "8b01239b5fb690838236141cf036f4542ebc1b85057127e35f8ad465c9dfa0b7",
+      "bytes": 38506
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v4-unconfirmed-training-rejected.json",
+      "sha256": "e71efd9b49c3632518ff1965cf1fae6490b65235cb6c510c9ae00e8981ad6a95",
+      "bytes": 39218
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v5-mirrored-contact.json",
+      "sha256": "90ce4a48d79e7cc13a1049f8983415a6c1ab5e7f9d67d36b18912fe2b8f23e7c",
+      "bytes": 39458
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v5-mirrored-contact.png",
+      "sha256": "c404a614f53ad4ecc5b5ae9837a6f8a28e68728a8348c428f95f9b2c02f5a39e",
+      "bytes": 1514678
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v5-mirrored-infrastructure.json",
+      "sha256": "e0798ffe522fb5577695e53acbd03440b22e98d41426e5a1b2f6001550e3f34b",
+      "bytes": 38977
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v5-mobile-blades-ai-r1.json",
+      "sha256": "c4e6301da879d8886cc030afcd73253a8a4909b0a4998a87e81aa509f3e868fa",
+      "bytes": 13372
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v5-mobile-blades-ai-r2.json",
+      "sha256": "482a1381ddea1ad2ad4588e51bfdb95d5113065f6b63e3a05c82c119104c766a",
+      "bytes": 21158
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v5-mobile-blades-ai-r3.json",
+      "sha256": "177f0ca8fd5f79ba6d11f25e7d83a251d86f2b56cf04cb475ab5861682062430",
+      "bytes": 23853
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v5-mobile-blades-ai-r4.json",
+      "sha256": "775ccc6c644ebcb0b6d55aea22525ae5d829c88156f899cbfa098af497cfe0fa",
+      "bytes": 22918
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v5-mobile-blades-ai-r6.json",
+      "sha256": "ca1dff1b0a4645c41e0440a9d7e96bf45340847880b038adb9be74e673201b87",
+      "bytes": 23014
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v5-mobile-blades-ai-r7.json",
+      "sha256": "7de4ce6f9c11a79a550c7c4935e38c835fe4d0cca1229982d921d2198aeb84f5",
+      "bytes": 22886
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v5-mobile-blades-ai-replay/gate-c-20260930-144959-a8e6f335.jsonl",
+      "sha256": "721f157fa18ac722d022ee8af99e16db47d0eee7a7df9a7576801b38d4a13832",
+      "bytes": 670574
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v5-mobile-blades-ai-replay/gate-c-20260930-144959-a8e6f335.session.json",
+      "sha256": "57794ba93a6393fe62e52a2a4f6ccfe3fa8292e2e1cb562fda40f0d93d80f768",
+      "bytes": 335
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v5-mobile-blades-ai-result.json",
+      "sha256": "8fe108d8b7a83e98de4c008b1aefbe405e4e579de06b44249b90732514f66a42",
+      "bytes": 23110
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v5-mobile-blades-ai-result.png",
+      "sha256": "25bc6912fcfcba1d73873681fff0f4e86b43413db0773a6646d7858b7f17ab79",
+      "bytes": 1316122
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v5-mobile-blades-ai-start.json",
+      "sha256": "cff5a2720a6c325fce6c3bfb7a22f090c13faf3e283593cd2ac1a81c62732972",
+      "bytes": 13070
+    },
+    {
+      "path": "Docs/Prototype/Evidence/5051/manual-complete/v5-mobile-blades-ai-verification.txt",
+      "sha256": "0f4a63932a72a0ebde799aeb9857570d57cf20fe8a9198f183f5fdc0e6880e88",
+      "bytes": 52
+    }
+  ],
+  "historical_audit_manual": {
+    "manual": {
+      "N1": "NOT RUN \u2014 not completed in this follow-up; GUI was available after user released input, not an access-block claim",
+      "N2": "NOT RUN \u2014 not completed in this follow-up; GUI was available after user released input, not an access-block claim",
+      "N3": "NOT RUN \u2014 not completed in this follow-up; GUI was available after user released input, not an access-block claim",
+      "N4": "NOT RUN \u2014 not completed in this follow-up; GUI was available after user released input, not an access-block claim",
+      "N5": "NOT RUN \u2014 not completed in this follow-up; GUI was available after user released input, not an access-block claim",
+      "V3": "NOT RUN \u2014 not completed in this follow-up; GUI was available after user released input, not an access-block claim",
+      "V4": "NOT RUN \u2014 not completed in this follow-up; GUI was available after user released input, not an access-block claim",
+      "V5": "NOT RUN \u2014 not completed in this follow-up; GUI was available after user released input, not an access-block claim",
+      "V1": "PARTIAL \u2014 OS menu launch, Ability selection, IceShield self Barrier10/Exhausted, AI Fireball actual damage, Freeze cast; battle not finished, player FF/Burn not checked",
+      "V2": "PARTIAL \u2014 Freeze applied visibly; Support/Graceful Exit/Freeze denial-break-expiry probes NOT RUN"
+    },
+    "manual_source": "a84a3b6 (initial ability layout fix); subsequent a82e98e wording correction automated regression passed, not separately mouse-validated",
+    "manual_evidence": [
+      "Docs/Prototype/Evidence/5051/manual-audit/audit-ai.png",
+      "Docs/Prototype/Evidence/5051/manual-audit/audit-fixed-ability.png",
+      "Docs/Prototype/Evidence/5051/manual-audit/audit-fixed.png",
+      "Docs/Prototype/Evidence/5051/manual-audit/audit-freeze-cast.png",
+      "Docs/Prototype/Evidence/5051/manual-audit/audit-freeze-preview.png",
+      "Docs/Prototype/Evidence/5051/manual-audit/audit-shield-cast.png",
+      "Docs/Prototype/Evidence/5051/manual-audit/audit-shield-legal.png"
+    ],
+    "package50_status": "PARTIAL",
+    "package51_status": "PARTIAL"
+  }
+}

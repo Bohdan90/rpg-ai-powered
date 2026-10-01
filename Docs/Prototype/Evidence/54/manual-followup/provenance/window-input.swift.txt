@@ -1,0 +1,65 @@
+import AppKit
+import ApplicationServices
+let args=CommandLine.arguments
+let windows=CGWindowListCopyWindowInfo([.optionOnScreenOnly,.excludeDesktopElements],kCGNullWindowID) as? [[String:Any]] ?? []
+guard let w=windows.first(where:{($0[kCGWindowName as String] as? String ?? "").contains(" - Seamless-Worlds-07 - ")}),
+let pid=w[kCGWindowOwnerPID as String] as? Int32, let app=NSRunningApplication(processIdentifier:pid) else {print("No Seamless-Worlds-07 window");exit(1)}
+if args[1]=="quit" { app.terminate(); exit(0) }
+if NSWorkspace.shared.frontmostApplication?.processIdentifier != pid {
+app.activate(options:[.activateAllWindows])
+let ax=AXUIElementCreateApplication(pid)
+AXUIElementSetAttributeValue(ax,kAXFrontmostAttribute as CFString,kCFBooleanTrue)
+RunLoop.current.run(until:Date(timeIntervalSinceNow:0.5))
+}
+guard NSWorkspace.shared.frontmostApplication?.processIdentifier==pid else {print("Wrong foreground app");exit(2)}
+if args[1]=="focus" { print(w);exit(0) }
+if args[1]=="inspect" {
+ print("front",NSWorkspace.shared.frontmostApplication?.localizedName ?? "none")
+ for screen in NSScreen.screens {print("screen",screen.localizedName,screen.frame)}
+ for win in (CGWindowListCopyWindowInfo([.optionOnScreenOnly,.excludeDesktopElements],kCGNullWindowID) as? [[String:Any]] ?? []).prefix(10) {print(win[kCGWindowOwnerName as String] ?? "",win[kCGWindowBounds as String] ?? "")}
+ let p=Process();p.executableURL=URL(fileURLWithPath:"/usr/sbin/screencapture");p.arguments=["-x","-R0,33,1708,994","/private/tmp/seamless-worlds-07/results/focused-region.png"];try! p.run();p.waitUntilExit();exit(0)
+}
+if args[1]=="place" {
+ let ax=AXUIElementCreateApplication(pid); var item:CFTypeRef?
+ if AXUIElementCopyAttributeValue(ax,kAXFocusedWindowAttribute as CFString,&item) == .success,let item=item {
+  let window=item as! AXUIElement
+  var point=CGPoint(x:40,y:50);var size=CGSize(width:1400,height:950)
+  AXUIElementSetAttributeValue(window,kAXPositionAttribute as CFString,AXValueCreate(.cgPoint,&point)!)
+  AXUIElementSetAttributeValue(window,kAXSizeAttribute as CFString,AXValueCreate(.cgSize,&size)!)
+ }
+ exit(0)
+}
+if args[1]=="release-modifiers" {
+ for code:CGKeyCode in [55,54,56,60,58,61,59,62] {let e=CGEvent(keyboardEventSource:nil,virtualKey:code,keyDown:false);e?.flags=[];e?.post(tap:.cghidEventTap)}
+ usleep(100000);exit(0)
+}
+if args[1]=="key" {
+ let code:CGKeyCode = ["up":126,"down":125,"return":36,"escape":53,"refresh":15,"home":115][args[2]]!
+ for down in [true,false] {let e=CGEvent(keyboardEventSource:nil,virtualKey:code,keyDown:down);if args[2]=="refresh" {e?.flags = .maskCommand};e?.post(tap:.cghidEventTap);usleep(80000)}
+ exit(0)
+}
+if args[1]=="wheel" {
+ let pt=CGPoint(x:Double(args[2])!,y:Double(args[3])!)
+ CGEvent(mouseEventSource:nil,mouseType:.mouseMoved,mouseCursorPosition:pt,mouseButton:.left)?.post(tap:.cghidEventTap)
+ usleep(60000)
+ let e=CGEvent(scrollWheelEvent2Source:nil,units:.line,wheelCount:1,wheel1:Int32(args[4])!,wheel2:0,wheel3:0);e?.location=pt;e?.post(tap:.cghidEventTap);usleep(100000);exit(0)
+}
+if args[1]=="drag" {
+ let a=CGPoint(x:Double(args[2])!,y:Double(args[3])!),b=CGPoint(x:Double(args[4])!,y:Double(args[5])!)
+ CGEvent(mouseEventSource:nil,mouseType:.mouseMoved,mouseCursorPosition:a,mouseButton:.left)?.post(tap:.cghidEventTap)
+ CGEvent(mouseEventSource:nil,mouseType:.leftMouseDown,mouseCursorPosition:a,mouseButton:.left)?.post(tap:.cghidEventTap);usleep(80000)
+ for i in 1...16 {let t=Double(i)/16;let pt=CGPoint(x:a.x+(b.x-a.x)*t,y:a.y+(b.y-a.y)*t);CGEvent(mouseEventSource:nil,mouseType:.leftMouseDragged,mouseCursorPosition:pt,mouseButton:.left)?.post(tap:.cghidEventTap);usleep(20000)}
+ CGEvent(mouseEventSource:nil,mouseType:.leftMouseUp,mouseCursorPosition:b,mouseButton:.left)?.post(tap:.cghidEventTap);usleep(80000);exit(0)
+}
+print("trusted",AXIsProcessTrusted(),"before",CGEvent(source:nil)!.location)
+let point=CGPoint(x:Double(args[1])!,y:Double(args[2])!)
+CGEvent(mouseEventSource:nil,mouseType:.mouseMoved,mouseCursorPosition:point,mouseButton:.left)?.post(tap:.cghidEventTap)
+if args.count<4 || args[3] != "hover" {
+for t in [CGEventType.leftMouseDown,CGEventType.leftMouseUp] {
+let e=CGEvent(mouseEventSource:nil,mouseType:t,mouseCursorPosition:point,mouseButton:.left)
+e?.flags=[];e?.setIntegerValueField(.mouseEventClickState,value:args.count>3 && args[3]=="double" ? 2 : 1);e?.post(tap:.cghidEventTap);usleep(50000)
+}
+}
+RunLoop.current.run(until:Date(timeIntervalSinceNow:0.04))
+
+print("after",CGEvent(source:nil)!.location)

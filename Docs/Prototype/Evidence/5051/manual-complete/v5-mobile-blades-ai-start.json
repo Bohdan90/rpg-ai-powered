@@ -1,0 +1,498 @@
+{
+  "mode": "v5-mobile-blades-ai",
+  "hash": "KRBLZh3jLvFfR1GLBSpsxUAZPnUS9eyGdL+8rk2aWVE=",
+  "plan": "MoveCommand",
+  "contact": "",
+  "hud": "Stable map only \u00b7 one Crossroads slot.\nCombat Lab \u00b7 MobileBlades \u00b7 AUTHORED near-contact quick-start. New session = full source budgets. Select ability, target, confirm.\nGATE C / HOTSEAT\nBLUE West \u00b7 ORANGE East \u00b7 GOLD active\nGreen: reachable \u00b7 Gold: path \u00b7 Red segment: OA risk\nSword + shield: HW/EW \u00b7 Bow: HA \u00b7 * Commander\nWhite arrow: facing \u00b7 Red border: ZoC ready \u00b7 Gray: spent\nWheel: zoom \u00b7 Right-click: center view\n\u2190 West Retreat \u2014 YOUR ESCAPE\nEast Retreat \u2192\nEW II*\nHP 38/38\nA 8/8\nEW II\nHP 38/38\nA 8/8\nHH\nHP 28/28\nA 0/0\nHW\nHP 40/40\nA 16/16\nHW\nHP 40/40\nA 16/16\nIce 2*\nHP 32/32\nA 0/0\nHW\nHP 40/40\nA 16/16\nHA\nHP 28/28\nA 4/4\nHA\nHP 28/28\nA 4/4\nEW\nHP 32/32\nA 6/6\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\nTACTICAL GRAYBOX\nHotseat \u00b7 ZoC / OA / physical Retreat\nController\nNo AI decision yet.\nROUND 1 \u00b7 ElfWarriorTII #1\nWest | HP 38 / Armor 8\nMovement 6 | Action available\nFacing East | Defending no | OA ready\nBarrier 0\nAbility\nInitiative order (\u25ba current):\n\u25ba ElfWarriorTII #1 [15] OA ready\n   ElfWarriorTII #2 [15] OA ready\n   HumanHealerTI #3 [12] no OA\n   IceMageTII #6 [11] no OA\n   HumanWarriorTI #5 [10] OA ready\n   HumanWarriorTI #4 [10] OA ready\nWest: West edge. East: East edge.\nYOUR escape: West edge\nEscaped/Safe:\nNone\nHover the battlefield.\nNo destination / target selected.\nClick a cell or unit, then confirm. Green cells: Core reachable.\nExplicitly confirm allied target\nEnd facing\nCombat Lab \u00b7 MobileBlades \u00b7 AUTHORED near-contact quick-start. New session = full source budgets. Select ability, target, confirm.\nFixture (resets battle)\n05B West preset\n05B East preset\n05 Starting Side\nSize/density experiment \u00b7 no combat retuning. 9v9 = synthetic tactical roster, not strategic Capacity validation. Siege: static fortress; moat proxy has fixed crossings. 41\u00d739 preserves each attacker approach; West = attacker coalition, East = defenders. No real siege mechanics.\nLOCAL REPLAY / TELEMETRY\nReplay file\nRECENT CORE EVENTS\nR0 Battle: BattleStarted\nR1 Battle: RoundStarted\nR1 ElfWarriorTII #1: ActivationStarted",
+  "spell": "IceShard",
+  "persistentPath": "/tmp/convergence-5051/manual-complete/preferences/Library/Application Support/DefaultCompany/My project",
+  "ff": true,
+  "gx": 0.0,
+  "gy": 97.0,
+  "fields": [
+    {
+      "label": "Controller",
+      "name": "controller-mode",
+      "index": 1,
+      "choices": [
+        "Hotseat",
+        "Player West vs AI East",
+        "Player East vs AI West"
+      ],
+      "x": 1340.103515625,
+      "y": 30.737384796142578
+    },
+    {
+      "label": "Ability",
+      "name": "spell-selector",
+      "index": 0,
+      "choices": [
+        "Basic / Move"
+      ],
+      "x": 1340.103515625,
+      "y": 213.76454162597656
+    },
+    {
+      "label": "End facing",
+      "name": "",
+      "index": 0,
+      "choices": [
+        "Keep current",
+        "North",
+        "NorthEast",
+        "East",
+        "SouthEast",
+        "South",
+        "SouthWest",
+        "West",
+        "NorthWest"
+      ],
+      "x": 1340.103515625,
+      "y": 732.108642578125
+    },
+    {
+      "label": "Fixture (resets battle)",
+      "name": "fixture-selector",
+      "index": 0,
+      "choices": [
+        "Field_13x9_Control",
+        "Field_17x11_Expanded",
+        "Siege_23x17_Tight",
+        "Siege_27x21_Roomy",
+        "Field_19x13_ExpandedV2",
+        "Siege_31x25_Medium",
+        "Siege_35x27_Large",
+        "Field_23x17_Full_9v9",
+        "Siege_35x27_Full_9v9",
+        "Siege_41x39_West_9v9",
+        "Siege_41x39_East_9v9",
+        "Siege_41x39_North_9v9",
+        "Siege_41x39_South_9v9",
+        "Siege_41x39_WestEast_18v9",
+        "Siege_41x39_NorthSouth_18v9"
+      ],
+      "x": 1340.103515625,
+      "y": 884.8641357421875
+    },
+    {
+      "label": "05B West preset",
+      "name": "",
+      "index": 0,
+      "choices": [
+        "Fire",
+        "Ice",
+        "Support"
+      ],
+      "x": 1340.103515625,
+      "y": 1058.576904296875
+    },
+    {
+      "label": "05B East preset",
+      "name": "",
+      "index": 1,
+      "choices": [
+        "Fire",
+        "Ice",
+        "Support"
+      ],
+      "x": 1340.103515625,
+      "y": 1099.56005859375
+    },
+    {
+      "label": "05 Starting Side",
+      "name": "",
+      "index": 0,
+      "choices": [
+        "West",
+        "East"
+      ],
+      "x": 1340.103515625,
+      "y": 1140.543212890625
+    }
+  ],
+  "toggles": [
+    {
+      "label": "Explicitly confirm allied target",
+      "value": false,
+      "x": 1340.103515625,
+      "y": 561.8887939453125
+    }
+  ],
+  "battle": false,
+  "ended": false,
+  "ai": true,
+  "aiTurn": false,
+  "round": 1,
+  "records": 0,
+  "active": 1,
+  "x": 938.2401123046875,
+  "y": 576.2935791015625,
+  "rw": 1590.892578125,
+  "rh": 805.6920776367188,
+  "sw": 3416,
+  "sh": 1820,
+  "tx": 22,
+  "ty": 3,
+  "buttons": [
+    {
+      "name": "defend",
+      "text": "Defend",
+      "x": 1340.103515625,
+      "y": 687.865478515625
+    },
+    {
+      "name": "end-activation",
+      "text": "End Activation",
+      "x": 1340.103515625,
+      "y": 773.0918579101562
+    },
+    {
+      "name": "lab-FireVsIce",
+      "text": "Combat Lab \u00b7 FireVsIce \u00b7 near contact",
+      "x": 1340.103515625,
+      "y": 925.8473510742188
+    },
+    {
+      "name": "lab-SupportVsFire",
+      "text": "Combat Lab \u00b7 SupportVsFire \u00b7 near contact",
+      "x": 1340.103515625,
+      "y": 970.090576171875
+    },
+    {
+      "name": "lab-MobileBlades",
+      "text": "Combat Lab \u00b7 MobileBlades \u00b7 near contact",
+      "x": 1340.103515625,
+      "y": 1014.333740234375
+    },
+    {
+      "name": "city-start-a",
+      "text": "City Foundations 05A",
+      "x": 1340.103515625,
+      "y": 1181.5263671875
+    },
+    {
+      "name": "city-start-b",
+      "text": "City & Combat 05B \u00b7 permanent presets",
+      "x": 1340.103515625,
+      "y": 1225.769775390625
+    },
+    {
+      "name": "city-authored",
+      "text": "Load AUTHORED 05B inspection fixture (not a played match)",
+      "x": 1340.103515625,
+      "y": 1270.012939453125
+    },
+    {
+      "name": "city-load-a",
+      "text": "Load City Foundations 05A",
+      "x": 1340.103515625,
+      "y": 1314.256103515625
+    },
+    {
+      "name": "city-load-b",
+      "text": "Load City & Combat 05B",
+      "x": 1340.103515625,
+      "y": 1358.499267578125
+    },
+    {
+      "name": "persistence-start",
+      "text": "Start Persistence Slice v0.1",
+      "x": 1340.103515625,
+      "y": 1402.742431640625
+    },
+    {
+      "name": "world-start",
+      "text": "Start Connected Mission 01",
+      "x": 1340.103515625,
+      "y": 1446.985595703125
+    },
+    {
+      "name": "world-load",
+      "text": "Load saved Mission 01",
+      "x": 1340.103515625,
+      "y": 1491.22900390625
+    },
+    {
+      "name": "duel-start-west",
+      "text": "Crossroads economy Hotseat \u00b7 West first",
+      "x": 1340.103515625,
+      "y": 1535.47216796875
+    },
+    {
+      "name": "duel-start-east",
+      "text": "Crossroads economy Hotseat \u00b7 East first",
+      "x": 1340.103515625,
+      "y": 1579.71533203125
+    },
+    {
+      "name": "incident-start-west",
+      "text": "Crossroads Incident 04 \u00b7 West first",
+      "x": 1340.103515625,
+      "y": 1623.95849609375
+    },
+    {
+      "name": "incident-start-east",
+      "text": "Crossroads Incident 04 \u00b7 East first",
+      "x": 1340.103515625,
+      "y": 1668.20166015625
+    },
+    {
+      "name": "incident-control",
+      "text": "Incident 04 \u00b7 control (no incidents)",
+      "x": 1340.103515625,
+      "y": 1712.44482421875
+    },
+    {
+      "name": "incident-load",
+      "text": "Load Incident 04",
+      "x": 1340.103515625,
+      "y": 1756.688232421875
+    },
+    {
+      "name": "duel-load",
+      "text": "Load Crossroads Hotseat",
+      "x": 1340.103515625,
+      "y": 1800.931396484375
+    },
+    {
+      "name": "fit-board",
+      "text": "Fit whole board",
+      "x": 1340.103515625,
+      "y": 1919.689453125
+    },
+    {
+      "name": "focus-unit",
+      "text": "Focus active unit (wheel to zoom)",
+      "x": 1340.103515625,
+      "y": 1963.9326171875
+    },
+    {
+      "name": "restart",
+      "text": "Restart Same Seed",
+      "x": 1340.103515625,
+      "y": 2008.17578125
+    },
+    {
+      "name": "export-replay",
+      "text": "Export battle + session",
+      "x": 1340.103515625,
+      "y": 2128.796875
+    },
+    {
+      "name": "verify-replay",
+      "text": "Load / verify replay file",
+      "x": 1340.103515625,
+      "y": 2173.0400390625
+    }
+  ],
+  "units": [
+    {
+      "id": 1,
+      "x": 9,
+      "y": 6,
+      "hp": 38,
+      "armor": 8,
+      "movement": 6,
+      "burn": 0,
+      "barrier": 0,
+      "action": true,
+      "frozen": false,
+      "side": "West",
+      "status": "Active",
+      "persistent": "",
+      "profile": "ElfWarriorTII"
+    },
+    {
+      "id": 2,
+      "x": 9,
+      "y": 8,
+      "hp": 38,
+      "armor": 8,
+      "movement": 0,
+      "burn": 0,
+      "barrier": 0,
+      "action": false,
+      "frozen": false,
+      "side": "West",
+      "status": "Active",
+      "persistent": "",
+      "profile": "ElfWarriorTII"
+    },
+    {
+      "id": 3,
+      "x": 9,
+      "y": 10,
+      "hp": 28,
+      "armor": 0,
+      "movement": 0,
+      "burn": 0,
+      "barrier": 0,
+      "action": false,
+      "frozen": false,
+      "side": "West",
+      "status": "Active",
+      "persistent": "",
+      "profile": "HumanHealerTI"
+    },
+    {
+      "id": 4,
+      "x": 12,
+      "y": 6,
+      "hp": 40,
+      "armor": 16,
+      "movement": 0,
+      "burn": 0,
+      "barrier": 0,
+      "action": false,
+      "frozen": false,
+      "side": "East",
+      "status": "Active",
+      "persistent": "",
+      "profile": "HumanWarriorTI"
+    },
+    {
+      "id": 5,
+      "x": 12,
+      "y": 8,
+      "hp": 40,
+      "armor": 16,
+      "movement": 0,
+      "burn": 0,
+      "barrier": 0,
+      "action": false,
+      "frozen": false,
+      "side": "East",
+      "status": "Active",
+      "persistent": "",
+      "profile": "HumanWarriorTI"
+    },
+    {
+      "id": 6,
+      "x": 12,
+      "y": 10,
+      "hp": 32,
+      "armor": 0,
+      "movement": 0,
+      "burn": 0,
+      "barrier": 0,
+      "action": false,
+      "frozen": false,
+      "side": "East",
+      "status": "Active",
+      "persistent": "",
+      "profile": "IceMageTII"
+    }
+  ],
+  "world": {
+    "version": 0,
+    "refresh": 0,
+    "startingSide": 0,
+    "activeSide": 0,
+    "completed": 0,
+    "winner": 0,
+    "battleNumber": 0,
+    "seed": 0,
+    "handoff": false,
+    "economy": false,
+    "waystationFood": 0,
+    "scenario": "",
+    "checksum": "",
+    "owners": [],
+    "events": [],
+    "west": {
+      "node": 0,
+      "tempo": 0,
+      "provisions": 0,
+      "pressure": 0,
+      "gold": 0,
+      "keepFood": 0,
+      "nextRecruit": 0,
+      "pendingProfile": 0,
+      "lastRecruitRefresh": 0,
+      "pendingId": "",
+      "goldExact": "",
+      "foodExact": "",
+      "formation": {
+        "id": "",
+        "side": 0,
+        "commanderless": false,
+        "rosterLocked": false,
+        "members": []
+      }
+    },
+    "east": {
+      "node": 0,
+      "tempo": 0,
+      "provisions": 0,
+      "pressure": 0,
+      "gold": 0,
+      "keepFood": 0,
+      "nextRecruit": 0,
+      "pendingProfile": 0,
+      "lastRecruitRefresh": 0,
+      "pendingId": "",
+      "goldExact": "",
+      "foodExact": "",
+      "formation": {
+        "id": "",
+        "side": 0,
+        "commanderless": false,
+        "rosterLocked": false,
+        "members": []
+      }
+    },
+    "incident": {
+      "enabled": false,
+      "worldPhase": false,
+      "ravaged": false,
+      "cycleEligible": false,
+      "continuityBroken": false,
+      "rewardPaid": false,
+      "phase": 0,
+      "whiteout": 0,
+      "cursor": 0,
+      "contract": 0,
+      "holdCycles": 0,
+      "appliedBattle": 0,
+      "id": "",
+      "claimant": "",
+      "holdReason": "",
+      "actorOrder": [],
+      "raiders": []
+    },
+    "foundations": {
+      "combined": false,
+      "locations": [],
+      "west": {
+        "wood": "",
+        "iron": "",
+        "preset": 0,
+        "active": 0,
+        "started": 0,
+        "paused": false,
+        "queue": [],
+        "research": [],
+        "repairStarted": 0,
+        "trainingStarted": 0,
+        "repairIds": [],
+        "repairs": [],
+        "trainee": ""
+      },
+      "east": {
+        "wood": "",
+        "iron": "",
+        "preset": 0,
+        "active": 0,
+        "started": 0,
+        "paused": false,
+        "queue": [],
+        "research": [],
+        "repairStarted": 0,
+        "trainingStarted": 0,
+        "repairIds": [],
+        "repairs": [],
+        "trainee": ""
+      }
+    }
+  }
+}

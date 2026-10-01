@@ -1,0 +1,12 @@
+{
+  "starting_main": "49a2a17",
+  "implementation": "029a42e",
+  "method": "fast-forward",
+  "tested_source_identical": true,
+  "protected_nine_unchanged": true,
+  "changed_gameplay_files": [],
+  "changed_unity_telemetry_files": [],
+  "forced_restart": false,
+  "mouse_control": false,
+  "push": "NOT PERFORMED"
+}

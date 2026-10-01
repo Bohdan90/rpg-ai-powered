@@ -1,0 +1,142 @@
+{
+  "implementation": "1d101cf436fd66546550584577ea145fbf938136",
+  "method": "Real OS mouse/key input in independent Unity; ordinary public initializer or explicitly labelled rare initial fixture. Read-only AI command suggestions for normal tactical match; no direct resolver execution or injected outcome. Not a human balance acceptance.",
+  "manual": {
+    "S1": "PASS: unknown B excluded; A-B-A; real pan/wheel/focus/Previous; both known worlds",
+    "S2": "PASS: success, zero-Tempo invalid, paid blocked, closed; 95-command normal B battle; 3/6-figure controlled joint battle with real Fireball/escape/14 commands, same-world support only",
+    "S3": "PASS: B02 appearance/loss only, hidden B01/B05 omitted; offscreen A focus; handoff curtain; history pause/fast/skip; save continuation",
+    "S4": "PASS: ordinary West-first R14 East Pressure24 versus West13, both armies used A/B; short East-first mirrored R2 portal entry",
+    "S5": "PASS: R4/R5 full Whiteout, R6 closure; real stranded move B01-B02, save/load, R7 continuation; postbattle/history reload",
+    "S6": "PASS measured bounded prototype: actual OS pan/zoom samples for one/two known worlds; separate fresh-view snapshot latency. No input-to-photon or production FPS claim.",
+    "INPUT03": "PASS short controlled Fire/Ice/HH GUI and normal Lab Freeze; full/partial remaining Movement, Exhausted, no Frozen movement, first pin/second cast, pin retained under hover/Escape cancel; connected Fireball-Escape-return-save. Focus-loss/material-state revalidation covered by automated tests, not separately claimed as GUI."
+  },
+  "normal_match": {
+    "refresh": 14,
+    "winner": "East",
+    "pressure": {
+      "West": 13,
+      "East": 24
+    },
+    "tactical_commands": 95,
+    "deaths": 5,
+    "commanderless_winner_army": "realm06-East-army-1",
+    "late_provisions": "All continuing armies reached0 after prolonged holding; no supply retune"
+  },
+  "save_roundtrips": {
+    "followup-b-aftermath": {
+      "equal": true,
+      "checksum": "/BrxQCZfV56vMueQ14P9N1Qkc3dcXD18zCgpMTH2bVk=",
+      "refresh": 2,
+      "version": 6
+    },
+    "followup-stranded": {
+      "equal": true,
+      "checksum": "YblyZP6ho/+Fq3ELsfKWT18AN2M9yhzcgT7FZJVQsQw=",
+      "refresh": 6,
+      "version": 6
+    },
+    "followup-whiteout-two": {
+      "equal": true,
+      "checksum": "dvjIz/DdQ0Cph7UWSfXZBNRaLISpLO27SWZLZqisqYE=",
+      "refresh": 4,
+      "version": 6
+    },
+    "followup-observations": {
+      "equal": true,
+      "checksum": "dZXTAY/xyGv+yxeuJhbfns+8kjA/3HmoS/0ALQVmf+c=",
+      "refresh": 1,
+      "version": 6
+    },
+    "followup-joint-aftermath": {
+      "equal": true,
+      "checksum": "PggzFiSIFciloPMgOFTkjaR5grk1Bc2KoECFsCXCN5s=",
+      "refresh": 1,
+      "version": 6
+    },
+    "followup-blocked": {
+      "equal": true,
+      "checksum": "mCSoDWfzQm+FG8/7Lg4DpSf/CjQG84TSES5V8b2ALJ4=",
+      "refresh": 1,
+      "version": 6
+    },
+    "followup-normal-victory": {
+      "equal": true,
+      "checksum": "SySCeYVP15vTQIkvPcDgaDyfFV79rKsb2D3mJVYihws=",
+      "refresh": 14,
+      "version": 6
+    }
+  },
+  "replay_verifications": {
+    "followup-healer-verification.txt": "Replay matches: 2 successful commands, 2 attempts.",
+    "followup-ice-input-verification.txt": "Replay matches: 3 successful commands, 3 attempts.",
+    "followup-freeze-input-verification.txt": "Replay matches: 9 successful commands, 9 attempts.",
+    "followup-s1-verification.txt": "Replay matches: 95 successful commands, 95 attempts.",
+    "followup-joint-b-verification.txt": "Replay matches: 14 successful commands, 14 attempts.",
+    "followup-exhausted-input-verification.txt": "Replay matches: 2 successful commands, 2 attempts.",
+    "followup-fire-input-verification.txt": "Replay matches: 2 successful commands, 2 attempts."
+  },
+  "diagnostic_limitations": [
+    "Initial real GUI session worked on external monitor. Later diagnostic reload/focus interference required a safe restart of only independent editor and fresh coordinate checks; input also worked on Retina. No claim that two monitors are inherently unsupported.",
+    "Temporary observer briefly called stable-state SimulationHash during contact and produced stale telemetry; fixed its guard and rejected stale files, repeated only affected joint fixture. No game-code fix.",
+    "Read-only full snapshots include developer omniscient state; user-facing fog was checked separately in visible screenshots."
+  ],
+  "protection": {
+    "protected": {
+      "checked": 9,
+      "changed": []
+    },
+    "saves": {
+      "checked": 22,
+      "changed": []
+    },
+    "source_configuration_matches_1d101cf": true,
+    "main_head": "20c7f76347a7fd39c45c54542443f0113c7880c5"
+  },
+  "performance": {
+    "followup-os-camera-performance.json": {
+      "samples": 20,
+      "cpu": "Apple M4 Pro",
+      "gpu": "Apple M4 Pro",
+      "render_pixels": [
+        2800,
+        1732
+      ],
+      "frame_ms_median": 0.9971478879451752,
+      "frame_ms_max": 6.61016845703125,
+      "gameobjects": [
+        882,
+        882
+      ],
+      "allocated_bytes": [
+        395973919,
+        395977319
+      ],
+      "distinct_simulation_hashes": 1
+    },
+    "followup-two-world-os-camera-performance.json": {
+      "samples": 20,
+      "cpu": "Apple M4 Pro",
+      "gpu": "Apple M4 Pro",
+      "render_pixels": [
+        2800,
+        1732
+      ],
+      "frame_ms_median": 1.097399353981018,
+      "frame_ms_max": 6.330874443054199,
+      "gameobjects": [
+        882,
+        882
+      ],
+      "allocated_bytes": [
+        399062579,
+        399064243
+      ],
+      "distinct_simulation_hashes": 1
+    },
+    "first_view": {
+      "seconds": 0.024999333079904318,
+      "method": "public menu initializer + fresh completed observer snapshot after command consumption; 100ms sampler, not display input-to-photon",
+      "origin": "new presentation scene verified without world, same warm editor"
+    }
+  }
+}

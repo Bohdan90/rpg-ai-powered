@@ -1,0 +1,1 @@
+AUTHORED initial tactical INPUT03 fixture: exhausted-input. No outcome mutation.

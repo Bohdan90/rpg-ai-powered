@@ -1,0 +1,6 @@
+{
+  "Assets/_Project/Presentation/BattlePresenter.cs": "4eff132405633b9ada0ecc306b9fa3d8b00249ee645953e4dea35039765e1684",
+  "Assets/_Project/Presentation/CombatLabPresenter.cs": "3539ae2bdef617c91d68d7102bcceb22b6c4890cd6c4c3d8a834f260a5e4cf3e",
+  "Assets/_Project/Presentation/BattleHud.cs": "5162ba4db978ab9637209b640e69f8dfe18ef7ced20dee97e0a53462b7f80155",
+  "Assets/_Project/Tests/PlayMode/SpellUxPresentationTests.cs": "b1c3f8919753516bf01e6099832040226bba3387ff632dec1d2fc8411b3c4aeb"
+}

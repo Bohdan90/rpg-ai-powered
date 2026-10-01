@@ -1,0 +1,82 @@
+{
+  "starting_main": "49a2a17",
+  "unity": "6000.6.2f1",
+  "worktree": "/Users/bohdanskrypka/UnityProjects/Convergence/Realm-Operations-06",
+  "test_preferences": "/private/tmp/realm-operations-06/test-preferences",
+  "commands": [
+    "bash /private/tmp/realm-operations-06/run-tests.sh EditMode MeleeApproachTests",
+    "bash /private/tmp/realm-operations-06/run-tests.sh PlayMode SpellUxPresentationTests",
+    "bash /private/tmp/realm-operations-06/run-tests.sh PlayMode SizeExperimentPresentationTests",
+    "bash /private/tmp/realm-operations-06/run-tests.sh EditMode",
+    "bash /private/tmp/realm-operations-06/run-tests.sh PlayMode"
+  ],
+  "source_hashes": "source-sha256.json",
+  "runs": [
+    {
+      "kind": "focused",
+      "xml": "EditMode-20260930-182132.xml",
+      "log": "EditMode-20260930-182132.log.gz",
+      "passed": "5",
+      "failed": "0",
+      "skipped": "0",
+      "start": "2026-09-30 22:21:38Z",
+      "end": "2026-09-30 22:21:39Z"
+    },
+    {
+      "kind": "focused spell/approach",
+      "xml": "PlayMode-20260930-182154.xml",
+      "log": "PlayMode-20260930-182154.log.gz",
+      "passed": "12",
+      "failed": "0",
+      "skipped": "0",
+      "start": "2026-09-30 22:22:01Z",
+      "end": "2026-09-30 22:22:09Z"
+    },
+    {
+      "kind": "focused corner/size",
+      "xml": "PlayMode-20260930-182702.xml",
+      "log": "PlayMode-20260930-182702.log.gz",
+      "passed": "7",
+      "failed": "0",
+      "skipped": "0",
+      "start": "2026-09-30 22:27:08Z",
+      "end": "2026-09-30 22:27:40Z"
+    },
+    {
+      "kind": "superseded full: old UI expectation",
+      "xml": "PlayMode-20260930-182359.xml",
+      "log": "PlayMode-20260930-182359.log.gz",
+      "passed": "78",
+      "failed": "1",
+      "skipped": "0",
+      "start": "2026-09-30 22:24:05Z",
+      "end": "2026-09-30 22:26:04Z"
+    },
+    {
+      "kind": "final full",
+      "xml": "EditMode-20260930-182805.xml",
+      "log": "EditMode-20260930-182805.log.gz",
+      "passed": "590",
+      "failed": "0",
+      "skipped": "0",
+      "start": "2026-09-30 22:28:11Z",
+      "end": "2026-09-30 22:29:27Z"
+    },
+    {
+      "kind": "final full",
+      "xml": "PlayMode-20260930-182942.xml",
+      "log": "PlayMode-20260930-182942.log.gz",
+      "passed": "79",
+      "failed": "0",
+      "skipped": "0",
+      "start": "2026-09-30 22:29:49Z",
+      "end": "2026-09-30 22:31:48Z"
+    }
+  ],
+  "final_full_total": 669,
+  "final_failed": 0,
+  "final_skipped": 0,
+  "manual": "NOT RUN; real Presentation exercised by PlayMode; no user window control",
+  "replay": "PASS: existing MoveCommand + BasicAttackCommand; lethal OA records Move only",
+  "push": "NOT PERFORMED"
+}

@@ -1,0 +1,8 @@
+{
+  "Assets/_Project/Core/MeleeApproachPreview.cs": "8f0635d99a00a3612ca6f0969b5eebb944054ab2a226c41d29675e9c50f30d84",
+  "Assets/_Project/Tests/MeleeApproachTests.cs": "d98947cee306cb04d02f71dec47b5ee46650b5bd3e37687870ea1222ef7df3ca",
+  "Assets/_Project/Presentation/BattlePresenter.cs": "a837fd0bda150153c3f3f14100de05915c7ede3c9087fc0df599ac2a5100db38",
+  "Assets/_Project/Presentation/CombatLabPresenter.cs": "5678f94f2982880747ee068c57f8eb129621fa96a9a16b107bd5687da21fd795",
+  "Assets/_Project/Tests/PlayMode/SpellUxPresentationTests.cs": "35417b1076120f057dc48a7e50c16cb1c3b968ba416b339e22d3e830fd7856c6",
+  "Assets/_Project/Tests/PlayMode/SizeExperimentPresentationTests.cs": "b8e38a3022ed7ab8a6bef6d43042591fb1cf4f4eff31b59b6256ceac66be22f3"
+}

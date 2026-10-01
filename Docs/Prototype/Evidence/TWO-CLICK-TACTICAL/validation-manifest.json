@@ -1,0 +1,48 @@
+{
+  "starting_main": "3271802",
+  "unity": "6000.6.2f1",
+  "worktree": "/Users/bohdanskrypka/UnityProjects/Convergence/Realm-Operations-06",
+  "test_preferences": "/private/tmp/realm-operations-06/test-preferences",
+  "commands": [
+    "bash /private/tmp/realm-operations-06/run-tests.sh PlayMode SpellUxPresentationTests",
+    "bash /private/tmp/realm-operations-06/run-tests.sh EditMode",
+    "bash /private/tmp/realm-operations-06/run-tests.sh PlayMode"
+  ],
+  "source_hashes": "source-sha256.json",
+  "runs": [
+    {
+      "kind": "focused",
+      "xml": "PlayMode-20260930-180816.xml",
+      "log": "PlayMode-20260930-180816.log.gz",
+      "passed": "10",
+      "failed": "0",
+      "skipped": "0",
+      "start": "2026-09-30 22:08:23Z",
+      "end": "2026-09-30 22:08:28Z"
+    },
+    {
+      "kind": "full",
+      "xml": "EditMode-20260930-180842.xml",
+      "log": "EditMode-20260930-180842.log.gz",
+      "passed": "585",
+      "failed": "0",
+      "skipped": "0",
+      "start": "2026-09-30 22:08:48Z",
+      "end": "2026-09-30 22:10:07Z"
+    },
+    {
+      "kind": "full",
+      "xml": "PlayMode-20260930-181043.xml",
+      "log": "PlayMode-20260930-181043.log.gz",
+      "passed": "77",
+      "failed": "0",
+      "skipped": "0",
+      "start": "2026-09-30 22:10:50Z",
+      "end": "2026-09-30 22:13:16Z"
+    }
+  ],
+  "full_total": 662,
+  "manual": "NOT RUN; actual Presentation exercised by PlayMode, no user window mouse control",
+  "core_rules_changed": false,
+  "push": "NOT PERFORMED"
+}

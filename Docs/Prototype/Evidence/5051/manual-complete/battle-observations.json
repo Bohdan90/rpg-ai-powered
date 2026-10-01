@@ -1,0 +1,463 @@
+{
+  "v2-freeze-break-authored-replay": {
+    "commands": 4,
+    "rounds": 1,
+    "approach_or_pass_only_rounds": [],
+    "command_counts": {
+      "CastCommand": 2,
+      "EndActivationCommand": 1,
+      "MoveCommand": 1
+    },
+    "casts": [
+      {
+        "round": 1,
+        "controller": "Player",
+        "actor": 1,
+        "spell": 5
+      },
+      {
+        "round": 1,
+        "controller": "Player",
+        "actor": 3,
+        "spell": 0
+      }
+    ],
+    "verification": "Replay matches: 4 successful commands, 4 attempts."
+  },
+  "n2-recruit-armor-battle-replay": {
+    "commands": 107,
+    "rounds": 5,
+    "approach_or_pass_only_rounds": [
+      1,
+      2,
+      5
+    ],
+    "command_counts": {
+      "MoveCommand": 42,
+      "EndActivationCommand": 43,
+      "DefendCommand": 17,
+      "BasicAttackCommand": 5
+    },
+    "casts": [],
+    "verification": "Replay matches: 107 successful commands, 107 attempts."
+  },
+  "v3-05b-new-mage-battle-replay": {
+    "commands": 146,
+    "rounds": 7,
+    "approach_or_pass_only_rounds": [],
+    "command_counts": {
+      "MoveCommand": 59,
+      "EndActivationCommand": 50,
+      "BasicAttackCommand": 27,
+      "CastCommand": 10
+    },
+    "casts": [
+      {
+        "round": 1,
+        "controller": "Player",
+        "actor": 105,
+        "spell": 4
+      },
+      {
+        "round": 1,
+        "controller": "Player",
+        "actor": 5,
+        "spell": 1
+      },
+      {
+        "round": 2,
+        "controller": "Player",
+        "actor": 105,
+        "spell": 3
+      },
+      {
+        "round": 2,
+        "controller": "Player",
+        "actor": 5,
+        "spell": 0
+      },
+      {
+        "round": 3,
+        "controller": "Player",
+        "actor": 105,
+        "spell": 3
+      },
+      {
+        "round": 3,
+        "controller": "Player",
+        "actor": 5,
+        "spell": 0
+      },
+      {
+        "round": 4,
+        "controller": "Player",
+        "actor": 105,
+        "spell": 3
+      },
+      {
+        "round": 5,
+        "controller": "Player",
+        "actor": 105,
+        "spell": 3
+      },
+      {
+        "round": 6,
+        "controller": "Player",
+        "actor": 105,
+        "spell": 4
+      },
+      {
+        "round": 7,
+        "controller": "Player",
+        "actor": 105,
+        "spell": 3
+      }
+    ],
+    "verification": "Replay matches: 146 successful commands, 146 attempts."
+  },
+  "n2-repaired-redeploy-replay": {
+    "commands": 12,
+    "rounds": 1,
+    "approach_or_pass_only_rounds": [
+      1
+    ],
+    "command_counts": {
+      "EndActivationCommand": 6,
+      "MoveCommand": 6
+    },
+    "casts": [],
+    "verification": "Replay matches: 12 successful commands, 12 attempts."
+  },
+  "v1-fire-ice-ai-replay": {
+    "commands": 45,
+    "rounds": 4,
+    "approach_or_pass_only_rounds": [],
+    "command_counts": {
+      "CastCommand": 9,
+      "EndActivationCommand": 17,
+      "MoveCommand": 13,
+      "BasicAttackCommand": 6
+    },
+    "casts": [
+      {
+        "round": 1,
+        "controller": "Player",
+        "actor": 5,
+        "spell": 4
+      },
+      {
+        "round": 1,
+        "controller": "AI",
+        "actor": 1,
+        "spell": 2
+      },
+      {
+        "round": 1,
+        "controller": "Player",
+        "actor": 4,
+        "spell": 3
+      },
+      {
+        "round": 1,
+        "controller": "AI",
+        "actor": 2,
+        "spell": 0
+      },
+      {
+        "round": 2,
+        "controller": "Player",
+        "actor": 5,
+        "spell": 3
+      },
+      {
+        "round": 2,
+        "controller": "AI",
+        "actor": 1,
+        "spell": 0
+      },
+      {
+        "round": 2,
+        "controller": "Player",
+        "actor": 4,
+        "spell": 3
+      },
+      {
+        "round": 2,
+        "controller": "AI",
+        "actor": 2,
+        "spell": 0
+      },
+      {
+        "round": 3,
+        "controller": "AI",
+        "actor": 1,
+        "spell": 2
+      }
+    ],
+    "verification": "Replay matches: 45 successful commands, 45 attempts."
+  },
+  "v4-heal-escape-1-replay": {
+    "commands": 15,
+    "rounds": 2,
+    "approach_or_pass_only_rounds": [
+      2
+    ],
+    "command_counts": {
+      "EndActivationCommand": 8,
+      "MoveCommand": 6,
+      "CastCommand": 1
+    },
+    "casts": [
+      {
+        "round": 1,
+        "controller": "Player",
+        "actor": 5,
+        "spell": 6
+      }
+    ],
+    "verification": "Replay matches: 15 successful commands, 15 attempts."
+  },
+  "v1-player-ff-replay": {
+    "commands": 2,
+    "rounds": 1,
+    "approach_or_pass_only_rounds": [],
+    "command_counts": {
+      "EndActivationCommand": 1,
+      "CastCommand": 1
+    },
+    "casts": [
+      {
+        "round": 1,
+        "controller": "Player",
+        "actor": 1,
+        "spell": 2
+      }
+    ],
+    "verification": "Replay matches: 2 successful commands, 2 attempts."
+  },
+  "v2-support-replay": {
+    "commands": 2,
+    "rounds": 1,
+    "approach_or_pass_only_rounds": [],
+    "command_counts": {
+      "MoveCommand": 1,
+      "CastCommand": 1
+    },
+    "casts": [
+      {
+        "round": 1,
+        "controller": "Player",
+        "actor": 1,
+        "spell": 6
+      }
+    ],
+    "verification": "Replay matches: 2 successful commands, 2 attempts."
+  },
+  "v3-loss-preserve-commander-replay": {
+    "commands": 69,
+    "rounds": 4,
+    "approach_or_pass_only_rounds": [
+      1,
+      4
+    ],
+    "command_counts": {
+      "MoveCommand": 26,
+      "EndActivationCommand": 28,
+      "DefendCommand": 11,
+      "BasicAttackCommand": 3,
+      "CastCommand": 1
+    },
+    "casts": [
+      {
+        "round": 3,
+        "controller": "Player",
+        "actor": 105,
+        "spell": 3
+      }
+    ],
+    "verification": "Replay matches: 69 successful commands, 69 attempts."
+  },
+  "n1-05a-hotseat-replay": {
+    "commands": 222,
+    "rounds": 10,
+    "approach_or_pass_only_rounds": [
+      1
+    ],
+    "command_counts": {
+      "MoveCommand": 81,
+      "EndActivationCommand": 80,
+      "BasicAttackCommand": 60,
+      "DefendCommand": 1
+    },
+    "casts": [],
+    "verification": "Replay matches: 222 successful commands, 222 attempts."
+  },
+  "v2-support-ai-replay": {
+    "commands": 30,
+    "rounds": 3,
+    "approach_or_pass_only_rounds": [
+      3
+    ],
+    "command_counts": {
+      "MoveCommand": 10,
+      "CastCommand": 7,
+      "EndActivationCommand": 10,
+      "BasicAttackCommand": 3
+    },
+    "casts": [
+      {
+        "round": 1,
+        "controller": "Player",
+        "actor": 1,
+        "spell": 6
+      },
+      {
+        "round": 1,
+        "controller": "Player",
+        "actor": 3,
+        "spell": 3
+      },
+      {
+        "round": 1,
+        "controller": "AI",
+        "actor": 5,
+        "spell": 0
+      },
+      {
+        "round": 1,
+        "controller": "AI",
+        "actor": 4,
+        "spell": 2
+      },
+      {
+        "round": 2,
+        "controller": "Player",
+        "actor": 3,
+        "spell": 3
+      },
+      {
+        "round": 2,
+        "controller": "AI",
+        "actor": 5,
+        "spell": 0
+      },
+      {
+        "round": 2,
+        "controller": "AI",
+        "actor": 4,
+        "spell": 0
+      }
+    ],
+    "verification": "Replay matches: 30 successful commands, 30 attempts."
+  },
+  "v2-cleanse-authored-replay": {
+    "commands": 1,
+    "rounds": 1,
+    "approach_or_pass_only_rounds": [],
+    "command_counts": {
+      "CastCommand": 1
+    },
+    "casts": [
+      {
+        "round": 1,
+        "controller": "Player",
+        "actor": 1,
+        "spell": 6
+      }
+    ],
+    "verification": "Replay matches: 1 successful commands, 1 attempts."
+  },
+  "v2-freeze-expiry-authored-replay": {
+    "commands": 4,
+    "rounds": 1,
+    "approach_or_pass_only_rounds": [],
+    "command_counts": {
+      "CastCommand": 1,
+      "EndActivationCommand": 3
+    },
+    "casts": [
+      {
+        "round": 1,
+        "controller": "Player",
+        "actor": 1,
+        "spell": 5
+      }
+    ],
+    "verification": "Replay matches: 4 successful commands, 4 attempts."
+  },
+  "v4-heal-escape-2-replay": {
+    "commands": 15,
+    "rounds": 2,
+    "approach_or_pass_only_rounds": [
+      2
+    ],
+    "command_counts": {
+      "EndActivationCommand": 8,
+      "MoveCommand": 6,
+      "CastCommand": 1
+    },
+    "casts": [
+      {
+        "round": 1,
+        "controller": "Player",
+        "actor": 5,
+        "spell": 6
+      }
+    ],
+    "verification": "Replay matches: 15 successful commands, 15 attempts."
+  },
+  "v2-graceful-authored-replay": {
+    "commands": 2,
+    "rounds": 1,
+    "approach_or_pass_only_rounds": [],
+    "command_counts": {
+      "BasicAttackCommand": 1,
+      "MoveCommand": 1
+    },
+    "casts": [],
+    "verification": "Replay matches: 2 successful commands, 2 attempts."
+  },
+  "v5-mobile-blades-ai-replay": {
+    "commands": 93,
+    "rounds": 8,
+    "approach_or_pass_only_rounds": [],
+    "command_counts": {
+      "MoveCommand": 41,
+      "BasicAttackCommand": 16,
+      "EndActivationCommand": 32,
+      "DefendCommand": 2,
+      "CastCommand": 2
+    },
+    "casts": [
+      {
+        "round": 4,
+        "controller": "Player",
+        "actor": 3,
+        "spell": 6
+      },
+      {
+        "round": 6,
+        "controller": "Player",
+        "actor": 3,
+        "spell": 6
+      }
+    ],
+    "verification": "Replay matches: 93 successful commands, 93 attempts."
+  },
+  "n2-attrition-retreat-replay": {
+    "commands": 129,
+    "rounds": 6,
+    "approach_or_pass_only_rounds": [
+      1,
+      6
+    ],
+    "command_counts": {
+      "DefendCommand": 22,
+      "EndActivationCommand": 53,
+      "MoveCommand": 43,
+      "BasicAttackCommand": 11
+    },
+    "casts": [],
+    "verification": "Replay matches: 129 successful commands, 129 attempts."
+  }
+}

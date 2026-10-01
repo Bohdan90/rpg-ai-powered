@@ -1,0 +1,495 @@
+{
+  "mode": "v1-fire-ice-ai",
+  "hash": "contact",
+  "plan": "MoveCommand",
+  "contact": "",
+  "hud": "Stable map only \u00b7 one Crossroads slot.\nMoveCommand applied.\nGATE C / HOTSEAT\nBLUE West \u00b7 ORANGE East \u00b7 GOLD active\nGreen: reachable \u00b7 Gold: path \u00b7 Red segment: OA risk\nSword + shield: HW/EW \u00b7 Bow: HA \u00b7 * Commander\nWhite arrow: facing \u00b7 Red border: ZoC ready \u00b7 Gray: spent\nWheel: zoom \u00b7 Right-click: center view\n\u2190 West Retreat\nEast Retreat \u2192 \u2014 YOUR ESCAPE\nFire 2*\nHP 19/32\nA 0/0\nFire 1\nHP 14/26\nA 0/0\nHW\nHP 40/40\nA 16/16\nIce 2\nHP 16/32\nA 0/0\nIce 1 DEAD\nHP 0/26\nA 0/0\nBurn 1\nHW* B1\nHP 28/40\nA 16/16\nBurn 1\nHW\nHP 40/40\nA 16/16\nHA\nHP 28/28\nA 4/4\nHA\nHP 28/28\nA 4/4\nEW\nHP 32/32\nA 6/6\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\nTACTICAL GRAYBOX\nHotseat \u00b7 ZoC / OA / physical Retreat\nController\nAI S=0.00 \u00b7 Action spent; End\nROUND 2 \u00b7 IceMageTII #4\nEast | HP 16 / Armor 0\nMovement 3 | Action available\nFacing NorthWest | Defending no | no OA\nBarrier 0\nAbility\nLAST ATTACK RESULT\nFireMageTII #1 \u2192 IceMageTI #5: HP damage 8 (8 \u2192 0)\nInitiative order (\u25ba current):\n   FireMageTII #1 [11] no OA\n\u25ba IceMageTII #4 [11] no OA\n   FireMageTI #2 [11] no OA\n   W HA-Left [10] OA ready\n   E HW-Commander * [10] OA ready\nWest: West edge. East: East edge.\nYOUR escape: East edge\nEscaped/Safe:\nNone\nHover (7,3) IceMageTII #4 | no OA\nHP 16 / Armor 0 | Facing NorthWest\nNo destination / target selected.\nClick a cell or unit, then confirm. Green cells: Core reachable.\nExplicitly confirm allied target\nEnd facing\nMoveCommand applied.\nFixture (resets battle)\n05B West preset\n05B East preset\n05 Starting Side\nSize/density experiment \u00b7 no combat retuning. 9v9 = synthetic tactical roster, not strategic Capacity validation. Siege: static fortress; moat proxy has fixed crossings. 41\u00d739 preserves each attacker approach; West = attacker coalition, East = defenders. No real siege mechanics.\nLOCAL REPLAY / TELEMETRY\nReplay file\nRECENT CORE EVENTS\nR0 Battle: BattleStarted\nR1 Battle: RoundStarted\nR1 IceMageTI #5: ActivationStarted\nR1 IceMageTI #5: ActionConsumed\nR1 IceMageTI #5: ExhaustionChanged\nR1 IceMageTI #5: SpellCast IceShield (12,8)\nR1 IceMageTI #5: BarrierChanged \u2192 IceMageTI #5 0 \u2192 10\nR1 IceMageTI #5: MovementConsumed\nR1 IceMageTI #5: ActivationEnded\nR1 IceMageTI #5: ExhaustionChanged\nR1 FireMageTII #1: ActivationStarted\nR1 FireMageTII #1: MovementStarted\nR1 FireMageTII #1: FacingChanged\nR1 FireMageTII #1: MovementConsumed\nR1 FireMageTII #1: StepMoved (9,6) \u2192 (8,5)\nR1 FireMageTII #1: MovementConsumed\nR1 FireMageTII #1: StepMoved (8,5) \u2192 (7,4)\nR1 FireMageTII #1: MovementConsumed\nR1 FireMageTII #1: StepMoved (7,4) \u2192 (6,3)\nAI S=24.00 \u00b7 MoveCommand; endpoint 6,3; next CastCommand; HP 26.00, Armor 0.00, kill 0.00, OA HP 0.00, incoming HP 0.00, approach -2\nR1 FireMageTII #1: ActionConsumed\nR1 FireMageTII #1: ExhaustionChanged\nR1 FireMageTII #1: SpellCast Fireball (11,7)\nR1 FireMageTII #1: FacingChanged\nR1 FireMageTII #1: DamageApplied \u2192 IceMageTII #4 16\nR1 FireMageTII #1: HpLost \u2014 HP damage 16 (32 \u2192 16) \u2192 IceMageTII #4 32 \u2192 16\nR1 FireMageTII #1: DamageApplied \u2192 IceMageTI #5 16\nR1 FireMageTII #1: BarrierChanged \u2192 IceMageTI #5 10 \u2192 0\nR1 FireMageTII #1: HpLost \u2014 HP damage 6 (26 \u2192 20) \u2192 IceMageTI #5 26 \u2192 20\nAI S=26.00 \u00b7 CastCommand; endpoint 6,3; next CastCommand; HP 26.00, Armor 0.00, kill 0.00, OA HP 0.00, incoming HP 0.00, approach 0\nR1 FireMageTII #1: MovementConsumed\nR1 FireMageTII #1: ActivationEnded\nR1 FireMageTII #1: ExhaustionChanged\nR1 IceMageTII #4: ActivationStarted\nAI S=0.00 \u00b7 Action spent; End\nR1 IceMageTII #4: MovementStarted\nR1 IceMageTII #4: FacingChanged\nR1 IceMageTII #4: MovementConsumed\nR1 IceMageTII #4: StepMoved (12,6) \u2192 (11,5)\nR1 IceMageTII #4: MovementConsumed\nR1 IceMageTII #4: StepMoved (11,5) \u2192 (10,4)\nR1 IceMageTII #4: MovementConsumed\nR1 IceMageTII #4: StepMoved (10,4) \u2192 (9,3)\nR1 IceMageTII #4: MovementConsumed\nR1 IceMageTII #4: StepMoved (9,3) \u2192 (8,2)\nR1 IceMageTII #4: ActionConsumed\nR1 IceMageTII #4: SpellCast IceShard (6,3)\nR1 IceMageTII #4: FacingChanged\nR1 IceMageTII #4: ContactRolled \u2192 FireMageTII #1 [80 < 85: success]\nR1 IceMageTII #4: DamageApplied \u2192 FireMageTII #1 13\nR1 IceMageTII #4: HpLost \u2014 HP damage 13 (32 \u2192 19) \u2192 FireMageTII #1 32 \u2192 19\nR1 IceMageTII #4: ActivationEnded\nR1 FireMageTI #2: ActivationStarted\nR1 FireMageTI #2: MovementStarted\nR1 FireMageTI #2: FacingChanged\nR1 FireMageTI #2: MovementConsumed\nR1 FireMageTI #2: StepMoved (9,8) \u2192 (10,9)\nR1 FireMageTI #2: MovementConsumed\nR1 FireMageTI #2: StepMoved (10,9) \u2192 (11,10)\nR1 FireMageTI #2: FacingChanged\nR1 FireMageTI #2: MovementConsumed\nR1 FireMageTI #2: StepMoved (11,10) \u2192 (11,11)\nR1 FireMageTI #2: FacingChanged\nR1 FireMageTI #2: MovementConsumed\nR1 FireMageTI #2: StepMoved (11,11) \u2192 (12,11)\nAI S=14.78 \u00b7 MoveCommand; endpoint 12,11; next CastCommand; HP 20.00, Armor 0.00, kill 0.00, OA HP 0.00, incoming HP 14.45, approach 2\nR1 FireMageTI #2: ActionConsumed\nR1 FireMageTI #2: SpellCast FireStream (12,10)\nR1 FireMageTI #2: FacingChanged\nR1 FireMageTI #2: DamageApplied \u2192 IceMageTI #5 10\nR1 FireMageTI #2: HpLost \u2014 HP damage 10 (20 \u2192 10) \u2192 IceMageTI #5 20 \u2192 10\nR1 FireMageTI #2: BurnApplied \u2192 IceMageTI #5\nR1 FireMageTI #2: DamageApplied \u2192 E HW-Commander * 10\nR1 FireMageTI #2: HpLost \u2014 HP damage 10 (40 \u2192 30) \u2192 E HW-Commander * 40 \u2192 30\nR1 FireMageTI #2: BurnApplied \u2192 E HW-Commander *\nAI S=12.78 \u00b7 CastCommand; endpoint 12,11; next CastCommand; HP 20.00, Armor 0.00, kill 0.00, OA HP 0.00, incoming HP 14.45, approach 0\nR1 FireMageTI #2: ActivationEnded\nR1 W HA-Left: ActivationStarted\nAI S=0.00 \u00b7 Action spent; End\nR1 W HA-Left: MovementStarted\nR1 W HA-Left: FacingChanged\nR1 W HA-Left: MovementConsumed\nR1 W HA-Left: StepMoved (9,10) \u2192 (10,9)\nR1 W HA-Left: MovementConsumed\nR1 W HA-Left: StepMoved (10,9) \u2192 (11,8)\nAI S=20.70 \u00b7 MoveCommand; endpoint 11,8; next attack 5; HP 8.50, Armor 0.00, kill 0.85, OA HP 0.00, incoming HP 0.00, approach 2\nR1 W HA-Left: ActionConsumed\nR1 W HA-Left: FacingChanged\nR1 W HA-Left: ContactRolled \u2192 IceMageTI #5 [89 < 85: fail]\nR1 W HA-Left: AttackMissed \u2014 Failed contact \u2014 no damage \u2192 IceMageTI #5\nAI S=18.70 \u00b7 BasicAttackCommand; endpoint 11,8; next attack 5; HP 8.50, Armor 0.00, kill 0.85, OA HP 0.00, incoming HP 0.00, approach 0\nR1 W HA-Left: MovementConsumed\nR1 W HA-Left: ActivationEnded\nR1 E HW-Commander *: BurnTick\nR1 E HW-Commander *: DamageApplied \u2192 E HW-Commander * 2\nR1 E HW-Commander *: HpLost \u2014 HP damage 2 (30 \u2192 28) \u2192 E HW-Commander * 30 \u2192 28\nR1 E HW-Commander *: ActivationStarted\nAI S=0.00 \u00b7 Action spent; End\nR1 E HW-Commander *: ActionConsumed\nR1 E HW-Commander *: FacingChanged\nR1 E HW-Commander *: ContactRolled \u2192 FireMageTI #2 [43 < 85: success]\nR1 E HW-Commander *: DamageApplied \u2192 FireMageTI #2 12\nR1 E HW-Commander *: HpLost \u2014 HP damage 12 (26 \u2192 14) \u2192 FireMageTI #2 26 \u2192 14\nR1 E HW-Commander *: MovementConsumed\nR1 E HW-Commander *: ActivationEnded\nR2 Battle: RoundStarted\nR2 IceMageTI #5: BurnTick\nR2 IceMageTI #5: DamageApplied \u2192 IceMageTI #5 2\nR2 IceMageTI #5: HpLost \u2014 HP damage 2 (10 \u2192 8) \u2192 IceMageTI #5 10 \u2192 8\nR2 IceMageTI #5: ActivationStarted\nR2 IceMageTI #5: ActionConsumed\nR2 IceMageTI #5: SpellCast IceShard (6,3)\nR2 IceMageTI #5: FacingChanged\nR2 IceMageTI #5: ContactRolled \u2192 FireMageTII #1 [90 < 85: fail]\nR2 IceMageTI #5: AttackMissed \u2014 Failed contact \u2014 no damage \u2192 FireMageTII #1\nR2 IceMageTI #5: MovementConsumed\nR2 IceMageTI #5: ActivationEnded\nR2 IceMageTI #5: ExhaustionChanged\nR2 FireMageTII #1: ActivationStarted\nR2 FireMageTII #1: MovementStarted\nR2 FireMageTII #1: MovementConsumed\nR2 FireMageTII #1: StepMoved (6,3) \u2192 (7,4)\nR2 FireMageTII #1: FacingChanged\nR2 FireMageTII #1: MovementConsumed\nR2 FireMageTII #1: StepMoved (7,4) \u2192 (8,4)\nR2 FireMageTII #1: FacingChanged\nR2 FireMageTII #1: MovementConsumed\nR2 FireMageTII #1: StepMoved (8,4) \u2192 (9,5)\nAI S=14.75 \u00b7 MoveCommand; endpoint 9,5; next CastCommand; HP 20.00, Armor 0.00, kill 0.00, OA HP 0.00, incoming HP 8.50, approach -1\nR2 FireMageTII #1: ActionConsumed\nR2 FireMageTII #1: SpellCast FireStream (10,6)\nR2 FireMageTII #1: DamageApplied \u2192 IceMageTI #5 11\nR2 FireMageTII #1: HpLost \u2014 HP damage 8 (8 \u2192 0) \u2192 IceMageTI #5 8 \u2192 0\nR2 FireMageTII #1: UnitDied \u2192 IceMageTI #5\nAI S=15.75 \u00b7 CastCommand; endpoint 9,5; next CastCommand; HP 20.00, Armor 0.00, kill 0.00, OA HP 0.00, incoming HP 8.50, approach 0\nR2 FireMageTII #1: MovementConsumed\nR2 FireMageTII #1: ActivationEnded\nR2 FireMageTII #1: ExhaustionChanged\nR2 IceMageTII #4: ActivationStarted\nAI S=0.00 \u00b7 Action spent; End\nR2 IceMageTII #4: MovementStarted\nR2 IceMageTII #4: MovementConsumed\nR2 IceMageTII #4: StepMoved (8,2) \u2192 (7,3)",
+  "spell": "",
+  "persistentPath": "/tmp/convergence-5051/manual-complete/preferences/Library/Application Support/DefaultCompany/My project",
+  "ff": false,
+  "gx": 0.0,
+  "gy": 97.0,
+  "fields": [
+    {
+      "label": "Controller",
+      "name": "controller-mode",
+      "index": 2,
+      "choices": [
+        "Hotseat",
+        "Player West vs AI East",
+        "Player East vs AI West"
+      ],
+      "x": 1340.103515625,
+      "y": -46.106075286865234
+    },
+    {
+      "label": "Ability",
+      "name": "spell-selector",
+      "index": 0,
+      "choices": [
+        "Basic / Move",
+        "IceShard",
+        "IceShield",
+        "Freeze"
+      ],
+      "x": 1340.103515625,
+      "y": 136.92108154296875
+    },
+    {
+      "label": "End facing",
+      "name": "",
+      "index": 0,
+      "choices": [
+        "Keep current",
+        "North",
+        "NorthEast",
+        "East",
+        "SouthEast",
+        "South",
+        "SouthWest",
+        "West",
+        "NorthWest"
+      ],
+      "x": 1340.103515625,
+      "y": 706.4942016601562
+    },
+    {
+      "label": "Fixture (resets battle)",
+      "name": "fixture-selector",
+      "index": 0,
+      "choices": [
+        "Field_13x9_Control",
+        "Field_17x11_Expanded",
+        "Siege_23x17_Tight",
+        "Siege_27x21_Roomy",
+        "Field_19x13_ExpandedV2",
+        "Siege_31x25_Medium",
+        "Siege_35x27_Large",
+        "Field_23x17_Full_9v9",
+        "Siege_35x27_Full_9v9",
+        "Siege_41x39_West_9v9",
+        "Siege_41x39_East_9v9",
+        "Siege_41x39_North_9v9",
+        "Siege_41x39_South_9v9",
+        "Siege_41x39_WestEast_18v9",
+        "Siege_41x39_NorthSouth_18v9"
+      ],
+      "x": 1340.103515625,
+      "y": 827.1151733398438
+    },
+    {
+      "label": "05B West preset",
+      "name": "",
+      "index": 0,
+      "choices": [
+        "Fire",
+        "Ice",
+        "Support"
+      ],
+      "x": 1340.103515625,
+      "y": 1000.8279418945312
+    },
+    {
+      "label": "05B East preset",
+      "name": "",
+      "index": 1,
+      "choices": [
+        "Fire",
+        "Ice",
+        "Support"
+      ],
+      "x": 1340.103515625,
+      "y": 1041.81103515625
+    },
+    {
+      "label": "05 Starting Side",
+      "name": "",
+      "index": 0,
+      "choices": [
+        "West",
+        "East"
+      ],
+      "x": 1340.103515625,
+      "y": 1082.79443359375
+    }
+  ],
+  "toggles": [
+    {
+      "label": "Explicitly confirm allied target",
+      "value": false,
+      "x": 1340.103515625,
+      "y": 536.2742919921875
+    }
+  ],
+  "battle": false,
+  "ended": false,
+  "ai": true,
+  "aiTurn": false,
+  "round": 2,
+  "records": 22,
+  "active": 4,
+  "x": 417.9844055175781,
+  "y": 576.2935791015625,
+  "rw": 1590.892578125,
+  "rh": 805.6920776367188,
+  "sw": 3416,
+  "sh": 1820,
+  "tx": 7,
+  "ty": 3,
+  "buttons": [
+    {
+      "name": "end-activation",
+      "text": "End Activation",
+      "x": 1340.103515625,
+      "y": 747.4773559570312
+    },
+    {
+      "name": "lab-FireVsIce",
+      "text": "Combat Lab \u00b7 FireVsIce \u00b7 near contact",
+      "x": 1340.103515625,
+      "y": 868.0983276367188
+    },
+    {
+      "name": "lab-SupportVsFire",
+      "text": "Combat Lab \u00b7 SupportVsFire \u00b7 near contact",
+      "x": 1340.103515625,
+      "y": 912.3414916992188
+    },
+    {
+      "name": "lab-MobileBlades",
+      "text": "Combat Lab \u00b7 MobileBlades \u00b7 near contact",
+      "x": 1340.103515625,
+      "y": 956.5847778320312
+    },
+    {
+      "name": "city-start-a",
+      "text": "City Foundations 05A",
+      "x": 1340.103515625,
+      "y": 1123.777587890625
+    },
+    {
+      "name": "city-start-b",
+      "text": "City & Combat 05B \u00b7 permanent presets",
+      "x": 1340.103515625,
+      "y": 1168.020751953125
+    },
+    {
+      "name": "city-authored",
+      "text": "Load AUTHORED 05B inspection fixture (not a played match)",
+      "x": 1340.103515625,
+      "y": 1212.263916015625
+    },
+    {
+      "name": "city-load-a",
+      "text": "Load City Foundations 05A",
+      "x": 1340.103515625,
+      "y": 1256.507080078125
+    },
+    {
+      "name": "city-load-b",
+      "text": "Load City & Combat 05B",
+      "x": 1340.103515625,
+      "y": 1300.750244140625
+    },
+    {
+      "name": "persistence-start",
+      "text": "Start Persistence Slice v0.1",
+      "x": 1340.103515625,
+      "y": 1344.99365234375
+    },
+    {
+      "name": "world-start",
+      "text": "Start Connected Mission 01",
+      "x": 1340.103515625,
+      "y": 1389.23681640625
+    },
+    {
+      "name": "world-load",
+      "text": "Load saved Mission 01",
+      "x": 1340.103515625,
+      "y": 1433.47998046875
+    },
+    {
+      "name": "duel-start-west",
+      "text": "Crossroads economy Hotseat \u00b7 West first",
+      "x": 1340.103515625,
+      "y": 1477.72314453125
+    },
+    {
+      "name": "duel-start-east",
+      "text": "Crossroads economy Hotseat \u00b7 East first",
+      "x": 1340.103515625,
+      "y": 1521.96630859375
+    },
+    {
+      "name": "incident-start-west",
+      "text": "Crossroads Incident 04 \u00b7 West first",
+      "x": 1340.103515625,
+      "y": 1566.20947265625
+    },
+    {
+      "name": "incident-start-east",
+      "text": "Crossroads Incident 04 \u00b7 East first",
+      "x": 1340.103515625,
+      "y": 1610.452880859375
+    },
+    {
+      "name": "incident-control",
+      "text": "Incident 04 \u00b7 control (no incidents)",
+      "x": 1340.103515625,
+      "y": 1654.696044921875
+    },
+    {
+      "name": "incident-load",
+      "text": "Load Incident 04",
+      "x": 1340.103515625,
+      "y": 1698.939208984375
+    },
+    {
+      "name": "duel-load",
+      "text": "Load Crossroads Hotseat",
+      "x": 1340.103515625,
+      "y": 1743.182373046875
+    },
+    {
+      "name": "fit-board",
+      "text": "Fit whole board",
+      "x": 1340.103515625,
+      "y": 1861.9404296875
+    },
+    {
+      "name": "focus-unit",
+      "text": "Focus active unit (wheel to zoom)",
+      "x": 1340.103515625,
+      "y": 1906.18359375
+    },
+    {
+      "name": "restart",
+      "text": "Restart Same Seed",
+      "x": 1340.103515625,
+      "y": 1950.4268798828125
+    },
+    {
+      "name": "export-replay",
+      "text": "Export battle + session",
+      "x": 1340.103515625,
+      "y": 2071.0478515625
+    },
+    {
+      "name": "verify-replay",
+      "text": "Load / verify replay file",
+      "x": 1340.103515625,
+      "y": 2115.291015625
+    }
+  ],
+  "units": [
+    {
+      "id": 1,
+      "x": 9,
+      "y": 5,
+      "hp": 19,
+      "armor": 0,
+      "movement": 0,
+      "burn": 0,
+      "barrier": 0,
+      "action": false,
+      "frozen": false,
+      "side": "West",
+      "status": "Active",
+      "persistent": "",
+      "profile": "FireMageTII"
+    },
+    {
+      "id": 2,
+      "x": 12,
+      "y": 11,
+      "hp": 14,
+      "armor": 0,
+      "movement": 0,
+      "burn": 0,
+      "barrier": 0,
+      "action": false,
+      "frozen": false,
+      "side": "West",
+      "status": "Active",
+      "persistent": "",
+      "profile": "FireMageTI"
+    },
+    {
+      "id": 3,
+      "x": 11,
+      "y": 8,
+      "hp": 40,
+      "armor": 16,
+      "movement": 0,
+      "burn": 0,
+      "barrier": 0,
+      "action": false,
+      "frozen": false,
+      "side": "West",
+      "status": "Active",
+      "persistent": "",
+      "profile": "HumanWarriorTI"
+    },
+    {
+      "id": 4,
+      "x": 7,
+      "y": 3,
+      "hp": 16,
+      "armor": 0,
+      "movement": 3,
+      "burn": 0,
+      "barrier": 0,
+      "action": true,
+      "frozen": false,
+      "side": "East",
+      "status": "Active",
+      "persistent": "",
+      "profile": "IceMageTII"
+    },
+    {
+      "id": 5,
+      "x": 12,
+      "y": 8,
+      "hp": 0,
+      "armor": 0,
+      "movement": 0,
+      "burn": 1,
+      "barrier": 0,
+      "action": false,
+      "frozen": false,
+      "side": "East",
+      "status": "Dead",
+      "persistent": "",
+      "profile": "IceMageTI"
+    },
+    {
+      "id": 6,
+      "x": 12,
+      "y": 10,
+      "hp": 28,
+      "armor": 16,
+      "movement": 0,
+      "burn": 1,
+      "barrier": 0,
+      "action": false,
+      "frozen": false,
+      "side": "East",
+      "status": "Active",
+      "persistent": "",
+      "profile": "HumanWarriorTI"
+    }
+  ],
+  "world": {
+    "version": 0,
+    "refresh": 0,
+    "startingSide": 0,
+    "activeSide": 0,
+    "completed": 0,
+    "winner": 0,
+    "battleNumber": 0,
+    "seed": 0,
+    "handoff": false,
+    "economy": false,
+    "waystationFood": 0,
+    "scenario": "",
+    "checksum": "",
+    "owners": [],
+    "events": [],
+    "west": {
+      "node": 0,
+      "tempo": 0,
+      "provisions": 0,
+      "pressure": 0,
+      "gold": 0,
+      "keepFood": 0,
+      "nextRecruit": 0,
+      "pendingProfile": 0,
+      "lastRecruitRefresh": 0,
+      "pendingId": "",
+      "goldExact": "",
+      "foodExact": "",
+      "formation": {
+        "id": "",
+        "side": 0,
+        "commanderless": false,
+        "rosterLocked": false,
+        "members": []
+      }
+    },
+    "east": {
+      "node": 0,
+      "tempo": 0,
+      "provisions": 0,
+      "pressure": 0,
+      "gold": 0,
+      "keepFood": 0,
+      "nextRecruit": 0,
+      "pendingProfile": 0,
+      "lastRecruitRefresh": 0,
+      "pendingId": "",
+      "goldExact": "",
+      "foodExact": "",
+      "formation": {
+        "id": "",
+        "side": 0,
+        "commanderless": false,
+        "rosterLocked": false,
+        "members": []
+      }
+    },
+    "incident": {
+      "enabled": false,
+      "worldPhase": false,
+      "ravaged": false,
+      "cycleEligible": false,
+      "continuityBroken": false,
+      "rewardPaid": false,
+      "phase": 0,
+      "whiteout": 0,
+      "cursor": 0,
+      "contract": 0,
+      "holdCycles": 0,
+      "appliedBattle": 0,
+      "id": "",
+      "claimant": "",
+      "holdReason": "",
+      "actorOrder": [],
+      "raiders": []
+    },
+    "foundations": {
+      "combined": false,
+      "locations": [],
+      "west": {
+        "wood": "",
+        "iron": "",
+        "preset": 0,
+        "active": 0,
+        "started": 0,
+        "paused": false,
+        "queue": [],
+        "research": [],
+        "repairStarted": 0,
+        "trainingStarted": 0,
+        "repairIds": [],
+        "repairs": [],
+        "trainee": ""
+      },
+      "east": {
+        "wood": "",
+        "iron": "",
+        "preset": 0,
+        "active": 0,
+        "started": 0,
+        "paused": false,
+        "queue": [],
+        "research": [],
+        "repairStarted": 0,
+        "trainingStarted": 0,
+        "repairIds": [],
+        "repairs": [],
+        "trainee": ""
+      }
+    }
+  }
+}

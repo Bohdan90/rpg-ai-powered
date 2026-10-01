@@ -1,0 +1,16 @@
+{
+    "name": "RPG.Presentation",
+    "rootNamespace": "RPG.Presentation",
+    "references": [
+        "RPG.Core"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

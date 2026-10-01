@@ -1,0 +1,1 @@
+AUTHORED rare-case initial fixture: joint. No played history claimed. Subsequent commands use ordinary GUI controls.

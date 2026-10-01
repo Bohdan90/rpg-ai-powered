@@ -1,0 +1,24 @@
+{
+  "main_files_unchanged": {
+    "Assets/_Project/Scenes/TacticalGraybox.unity": true,
+    "ProjectSettings/EditorBuildSettings.asset": true,
+    "ProjectSettings/ProjectSettings.asset": true,
+    "Assets/_Project/Core/PersistenceSliceScenario.cs.meta": true,
+    "Assets/_Project/Core/PersistentFormation.cs.meta": true,
+    "Assets/_Project/Tests/PersistenceProgressionTests.cs.meta": true,
+    "Assets/_Project/Tests/PersistenceSliceScenarioTests.cs.meta": true,
+    "Assets/_Project/Tests/PersistentFormationTests.cs.meta": true,
+    "Assets/_Project/Tests/PlayMode/PersistenceSlicePresentationTests.cs.meta": true
+  },
+  "save_files_before": 28,
+  "save_files_after": 28,
+  "main_save_hashes_equal": false,
+  "test_root": "/private/tmp/realm-operations-06/test-preferences",
+  "gui_root": "/private/tmp/realm-operations-06/gui-preferences",
+  "player_root": "/private/tmp/realm-operations-06/player-preferences",
+  "changed_paths": [
+    "Unity/1d314123-600d-4682-904e-160db984c9cd/Insights/ArchivedEvents/Session/session_end_event"
+  ],
+  "gameplay_save_replay_hashes_equal": true,
+  "note": "Only the Unity Insights session_end_event archive differs under the original root; no gameplay save/replay file changed. Engine telemetry was not restored or edited."
+}

@@ -1,0 +1,53 @@
+{
+  "starting_head": "76f60ebcf72fce202f3f40b7f3c7e18f11aa18cd",
+  "unity": "6000.6.2f1",
+  "runs": [
+    {
+      "kind": "reproduction before fix",
+      "xml": "EditMode-20260930-183858.xml",
+      "log": "EditMode-20260930-183858.log.gz",
+      "passed": "9",
+      "failed": "4",
+      "skipped": "0",
+      "start-time": "2026-09-30 22:39:06Z",
+      "end-time": "2026-09-30 22:39:06Z"
+    },
+    {
+      "kind": "focused after fix",
+      "xml": "EditMode-20260930-183937.xml",
+      "log": "EditMode-20260930-183937.log.gz",
+      "passed": "13",
+      "failed": "0",
+      "skipped": "0",
+      "start-time": "2026-09-30 22:39:45Z",
+      "end-time": "2026-09-30 22:39:45Z"
+    },
+    {
+      "kind": "full EditMode",
+      "xml": "EditMode-20260930-184050.xml",
+      "log": "EditMode-20260930-184050.log.gz",
+      "passed": "598",
+      "failed": "0",
+      "skipped": "0",
+      "start-time": "2026-09-30 22:40:56Z",
+      "end-time": "2026-09-30 22:42:17Z"
+    },
+    {
+      "kind": "full PlayMode",
+      "xml": "PlayMode-20260930-184504.xml",
+      "log": "PlayMode-20260930-184504.log.gz",
+      "passed": "79",
+      "failed": "0",
+      "skipped": "0",
+      "start-time": "2026-09-30 22:45:12Z",
+      "end-time": "2026-09-30 22:47:15Z"
+    }
+  ],
+  "source_hashes": "source-sha256.json",
+  "manual": "NOT RUN; automated Core/Presentation checks only",
+  "push": "NOT PERFORMED",
+  "final_full_total": 677,
+  "final_failed": 0,
+  "final_skipped": 0,
+  "delivery": "Feature only; main unchanged at 76f60eb, active user session preserved."
+}
