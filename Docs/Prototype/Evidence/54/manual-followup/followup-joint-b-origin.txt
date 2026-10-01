@@ -1,0 +1,1 @@
+AUTHORED controlled07 initial fixture: joint-b. Subsequent commands are real GUI input; no earned starting history claimed.

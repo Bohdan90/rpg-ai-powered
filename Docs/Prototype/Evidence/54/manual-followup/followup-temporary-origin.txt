@@ -1,0 +1,1 @@
+AUTHORED controlled07 initial fixture: temporary. Subsequent commands are real GUI input; no earned starting history claimed.

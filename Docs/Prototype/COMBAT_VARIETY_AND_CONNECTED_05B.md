@@ -145,3 +145,8 @@ Delivery update: FIRE-TARGETING-02 gameplay7ae088c is now fast-forwarded into `M
 Existing two-click attacks/warrior and Bow approach preserved from actual main20c7f76. Completed the remaining post-spell Movement correction under recorded rules3, plus stale/focus/cancel guards, outlined waypoint and actual heal/Barrier outcome summary. HH self targeting was already canonical and implemented; new Presentation test verifies two-click self heal and one source use. No spell damage/range/kit/economy retune. Rules1/2 hashes and32 actual stored journals remain verified.
 
 Fresh combined07 regression628 EditMode+84 PlayMode=712PASS,0failed/0skipped; exact source/provenance in `Evidence/54/validation-manifest.json`. This is feature-only, not a main delivery. Short INPUT03 GUI/connected smoke NOT RUN due independent runtime input delivery; no repeat of old N/V claimed. See `TACTICAL_INPUT_03.md` and `SEAMLESS_WORLDS_07.md`. NO PUSH.
+
+
+### INPUT03 GUI follow-up with document54
+
+At unchanged game implementation `1d101cf`, controlled real OS-input Fire/Ice/HH, Exhausted/Freeze and pin/cancel probes completed. Connected B joint battle retained Fireball use1 through Escape, aftermath and save/recreate/load. Previous INPUT03 NOT RUN is superseded; no repeat of old N/V, no new spell/economy changes. See `TACTICAL_INPUT_03.md` and `Evidence/54/manual-followup/`. Main remains20c7f76; no merge/push.

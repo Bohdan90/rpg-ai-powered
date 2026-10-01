@@ -274,3 +274,18 @@ Fresh combined full **628 EditMode +84 PlayMode =712 passed;0 failed;0 skipped**
 **Whole document54 remains PARTIAL:** independent Unity rendered the map, but bounded GUI diagnostics found no runtime PointerDown despite AX trusted/Game focused/Play active on both monitor placements. No blind repetition or main takeover. S1 rendering PARTIAL; S2–S5 GUI NOT RUN; S6 PARTIAL (100+100 API-driven actual-editor view measurements, no object growth, unchanged simulation hashes; no cold-entry/input-latency claim). INPUT03 short GUI/connected smoke NOT RUN. Exact developer remainder in `Evidence/54/MANUAL_REMAINDER.md`; do not declare GUI PASS from automated tests/authored inspection.
 
 Launch separate editor via `Tools/launch-seamless-worlds-07.sh`, then **Gate C/Seamless Worlds07/West starts** (menu has spaces: `Seamless Worlds 07`). Own GUI closed normally after diagnosis; main left running. Nine protected main files and22 saved files remain byte-identical. Isolated product/preferences/save roots; copied scene build entry and six historical metadata counterparts remain uncommitted. Coordinator review/manual completion/player evaluation remain pending; no next package.
+
+
+## 2026-09-30 — document54 controlled GUI completion
+
+Follow-up starts `feature/seamless-worlds-07@1d101cf436fd66546550584577ea145fbf938136`; gameplay/source/config remain byte-identical. Own follow-up is evidence/docs only. Main `My project/develop` remains20c7f76, no merge/restart/push.
+
+Previous manual blocker superseded: real OS-input **S1–S6 completed** in independent Unity. Normal two-world Hotseat match:95 tactical commands,5 actual deaths, Commanderless surviving East army, R14 EastPressure24:West13. Both sides used separate A/B armies; short East-first mirror done. Controlled joint B battle:3 versus6 lawful participants; A force excluded; actual Fireball→Escape, per-army aftermath and use1 retained. Portal round trip, paid blocked privacy, zero/closed invalid, offscreen B02-only observations/handoff/history, fullR4/R5 Whiteout→R6closure→R7stranded continuation and7 exact save/recreate/load pairs passed.
+
+INPUT03 short controlled Fire/Ice/HH GUI: pin/cast, full/partial remaining Movement, Exhausted movement, Frozen refusal, self-heal10→24/use1, hover-retained route/Escape cancel and connected return/save. Focus-loss/stale-state specifics retain automated coverage. Read-only diagnostic interference (focus/domain reload, one invalid stable hash during contact) corrected only in temporary tools and affected fixture rerun; no game fix. No two-monitor incompatibility claimed.
+
+Fresh post-GUI **628 EditMode +84 PlayMode =712 PASS;0failed;0skipped**, after removing observer. Same final-source fingerprint; earlier focused63+17 retain provenance. Seven GUI scenario replay summaries match;32 retained legacy journals rechecked by suite. `SEAMLESS_WORLDS_07.md`, `TACTICAL_INPUT_03.md`, `Evidence/54/manual-followup/manual-summary.json` and manifest hold screenshots, saves, replays, measurements and limits.
+
+20 actual OS pan/wheel sequences each for one/two known worlds: GameObjects882→882, unchanged simulation hashes; sampled frame medians~1.00/1.10ms, maxima~6.61/6.33ms, no measured display-FPS guarantee. Fresh-view construction snapshot~25ms in warm editor (coarse100ms observer). Long holding eventually exhausted supplies; small labels require zoom. No balance retune or playerKEEP inferred.
+
+Nine protected main files and22 baseline save files remain byte-identical. Separate roots retained, independent GUI closed normally, main left running. Seven pre-existing feature status entries retained. Coordinator review, main delivery and integrated player evaluation are next; no further package begun. NO PUSH.

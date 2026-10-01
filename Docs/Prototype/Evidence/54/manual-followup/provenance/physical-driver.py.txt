@@ -1,0 +1,210 @@
+import json,time,pathlib,subprocess,sys
+root=pathlib.Path('/private/tmp/seamless-worlds-07')
+def state():
+ for _ in range(30):
+  try:
+   if time.time()-(root/'state.json').stat().st_mtime>3:raise ValueError('Stale observer')
+   return json.loads((root/'state.json').read_text())
+  except (ValueError,FileNotFoundError):time.sleep(.1)
+ raise RuntimeError('No state')
+def command(c):
+ (root/'command.txt').write_text(c);time.sleep(.35)
+def mouse(*args):
+ subprocess.run([str(root/'mouse'),*map(str,args)],check=True,stdout=subprocess.DEVNULL);time.sleep(.2)
+ with (root/'results'/'followup-os-input.jsonl').open('a') as f:f.write(json.dumps({'time':time.time(),'args':args})+'\n')
+def point(x,y):
+ s=state();scale=s['gw']/s['rw'];mouse(s['gx']+scale*x,s['gy']+45+scale*y)
+def button(name):
+ def pick(s):return next(b for b in s['buttons'] if b['name']==name) if not name.startswith('text:') else next(b for b in s['buttons'] if b['text'].startswith(name[5:]))
+ s=state();b=pick(s)
+ if not (12<b['y']<s['rh']-12):command('scroll:'+name);s=state();b=pick(s)
+ assert 0<b['y']<s['rh'],('Button outside view',name,b)
+ point(b['x'],b['y'])
+def field(label,choice):
+ command('scroll:label:'+label);f=next(f for f in state()['fields'] if f['label']==label)
+ target=f['choices'].index(choice) if isinstance(choice,str) else choice
+ if f['index']==target:return
+ point(f['x']+90,f['y'])
+ mouse('key','home')
+ for _ in range(target):mouse('key','down')
+ mouse('key','return');time.sleep(.2)
+ assert next(f for f in state()['fields'] if f['label']==label)['index']==target,(label,target,state()['fields'])
+def snap(name):
+ (root/'results'/f'{name}.json').write_text(json.dumps(state(),indent=2))
+ wid=(root/'window-id.txt').read_text().strip()
+ subprocess.run(['/usr/sbin/screencapture','-x','-l',wid,str(root/'results'/f'{name}.png')],check=True)
+def target(x,y):
+ s=state()
+ if (s['tx'],s['ty'])!=(x,y):command(f'cell:{x},{y}');s=state()
+ point(s['x'],s['y'])
+def cast(spell,x,y,ff=False):
+ field('Ability',spell);target(x,y)
+ if ff:
+  t=next(t for t in state()['toggles'] if t['label']=='Explicitly confirm allied target')
+  if not t['value']:point(t['x'],t['y'])
+ snap('preview-'+spell);button('confirm-command')
+
+def hover(x,y):
+ command(f'cell:{x},{y}');s=state();scale=s['gw']/s['rw'];mouse(s['gx']+scale*s['x'],s['gy']+45+scale*s['y'],'hover')
+def active(id):
+ for _ in range(20):
+  if state()['active']==id:return
+  button('end-activation')
+ raise AssertionError('actor not reached')
+def end():
+ before=state()['world']['completed']
+ button('realm-end')
+ if state()['world'] and state()['world']['completed']==before and not state()['world']['handoff']:button('realm-end')
+ if state()['world']['handoff']:button('realm-continue')
+def cycle():end();end()
+def move(n):
+ button('realm-node-'+str(n));button('realm-move');q=state()['world'];a=next(a for a in q['realm']['armies'] if a['id']==q['realm']['west' if q['activeSide']==0 else 'east']['selected']);assert a['node']==n,('move failed',a['node'],n,state()['hud'][-600:])
+def choose(label,choice):field(label,choice)
+def toggle_id(id):
+ command('scroll:toggle:'+id)
+ t=next(t for t in state()['toggles'] if t['label'].startswith(id+' ·'))
+ point(t['x'],t['y'])
+def army(side,slot):return f'realm06-{side}-army-{slot}'
+def entry(first='West'):
+ command('recreate');time.sleep(.8);button('realm-start-'+first.lower())
+def physical_battle(mode='retreat-east',limit=700):
+ assert state()['battle'],'No active connected battle'
+ for i in range(limit):
+  q=state()
+  if q['ended']:
+   command('export');return
+  u=next(u for u in q['units'] if u['id']==q['active'])
+  if mode=='retreat-east':
+   if u['side']=='West':button('end-activation');continue
+   command('escape')
+  elif mode=='joint':
+   lead=[v for v in q['units'] if v['persistent'].startswith('realm06-West-army-1-')]
+   gone=all(v['status']=='Escaped' for v in lead)
+   if not ((gone and u['side']=='East') or (not gone and u in lead)):button('end-activation');continue
+   command('escape')
+  else:command('plan')
+  q=state();plan=q['plan']
+  if plan=='EndActivationCommand':button('end-activation')
+  elif plan=='DefendCommand':button('defend')
+  elif plan=='MoveCommand':button('primary-attack');target(q['tx'],q['ty']);button('confirm-command')
+  elif plan=='BasicAttackCommand':button('staff-attack') if u['profile'].endswith('MageTI') or u['profile'].endswith('MageTII') else button('primary-attack');target(q['tx'],q['ty']);button('confirm-command')
+  elif plan=='CastCommand':
+   button('spell-'+q['spell']);target(q['tx'],q['ty'])
+   if q['ff']:
+    t=next(t for t in state()['toggles'] if t['label']=='Explicitly confirm allied target')
+    if not t['value']:point(t['x'],t['y'])
+   button('confirm-command')
+  else:raise RuntimeError(plan)
+  if i%20==0:print('physical commands',i,state()['records'],flush=True)
+ raise RuntimeError('bounded battle did not end')
+
+def move07(address):
+ button('worlds-fit')
+ button('world-node-'+address);button('realm-move')
+ q=state()['world'];a=next(a for a in q['realm']['armies'] if a['id']==q['realm']['west' if q['activeSide']==0 else 'east']['selected'])
+ print('moved',a['world'],a['node'],a['tempo'],flush=True)
+def traverse():
+ before=state()['world'];button('worlds-traverse');assert state()['world']['checksum']==before['checksum'];button('worlds-traverse')
+def save_reload07(label):
+ button('realm-save');before=state()['world'];snap(label+'-saved')
+ path=pathlib.Path(state()['persistentPath'])/'SeamlessWorlds07'/'manual.json'
+ (root/'results'/f'{label}-save.json').write_text(path.read_text())
+ command('recreate');time.sleep(.7);command('start07');button('realm-load');after=state()['world']
+ assert after==before,('load mismatch',before['checksum'],after['checksum']);snap(label+'-loaded')
+def finish07():
+ button('world-return');snap('followup-b-aftermath');save_reload07('followup-b-aftermath')
+ q=state()['world'];print('aftermath',[(a['id'],a['world'],a['node'],[(u['hp'],u['armor'],u['status']) for u in a['units']]) for a in q['realm']['armies']],flush=True)
+ end();end();field('Selected army','realm06-East-army-1');move07('B04');snap('followup-beacon');button('realm-save')
+ for i in range(60):
+  q=state()['world']
+  if q['winner']>=0:snap('followup-normal-victory');save_reload07('followup-normal-victory');print('LEGAL VICTORY',q['refresh'],q['winner'],flush=True);return
+  end()
+  if i%4==0:print('sides advanced',i,'R',state()['world']['refresh'],flush=True)
+ raise AssertionError('No legal match ending within bounded turns')
+def perf07():
+ button('worlds-fit');before=state()['simHash'];samples=[]
+ for i in range(20):
+  q=state();x=q['gx']+q['gw']*.38;y=q['gy']+300;t=time.perf_counter()
+  mouse('drag',x,y,x+(90 if i%2==0 else -90),y)
+  mouse('wheel',x,y,1 if i%2==0 else -1)
+  q=state();samples.append({k:q[k] for k in ['cpu','gpu','frameMs','memory','objects','simHash','sw','sh']});samples[-1]['inputSequenceSeconds']=time.perf_counter()-t
+  assert q['simHash']==before
+ (root/'results'/'followup-os-camera-performance.json').write_text(json.dumps(samples,indent=2));snap('followup-os-pan-zoom');button('worlds-fit')
+def input03():
+ for name in (['exhausted-input','healer'] if len(sys.argv)>2 and sys.argv[2]=='specials' else ['fire-input','ice-input','exhausted-input','healer']):
+  command('recreate');time.sleep(.5);command('mode:followup-'+name);command('fixture:'+name);active(1);before=state();snap('followup-'+name+'-start')
+  if name=='ice-input':target(8,7);target(8,7)
+  if name=='healer':button('spell-CloseHeal');cell=(8,8)
+  elif name=='exhausted-input':button('spell-FireArmor');cell=(8,8)
+  else:cell=(10,9)
+  h=state()['hash'];target(*cell);assert state()['hash']==h;snap('followup-'+name+'-pinned');button('cancel-preview');assert state()['hash']==h
+  if name in ['healer','exhausted-input']:button('spell-CloseHeal' if name=='healer' else 'spell-FireArmor')
+  target(*cell);target(*cell);after=state();u=next(u for u in after['units'] if u['id']==1);assert not u['action'];assert u['movement']==(3 if name=='ice-input' else 4);snap('followup-'+name+'-cast')
+  if name=='exhausted-input':assert u['exhausted'] and u['barrier']==6
+  if name=='healer':assert u['hp']==24
+  button('cancel-preview');cell=(8,6) if name=='ice-input' else (8,7);target(*cell);target(*cell);u=next(u for u in state()['units'] if u['id']==1);assert (u['x'],u['y'])==cell;assert u['movement']==(2 if name=='ice-input' else 3);snap('followup-'+name+'-move');command('export')
+ command('recreate');time.sleep(.5);command('mode:followup-freeze-input');button('lab-FireVsIce');active(4);button('spell-Freeze');target(9,6);target(9,6);snap('followup-freeze-applied');button('end-activation');snap('followup-freeze-next');command('export')
+def stage07(stage):
+ if stage=='normal1east':
+  snap('followup-west-a-task');end()
+  move07('A25');traverse();field('Selected army','realm06-East-army-2');move07('A06');snap('followup-east-a-task');field('Selected army','realm06-East-army-1');end()
+ elif stage=='normal1':
+  before=state()['hash'];button('worlds-traverse');assert state()['hash']==before;snap('followup-insufficient')
+  field('Selected army','realm06-West-army-2');move07('A08');snap('followup-west-a-task');end()
+  move07('A25');traverse();field('Selected army','realm06-East-army-2');move07('A06');snap('followup-east-a-task');field('Selected army','realm06-East-army-1');end()
+ elif stage=='normal2':
+  field('Selected army','realm06-West-army-1');traverse();button('worlds-fit');move07('B03');snap('followup-west-b-approach');end()
+  button('worlds-fit');move07('B06');button('world-node-B03');snap('followup-b-encounter');button('realm-attack');snap('followup-b-contact')
+ elif stage=='joint':
+  command('mode:followup-joint-b');command('fixture:joint-b');end();button('worlds-fit');button('world-node-B03');snap('followup-joint-preview');button('realm-attack');snap('followup-joint-contact');button('realm-fight');snap('followup-joint-deployed')
+ elif stage=='blocked':
+  command('mode:followup-blocked');command('fixture:blocked');snap('followup-blocked-start');before=state()['world'];traverse();after=state()['world'];a=after['realm']['armies'][0];assert a['node']==24 and a['world']==0 and a['tempo']==before['realm']['armies'][0]['tempo']-20;assert not any(b['name'].startswith('world-node-B') for b in state()['buttons']);snap('followup-blocked-paid');save_reload07('followup-blocked')
+ elif stage=='temporary':
+  command('mode:followup-temporary');command('fixture:temporary');snap('followup-temporary-r1')
+  for i in range(3):cycle()
+  assert state()['world']['refresh']==4;snap('followup-whiteout-two');save_reload07('followup-whiteout-two');cycle();assert state()['world']['refresh']==5;snap('followup-whiteout-one');cycle();assert state()['world']['refresh']==6;snap('followup-closed');before=state()['hash'];button('worlds-traverse');assert state()['hash']==before;move07('B02');save_reload07('followup-stranded');cycle();snap('followup-stranded-continued')
+ elif stage=='opaque':
+  command('mode:followup-opaque');command('opaque07');button('world-focus-Frontier');snap('followup-opaque-start-a-focused');button('worlds-fit');button('world-node-B02');button('world-focus-Frontier');button('realm-move');button('worlds-fit');button('world-node-B05');button('world-focus-Frontier');button('realm-move');snap('followup-opaque-east-end');button('realm-end');button('realm-end');snap('followup-private-handoff');button('realm-continue');button('world-focus-Frontier');snap('followup-observer-summary');before=state()['simHash'];obs=[b for b in state()['buttons'] if b['name'].startswith('observation-') and b['name'].split('-')[-1].isdigit()];print('observations',[(b['name'],b['text']) for b in obs],flush=True)
+  for b in obs[:2]:button(b['name']);button('observation-pause');button('observation-fast');snap('followup-'+b['name']);button('observation-skip')
+  assert state()['simHash']==before;save_reload07('followup-observations');end();snap('followup-observation-continued')
+ elif stage=='mirror':
+  command('mode:followup-mirror');command('mirror07');snap('followup-mirror-unknown-b');move07('A25');traverse();snap('followup-mirror-entry');end();move07('A24');traverse();end();snap('followup-mirror-r2')
+ elif stage=='s1view':
+  before=state()['hash'];button('worlds-fit');button('worlds-counterpart');button('worlds-previous');assert state()['hash']==before
+ else:raise ValueError(stage)
+if __name__=='__main__':
+ action=sys.argv[1]
+ if action=='entry07':
+  command('recreate');deadline=time.time()+6
+  while (state().get('world') or {}).get('version',0)>0:
+   assert time.time()<deadline,'No fresh empty presentation';time.sleep(.05)
+  t=time.perf_counter();wall=time.time();(root/'command.txt').write_text('start07')
+  while (root/'command.txt').exists() or (root/'state.json').stat().st_mtime<wall or (state().get('world') or {}).get('version',0)==0:time.sleep(.02)
+  elapsed=time.perf_counter()-t;(root/'results'/'followup-first-view-latency.json').write_text(json.dumps({'seconds':elapsed,'method':'public menu initializer + fresh completed observer snapshot after command consumption; 100ms sampler, not display input-to-photon','origin':'new presentation scene verified without world, same warm editor'}));snap('followup-fresh-entry')
+ elif action=='button':button(sys.argv[2])
+ elif action=='target':target(int(sys.argv[2]),int(sys.argv[3]))
+ elif action=='field':field(sys.argv[2],sys.argv[3])
+ elif action=='snap':snap(sys.argv[2])
+ elif action=='command':command(sys.argv[2])
+ elif action=='move07':move07(sys.argv[2])
+ elif action=='traverse':traverse()
+ elif action=='select':field('Selected army',sys.argv[2])
+ elif action=='stage07':stage07(sys.argv[2])
+ elif action=='freezecontinue':
+  for i in range(10):
+   if state()['round']>=2:break
+   button('end-activation')
+  snap('followup-freeze-skipped');command('export');print('round',state()['round'],'active',state()['active'],'events',state()['hud'][-1500:])
+ elif action=='pinmove':
+  u=next(u for u in state()['units'] if u['id']==state()['active']);cell=(u['x'],u['y']+1);h=state()['hash'];target(*cell);snap('followup-move-pinned');hover(u['x']+1,u['y']+1);assert state()['hash']==h;snap('followup-move-pin-hover');mouse('key','escape');assert state()['hash']==h;snap('followup-move-cancelled')
+ elif action=='jointcast':
+  active(7);button('spell-Fireball');target(8,7);target(8,7);snap('followup-joint-fireball-used');button('primary-attack');target(0,7);target(0,7);snap('followup-joint-cast-escape')
+ elif action=='input03':input03()
+ elif action=='perf07':perf07()
+ elif action=='finish07':finish07()
+ elif action=='save07':save_reload07(sys.argv[2])
+ elif action=='end':end()
+ elif action=='cycle':cycle()
+ elif action=='battle':physical_battle(sys.argv[2] if len(sys.argv)>2 else 'fight',int(sys.argv[3]) if len(sys.argv)>3 else 700)
+ else:raise ValueError(action)
+ print(json.dumps({k:state().get(k) for k in ['hash','active','records','contact','battle','ended']}))
