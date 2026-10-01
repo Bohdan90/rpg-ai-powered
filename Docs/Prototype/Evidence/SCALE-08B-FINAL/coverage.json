@@ -1,0 +1,43 @@
+{
+  "queue/no-autostart/no-auto-end/explicit/many-legs/budget/retention/opponent-turn": [
+    "ExplicitTravelTests.QueueEndTurnAndOwnHandoffAreStationaryThenExplicitContinueSpendsManyLegs",
+    "ExplicitTravelTests.UnusedTempoIsNotSpentByEitherHandoff"
+  ],
+  "junction": [
+    "ExplicitTravelTests.ContinueCrossesMacroJunctionAndKeepsGoing"
+  ],
+  "cancel/override/insufficient/no-borrow": [
+    "ExplicitTravelTests.CancelOverrideAndInsufficientTempoDoNotMoveOrBorrow",
+    "TravelScale08Tests.CancelOverrideAndExactArrivalUseRealSegments"
+  ],
+  "hostile/observation/invalid/blocker/portal": [
+    "ExplicitTravelTests.HiddenHostileInterruptsWithoutHiddenPreviewReroute",
+    "ExplicitTravelTests.InvalidRouteAndChangedFormationArePureRefusals",
+    "ExplicitTravelTests.PortalArrivalPausesUntilExplicitTraverse"
+  ],
+  "position/save/load/hash/continuation/no-duplicate": [
+    "ExplicitTravelTests.IntermediateSaveLoadAndSameExplicitCommandsAreDeterministic",
+    "TravelScale08Tests.IntermediatePositionAndOrderRoundTripResumeWithoutOpponentMovementOrDuplicateEvents"
+  ],
+  "road-battle/fog/aftermath/tactical-replay": [
+    "TravelScale08Tests.IntermediateContactObservationsAndBattleUseExistingBridge"
+  ],
+  "scale/alternatives/connectivity/Initiative": [
+    "TravelScale08Tests.ExpansionPreservesMacroCyclesAndHasStableIdsAndDistanceCosts",
+    "TravelScale08Tests.DiagnosticsDistinguishMacroAndTravelGraphs",
+    "TravelScale08Tests.OrdinaryDepthAndValleyRatioAreMeasuredOnShortestLandRoutes",
+    "TravelScale08Tests.NormalSuppliedThenHungryJourneyMeasuresActualActivations",
+    "ExplicitTravelTests.ValleyNormalJourneyDepthAndMainRatio",
+    "TravelScale08Tests.AuthoredInitiative",
+    "TravelScale08Tests.MixedActivationOrderingAndLegacyReplayProfiles"
+  ],
+  "presentation": [
+    "StrategicMapUxPresentationTests.ExplicitContinueButtonForecastAndTurnBoundariesMatchCore",
+    "StrategicMapUxPresentationTests.ProductionViewHidesTechnicalAnchorsShowsRetainedJourneyAndRoundTrips",
+    "StrategicMapUxPresentationTests.PortalPrimaryActionIsContextualAndRequiresSeparateConfirmation"
+  ],
+  "legacy": [
+    "StrategicJourneyTests:22 rule2 tests explicitly retained",
+    "TravelScale08Tests.Legacy08SaveRetainsCoarseTopology"
+  ]
+}

@@ -44,7 +44,7 @@ namespace RPG.Core
         {
             var w=new CrossroadsScenario(first,seed,realm:true,westPreset:CombatPreset.Fire,eastPreset:CombatPreset.Ice);
             w.Seamless=new SeamlessWorlds(w,false,production:true,dense:true);w.Seamless.Observe();
-            w.Seamless.SetSideMessage(first,"PRODUCTION ROADS 08B · real road positions · retained destinations resume next own activation. Portals require explicit traversal.");return w;
+            w.Seamless.SetSideMessage(first,"PRODUCTION ROADS 08B · real road positions · queue destination, then explicitly Continue Travel; turns do not auto-move. Portals require explicit traversal.");return w;
         }
     }
 }

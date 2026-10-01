@@ -36,10 +36,10 @@ namespace RPG.Core.Tests
         {
             var w=TravelScale08.Create();var f=w.West;f.Tempo=35;
             Assert.That(w.Seamless.SetDestination(Side.West,new WorldAddress(WorldId.Frontier,6)),Is.True);
-            Assert.That(TravelScale08.IsTravel(f.Node),Is.True);Assert.That(f.Tempo,Is.EqualTo(5));
+            Assert.That(f.Node,Is.EqualTo(2));Assert.That(w.Seamless.ContinueTravel(Side.West),Is.True);Assert.That(TravelScale08.IsTravel(f.Node),Is.True);Assert.That(f.Tempo,Is.EqualTo(5));
             var save=w.CaptureSave();Assert.That(save.version,Is.EqualTo(8));var b=save.Restore();Assert.That(b.West.Node,Is.EqualTo(f.Node));Assert.That(b.CaptureSave().checksum,Is.EqualTo(save.checksum));
             int at=f.Node;w.EndActivation(Side.West);w.ContinueHandoff(Side.East);Assert.That(f.Node,Is.EqualTo(at));Assert.That(f.Tempo,Is.EqualTo(5));w.EndActivation(Side.East);w.ContinueHandoff(Side.West);Cycle(b);
-            Assert.That(b.CaptureSave().checksum,Is.EqualTo(w.CaptureSave().checksum));Assert.That(f.Node,Is.Not.EqualTo(at));
+            Assert.That(b.CaptureSave().checksum,Is.EqualTo(w.CaptureSave().checksum));Assert.That(f.Node,Is.EqualTo(at));Assert.That(w.Seamless.ContinueTravel(Side.West),Is.True);Assert.That(b.Seamless.ContinueTravel(Side.West),Is.True);Assert.That(f.Node,Is.Not.EqualTo(at));Assert.That(b.CaptureSave().checksum,Is.EqualTo(w.CaptureSave().checksum));
             Assert.That(w.Seamless.Knowledge(Side.West).At(f.Address),Is.EqualTo(KnowledgeLevel.CurrentlyObserved));
             string hash=w.CaptureSave().checksum;Assert.That(w.Seamless.SetDestination(Side.East,new WorldAddress(WorldId.Frontier,6)),Is.False);Assert.That(w.CaptureSave().checksum,Is.EqualTo(hash));
         }
@@ -47,7 +47,7 @@ namespace RPG.Core.Tests
         {
             var w=TravelScale08.Create();w.West.Tempo=0;var s=w.Seamless;string id=w.West.Formation.FormationId;
             s.SetDestination(Side.West,new WorldAddress(WorldId.Frontier,6));s.SetDestination(Side.West,new WorldAddress(WorldId.Frontier,8));Assert.That(s.Journey(id).destination,Is.EqualTo(8));s.CancelDestination(Side.West,id);Cycle(w);Assert.That(w.West.Node,Is.EqualTo(2));
-            int target=w.Graph.Neighbors(w.West.Node).First();w.West.Tempo=10;Assert.That(s.SetDestination(Side.West,new WorldAddress(WorldId.Frontier,target)),Is.True);Assert.That(w.West.Node,Is.EqualTo(target));Assert.That(w.West.Tempo,Is.Zero);Assert.That(s.Journey(id),Is.Null);
+            int target=w.Graph.Neighbors(w.West.Node).First();w.West.Tempo=10;Assert.That(s.SetDestination(Side.West,new WorldAddress(WorldId.Frontier,target)),Is.True);Assert.That(s.ContinueTravel(Side.West),Is.True);Assert.That(w.West.Node,Is.EqualTo(target));Assert.That(w.West.Tempo,Is.Zero);Assert.That(s.Journey(id),Is.Null);
         }
         [Test] public void PortalRemainsExplicitAndDenseValleyIsSeparate()
         {
@@ -71,7 +71,8 @@ namespace RPG.Core.Tests
         {
             var w=TravelScale08.Create();int dest=25;int activations=1;
             Assert.That(w.Seamless.SetDestination(Side.West,new WorldAddress(WorldId.Frontier,dest)),Is.True);
-            while(w.West.Node!=dest&&activations<20){Cycle(w);activations++;var j=w.Seamless.Journey(w.West.Formation.FormationId);if(w.West.Node!=dest&&j?.paused!=""&&j!=null)Assert.Fail(j.paused);}
+            Assert.That(w.Seamless.ContinueTravel(Side.West),Is.True);
+            while(w.West.Node!=dest&&activations<20){Cycle(w);activations++;Assert.That(w.Seamless.ContinueTravel(Side.West),Is.True);var j=w.Seamless.Journey(w.West.Formation.FormationId);if(w.West.Node!=dest&&j?.paused!=""&&j!=null)Assert.Fail(j.paused);}
             TestContext.WriteLine("Normal West start A2 to A25, activations="+activations+" finalTempo="+w.West.Tempo+" provisions="+w.West.RealmProvisions);
             Assert.That(w.West.Node,Is.EqualTo(dest));Assert.That(activations,Is.InRange(8,12));
         }
@@ -79,7 +80,7 @@ namespace RPG.Core.Tests
         {
             var w=TravelScale08.Create();w.West.Node=24;w.West.Tempo=0;w.Seamless.Observe();int target=w.Graph.Neighbors(24).First();
             Assert.That(w.Seamless.SetDestination(Side.West,new WorldAddress(WorldId.Frontier,target)),Is.True);Cycle(w);
-            Assert.That(w.West.Node,Is.EqualTo(target));Assert.That(w.West.WorldId,Is.EqualTo(WorldId.Frontier));Assert.That(w.Seamless.Journey(w.West.Formation.FormationId),Is.Null);
+            Assert.That(w.West.Node,Is.EqualTo(24));Assert.That(w.Seamless.ContinueTravel(Side.West),Is.True);Assert.That(w.West.Node,Is.EqualTo(target));Assert.That(w.West.WorldId,Is.EqualTo(WorldId.Frontier));Assert.That(w.Seamless.Journey(w.West.Formation.FormationId),Is.Null);
         }
         [Test] public void Legacy08SaveRetainsCoarseTopology()
         {var old=ProductionRoads.Create();var save=old.CaptureSave();var restored=save.Restore();Assert.That(save.version,Is.EqualTo(7));Assert.That(restored.Graph.Nodes.Count,Is.EqualTo(60));Assert.That(restored.Seamless.DenseTravel,Is.False);Assert.That(restored.CaptureSave().checksum,Is.EqualTo(save.checksum));}
