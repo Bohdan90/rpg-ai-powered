@@ -1,0 +1,34 @@
+{
+  "completionReport": "1-eJC1Sdh09PNIsSWzbxuLXWIkRdilG-F",
+  "archiveManifest": "14zH5KNjHcePnQAvWi3v6JgFDr4XEACUM",
+  "files": [
+    {
+      "staged": "rig.zip",
+      "driveId": "1Zc0tVVl9COoE3jiWcryERyFnG_T2Itvx",
+      "bytes": 29695336,
+      "sha256": "d2fc06ea27de88268adc6c9ed0c8c2fc56da1ca0c712223ec51e9bd998365da6"
+    },
+    {
+      "staged": "remesh.glb",
+      "driveId": "1nwrGA_cqMH0d0kbHP9MITxrSrg4RS2c2",
+      "bytes": 25544744,
+      "sha256": "29c23894bd3780567cabba0dd5efb57088311a9b4883c5142bc5f6cf678171ac"
+    },
+    {
+      "staged": "textures.zip",
+      "driveId": "1f8yEH0aUAvawoLn1uyXsAnWWQzdlW6J6",
+      "bytes": 32525381,
+      "sha256": "11547b10ad83e1007be4b52e42e310c64b75ca87475d1bd79a4d4374e9f4379b"
+    },
+    {
+      "staged": "animations.zip",
+      "driveId": "1jikYbrZmeB4TCO3RL7Af5yEuRUPxjW-L",
+      "bytes": 39691553,
+      "sha256": "db4a1cdb98fde9675ea2a377995880d556650682838867fbb63c14a1703eea5b"
+    }
+  ],
+  "providerCalls": 0,
+  "creditsSpent": 0,
+  "rawFilesInGit": false,
+  "animationInspectionArchiveNotDownloaded": "Existing factual report sufficient; actual Unity playback checked independently"
+}
