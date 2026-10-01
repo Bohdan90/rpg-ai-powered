@@ -1,0 +1,23 @@
+#if UNITY_EDITOR
+using System.Collections;
+using NUnit.Framework;
+using UnityEngine;
+using UnityEngine.TestTools;
+using UnityEngine.SceneManagement;
+using UnityEditor.SceneManagement;
+namespace RPG.VisualTrial.Tests {
+public class HwIntegrationSceneSmoke {
+[UnityTest] public IEnumerator MergedFixtureLoadsAndCreatesAcceptedCharacter() {
+var op=EditorSceneManager.LoadSceneAsyncInPlayMode("Assets/_Project/VisualTrials/HW_TI/Generated/HW_TI_VisualLab.unity",new LoadSceneParameters(LoadSceneMode.Additive));
+yield return op; yield return null;
+var lab=Object.FindAnyObjectByType<HwVisualLab>();
+Assert.That(lab,Is.Not.Null);Assert.That(lab.Character,Is.Not.Null);Assert.That(lab.Corrected,Is.Not.Null);Assert.That(lab.ProviderGloss,Is.Not.Null);
+Assert.That(lab.Units.Count,Is.EqualTo(1));
+var unit=lab.Units[0];var animator=unit.GetComponent<Animator>();
+Assert.That(animator.avatar.isValid && animator.avatar.isHuman,Is.True);
+Assert.That(unit.GetComponent<HwMeshVariants>().Body.sharedMesh.triangles.Length/3,Is.EqualTo(102053));
+Assert.That(Object.FindAnyObjectByType<Camera>(),Is.Not.Null);
+yield return SceneManager.UnloadSceneAsync(lab.gameObject.scene);
+}
+}}
+#endif

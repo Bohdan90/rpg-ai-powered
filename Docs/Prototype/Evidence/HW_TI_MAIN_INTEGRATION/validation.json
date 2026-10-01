@@ -1,0 +1,36 @@
+{
+  "feature": "c75d3f03fd7dd3dabacca40f86a97834afcb5ee1",
+  "starting_develop": "c35fb00c1406fffe8fe70b08751230a17716a29f",
+  "merge": "ae64deb1ed108d599172d4a0cb5dafe2689ec753",
+  "conflicts": false,
+  "tracked_implementation_identical_to_feature": true,
+  "fresh_tests": [
+    {
+      "scope": "EditMode",
+      "total": "11",
+      "passed": "11",
+      "failed": "0",
+      "skipped": "0"
+    },
+    {
+      "scope": "PlayMode",
+      "total": "2",
+      "passed": "2",
+      "failed": "0",
+      "skipped": "0"
+    }
+  ],
+  "protected": {
+    "protected": {
+      "count": 9,
+      "unchanged": true
+    },
+    "saves": {
+      "count": 22,
+      "unchanged": true
+    }
+  },
+  "full_regression": "Not rerun: feature c75d3f0 has 719 EditMode + 95 PlayMode PASS; see HW_TI_SHIELD_HEIGHT/validation.json",
+  "temporary_scene_smoke": "Archived here; executed then removed from Assets. No runtime diff.",
+  "configuration": "Separate CFFIXED_USER_HOME. Package import removed SENTIS_ANALYTICS_ENABLED locally; original user settings restored byte-for-byte after tests."
+}

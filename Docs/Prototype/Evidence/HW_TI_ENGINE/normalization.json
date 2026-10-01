@@ -1,0 +1,111 @@
+{
+  "blender": "5.2.2 LTS",
+  "manualArtRepairs": 0,
+  "sourceHashes": {
+    "rig/rigged.glb": "a6cf836cb751294f3027427a711bde796a6cfd14856f5be2124233bd908d18f9",
+    "animations/idle.glb": "949754e47576226b7939bc5f69f3c1387120e525bfa01a76578bdd690768c7e6",
+    "rig/walking.glb": "6eb603acb19610f44e7fb7b235813f1946e29919fab3c45aa5f9cbcbdb7f2b4c",
+    "animations/attack.glb": "e66cd56654d7de28619df8ab59d1041455498616c8752bd55c2f0f09ea28e06a",
+    "animations/hit.glb": "b7511554820099155e6d9c5752f91481d824df1d7ba9ce44157adf2fd94a958e",
+    "animations/death.glb": "8902bf26acaa37a6f006aa55a60d6a31794261b3486e15300fdab09737c3a041"
+  },
+  "lods": [
+    {
+      "name": "LOD0",
+      "vertices": 125937,
+      "triangles": 102053,
+      "unweighted": 0,
+      "materials": 1
+    },
+    {
+      "name": "LOD1",
+      "vertices": 85023,
+      "triangles": 50000,
+      "unweighted": 0,
+      "materials": 0
+    },
+    {
+      "name": "LOD2",
+      "vertices": 61045,
+      "triangles": 25000,
+      "unweighted": 0,
+      "materials": 0
+    }
+  ],
+  "clips": [
+    {
+      "name": "Idle",
+      "frameStart": 0,
+      "frameEnd": 97,
+      "fps": 24,
+      "seconds": 4.041666666666667,
+      "skeletonOnly": true
+    },
+    {
+      "name": "Walk",
+      "frameStart": 0,
+      "frameEnd": 26,
+      "fps": 24,
+      "seconds": 1.0833333333333333,
+      "skeletonOnly": true
+    },
+    {
+      "name": "Attack",
+      "frameStart": 0,
+      "frameEnd": 37,
+      "fps": 24,
+      "seconds": 1.5416666666666667,
+      "skeletonOnly": true
+    },
+    {
+      "name": "Hit",
+      "frameStart": 0,
+      "frameEnd": 40,
+      "fps": 24,
+      "seconds": 1.6666666666666667,
+      "skeletonOnly": true
+    },
+    {
+      "name": "Death",
+      "frameStart": 0,
+      "frameEnd": 72,
+      "fps": 24,
+      "seconds": 3.0,
+      "skeletonOnly": true
+    }
+  ],
+  "normalization": {
+    "sourceHeightMeters": 1.7444913403501658,
+    "targetHeightMeters": 1.8,
+    "exportGlobalScale": 1.0318193953537724,
+    "forward": "-Z FBX / +Z Unity",
+    "up": "Y FBX / Unity",
+    "root": "HW_TI_Root",
+    "bones": [
+      "Hips",
+      "LeftUpLeg",
+      "LeftLeg",
+      "LeftFoot",
+      "LeftToeBase",
+      "RightUpLeg",
+      "RightLeg",
+      "RightFoot",
+      "RightToeBase",
+      "Spine02",
+      "Spine01",
+      "Spine",
+      "LeftShoulder",
+      "LeftArm",
+      "LeftForeArm",
+      "LeftHand",
+      "RightShoulder",
+      "RightArm",
+      "RightForeArm",
+      "RightHand",
+      "neck",
+      "Head",
+      "head_end",
+      "headfront"
+    ]
+  }
+}

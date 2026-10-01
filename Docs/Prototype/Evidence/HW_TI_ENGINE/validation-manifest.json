@@ -1,0 +1,57 @@
+{
+  "baseHead": "c35fb00c1406fffe8fe70b08751230a17716a29f",
+  "branch": "feature/hw-ti-engine",
+  "delivery": "Commit containing this manifest; final gameplay/import/runtime content unchanged after these runs",
+  "unity": "6000.6.2f1",
+  "configuration": "validated-files-sha256.json includes actual local settings, including Unity-generated APP_UI_EDITOR_ONLY; settings excluded from delivery",
+  "runs": [
+    {
+      "scope": "focused",
+      "suite": "EditMode",
+      "command": "bash /private/tmp/strategic-map-ux/run-tests.sh EditMode RPG.VisualTrial.Tests",
+      "xml": "EditMode-20261001-135613.xml",
+      "sha256": "f874d009aa8700844c156168b833c654ed615918165a287cf088d571e533a314",
+      "total": 8,
+      "passed": 8,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "scope": "focused",
+      "suite": "PlayMode",
+      "command": "bash /private/tmp/strategic-map-ux/run-tests.sh PlayMode RPG.VisualTrial.PlayTests",
+      "xml": "PlayMode-20261001-135647.xml",
+      "sha256": "75bd38a77abcef6fb373e719fbb3eb88454af407e9a4ebabb5631e20bab8835f",
+      "total": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "scope": "full",
+      "suite": "EditMode",
+      "command": "bash /private/tmp/strategic-map-ux/run-tests.sh EditMode",
+      "xml": "EditMode-20261001-135719.xml",
+      "sha256": "0302ea2cfc30ffcb24454a1c13681ddc4bc4c9ed629e192c45a9b74bd4acef45",
+      "total": 716,
+      "passed": 716,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "scope": "full",
+      "suite": "PlayMode",
+      "command": "bash /private/tmp/strategic-map-ux/run-tests.sh PlayMode",
+      "xml": "PlayMode-20261001-135904.xml",
+      "sha256": "4463e9e36b68fd13385eeb873b4f9dfea191a27e62423279370d3784ecc04859",
+      "total": 95,
+      "passed": 95,
+      "failed": 0,
+      "skipped": 0
+    }
+  ],
+  "gui": "Actual rendered Unity automated controlled Animator playback + visual inspection; not mouse-driven gameplay",
+  "guiLog": "gui.log.gz",
+  "manualArtRepairs": 0,
+  "providerCalls": 0
+}

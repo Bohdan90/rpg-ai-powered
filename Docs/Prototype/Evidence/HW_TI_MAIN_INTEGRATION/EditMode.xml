@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="11" result="Passed" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-10-01 19:37:55Z" end-time="2026-10-01 19:37:56Z" duration="0.1538578">
+  <test-suite type="TestSuite" id="1000" name="My project" fullname="My project" runstate="Runnable" testcasecount="719" result="Passed" start-time="2026-10-01 19:37:55Z" end-time="2026-10-01 19:37:56Z" duration="0.153858" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1867" name="RPG.VisualTrial.Tests.dll" fullname="/Users/bohdanskrypka/UnityProjects/Convergence/My project/Library/ScriptAssemblies/RPG.VisualTrial.Tests.dll" runstate="Runnable" testcasecount="11" result="Passed" start-time="2026-10-01 19:37:55Z" end-time="2026-10-01 19:37:56Z" duration="0.094399" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="4501" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1868" name="RPG" fullname="RPG" runstate="Runnable" testcasecount="11" result="Passed" start-time="2026-10-01 19:37:55Z" end-time="2026-10-01 19:37:56Z" duration="0.094135" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1869" name="VisualTrial" fullname="RPG.VisualTrial" runstate="Runnable" testcasecount="11" result="Passed" start-time="2026-10-01 19:37:55Z" end-time="2026-10-01 19:37:56Z" duration="0.094062" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1870" name="Tests" fullname="RPG.VisualTrial.Tests" runstate="Runnable" testcasecount="11" result="Passed" start-time="2026-10-01 19:37:55Z" end-time="2026-10-01 19:37:56Z" duration="0.093962" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1853" name="HwTrialTests" fullname="RPG.VisualTrial.Tests.HwTrialTests" classname="RPG.VisualTrial.Tests.HwTrialTests" runstate="Runnable" testcasecount="11" result="Passed" start-time="2026-10-01 19:37:55Z" end-time="2026-10-01 19:37:56Z" duration="0.093546" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1858" name="CandidateSwapKeepsOneRendererAndCanonicalSkeleton" fullname="RPG.VisualTrial.Tests.HwTrialTests.CandidateSwapKeepsOneRendererAndCanonicalSkeleton" methodname="CandidateSwapKeepsOneRendererAndCanonicalSkeleton" classname="RPG.VisualTrial.Tests.HwTrialTests" runstate="Runnable" seed="2046592039" result="Passed" start-time="2026-10-01 19:37:55Z" end-time="2026-10-01 19:37:55Z" duration="0.026644" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1854" name="CanonicalPrefabHasHealthyHumanoidAndLodsOnOneSkeleton" fullname="RPG.VisualTrial.Tests.HwTrialTests.CanonicalPrefabHasHealthyHumanoidAndLodsOnOneSkeleton" methodname="CanonicalPrefabHasHealthyHumanoidAndLodsOnOneSkeleton" classname="RPG.VisualTrial.Tests.HwTrialTests" runstate="Runnable" seed="112762017" result="Passed" start-time="2026-10-01 19:37:55Z" end-time="2026-10-01 19:37:55Z" duration="0.013005" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-suite type="ParameterizedMethod" id="1864" name="ClipsAreHumanoidAndSkeletonOnly" fullname="RPG.VisualTrial.Tests.HwTrialTests.ClipsAreHumanoidAndSkeletonOnly" classname="RPG.VisualTrial.Tests.HwTrialTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-10-01 19:37:55Z" end-time="2026-10-01 19:37:56Z" duration="0.008372" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1859" name="ClipsAreHumanoidAndSkeletonOnly(&quot;Idle&quot;)" fullname="RPG.VisualTrial.Tests.HwTrialTests.ClipsAreHumanoidAndSkeletonOnly(&quot;Idle&quot;)" methodname="ClipsAreHumanoidAndSkeletonOnly" classname="RPG.VisualTrial.Tests.HwTrialTests" runstate="Runnable" seed="571317316" result="Passed" start-time="2026-10-01 19:37:55Z" end-time="2026-10-01 19:37:55Z" duration="0.004078" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1860" name="ClipsAreHumanoidAndSkeletonOnly(&quot;Walk&quot;)" fullname="RPG.VisualTrial.Tests.HwTrialTests.ClipsAreHumanoidAndSkeletonOnly(&quot;Walk&quot;)" methodname="ClipsAreHumanoidAndSkeletonOnly" classname="RPG.VisualTrial.Tests.HwTrialTests" runstate="Runnable" seed="931071952" result="Passed" start-time="2026-10-01 19:37:55Z" end-time="2026-10-01 19:37:56Z" duration="0.000603" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1861" name="ClipsAreHumanoidAndSkeletonOnly(&quot;Attack&quot;)" fullname="RPG.VisualTrial.Tests.HwTrialTests.ClipsAreHumanoidAndSkeletonOnly(&quot;Attack&quot;)" methodname="ClipsAreHumanoidAndSkeletonOnly" classname="RPG.VisualTrial.Tests.HwTrialTests" runstate="Runnable" seed="163192440" result="Passed" start-time="2026-10-01 19:37:56Z" end-time="2026-10-01 19:37:56Z" duration="0.000549" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1862" name="ClipsAreHumanoidAndSkeletonOnly(&quot;Hit&quot;)" fullname="RPG.VisualTrial.Tests.HwTrialTests.ClipsAreHumanoidAndSkeletonOnly(&quot;Hit&quot;)" methodname="ClipsAreHumanoidAndSkeletonOnly" classname="RPG.VisualTrial.Tests.HwTrialTests" runstate="Runnable" seed="1813527474" result="Passed" start-time="2026-10-01 19:37:56Z" end-time="2026-10-01 19:37:56Z" duration="0.000584" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1863" name="ClipsAreHumanoidAndSkeletonOnly(&quot;Death&quot;)" fullname="RPG.VisualTrial.Tests.HwTrialTests.ClipsAreHumanoidAndSkeletonOnly(&quot;Death&quot;)" methodname="ClipsAreHumanoidAndSkeletonOnly" classname="RPG.VisualTrial.Tests.HwTrialTests" runstate="Runnable" seed="1257280747" result="Passed" start-time="2026-10-01 19:37:56Z" end-time="2026-10-01 19:37:56Z" duration="0.000809" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-case id="1866" name="ControllerHasRequiredClipsAndSceneExists" fullname="RPG.VisualTrial.Tests.HwTrialTests.ControllerHasRequiredClipsAndSceneExists" methodname="ControllerHasRequiredClipsAndSceneExists" classname="RPG.VisualTrial.Tests.HwTrialTests" runstate="Runnable" seed="1734352219" result="Passed" start-time="2026-10-01 19:37:56Z" end-time="2026-10-01 19:37:56Z" duration="0.001066" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-suite type="ParameterizedMethod" id="1857" name="HumanoidSocketAndPropMarkerCoincide" fullname="RPG.VisualTrial.Tests.HwTrialTests.HumanoidSocketAndPropMarkerCoincide" classname="RPG.VisualTrial.Tests.HwTrialTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-10-01 19:37:56Z" end-time="2026-10-01 19:37:56Z" duration="0.002542" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1855" name="HumanoidSocketAndPropMarkerCoincide(RightHand,&quot;RightHandWeaponSocket&quot;,&quot;GripPoint&quot;)" fullname="RPG.VisualTrial.Tests.HwTrialTests.HumanoidSocketAndPropMarkerCoincide(RightHand,&quot;RightHandWeaponSocket&quot;,&quot;GripPoint&quot;)" methodname="HumanoidSocketAndPropMarkerCoincide" classname="RPG.VisualTrial.Tests.HwTrialTests" runstate="Runnable" seed="1085299067" result="Passed" start-time="2026-10-01 19:37:56Z" end-time="2026-10-01 19:37:56Z" duration="0.001912" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1856" name="HumanoidSocketAndPropMarkerCoincide(LeftLowerArm,&quot;LeftForearmShieldSocket&quot;,&quot;ShieldMountPoint&quot;)" fullname="RPG.VisualTrial.Tests.HwTrialTests.HumanoidSocketAndPropMarkerCoincide(LeftLowerArm,&quot;LeftForearmShieldSocket&quot;,&quot;ShieldMountPoint&quot;)" methodname="HumanoidSocketAndPropMarkerCoincide" classname="RPG.VisualTrial.Tests.HwTrialTests" runstate="Runnable" seed="402459989" result="Passed" start-time="2026-10-01 19:37:56Z" end-time="2026-10-01 19:37:56Z" duration="0.000267" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-case id="1865" name="RestoredPbrHasRealMapsAndCorrectColorSpaces" fullname="RPG.VisualTrial.Tests.HwTrialTests.RestoredPbrHasRealMapsAndCorrectColorSpaces" methodname="RestoredPbrHasRealMapsAndCorrectColorSpaces" classname="RPG.VisualTrial.Tests.HwTrialTests" runstate="Runnable" seed="1499882113" result="Passed" start-time="2026-10-01 19:37:56Z" end-time="2026-10-01 19:37:56Z" duration="0.033849" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: /tmp/hw-ti-main-integration/preferences/Library/Application Support/DefaultCompany/My project/TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>
