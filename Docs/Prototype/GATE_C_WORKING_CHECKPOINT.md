@@ -311,3 +311,12 @@ Tactical companion: explicit Temporary Barrier alongside HP/Armor, current Fire3
 Fresh final combined **663 EditMode +91 PlayMode =754 PASS;0failed;0skipped**, exact source/config fingerprint and XML/logs under `Evidence/STRATEGIC-MAP-UX/validation-manifest.json`. Focused map42+4; companion13Edit,44expandedPlay,11final-changed-areaPlay (overlap, not additive). G1–G4 and T1–T4 real OS-input controlled GUI evidence retained. Save/recreate/load helpers explicitly distinguished from mouse actions. Last text-only inspection/feed corrections validated automatically after screenshots. No PLAYER ACCEPTED or final balance verdict.
 
 Reports: `STRATEGIC_MAP_UX_AND_PRODUCTION_TOPOLOGY.md`, `TACTICAL_UX_COMPANION.md`. GUI/input/fixtures and coverage under corresponding Evidence directories. Main9 protected paths +22baseline save/replay files byte-identical; isolated prefs/player-data roots. Feature local AppUI build-setting dependency and6legacy .meta remain uncommitted. Do not copy isolated PlayerSettings wholesale to main. STOP for coordinator/player review; no 3D/Meshy/Air/Earth or next package.
+
+
+## 2026-10-01 — authorized main delivery: map and tactical UX
+
+User requested delivery to `My project/develop`. Starting main `26e0f9a`; validated feature `feature/strategic-map-ux@6178e1b` (gameplay commit `b526beb`). Integration preserves main PlayerSettings/company/product/defines and existing local scene/build settings/six metadata files. Gameplay, tests and evidence are identical to the validated feature; no new gameplay changes.
+
+Validation provenance: completed feature full **663 EditMode +91 PlayMode =754 PASS;0 failed/skipped**, XML in `Evidence/STRATEGIC-MAP-UX/tests/EditMode-20261001-092207.xml` and `PlayMode-20261001-092438.xml`. G1–G4 and T1–T4 evidence/limitations remain in the two reports. This delivery does not claim a fresh main regression or new GUI pass.
+
+Main launch after import: **Gate C → Production Roads 08 → West starts** (or East); tactical changes also apply in **Gate C → Combat Lab → Support vs Fire (near contact)** and existing encounters. Open ordinary My project; isolated launcher is unnecessary. Existing 07 remains available. No forced Unity restart, save migration or push. Earlier feature-only/main-pending entries are superseded by this delivery; player acceptance remains pending.
