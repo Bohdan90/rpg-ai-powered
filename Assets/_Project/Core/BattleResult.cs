@@ -8,7 +8,7 @@ namespace RPG.Core
         None, InvalidCommand, ActorNotFound, ActorInactive, NotCurrentActor, NoAction,
         TargetNotFound, TargetInactive, SelfTarget, FriendlyFireNotConfirmed, OutOfRange,
         MovementAlreadySpent, InvalidFacing, InvalidPath, InvalidStep, OutOfBounds, SolidCell,
-        OccupiedCell, BlockedCorner, InsufficientMovement, BlockedLineOfSight, BattleAlreadyEnded, Engaged, MeleeStrikeUnavailable, Frozen, Exhausted, AbilityUnavailable, SourceBudgetSpent, NoUsefulEffect, Silenced, SelfOnly, OutsideSpellLine, InvalidSpellTarget
+        OccupiedCell, BlockedCorner, InsufficientMovement, BlockedLineOfSight, BattleAlreadyEnded, Engaged, MeleeStrikeUnavailable, Frozen, Exhausted, AbilityUnavailable, SourceBudgetSpent, NoUsefulEffect, Silenced, SelfOnly, OutsideSpellLine, InvalidSpellTarget, BlockedWhileEngaged
     }
 
     public sealed class BattleResult

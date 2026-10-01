@@ -55,7 +55,7 @@ namespace RPG.Core
         public BattleState Restore()
         {
             if(fireRulesVersion<3&&units.Any(u=>u.postSpellMovement))throw new InvalidDataException("Post-cast movement requires rules3");
-            if(fireRulesVersion<0||fireRulesVersion>3)throw new InvalidDataException("Unsupported Fire rules version");
+            if(fireRulesVersion<0||fireRulesVersion>4)throw new InvalidDataException("Unsupported Fire rules version");
             var s=new BattleState(units.Select(u=>u.Restore()),seed,new Battlefield(columns,rows,solids.Select(p=>p.Position()),eastPerimeter),completedMutualElimination:outcome==(int)BattleEndReason.MutualElimination);
             s.FireRulesVersion=fireRulesVersion==0?1:fireRulesVersion;
             // Constructor seeds priority for fresh battles; replay restores the explicit initial snapshot.
@@ -139,7 +139,8 @@ namespace RPG.Core
     {
         public const string LegacyConfig="GateC-v0.1-HA10-fallback5-AI1-directional-retreat-51-spells1";
         public const string Input03Config="GateC-v0.1-51-spells3-tacticalinput03";
-        public static string ConfigFor(int rules)=>rules==1?LegacyConfig:rules==2?CurrentConfig:Input03Config;
+        public const string EngagementConfig="GateC-v0.1-51-spells4-engagementcasting";
+        public static string ConfigFor(int rules)=>rules==1?LegacyConfig:rules==2?CurrentConfig:rules==3?Input03Config:EngagementConfig;
         public const string CurrentConfig="GateC-v0.1-HA10-fallback5-AI1-directional-retreat-51-spells2-firetargeting02";
         public string type="header",configVersion=CurrentConfig,buildVersion,fixture,westController,eastController,initialHash;
         public int formatVersion=2;
@@ -228,7 +229,7 @@ namespace RPG.Core
             var result=new ReplayVerification();int sequence=0,successful=0;
             try
             {
-                if(header.formatVersion!=2||(header.configVersion!=ReplayHeader.CurrentConfig&&header.configVersion!=ReplayHeader.LegacyConfig&&header.configVersion!=ReplayHeader.Input03Config))throw new InvalidDataException("Unsupported replay/config version");
+                if(header.formatVersion!=2||(header.configVersion!=ReplayHeader.CurrentConfig&&header.configVersion!=ReplayHeader.LegacyConfig&&header.configVersion!=ReplayHeader.Input03Config&&header.configVersion!=ReplayHeader.EngagementConfig))throw new InvalidDataException("Unsupported replay/config version");
                 var state=header.initial.Restore();result.State=state;
                 if(header.configVersion!=ReplayHeader.ConfigFor(state.FireRulesVersion))throw new InvalidDataException("Rules/config mismatch");
                 if(header.seed!=state.InitialSeed||BattleStateHash.Compute(state)!=header.initialHash)throw new InvalidDataException("Initial state/config hash mismatch");

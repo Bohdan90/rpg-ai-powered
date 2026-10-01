@@ -82,7 +82,7 @@ namespace RPG.Presentation.Tests
         {
             yield return Open();
             foreach(var profile in new[]{UnitProfile.FireMageTI,UnitProfile.IceMageTI,UnitProfile.HumanWarriorTI,UnitProfile.HumanArcherTI}) {
-                var a=profile.IsArcher?new GridPosition(11,8):new GridPosition(9,8);var b=profile.IsArcher?new GridPosition(10,10):new GridPosition(8,9);
+                var a=profile.IsArcher||profile.IsIceMage?new GridPosition(11,8):new GridPosition(9,8);var b=profile.IsArcher||profile.IsIceMage?new GridPosition(10,10):new GridPosition(8,9);
                 P.ConfigureBattle(new[]{U(1,profile,Side.West,8,8),U(2,UnitProfile.ElfWarriorTI,Side.East,a.X,a.Y),U(3,UnitProfile.ElfWarriorTI,Side.East,b.X,b.Y)},new Battlefield(23,17),2);Actor(profile);int n=P.Journal.Records.Count;string hash=BattleStateHash.Compute(P.State);
                 P.HoverCell(a);Assert.That(P.SpellFootprint,Is.Not.Empty);P.LeaveBoard();Assert.That(P.SpellFootprint,Is.Empty);
                 P.ClickCell(a);var footprint=P.SpellFootprint.ToArray();P.HoverCell(b);P.LeaveBoard();P.InspectSpell(SpellId.FireArmor);Assert.That(P.SpellFootprint,Is.EqualTo(footprint));Assert.That(P.PinnedCell,Is.EqualTo(a));

@@ -13,7 +13,7 @@ namespace RPG.Core
         internal readonly List<UnitId> PriorityOrder;
         public ReadOnlyCollection<UnitState> Units { get; }
         public uint InitialSeed { get; }
-        public int FireRulesVersion { get; internal set; } = 2;
+        public int FireRulesVersion { get; internal set; } = 4;
         public Battlefield Battlefield { get; }
         public uint RngState => Random.State;
         public int Round { get; internal set; }

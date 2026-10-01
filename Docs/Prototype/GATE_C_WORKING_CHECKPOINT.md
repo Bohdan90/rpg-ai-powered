@@ -364,3 +364,11 @@ User explicitly requested transfer and local fixation, superseding the prior no-
 Validation: source **691EditMode+92PlayMode=783PASS;0failed/skipped**, final XMLs in Evidence/SCALE-08B-FINAL (EditMode20261001-115448,PlayMode20261001-115714), focused50+3 and documented GUI G1–G8/T1. No new full run solely for this source-identical delivery; not presented as main-run evidence.
 
 Main launch after import: **My project → Gate C → Production Roads08 → West starts → Set/Change Destination → Continue Travel**. Start a NEW session for rules3; older saved rules1/2 intentionally retain historic movement behavior. Protected nine local files and22saved files preserved, namespaces unchanged, no forced Unity restart. NO PUSH. This entry supersedes feature-only status above; no PLAYER ACCEPTED claim.
+
+## 2026-10-01 — Engagement Casting
+
+Typed explicit classifier for all seven active Spells; Fire Stream/Fire Armor/Ice Shield/Close Heal Allowed, Fireball/Ice Shard/Freeze Blocked by authoritative hostile melee ZoC. Readable UI reason, shared resolver/AI filtering, invalid previews/attempts pure. New battles rules4, legacy1–3 replay preserved. No combat tuning. Fresh full **708 EditMode +94 PlayMode =802 PASS, 0 failed/skipped**; focused73Core/17Play, final UI2 and adjusted-fixture38 checks. Real controlled mouse GUI Fire/Ice engagement, lawful OA/disengage and restored Ice Shard PASS. Nine protected main files and22saves/replays unchanged. Source feature/engagement-casting from5a45bbb (mainf8b8229 code-equivalent); user subsequently authorized main transfer. Detailed evidence/provenance: [ENGAGEMENT_CASTING.md](ENGAGEMENT_CASTING.md). TECHNICAL PASS; no PLAYER ACCEPTED, NO PUSH.
+
+## 2026-10-01 — authorized main delivery of Engagement Casting
+
+User requested main transfer after successful validation. Starting develop f8b8229; source feature/engagement-casting89df25d. Only overlapping append in this checkpoint required resolution; both histories retained. Game code/tests match validated source, main settings untouched. Main Unity observed outside Play Mode; no restart/party interruption. Final feature regression708Edit+94Play=802PASS,0failed/skipped remains source-run provenance, not a new main run. Protected9files/22saves unchanged; NO PUSH. Launch My project → Gate C → Combat Lab → Fire vs Ice (near contact); new battles use rules4.
