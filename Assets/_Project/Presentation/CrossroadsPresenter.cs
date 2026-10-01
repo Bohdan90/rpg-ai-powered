@@ -18,7 +18,7 @@ namespace RPG.Presentation
         public void StartCity(bool combined=false,CombatPreset west=CombatPreset.Fire,CombatPreset east=CombatPreset.Ice,Side first=Side.West)=>ShowDuel(new CrossroadsScenario(first,foundations:true,combined:combined,westPreset:west,eastPreset:east));
         public static string SeamlessSlot=>Path.Combine(Application.persistentDataPath,"SeamlessWorlds07","manual.json");
         public static string ProductionRoadsSlot=>Path.Combine(Application.persistentDataPath,"ProductionRoads08","manual.json");
-        public void StartProductionRoads(Side first=Side.West)=>ShowDuel(ProductionRoads.Create(first));
+        public void StartProductionRoads(Side first=Side.West)=>ShowDuel(TravelScale08.Create(first));
         public SeamlessMapView SeamlessMap=>duelHud?.SeamlessView;
         public void StartSeamless(Side first=Side.West,bool temporary=false,CombatPreset west=CombatPreset.Fire,CombatPreset east=CombatPreset.Ice)=>ShowDuel(SeamlessWorlds.Create(first,temporary,west,east));
         public void StartSeamlessOpaqueProbe()=>ShowDuel(SeamlessWorlds.CreateOpaqueProbe());

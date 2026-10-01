@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="41" result="Passed" total="41" passed="41" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-10-01 14:54:32Z" end-time="2026-10-01 14:54:37Z" duration="5.262617">
+  <test-suite type="TestSuite" id="1000" name="Strategic-Map-UX" fullname="Strategic-Map-UX" runstate="Runnable" testcasecount="682" result="Passed" start-time="2026-10-01 14:54:32Z" end-time="2026-10-01 14:54:37Z" duration="5.262617" total="41" passed="41" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1818" name="RPG.Tests.dll" fullname="/Users/bohdanskrypka/UnityProjects/Convergence/Strategic-Map-UX/Library/ScriptAssemblies/RPG.Tests.dll" runstate="Runnable" testcasecount="682" result="Passed" start-time="2026-10-01 14:54:32Z" end-time="2026-10-01 14:54:37Z" duration="5.258111" total="41" passed="41" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="69445" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1819" name="RPG" fullname="RPG" runstate="Runnable" testcasecount="682" result="Passed" start-time="2026-10-01 14:54:32Z" end-time="2026-10-01 14:54:37Z" duration="5.257798" total="41" passed="41" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1820" name="Core" fullname="RPG.Core" runstate="Runnable" testcasecount="41" result="Passed" start-time="2026-10-01 14:54:32Z" end-time="2026-10-01 14:54:37Z" duration="5.242517" total="41" passed="41" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1821" name="Tests" fullname="RPG.Core.Tests" runstate="Runnable" testcasecount="41" result="Passed" start-time="2026-10-01 14:54:32Z" end-time="2026-10-01 14:54:37Z" duration="5.242290" total="41" passed="41" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1001" name="StrategicJourneyTests" fullname="RPG.Core.Tests.StrategicJourneyTests" classname="RPG.Core.Tests.StrategicJourneyTests" runstate="Runnable" testcasecount="22" result="Passed" start-time="2026-10-01 14:54:32Z" end-time="2026-10-01 14:54:33Z" duration="1.180413" total="22" passed="22" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1020" name="ActualBattlePausesCommittedOrdersAndReturnsSamePersistentIdsOnce" fullname="RPG.Core.Tests.StrategicJourneyTests.ActualBattlePausesCommittedOrdersAndReturnsSamePersistentIdsOnce" methodname="ActualBattlePausesCommittedOrdersAndReturnsSamePersistentIdsOnce" classname="RPG.Core.Tests.StrategicJourneyTests" runstate="Runnable" seed="1624068395" result="Passed" start-time="2026-10-01 14:54:32Z" end-time="2026-10-01 14:54:33Z" duration="1.054888" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1023" name="AlreadyObservedEnemyEnteringContactPausesWithoutWaitingForNewDiscovery" fullname="RPG.Core.Tests.StrategicJourneyTests.AlreadyObservedEnemyEnteringContactPausesWithoutWaitingForNewDiscovery" methodname="AlreadyObservedEnemyEnteringContactPausesWithoutWaitingForNewDiscovery" classname="RPG.Core.Tests.StrategicJourneyTests" runstate="Runnable" seed="1105477366" result="Passed" start-time="2026-10-01 14:54:33Z" end-time="2026-10-01 14:54:33Z" duration="0.011949" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1003" name="CancelAndNewDestinationOverrideAreExplicitAndInvalidIsPure" fullname="RPG.Core.Tests.StrategicJourneyTests.CancelAndNewDestinationOverrideAreExplicitAndInvalidIsPure" methodname="CancelAndNewDestinationOverrideAreExplicitAndInvalidIsPure" classname="RPG.Core.Tests.StrategicJourneyTests" runstate="Runnable" seed="620252838" result="Passed" start-time="2026-10-01 14:54:33Z" end-time="2026-10-01 14:54:33Z" duration="0.005011" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1002" name="DistantKnownDestinationMovesPartialRetainsThenResumesOnlyOnOwnHandoff" fullname="RPG.Core.Tests.StrategicJourneyTests.DistantKnownDestinationMovesPartialRetainsThenResumesOnlyOnOwnHandoff" methodname="DistantKnownDestinationMovesPartialRetainsThenResumesOnlyOnOwnHandoff" classname="RPG.Core.Tests.StrategicJourneyTests" runstate="Runnable" seed="531686545" result="Passed" start-time="2026-10-01 14:54:33Z" end-time="2026-10-01 14:54:33Z" duration="0.003516" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1008" name="FormationChangesPauseAndDontNormalizeOrHeal" fullname="RPG.Core.Tests.StrategicJourneyTests.FormationChangesPauseAndDontNormalizeOrHeal" methodname="FormationChangesPauseAndDontNormalizeOrHeal" classname="RPG.Core.Tests.StrategicJourneyTests" runstate="Runnable" seed="302960551" result="Passed" start-time="2026-10-01 14:54:33Z" end-time="2026-10-01 14:54:33Z" duration="0.000993" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1006" name="HiddenOccupancyDoesNotChangePreviewRouteOrRevealComposition" fullname="RPG.Core.Tests.StrategicJourneyTests.HiddenOccupancyDoesNotChangePreviewRouteOrRevealComposition" methodname="HiddenOccupancyDoesNotChangePreviewRouteOrRevealComposition" classname="RPG.Core.Tests.StrategicJourneyTests" runstate="Runnable" seed="1265561170" result="Passed" start-time="2026-10-01 14:54:33Z" end-time="2026-10-01 14:54:33Z" duration="0.001469" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1021" name="HiddenPhysicalBlockStopsBeforeOccupancyWithoutChoosingAnotherRoute" fullname="RPG.Core.Tests.StrategicJourneyTests.HiddenPhysicalBlockStopsBeforeOccupancyWithoutChoosingAnotherRoute" methodname="HiddenPhysicalBlockStopsBeforeOccupancyWithoutChoosingAnotherRoute" classname="RPG.Core.Tests.StrategicJourneyTests" runstate="Runnable" seed="1768971512" result="Passed" start-time="2026-10-01 14:54:33Z" end-time="2026-10-01 14:54:33Z" duration="0.000528" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1007" name="InvalidSavedLegPausesAndNeverTeleports" fullname="RPG.Core.Tests.StrategicJourneyTests.InvalidSavedLegPausesAndNeverTeleports" methodname="InvalidSavedLegPausesAndNeverTeleports" classname="RPG.Core.Tests.StrategicJourneyTests" runstate="Runnable" seed="1470851358" result="Passed" start-time="2026-10-01 14:54:33Z" end-time="2026-10-01 14:54:33Z" duration="0.000954" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1009" name="JourneyRoundTripAndContinuationHaveIdenticalHashes" fullname="RPG.Core.Tests.StrategicJourneyTests.JourneyRoundTripAndContinuationHaveIdenticalHashes" methodname="JourneyRoundTripAndContinuationHaveIdenticalHashes" classname="RPG.Core.Tests.StrategicJourneyTests" runstate="Runnable" seed="379985366" result="Passed" start-time="2026-10-01 14:54:33Z" end-time="2026-10-01 14:54:33Z" duration="0.006512" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-suite type="ParameterizedMethod" id="1019" name="KeyAreasHaveAlternateRoadsAfterOrdinaryConnectionRemoval" fullname="RPG.Core.Tests.StrategicJourneyTests.KeyAreasHaveAlternateRoadsAfterOrdinaryConnectionRemoval" classname="RPG.Core.Tests.StrategicJourneyTests" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-10-01 14:54:33Z" end-time="2026-10-01 14:54:33Z" duration="0.027833" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1013" name="KeyAreasHaveAlternateRoadsAfterOrdinaryConnectionRemoval(1,6)" fullname="RPG.Core.Tests.StrategicJourneyTests.KeyAreasHaveAlternateRoadsAfterOrdinaryConnectionRemoval(1,6)" methodname="KeyAreasHaveAlternateRoadsAfterOrdinaryConnectionRemoval" classname="RPG.Core.Tests.StrategicJourneyTests" runstate="Runnable" seed="537820496" result="Passed" start-time="2026-10-01 14:54:33Z" end-time="2026-10-01 14:54:33Z" duration="0.001662" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[1 -> 6 : 1,2,3,30,31,4,5,32,6 cost 145; alternative 180
+]]></output>
+                </test-case>
+                <test-case id="1014" name="KeyAreasHaveAlternateRoadsAfterOrdinaryConnectionRemoval(13,6)" fullname="RPG.Core.Tests.StrategicJourneyTests.KeyAreasHaveAlternateRoadsAfterOrdinaryConnectionRemoval(13,6)" methodname="KeyAreasHaveAlternateRoadsAfterOrdinaryConnectionRemoval" classname="RPG.Core.Tests.StrategicJourneyTests" runstate="Runnable" seed="1635424419" result="Passed" start-time="2026-10-01 14:54:33Z" end-time="2026-10-01 14:54:33Z" duration="0.000539" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[13 -> 6 : 13,12,54,36,37,19,6 cost 125; alternative 180
+]]></output>
+                </test-case>
+                <test-case id="1015" name="KeyAreasHaveAlternateRoadsAfterOrdinaryConnectionRemoval(1,7)" fullname="RPG.Core.Tests.StrategicJourneyTests.KeyAreasHaveAlternateRoadsAfterOrdinaryConnectionRemoval(1,7)" methodname="KeyAreasHaveAlternateRoadsAfterOrdinaryConnectionRemoval" classname="RPG.Core.Tests.StrategicJourneyTests" runstate="Runnable" seed="2118645446" result="Passed" start-time="2026-10-01 14:54:33Z" end-time="2026-10-01 14:54:33Z" duration="0.000312" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[1 -> 7 : 1,28,27,40,39,7 cost 85; alternative 110
+]]></output>
+                </test-case>
+                <test-case id="1016" name="KeyAreasHaveAlternateRoadsAfterOrdinaryConnectionRemoval(13,7)" fullname="RPG.Core.Tests.StrategicJourneyTests.KeyAreasHaveAlternateRoadsAfterOrdinaryConnectionRemoval(13,7)" methodname="KeyAreasHaveAlternateRoadsAfterOrdinaryConnectionRemoval" classname="RPG.Core.Tests.StrategicJourneyTests" runstate="Runnable" seed="1530319176" result="Passed" start-time="2026-10-01 14:54:33Z" end-time="2026-10-01 14:54:33Z" duration="0.000476" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[13 -> 7 : 13,12,11,10,50,43,9,7 cost 125; alternative 130
+]]></output>
+                </test-case>
+                <test-case id="1017" name="KeyAreasHaveAlternateRoadsAfterOrdinaryConnectionRemoval(1,8)" fullname="RPG.Core.Tests.StrategicJourneyTests.KeyAreasHaveAlternateRoadsAfterOrdinaryConnectionRemoval(1,8)" methodname="KeyAreasHaveAlternateRoadsAfterOrdinaryConnectionRemoval" classname="RPG.Core.Tests.StrategicJourneyTests" runstate="Runnable" seed="1032648668" result="Passed" start-time="2026-10-01 14:54:33Z" end-time="2026-10-01 14:54:33Z" duration="0.000365" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[1 -> 8 : 1,28,44,21,15,8 cost 85; alternative 125
+]]></output>
+                </test-case>
+                <test-case id="1018" name="KeyAreasHaveAlternateRoadsAfterOrdinaryConnectionRemoval(13,8)" fullname="RPG.Core.Tests.StrategicJourneyTests.KeyAreasHaveAlternateRoadsAfterOrdinaryConnectionRemoval(13,8)" methodname="KeyAreasHaveAlternateRoadsAfterOrdinaryConnectionRemoval" classname="RPG.Core.Tests.StrategicJourneyTests" runstate="Runnable" seed="2120667839" result="Passed" start-time="2026-10-01 14:54:33Z" end-time="2026-10-01 14:54:33Z" duration="0.000362" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[13 -> 8 : 13,12,11,10,50,51,48,8 cost 115; alternative 115
+]]></output>
+                </test-case>
+              </test-suite>
+              <test-case id="1011" name="Legacy07SnapshotRestoresWithoutNewRuleHashChanges" fullname="RPG.Core.Tests.StrategicJourneyTests.Legacy07SnapshotRestoresWithoutNewRuleHashChanges" methodname="Legacy07SnapshotRestoresWithoutNewRuleHashChanges" classname="RPG.Core.Tests.StrategicJourneyTests" runstate="Runnable" seed="2023638891" result="Passed" start-time="2026-10-01 14:54:33Z" end-time="2026-10-01 14:54:33Z" duration="0.004182" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1005" name="NewlyObservedHostileInterruptsRatherThanReroutes" fullname="RPG.Core.Tests.StrategicJourneyTests.NewlyObservedHostileInterruptsRatherThanReroutes" methodname="NewlyObservedHostileInterruptsRatherThanReroutes" classname="RPG.Core.Tests.StrategicJourneyTests" runstate="Runnable" seed="178167296" result="Passed" start-time="2026-10-01 14:54:33Z" end-time="2026-10-01 14:54:33Z" duration="0.002470" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1022" name="NewlyObservedOpponentDuringItsTurnPausesSavedJourneyBeforeNextOwnTurn" fullname="RPG.Core.Tests.StrategicJourneyTests.NewlyObservedOpponentDuringItsTurnPausesSavedJourneyBeforeNextOwnTurn" methodname="NewlyObservedOpponentDuringItsTurnPausesSavedJourneyBeforeNextOwnTurn" classname="RPG.Core.Tests.StrategicJourneyTests" runstate="Runnable" seed="494595361" result="Passed" start-time="2026-10-01 14:54:33Z" end-time="2026-10-01 14:54:33Z" duration="0.001197" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1024" name="OldTopologyAndNewScenarioHaveSeparateIdentity" fullname="RPG.Core.Tests.StrategicJourneyTests.OldTopologyAndNewScenarioHaveSeparateIdentity" methodname="OldTopologyAndNewScenarioHaveSeparateIdentity" classname="RPG.Core.Tests.StrategicJourneyTests" runstate="Runnable" seed="903814344" result="Passed" start-time="2026-10-01 14:54:33Z" end-time="2026-10-01 14:54:33Z" duration="0.000630" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1004" name="PortalArrivalPausesEvenWithTempoAndNeverAutoTraverses" fullname="RPG.Core.Tests.StrategicJourneyTests.PortalArrivalPausesEvenWithTempoAndNeverAutoTraverses" methodname="PortalArrivalPausesEvenWithTempoAndNeverAutoTraverses" classname="RPG.Core.Tests.StrategicJourneyTests" runstate="Runnable" seed="125181152" result="Passed" start-time="2026-10-01 14:54:33Z" end-time="2026-10-01 14:54:33Z" duration="0.001680" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1010" name="PurePreviewsAndDefensiveJourneyCopiesDoNotMutateState" fullname="RPG.Core.Tests.StrategicJourneyTests.PurePreviewsAndDefensiveJourneyCopiesDoNotMutateState" methodname="PurePreviewsAndDefensiveJourneyCopiesDoNotMutateState" classname="RPG.Core.Tests.StrategicJourneyTests" runstate="Runnable" seed="358260681" result="Passed" start-time="2026-10-01 14:54:33Z" end-time="2026-10-01 14:54:33Z" duration="0.000829" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1012" name="TopologyIsConnectedRichDeterministicAndOnlyDeliberateSpurIsBridge" fullname="RPG.Core.Tests.StrategicJourneyTests.TopologyIsConnectedRichDeterministicAndOnlyDeliberateSpurIsBridge" methodname="TopologyIsConnectedRichDeterministicAndOnlyDeliberateSpurIsBridge" classname="RPG.Core.Tests.StrategicJourneyTests" runstate="Runnable" seed="1639632528" result="Passed" start-time="2026-10-01 14:54:33Z" end-time="2026-10-01 14:54:33Z" duration="0.047987" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[60 anchors · 75 edges · components 1 · degree 2.50 · cycle rank 16 · articulation 59 · bridges 25-59
+]]></output>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1025" name="TravelScale08Tests" fullname="RPG.Core.Tests.TravelScale08Tests" classname="RPG.Core.Tests.TravelScale08Tests" runstate="Runnable" testcasecount="19" result="Passed" start-time="2026-10-01 14:54:33Z" end-time="2026-10-01 14:54:37Z" duration="4.061223" total="19" passed="19" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-suite type="ParameterizedMethod" id="1044" name="AuthoredInitiative" fullname="RPG.Core.Tests.TravelScale08Tests.AuthoredInitiative" classname="RPG.Core.Tests.TravelScale08Tests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-10-01 14:54:33Z" end-time="2026-10-01 14:54:33Z" duration="0.000882" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1036" name="AuthoredInitiative(FireMageTI,8)" fullname="RPG.Core.Tests.TravelScale08Tests.AuthoredInitiative(FireMageTI,8)" methodname="AuthoredInitiative" classname="RPG.Core.Tests.TravelScale08Tests" runstate="Runnable" seed="2090916358" result="Passed" start-time="2026-10-01 14:54:33Z" end-time="2026-10-01 14:54:33Z" duration="0.000108" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1037" name="AuthoredInitiative(FireMageTII,8)" fullname="RPG.Core.Tests.TravelScale08Tests.AuthoredInitiative(FireMageTII,8)" methodname="AuthoredInitiative" classname="RPG.Core.Tests.TravelScale08Tests" runstate="Runnable" seed="1724008750" result="Passed" start-time="2026-10-01 14:54:33Z" end-time="2026-10-01 14:54:33Z" duration="0.000031" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1038" name="AuthoredInitiative(IceMageTI,8)" fullname="RPG.Core.Tests.TravelScale08Tests.AuthoredInitiative(IceMageTI,8)" methodname="AuthoredInitiative" classname="RPG.Core.Tests.TravelScale08Tests" runstate="Runnable" seed="1190155876" result="Passed" start-time="2026-10-01 14:54:33Z" end-time="2026-10-01 14:54:33Z" duration="0.000030" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1039" name="AuthoredInitiative(IceMageTII,8)" fullname="RPG.Core.Tests.TravelScale08Tests.AuthoredInitiative(IceMageTII,8)" methodname="AuthoredInitiative" classname="RPG.Core.Tests.TravelScale08Tests" runstate="Runnable" seed="927987784" result="Passed" start-time="2026-10-01 14:54:33Z" end-time="2026-10-01 14:54:33Z" duration="0.000031" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1040" name="AuthoredInitiative(HumanHealerTI,9)" fullname="RPG.Core.Tests.TravelScale08Tests.AuthoredInitiative(HumanHealerTI,9)" methodname="AuthoredInitiative" classname="RPG.Core.Tests.TravelScale08Tests" runstate="Runnable" seed="1730450928" result="Passed" start-time="2026-10-01 14:54:33Z" end-time="2026-10-01 14:54:33Z" duration="0.000029" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1041" name="AuthoredInitiative(HumanWarriorTI,10)" fullname="RPG.Core.Tests.TravelScale08Tests.AuthoredInitiative(HumanWarriorTI,10)" methodname="AuthoredInitiative" classname="RPG.Core.Tests.TravelScale08Tests" runstate="Runnable" seed="1840136808" result="Passed" start-time="2026-10-01 14:54:33Z" end-time="2026-10-01 14:54:33Z" duration="0.000030" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1042" name="AuthoredInitiative(HumanArcherTI,12)" fullname="RPG.Core.Tests.TravelScale08Tests.AuthoredInitiative(HumanArcherTI,12)" methodname="AuthoredInitiative" classname="RPG.Core.Tests.TravelScale08Tests" runstate="Runnable" seed="946900310" result="Passed" start-time="2026-10-01 14:54:33Z" end-time="2026-10-01 14:54:33Z" duration="0.000029" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1043" name="AuthoredInitiative(ElfWarriorTI,14)" fullname="RPG.Core.Tests.TravelScale08Tests.AuthoredInitiative(ElfWarriorTI,14)" methodname="AuthoredInitiative" classname="RPG.Core.Tests.TravelScale08Tests" runstate="Runnable" seed="1087806986" result="Passed" start-time="2026-10-01 14:54:33Z" end-time="2026-10-01 14:54:33Z" duration="0.000029" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-case id="1030" name="CancelOverrideAndExactArrivalUseRealSegments" fullname="RPG.Core.Tests.TravelScale08Tests.CancelOverrideAndExactArrivalUseRealSegments" methodname="CancelOverrideAndExactArrivalUseRealSegments" classname="RPG.Core.Tests.TravelScale08Tests" runstate="Runnable" seed="1198942981" result="Passed" start-time="2026-10-01 14:54:33Z" end-time="2026-10-01 14:54:33Z" duration="0.009091" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1027" name="DiagnosticsDistinguishMacroAndTravelGraphs" fullname="RPG.Core.Tests.TravelScale08Tests.DiagnosticsDistinguishMacroAndTravelGraphs" methodname="DiagnosticsDistinguishMacroAndTravelGraphs" classname="RPG.Core.Tests.TravelScale08Tests" runstate="Runnable" seed="669396245" result="Passed" start-time="2026-10-01 14:54:33Z" end-time="2026-10-01 14:54:36Z" duration="3.149114" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[60 anchors · 75 edges · components 1 · degree 2.50 · cycle rank 16 · articulation 59 · bridges 25-59
+513 anchors · 528 edges · components 1 · degree 2.06 · cycle rank 16 · articulation 59,256901,256902,256903,256904,256905,256906 · bridges 25-256901,256901-256902,256902-256903,256903-256904,256904-256905,256905-256906,59-256906
+15 anchors · 20 edges · components 1 · degree 2.67 · cycle rank 6 · articulation 2,6 · bridges 1-2,6-7
+154 anchors · 159 edges · components 1 · degree 2.06 · cycle rank 6 · articulation 2,6,11201,11202,11203,11204,11205,61701,61702,61703,61704,61705,61706 · bridges 1-11201,11201-11202,11202-11203,11203-11204,11204-11205,2-11205,6-61701,61701-61702,61702-61703,61703-61704,61704-61705,61705-61706,7-61706
+(1, 6) cost 480 alternative 670
+(13, 6) cost 390 alternative 880
+(1, 7) cost 350 alternative 380
+(13, 7) cost 450 alternative 670
+(1, 8) cost 290 alternative 640
+(13, 8) cost 620 alternative 630
+(2, 25) cost 870 alternative 950
+]]></output>
+              </test-case>
+              <test-case id="1026" name="ExpansionPreservesMacroCyclesAndHasStableIdsAndDistanceCosts" fullname="RPG.Core.Tests.TravelScale08Tests.ExpansionPreservesMacroCyclesAndHasStableIdsAndDistanceCosts" methodname="ExpansionPreservesMacroCyclesAndHasStableIdsAndDistanceCosts" classname="RPG.Core.Tests.TravelScale08Tests" runstate="Runnable" seed="1373503819" result="Passed" start-time="2026-10-01 14:54:36Z" end-time="2026-10-01 14:54:36Z" duration="0.001763" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1034" name="ExplicitLandDepartureFromPortalCanWaitForNextOwnActivation" fullname="RPG.Core.Tests.TravelScale08Tests.ExplicitLandDepartureFromPortalCanWaitForNextOwnActivation" methodname="ExplicitLandDepartureFromPortalCanWaitForNextOwnActivation" classname="RPG.Core.Tests.TravelScale08Tests" runstate="Runnable" seed="1851370516" result="Passed" start-time="2026-10-01 14:54:36Z" end-time="2026-10-01 14:54:36Z" duration="0.001753" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1032" name="IntermediateContactObservationsAndBattleUseExistingBridge" fullname="RPG.Core.Tests.TravelScale08Tests.IntermediateContactObservationsAndBattleUseExistingBridge" methodname="IntermediateContactObservationsAndBattleUseExistingBridge" classname="RPG.Core.Tests.TravelScale08Tests" runstate="Runnable" seed="2141050708" result="Passed" start-time="2026-10-01 14:54:36Z" end-time="2026-10-01 14:54:37Z" duration="0.801515" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1029" name="IntermediatePositionAndOrderRoundTripResumeWithoutOpponentMovementOrDuplicateEvents" fullname="RPG.Core.Tests.TravelScale08Tests.IntermediatePositionAndOrderRoundTripResumeWithoutOpponentMovementOrDuplicateEvents" methodname="IntermediatePositionAndOrderRoundTripResumeWithoutOpponentMovementOrDuplicateEvents" classname="RPG.Core.Tests.TravelScale08Tests" runstate="Runnable" seed="1966396720" result="Passed" start-time="2026-10-01 14:54:37Z" end-time="2026-10-01 14:54:37Z" duration="0.022103" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1035" name="Legacy08SaveRetainsCoarseTopology" fullname="RPG.Core.Tests.TravelScale08Tests.Legacy08SaveRetainsCoarseTopology" methodname="Legacy08SaveRetainsCoarseTopology" classname="RPG.Core.Tests.TravelScale08Tests" runstate="Runnable" seed="1177113205" result="Passed" start-time="2026-10-01 14:54:37Z" end-time="2026-10-01 14:54:37Z" duration="0.000936" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1045" name="MixedActivationOrderingAndLegacyReplayProfiles" fullname="RPG.Core.Tests.TravelScale08Tests.MixedActivationOrderingAndLegacyReplayProfiles" methodname="MixedActivationOrderingAndLegacyReplayProfiles" classname="RPG.Core.Tests.TravelScale08Tests" runstate="Runnable" seed="374075239" result="Passed" start-time="2026-10-01 14:54:37Z" end-time="2026-10-01 14:54:37Z" duration="0.000996" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1033" name="NormalSuppliedThenHungryJourneyMeasuresActualActivations" fullname="RPG.Core.Tests.TravelScale08Tests.NormalSuppliedThenHungryJourneyMeasuresActualActivations" methodname="NormalSuppliedThenHungryJourneyMeasuresActualActivations" classname="RPG.Core.Tests.TravelScale08Tests" runstate="Runnable" seed="499589582" result="Passed" start-time="2026-10-01 14:54:37Z" end-time="2026-10-01 14:54:37Z" duration="0.033353" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Normal West start A2 to A25, activations=10 finalTempo=22 provisions=0
+]]></output>
+              </test-case>
+              <test-case id="1028" name="OrdinaryDepthAndValleyRatioAreMeasuredOnShortestLandRoutes" fullname="RPG.Core.Tests.TravelScale08Tests.OrdinaryDepthAndValleyRatioAreMeasuredOnShortestLandRoutes" methodname="OrdinaryDepthAndValleyRatioAreMeasuredOnShortestLandRoutes" classname="RPG.Core.Tests.TravelScale08Tests" runstate="Runnable" seed="227131678" result="Passed" start-time="2026-10-01 14:54:37Z" end-time="2026-10-01 14:54:37Z" duration="0.013805" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[A keep-to-keep=800; A west-to-Ash=900; B portal-to-portal=450; ratio=0.5625; nodes=513/154; edges=528/159
+]]></output>
+              </test-case>
+              <test-case id="1031" name="PortalRemainsExplicitAndDenseValleyIsSeparate" fullname="RPG.Core.Tests.TravelScale08Tests.PortalRemainsExplicitAndDenseValleyIsSeparate" methodname="PortalRemainsExplicitAndDenseValleyIsSeparate" classname="RPG.Core.Tests.TravelScale08Tests" runstate="Runnable" seed="2079593088" result="Passed" start-time="2026-10-01 14:54:37Z" end-time="2026-10-01 14:54:37Z" duration="0.008329" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: /tmp/strategic-map-ux/test-preferences/Library/Application Support/RPGPrototypeIsolated/Strategic-Map-UX/TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

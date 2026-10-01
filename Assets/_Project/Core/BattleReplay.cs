@@ -15,6 +15,7 @@ namespace RPG.Core
     }
     [Serializable] public sealed class ReplayUnit
     {
+        public int initiative; // Zero/absent retains pre-08B authored Initiative.
         public int retreatEdge=-1;
         public int id,side,profile,x,y,facing,hp,armor,status,movement,spent;
         public bool action,oa,defending,postSpellMovement;
@@ -23,14 +24,14 @@ namespace RPG.Core
         public bool silenced;
         public int packageBarrier;
         public bool fireProtection; public int exitTarget;
-        public static ReplayUnit Capture(UnitState u)=>new ReplayUnit { retreatEdge=u.OwnRetreatEdge.HasValue?(int)u.OwnRetreatEdge.Value:-1,id=u.Id.Value,side=(int)u.Side,profile=(int)u.Profile.Id,
+        public static ReplayUnit Capture(UnitState u)=>new ReplayUnit { initiative=u.Profile.Initiative,retreatEdge=u.OwnRetreatEdge.HasValue?(int)u.OwnRetreatEdge.Value:-1,id=u.Id.Value,side=(int)u.Side,profile=(int)u.Profile.Id,
             x=u.Position.X,y=u.Position.Y,facing=(int)u.Facing,hp=u.Hp,armor=u.Armor,status=(int)u.Status,
             movement=u.MovementRemaining,spent=u.MovementSpentThisActivation,action=u.ActionAvailable,oa=u.OpportunityAttackAvailable,
             postSpellMovement=u.PostSpellMovement,defending=u.IsDefending,tie=u.TieKey,silenced=u.IsSilenced,packageBarrier=u.PackageBarrier,fireProtection=u.FireProtection,exitTarget=u.GracefulExitTarget?.Value??0,
             TemporaryBarrier=u.TemporaryBarrier,BarrierActivations=u.BarrierActivations,BurnStacks=u.BurnStacks,BurnTicks=u.BurnTicks,PoisonStacks=u.PoisonStacks,BleedStacks=u.BleedStacks,FrozenActivations=u.FrozenActivations,ExhaustedActivations=u.ExhaustedActivations,FireballUsed=u.FireballUsed,FreezeUsed=u.FreezeUsed,CloseHealUsed=u.CloseHealUsed };
         internal UnitState Restore()
         {
-            var p=UnitProfile.Get((UnitProfileId)profile);
+            var p=UnitProfile.ReplayProfile((UnitProfileId)profile,initiative);
             return new UnitState(new UnitId(id),(Side)side,p,new GridPosition(x,y),(Facing)facing,hp,armor,(UnitStatus)status,retreatEdge<0?(RetreatEdge?)null:(RetreatEdge)retreatEdge) {
                 PostSpellMovement=postSpellMovement,MovementRemaining=movement,MovementSpentThisActivation=spent,ActionAvailable=action,OpportunityAttackAvailable=oa,IsDefending=defending,TieKey=tie,IsSilenced=silenced,PackageBarrier=packageBarrier,FireProtection=fireProtection,GracefulExitTarget=exitTarget==0?(UnitId?)null:new UnitId(exitTarget),TemporaryBarrier=TemporaryBarrier,BarrierActivations=BarrierActivations,BurnStacks=BurnStacks,BurnTicks=BurnTicks,PoisonStacks=PoisonStacks,BleedStacks=BleedStacks,FrozenActivations=FrozenActivations,ExhaustedActivations=ExhaustedActivations,FireballUsed=FireballUsed,FreezeUsed=FreezeUsed,CloseHealUsed=CloseHealUsed };
         }

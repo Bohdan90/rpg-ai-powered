@@ -72,7 +72,7 @@ namespace RPG.Core
         public SeamlessSaveData seamless; public RealmSaveData realm; public IncidentSaveData incident; public CityFoundationData foundations;
         public CrossroadsScenario Restore()
         {
-            StrategicSaveData.Require((version==Version&&scenario==Scenario)||(version==3&&scenario==IncidentState.Id&&incident!=null)||(version==4&&scenario=="CityFoundations-05"&&foundations!=null)||(version==5&&scenario=="RealmOperations-06"&&foundations!=null&&realm!=null)||((version==6&&scenario==SeamlessWorlds.ScenarioId||version==7&&scenario==ProductionRoads.ScenarioId)&&foundations!=null&&realm!=null&&seamless!=null&&seamless.production==(version==7)),"Unsupported Crossroads schema/scenario.");
+            StrategicSaveData.Require((version==Version&&scenario==Scenario)||(version==3&&scenario==IncidentState.Id&&incident!=null)||(version==4&&scenario=="CityFoundations-05"&&foundations!=null)||(version==5&&scenario=="RealmOperations-06"&&foundations!=null&&realm!=null)||((version==6&&scenario==SeamlessWorlds.ScenarioId||(version==7||version==8)&&scenario==ProductionRoads.ScenarioId)&&foundations!=null&&realm!=null&&seamless!=null&&seamless.production==(version>=7)&&seamless.dense==(version==8)),"Unsupported Crossroads schema/scenario.");
             var candidate=new CrossroadsScenario(this);
             StrategicSaveData.Require(!string.IsNullOrEmpty(checksum)&&checksum==ComputeHash(),"Crossroads checksum mismatch.");return candidate;
         }
@@ -92,7 +92,7 @@ namespace RPG.Core
         public CrossroadsSaveData CaptureSave()
         {
             if(!CanSave)throw new InvalidOperationException("Finish battle before saving Crossroads.");
-            var d=new CrossroadsSaveData {version=Seamless!=null?(Seamless.ProductionTopology?7:6):Realm!=null?5:Foundations!=null?4:Incident==null?CrossroadsSaveData.Version:3,scenario=Seamless!=null?(Seamless.ProductionTopology?ProductionRoads.ScenarioId:SeamlessWorlds.ScenarioId):Realm!=null?"RealmOperations-06":Foundations!=null?"CityFoundations-05":Incident==null?CrossroadsSaveData.Scenario:IncidentState.Id,foundations=Foundations==null?null:CityFoundationData.Capture(Foundations),incident=Incident==null?null:IncidentSaveData.Capture(Incident),seed=Seed,refresh=Refresh,
+            var d=new CrossroadsSaveData {version=Seamless!=null?(Seamless.DenseTravel?8:Seamless.ProductionTopology?7:6):Realm!=null?5:Foundations!=null?4:Incident==null?CrossroadsSaveData.Version:3,scenario=Seamless!=null?(Seamless.ProductionTopology?ProductionRoads.ScenarioId:SeamlessWorlds.ScenarioId):Realm!=null?"RealmOperations-06":Foundations!=null?"CityFoundations-05":Incident==null?CrossroadsSaveData.Scenario:IncidentState.Id,foundations=Foundations==null?null:CityFoundationData.Capture(Foundations),incident=Incident==null?null:IncidentSaveData.Capture(Incident),seed=Seed,refresh=Refresh,
                 startingSide=(int)StartingSide,activeSide=(int)ActiveSide,completed=CompletedActivations,handoff=HandoffPending,winner=Winner.HasValue?(int)Winner.Value:-1,
                 battleNumber=battleNumber,economy=Economy,waystationFood=WaystationFood,owners=owners.Select(o=>o.HasValue?(int)o.Value:-1).ToArray(),west=DuelSaveForce.Capture(West),east=DuelSaveForce.Capture(East),events=events.ToArray()};
             if(Seamless!=null)d.seamless=SeamlessSaveData.Capture(Seamless);if(Realm!=null)d.realm=RealmSaveData.Capture(Realm);d.checksum=d.ComputeHash();return d;
@@ -109,7 +109,7 @@ namespace RPG.Core
             if(d.version>=5) {
                 StrategicSaveData.Require(d.foundations.realmMode,"Missing 06 economy adapter.");
                 Refresh=d.refresh;ActiveSide=(Side)d.activeSide;CompletedActivations=d.completed;HandoffPending=d.handoff;Winner=d.winner<0?(Side?)null:(Side)d.winner;battleNumber=d.battleNumber;WaystationFood=d.waystationFood;
-                if(d.version>=6)Seamless=new SeamlessWorlds(this,d.seamless.temporary,false,d.version==7);
+                if(d.version>=6)Seamless=new SeamlessWorlds(this,d.seamless.temporary,false,d.version>=7,d.version==8);
                 Realm=d.realm.Restore(this);West=Realm.Armies.Single(f=>f.Formation.FormationId=="realm06-West-army-1");East=Realm.Armies.Single(f=>f.Formation.FormationId=="realm06-East-army-1");
                 West.Gold=CityFoundationData.Decimal(d.west.goldExact);East.Gold=CityFoundationData.Decimal(d.east.goldExact);West.KeepFood=CityFoundationData.Decimal(d.west.foodExact);East.KeepFood=CityFoundationData.Decimal(d.east.foodExact);West.Pressure=d.west.pressure;East.Pressure=d.east.pressure;
                 StrategicSaveData.Require(West.KeepFood<=180&&East.KeepFood<=180&&West.Pressure>=0&&East.Pressure>=0,"Invalid 06 treasury.");

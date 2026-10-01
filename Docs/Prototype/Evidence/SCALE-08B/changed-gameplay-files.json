@@ -1,0 +1,15 @@
+[
+  "Assets/_Project/Core/BattleReplay.cs",
+  "Assets/_Project/Core/CrossroadsSaveData.cs",
+  "Assets/_Project/Core/SeamlessSaveData.cs",
+  "Assets/_Project/Core/SeamlessWorlds.cs",
+  "Assets/_Project/Core/StrategicJourney.cs",
+  "Assets/_Project/Core/TravelScale08.cs",
+  "Assets/_Project/Core/TravelScale08.cs.meta",
+  "Assets/_Project/Core/UnitProfile.cs",
+  "Assets/_Project/Presentation/CrossroadsPresenter.cs",
+  "Assets/_Project/Presentation/SeamlessMapView.cs",
+  "Assets/_Project/Tests/PlayMode/SpellUxPresentationTests.cs",
+  "Assets/_Project/Tests/TravelScale08Tests.cs",
+  "Assets/_Project/Tests/TravelScale08Tests.cs.meta"
+]

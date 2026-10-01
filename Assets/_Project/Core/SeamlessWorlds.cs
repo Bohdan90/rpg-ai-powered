@@ -76,7 +76,8 @@ namespace RPG.Core
         public static string Name(WorldId id)=>id==WorldId.Frontier?"Frontier":"Stone Valley";
         public static readonly IReadOnlyList<PortalLink> Portals=Array.AsReadOnly(new[]{new PortalLink("West",new WorldAddress(WorldId.Frontier,24),new WorldAddress(WorldId.StoneValley,1)),new PortalLink("East",new WorldAddress(WorldId.Frontier,25),new WorldAddress(WorldId.StoneValley,7))});
         public bool ProductionTopology {get;}
-        public StrategicGraph Map(WorldId id)=>ProductionTopology&&id==WorldId.Frontier?ProductionRoads.Map:MapFor(id);
+        public bool DenseTravel {get;}
+        public StrategicGraph Map(WorldId id)=>DenseTravel?(id==WorldId.Frontier?TravelScale08.Mainland:TravelScale08.Valley):ProductionTopology&&id==WorldId.Frontier?ProductionRoads.Map:MapFor(id);
         internal readonly CrossroadsScenario world;
         private readonly WorldKnowledge west=new WorldKnowledge(),east=new WorldKnowledge();
         internal string westMessage="07: select an own army and a known local destination.",eastMessage="07: select an own army and a known local destination.";
@@ -91,9 +92,9 @@ namespace RPG.Core
         public int Revision {get;internal set;}
         public string LastMessage {get;internal set;}="07: local graph movement; only explicit portals cross worlds.";
         public WorldKnowledge Knowledge(Side side)=>side==Side.West?west:east;
-        internal SeamlessWorlds(CrossroadsScenario w,bool temporary,bool initialize=true,bool production=false)
+        internal SeamlessWorlds(CrossroadsScenario w,bool temporary,bool initialize=true,bool production=false,bool dense=false)
         {
-            world=w;TemporaryRoute=temporary;ProductionTopology=production;
+            world=w;TemporaryRoute=temporary;ProductionTopology=production;DenseTravel=dense;
             if(initialize)foreach(var k in new[]{west,east})foreach(var n in Map(WorldId.Frontier).Nodes)k.explored.Add(new WorldAddress(WorldId.Frontier,n.Id));
         }
         public static CrossroadsScenario Create(Side first=Side.West,bool temporary=false,CombatPreset west=CombatPreset.Fire,CombatPreset east=CombatPreset.Ice,uint seed=20260930)

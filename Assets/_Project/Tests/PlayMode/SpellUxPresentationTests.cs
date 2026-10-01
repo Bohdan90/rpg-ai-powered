@@ -39,8 +39,8 @@ namespace RPG.Presentation.Tests
         [UnityTest] public IEnumerator GroundMovementFriendlyInspectionSpecialCancelAndStaffStaySeparate()
         {
             yield return Open();P.ConfigureBattle(new[]{U(1,UnitProfile.IceMageTII,Side.West,8,8),U(2,UnitProfile.HumanWarriorTI,Side.East,9,8),U(3,UnitProfile.HumanWarriorTI,Side.West,8,9)},new Battlefield(23,17),2);Actor(UnitProfile.IceMageTII);
-            string hash=BattleStateHash.Compute(P.State);P.ClickCell(new GridPosition(8,9));P.ConfirmPreview();Assert.That(BattleStateHash.Compute(P.State),Is.EqualTo(hash));P.ClickCell(new GridPosition(7,8));Assert.That(P.HasMovePreview,Is.True);P.CancelPreview();
-            P.SelectSpell(SpellId.Freeze);P.HoverCell(new GridPosition(9,8));P.CancelPreview();Assert.That(P.PrimarySpell,Is.EqualTo(SpellId.IceShard));Assert.That(P.SelectedSpell,Is.Null);P.SelectStaff();P.ClickCell(new GridPosition(9,8));Assert.That(P.Journal.Records.Count,Is.Zero);P.ConfirmPreview();Assert.That(P.Journal.Records.Last().command.kind,Is.EqualTo(nameof(BasicAttackCommand)));
+            int before=P.Journal.Records.Count;string hash=BattleStateHash.Compute(P.State);P.ClickCell(new GridPosition(8,9));P.ConfirmPreview();Assert.That(BattleStateHash.Compute(P.State),Is.EqualTo(hash));P.ClickCell(new GridPosition(7,8));Assert.That(P.HasMovePreview,Is.True);P.CancelPreview();
+            P.SelectSpell(SpellId.Freeze);P.HoverCell(new GridPosition(9,8));P.CancelPreview();Assert.That(P.PrimarySpell,Is.EqualTo(SpellId.IceShard));Assert.That(P.SelectedSpell,Is.Null);P.SelectStaff();P.ClickCell(new GridPosition(9,8));Assert.That(P.Journal.Records.Count,Is.EqualTo(before));P.ConfirmPreview();Assert.That(P.Journal.Records.Count,Is.EqualTo(before+1));Assert.That(P.Journal.Records.Last().command.kind,Is.EqualTo(nameof(BasicAttackCommand)));
             P.EndActivation(null);Assert.That(P.StaffSelected,Is.False);Assert.That(P.SelectedSpell,Is.Null);
         }
         [UnityTest] public IEnumerator HoverCameraCancelAndFriendlyFireNeverMutateAndTargetingClearsOnHandoff()
