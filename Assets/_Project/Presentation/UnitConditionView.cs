@@ -7,7 +7,7 @@ namespace RPG.Presentation
     // A projection of Core pools, never an independent health/damage model.
     public sealed class UnitConditionView : VisualElement
     {
-        private readonly Label title,status;
+        private readonly Label title,status,protection;
         private readonly VisualElement hpFill, armorFill;
         private readonly Label hpText, armorText;
         public UnitConditionView()
@@ -19,6 +19,7 @@ namespace RPG.Presentation
             title.style.flexShrink=0;title.style.height=12;title.style.fontSize=10;title.style.unityTextAlign=TextAnchor.MiddleCenter;Add(title);
             hpFill=Pool("hp",new Color(.16f,.55f,.25f),out hpText);
             armorFill=Pool("armor",new Color(.16f,.40f,.75f),out armorText);
+            protection=new Label{name="unit-protection",pickingMode=PickingMode.Ignore};protection.style.fontSize=10;protection.style.height=12;protection.style.color=new Color(.9f,.65f,1);protection.style.unityFontStyleAndWeight=FontStyle.Bold;Add(protection);
             status=new Label{name="unit-status",pickingMode=PickingMode.Ignore};status.style.color=new Color(.8f,.6f,1);status.style.fontSize=8;status.style.height=10;Add(status);
         }
         private VisualElement Pool(string id,Color color,out Label text)
@@ -36,7 +37,7 @@ namespace RPG.Presentation
         public float SizeForCell(float pixels)
         {
             float width=Mathf.Clamp(pixels*.94f,24,86),row=Mathf.Clamp(pixels*.24f,8,11),heading=Mathf.Clamp(pixels*.28f,9,12);
-            style.width=width;style.height=heading+2*row+(status.text.Length>0?10:0);title.style.height=heading;
+            style.width=width;style.height=heading+2*row+(protection.text.Length>0?12:0)+(status.text.Length>0?10:0);title.style.height=heading;
             title.style.fontSize=width<42?8:10;
             hpFill.parent.style.height=armorFill.parent.style.height=row;
             hpText.style.fontSize=armorText.style.fontSize=width<42?7:9;
@@ -48,10 +49,11 @@ namespace RPG.Presentation
             title.style.color=unit.Status==UnitStatus.Dead?new Color(1,.4f,.4f):current?new Color(1,.86f,.3f):Color.white;
             hpText.text="HP "+unit.Hp+"/"+unit.Profile.MaxHp;
             armorText.text="A "+unit.Armor+"/"+unit.Profile.MaxArmor;
-            status.text=(unit.TemporaryBarrier>0?"Barrier "+unit.TemporaryBarrier+" ":"")+(unit.IsFrozen?"FRZ ":"")+(unit.IsExhausted?"EXH ":"")+(unit.BurnStacks>0?"Burn "+unit.BurnStacks:"");status.style.display=status.text.Length>0?DisplayStyle.Flex:DisplayStyle.None;
+            protection.text=unit.TemporaryBarrier>0?"Temp B "+unit.TemporaryBarrier:"";protection.style.display=protection.text.Length>0?DisplayStyle.Flex:DisplayStyle.None;
+            status.text=(unit.IsFrozen?"FRZ ":"")+(unit.IsExhausted?"EXH ":"")+(unit.BurnStacks>0?"Burn "+unit.BurnStacks:"");status.style.display=status.text.Length>0?DisplayStyle.Flex:DisplayStyle.None;
             hpFill.style.width=Length.Percent(100f*unit.Hp/unit.Profile.MaxHp);
             armorFill.style.width=Length.Percent(unit.Profile.MaxArmor==0?0:100f*unit.Armor/unit.Profile.MaxArmor);
-            tooltip=title.text+" · "+hpText.text+" · Armor "+unit.Armor+"/"+unit.Profile.MaxArmor;
+            tooltip=title.text+" · "+BattlePresenter.ProtectionText(unit)+" · "+BattlePresenter.CombatStatuses(unit);
             style.display=unit.Status==UnitStatus.Escaped?DisplayStyle.None:DisplayStyle.Flex;
         }
     }

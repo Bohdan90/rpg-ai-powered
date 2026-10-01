@@ -134,7 +134,7 @@ namespace RPG.Presentation.Tests
             yield return Open();P.ConfigureBattle(new[]{new UnitState(new UnitId(1),Side.West,UnitProfile.HumanHealerTI,new GridPosition(8,8),Facing.East,hp:10),U(2,UnitProfile.HumanWarriorTI,Side.East,17,8)},new Battlefield(23,17),2);Actor(UnitProfile.HumanHealerTI);
             var cell=new GridPosition(8,8);P.SelectSpell(SpellId.CloseHeal);string hash=BattleStateHash.Compute(P.State);P.ClickCell(cell);
             Assert.That(BattleStateHash.Compute(P.State),Is.EqualTo(hash));Assert.That(P.SpellFootprint,Does.Contain(cell));P.ClickCell(cell);
-            var u=P.State.FindUnit(new UnitId(1));Assert.That(u.Hp,Is.EqualTo(24));Assert.That(u.CloseHealUsed,Is.EqualTo(1));Assert.That(u.ActionAvailable,Is.False);Assert.That(u.CanMove,Is.True);Assert.That(P.LastAttackOutcome,Does.Contain("HP healed +14"));
+            var u=P.State.FindUnit(new UnitId(1));Assert.That(u.Hp,Is.EqualTo(24));Assert.That(u.CloseHealUsed,Is.EqualTo(1));Assert.That(u.ActionAvailable,Is.False);Assert.That(u.CanMove,Is.True);Assert.That(P.LastAttackOutcome,Does.Contain("Close Heal").And.Contain("HP +14"));
             Assert.That(ReplayVerification.Verify(P.Journal.Header,P.Journal.Records,P.Journal.Footer()).Matches,Is.True);
         }
         [UnityTest] public IEnumerator ChangedStateRequiresFreshConfirmationAndFocusLossCancels()

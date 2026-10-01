@@ -71,12 +71,12 @@ namespace RPG.Core
         public const int MaxProvisions=30, PressureTarget=8;
         public RealmOperations Realm { get; internal set; }
         public SeamlessWorlds Seamless { get; internal set; }
-        public StrategicGraph GraphFor(WorldId id)=>Seamless==null?Graph:SeamlessWorlds.MapFor(id);
+        public StrategicGraph GraphFor(WorldId id)=>Seamless==null?Graph:Seamless.Map(id);
         public bool AtOwnCity(DuelForce f)=>f.WorldId==WorldId.Frontier&&f.Node==OwnKeep(f.Formation.Side);
         public bool AtEnemyCity(DuelForce f,int node)=>f.WorldId==WorldId.Frontier&&node==OwnKeep(Other(f.Formation.Side));
         public int ContactCost(DuelForce a,DuelForce b)=>a.WorldId==b.WorldId?GraphFor(a.WorldId).Cost(a.Node,b.Node):-1;
         public CityFoundations Foundations { get; internal set; }
-        public StrategicGraph Graph => Seamless!=null?SeamlessWorlds.Frontier:Foundations!=null?CityFoundations.Map:Incident==null?Map:IncidentState.Map;
+        public StrategicGraph Graph => Seamless!=null?Seamless.Map(WorldId.Frontier):Foundations!=null?CityFoundations.Map:Incident==null?Map:IncidentState.Map;
         public int TargetPressure => Foundations!=null?24:Incident==null?PressureTarget:16;
         public IncidentState Incident { get; private set; }
         public IEnumerable<DuelForce> AllForces => Realm!=null?Realm.Armies:new[]{West,East}.Concat(Incident==null?Enumerable.Empty<DuelForce>():Incident.Raiders.Select(r=>r.Force));
@@ -110,7 +110,7 @@ namespace RPG.Core
         public bool CanAct(Side side)=>Realm!=null?Realm.CanAct(side):ValidSide(side)&&side==ActiveSide&&!HandoffPending&&Encounter==null&&PendingContact==null&&!Winner.HasValue&&(Incident==null||!Incident.WorldPhase)&&Force(side).Continues;
         private void Log(string text)=>events.Add("R"+Refresh+" "+text);
         public bool ContinueHandoff(Side side)
-        {if(!HandoffPending||side!=ActiveSide||Winner.HasValue||Encounter!=null)return false;HandoffPending=false;Realm?.EnsureSelection(side);return true;}
+        {if(!HandoffPending||side!=ActiveSide||Winner.HasValue||Encounter!=null)return false;HandoffPending=false;Realm?.EnsureSelection(side);Seamless?.ResumeJourneys(side);return true;}
         public StrategicMovePreview PreviewMove(Side side,int destination)
         {
             if(Realm!=null)return Realm.PreviewMove(side,destination);

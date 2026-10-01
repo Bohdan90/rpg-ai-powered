@@ -20,7 +20,7 @@ namespace RPG.Presentation
         public SpellId? PrimarySpell => State?.CurrentUnitId==null?null:Primary(State.FindUnit(State.CurrentUnitId.Value).Profile);
         private static SpellId? Primary(UnitProfile p)=>p.IsFireMage?SpellId.FireStream:p.IsIceMage?SpellId.IceShard:(SpellId?)null;
         private SpellId? AimSpell => inspectedSpell??SelectedSpell??(StaffSelected?null:PrimarySpell);
-        public string ConfirmActionText => HasApproachPreview?"Confirm Approach + Attack":pending is CastCommand c?"Confirm "+c.Spell:HasMovePreview?"Confirm Move":"Confirm Attack";
+        public string ConfirmActionText => HasHealApproachPreview?"Confirm Move → Heal":HasApproachPreview?"Confirm Approach + Attack":pending is CastCommand c?"Confirm "+c.Spell:HasMovePreview?"Confirm Move":"Confirm Attack";
         public string SpellDetails {
             get {
                 if(State?.CurrentUnitId==null)return "";
@@ -34,7 +34,7 @@ namespace RPG.Presentation
                     +"\nAmber brackets: legal aim geometry (recipient/status checked separately). Magenta: exact effect. Red X: excluded by obstruction. Allies are named below.";
             }
         }
-        public static string TargetDescription(SpellId s)=>s==SpellId.FireArmor?"Target: Self / one friendly living unit · range 3 · 6 temporary Barrier; expires at recipient’s second next activation; no Armor repair":s==SpellId.FireStream?"Target: Direction through cell center · thin line · range 3 (diagonals included)":s==SpellId.Fireball?"Target: Ground cell, empty or occupied · center range 8 · blast radius 1":s==SpellId.IceShield?"Target: Self / friendly living unit · range 4":s==SpellId.CloseHeal?"Target: Self / adjacent friendly living unit · range 1":s==SpellId.Freeze?"Target: Hostile living unit · range 6":"Target: Hostile living unit · range 8";
+        public static string TargetDescription(SpellId s)=>s==SpellId.FireArmor?"Target: Self / one friendly living unit · range 3 · 6 temporary Barrier; expires at recipient’s second next activation; no Armor repair":s==SpellId.FireStream?"Target: Direction through cell center · SHORT LINE · range 3 · all units along the stream · FRIENDLY FIRE":s==SpellId.Fireball?"Target: Ground cell, empty or occupied · center range 8 · blast radius 1":s==SpellId.IceShield?"Target: Self / friendly living unit · range 4":s==SpellId.CloseHeal?"Target: Self / adjacent friendly living unit · range 1 · Move → Heal if reachable this activation":s==SpellId.Freeze?"Target: Hostile living unit · range 6":"LONG SINGLE TARGET · hostile living unit · range 8 · contact roll; no built-in Freeze/Slow";
         public void StartCombatLab(CombatLabMatch match,bool nearContact=true)
         {
             if(World!=null||Duel!=null)return;
@@ -81,6 +81,23 @@ namespace RPG.Presentation
         {
             var command=new CastCommand(State.CurrentUnitId.Value,spell,cell,friendly);
             var p=BattleResolver.PreviewSpell(State,command);var actor=State.FindUnit(command.Actor);
+            if(spell==SpellId.CloseHeal&&!p.IsLegal) {
+                var target=State.OccupantAt(cell);
+                if(target!=null&&target.Side==actor.Side&&actor.Position.DistanceTo(cell)>1) {
+                    pendingHeal=HealApproachPreview.Query(State,actor.Id,target.Id);
+                    if(pendingHeal!=null) {
+                        pending=pendingHeal.Movement;MovementRisk=pendingHeal.Risk;
+                        spellPreviewCells=pendingHeal.OnArrival.Cells;spellBlockedCells=pendingHeal.OnArrival.BlockedCells;spellCenter=cell;
+                        PreviewText="Move → Heal · "+UnitName(actor.Id)+" → "+UnitName(target.Id)
+                            +"\nCast cell "+Cell(pendingHeal.Movement.Path.Last())+" · Movement "+pendingHeal.Movement.Path.Count+" / "+actor.MovementRemaining
+                            +"\nPath: "+string.Join(" → ",pendingHeal.Movement.Path.Select(Cell))
+                            +"\nHP +"+Math.Min(target.Profile.MaxHp-target.Hp,pendingHeal.OnArrival.Magnitude)+" · existing cleanse · Action + Exertion · one use"
+                            +"\n"+OpportunityRiskCount+" OA risk(s); movement consequences resolve BEFORE heal revalidation."
+                            +"\nClick the same ally again to confirm. No partial movement if this plan is unavailable.";
+                        return;
+                    }
+                }
+            }
             spellPreviewCells=p.Cells.ToArray();spellBlockedCells=p.BlockedCells.ToArray();spellCenter=cell;
             // A default attack must actually hit the hovered enemy, never silently aim past it.
             bool outside=spell==SpellId.FireStream&&!p.Cells.Contains(cell);
@@ -93,6 +110,8 @@ namespace RPG.Presentation
                 +(p.Blockers.Count>0?"\nAll blockers: "+string.Join("; ",p.Blockers.Select(e=>Reason(e,spell))):"")
                 +(p.Magnitude>0?"\nMagnitude "+p.Magnitude:"\nStatus / protection effect")+" · contact "+p.ContactChance+"%";
             // Explicit direction may intentionally hit cells before the cursor obstruction; Core still validates the selected aim.
+            if(spell==SpellId.CloseHeal&&!p.IsLegal&&actor.Position.DistanceTo(cell)>1)
+                PreviewText+="\nCannot reach and heal this activation. No movement or cast committed.";
             if(select)pending=p.IsLegal&&(!outside||SelectedSpell.HasValue)?command:null;
         }
         private static string Reason(CommandError e,SpellId s)
@@ -107,7 +126,8 @@ namespace RPG.Presentation
             if(!actionAvailable){spellPreviewCells=null;spellBlockedCells=null;spellCenter=null;}
             spellEnvelope=!State.Outcome.IsEnded&&!IsAiTurn&&actionAvailable&&AimSpell.HasValue?BattleResolver.SpellAimCells(State,id.Value,AimSpell.Value):Array.Empty<GridPosition>();
         }
-        public static string CombatStatuses(UnitState u)=>"Barrier "+u.TemporaryBarrier+(u.FireProtection?" Fire Armor":"")
+        public static string ProtectionText(UnitState u)=>"HP "+u.Hp+"/"+u.Profile.MaxHp+" | Armor "+u.Armor+"/"+u.Profile.MaxArmor+(u.TemporaryBarrier>0?" | Temporary Barrier "+u.TemporaryBarrier:"");
+        public static string CombatStatuses(UnitState u)=>""+(u.FireProtection?" Fire Armor":"")
             +(u.BurnStacks>0?" · Burn "+u.BurnStacks+" ("+u.BurnTicks+" ticks)":"")+(u.IsFrozen?" · FROZEN":"")+(u.IsExhausted?" · EXHAUSTED":"")+(u.IsSilenced?" · SILENCED":"");
     }
 }

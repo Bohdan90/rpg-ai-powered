@@ -47,7 +47,14 @@ namespace RPG.Presentation
         }
         public string ConnectedArmyName(UnitId id) {var c=ConnectedCharacter(id);return Duel?.Realm==null||c==null?"":Duel.Realm.Armies.FirstOrDefault(f=>f.Formation.Members.Contains(c))?.Formation.FormationId??"";}
         public string UnitName(UnitId id)
-        {var c=ConnectedCharacter(id);return c==null?(Lab.HasValue||State.FindUnit(id).Profile.IsCaster||State.FindUnit(id).Profile.HasGracefulExit?State.FindUnit(id).Profile.Id+" #"+id:PrototypeFixture.Name(id)):(Duel?.Realm!=null?"["+ConnectedArmyName(id).Replace("realm06-","")+"] ":"")+c.CharacterId+" · "+c.Profile.Id+(IsCommander(id)?" *":"");}
+        {
+            var c=ConnectedCharacter(id);var u=State.FindUnit(id);
+            if(c!=null)return (Duel?.Realm!=null?"["+ConnectedArmyName(id).Replace("realm06-","")+"] ":"")+c.CharacterId+" · "+c.Profile.Id+(IsCommander(id)?" *":"");
+            string standard=PrototypeFixture.Name(id),role=Mission01Intel.ProfileLabel(u.Profile);
+            // Named legacy fixtures are valid only when their actual side/profile matches.
+            return !Lab.HasValue&&!u.Profile.IsCaster&&!u.Profile.HasGracefulExit&&standard.StartsWith((u.Side==Side.West?"W ":"E ")+role)
+                ?standard:u.Side+" "+u.Profile.Id+" #"+id;
+        }
         public bool IsCommander(UnitId id)=>World==null&&Duel==null?(id.Value==1||id.Value==6||id.Value==19):Duel?.Realm!=null?ConnectedCharacter(id)!=null&&Duel.Realm.Armies.Any(f=>f.Formation.Commander==ConnectedCharacter(id)):ConnectedCharacter(id)?.IsCommander==true;
         public void StartStrategicScenario()
         {StrategicSaveMessage="One manual slot · strategic map only.";ShowStrategicScenario(new StrategicScenario());}
@@ -65,7 +72,7 @@ namespace RPG.Presentation
                 loadedEncounter=World.Encounter;State=loadedEncounter.Battle.State;
                 PlayerVsAi=true;AiSide=Side.East;LastAttackOutcome="";
                 Journal=new BattleJournal(State,"Connected_Mission01",Application.version+" / Unity "+Application.unityVersion,"Player","AI");
-                log.Clear();Message="Connected encounter: "+string.Join(" + ",loadedEncounter.Participants)+". Persistent roster; no restart/healing on battle exit.";
+                log.Clear();combatFeed.Clear();Message="Connected encounter: "+string.Join(" + ",loadedEncounter.Participants)+". Persistent roster; no restart/healing on battle exit.";
                 nextAiTime=Time.unscaledTime+.4f;grid.Resize(State.Battlefield);hud.Resize(State.Battlefield);FitBoard();ClearPreview();Refresh();
             }
             else if(World.Encounter==null)PlayerVsAi=false;
@@ -112,7 +119,7 @@ namespace RPG.Presentation
             initialUnits = battle.State.Units.ToArray(); initialBoard = battle.State.Battlefield; initialSeed = battle.State.InitialSeed;
             State = battle.State; Journal = new BattleJournal(State,"Persistence_Battle_"+persistence.BattleNumber,Application.version+" / Unity "+Application.unityVersion,
                 PlayerVsAi&&AiSide==Side.West?"AI":"Player",PlayerVsAi&&AiSide==Side.East?"AI":"Player");
-            AiExplanation="No AI decision yet.";nextAiTime=Time.unscaledTime+.4f;log.Clear();Message="Persistence Battle "+persistence.BattleNumber+" started.";
+            AiExplanation="No AI decision yet.";nextAiTime=Time.unscaledTime+.4f;log.Clear();combatFeed.Clear();Message="Persistence Battle "+persistence.BattleNumber+" started.";
             grid.Resize(State.Battlefield);hud.Resize(State.Battlefield);FitBoard();ClearPreview();Refresh();
         }
         public void Zoom(float factor) { zoom = Mathf.Clamp(zoom * factor, .4f, 1); if(State!=null){ClearPreview();ShowViews();} }
@@ -157,6 +164,8 @@ namespace RPG.Presentation
         private bool pendingFriendly;
         private void OnApplicationFocus(bool focused){if(!focused&&hud!=null&&State!=null){CancelPreview();SeamlessMap?.CancelInputs();}}
         private MeleeApproachPreview pendingApproach;
+        private HealApproachPreview pendingHeal;
+        public bool HasHealApproachPreview => pendingHeal!=null;
         public bool HasApproachPreview => pendingApproach!=null;
         private GridPosition? selected;
         public GridPosition? PinnedCell => selected;
@@ -165,11 +174,13 @@ namespace RPG.Presentation
         public string PreviewText { get; private set; } = "Click a cell or a unit to preview.";
         public string Message { get; private set; } = "Hotseat: both sides are controlled here.";
         public IReadOnlyList<string> RecentEvents => log;
+        private readonly List<string> combatFeed=new List<string>();
+        public IEnumerable<string> CombatFeed => combatFeed.AsEnumerable().Reverse().Take(8);
         public VisualElement HudRoot => hud.Root;
         public OpportunityAttackPreview MovementRisk { get; private set; }
         public int OpportunityRiskCount => MovementRisk == null ? 0 : MovementRisk.Exposures.Sum(e => e.Threats.Count(t => t.WouldReact));
         public bool PreviewEscapes { get; private set; }
-        public bool HasMovePreview => pending is MoveCommand && pendingApproach==null;
+        public bool HasMovePreview => pending is MoveCommand && pendingApproach==null && pendingHeal==null;
         private readonly Dictionary<GridPosition, IReadOnlyList<UnitId>> threats = new Dictionary<GridPosition, IReadOnlyList<UnitId>>();
         public IReadOnlyDictionary<GridPosition, IReadOnlyList<UnitId>> ThreatCells => threats;
         public static string Cell(GridPosition p) => "(" + p.X + "," + p.Y + ")";
@@ -224,7 +235,7 @@ namespace RPG.Presentation
             if(World!=null||Duel!=null)return;
             LastAttackOutcome = "";
             var result = BattleResolver.StartBattle(initialUnits, initialSeed, initialBoard);
-            ResetAim(); State = result.State; Journal=new BattleJournal(State,Fixture.ToString(),Application.version+" / Unity "+Application.unityVersion,PlayerVsAi&&AiSide==Side.West?"AI":"Player",PlayerVsAi&&AiSide==Side.East?"AI":"Player"); AiExplanation="No AI decision yet."; nextAiTime=Time.unscaledTime+.4f; log.Clear(); Append(result.Events); Message = "Restarted with seed " + initialSeed + ".";
+            ResetAim(); State = result.State; Journal=new BattleJournal(State,Fixture.ToString(),Application.version+" / Unity "+Application.unityVersion,PlayerVsAi&&AiSide==Side.West?"AI":"Player",PlayerVsAi&&AiSide==Side.East?"AI":"Player"); AiExplanation="No AI decision yet."; nextAiTime=Time.unscaledTime+.4f; log.Clear();combatFeed.Clear(); Append(result.Events); Message = "Restarted with seed " + initialSeed + ".";
             grid.Resize(State.Battlefield); hud.Resize(State.Battlefield); FitBoard();
             ClearPreview(); Refresh();
         }
@@ -235,7 +246,7 @@ namespace RPG.Presentation
             State = result.State;
             Message = result.IsApplied ? command.GetType().Name + " applied." : "Rejected by Core: " + result.Error;
             if(result.IsApplied)ResetAim();
-            if (result.IsApplied) Append(result.Events); else AddLog(Message);
+            if (result.IsApplied) Append(result.Events,command); else AddLog(Message);
             if (result.IsApplied && State.Outcome.IsEnded && persistence != null && !persistenceResolved)
             {
                 persistence.Resolve(State); persistenceResolved=true;
@@ -249,6 +260,16 @@ namespace RPG.Presentation
         {
             if(IsAiTurn||!selected.HasValue||pending==null)return;
             if(pendingStateHash!=BattleStateHash.Compute(State)){var cell=selected.Value;PreviewCell(cell,pendingFriendly,true);PreviewText+="\nState changed — review the new preview and confirm again.";ShowViews();return;}
+            var heal=pendingHeal;
+            if(heal!=null) {
+                var movedHeal=Submit(heal.Movement);
+                var caster=State.FindUnit(heal.Heal.Actor);var target=State.FindUnit(heal.Target);
+                if(movedHeal.IsApplied&&caster.IsActive&&caster.Position==heal.Movement.Path.Last()
+                    &&target!=null&&target.IsActive&&target.Position==heal.Heal.Cell
+                    &&BattleResolver.Validate(State,heal.Heal)==CommandError.None)Submit(heal.Heal);
+                else {Message+=" Approach stopped; Close Heal was not cast or charged.";ShowViews();}
+                return;
+            }
             var approach=pendingApproach;
             if(approach==null){Submit(pending);return;}
             var moved=Submit(approach.Movement);
@@ -264,10 +285,10 @@ namespace RPG.Presentation
         {
             if (State.Outcome.IsEnded || IsAiTurn) return;
             pendingStateHash=BattleStateHash.Compute(State);pendingFriendly=friendlyConfirmed;
-            selected = pin ? cell : (GridPosition?)null; aimHover=cell; pending = null; pendingApproach=null; MovementRisk = null; PreviewEscapes = false; spellPreviewCells=null;spellBlockedCells=null;spellCenter=null;
+            selected = pin ? cell : (GridPosition?)null; aimHover=cell; pending = null; pendingApproach=null;pendingHeal=null; MovementRisk = null; PreviewEscapes = false; spellPreviewCells=null;spellBlockedCells=null;spellCenter=null;
             var actor = State.FindUnit(State.CurrentUnitId.Value); var target = State.OccupantAt(cell);
             if(PreviewSelectedSpell(cell,friendlyConfirmed))return;
-            if(target!=null&&target.Side==actor.Side&&Primary(actor.Profile).HasValue&&!StaffSelected){PreviewText="Inspect "+UnitName(target.Id)+" · HP "+target.Hp+" / Armor "+target.Armor+". Choose an explicit friendly spell to cast.";ShowViews();return;}
+            if(target!=null&&target.Side==actor.Side&&Primary(actor.Profile).HasValue&&!StaffSelected){PreviewText="Inspect "+UnitName(target.Id)+" · "+ProtectionText(target)+". Choose an explicit friendly spell to cast.";ShowViews();return;}
             if (target != null && target.Id != actor.Id)
             {
                 spellPreviewCells=new[]{cell};spellCenter=cell;
@@ -359,7 +380,7 @@ namespace RPG.Presentation
             var path = Pathfinder.FindPath(State, actor.Id, cell);
             var unit = State.OccupantAt(cell);
             string text = "Hover " + Cell(cell) + " " + (unit != null ? UnitName(unit.Id) + " | " + OaStatus(unit)
-                    + "\nHP " + unit.Hp + " / Armor " + unit.Armor + " | Facing " + unit.Facing + (unit.IsDefending ? " | Defending" : "")
+                    + "\n" + ProtectionText(unit) + " | Facing " + unit.Facing + (unit.IsDefending ? " | Defending" : "")
                 : path.Found ? "— Core path cost " + path.Cost : "— no reachable path");
             var sources = ZoneOfControl.Sources(State, actor.Side, cell);
             if (sources.Count > 0) text += "\nEnemy ZoC: " + string.Join(", ", sources.Select(id => UnitName(id) + " [" + OaStatus(State.FindUnit(id)) + "]"));
@@ -372,7 +393,7 @@ namespace RPG.Presentation
             else if (State.Battlefield.IsRetreatZone(actor.Side == Side.West ? Side.East : Side.West, cell)) text += "\nOpponent's edge — NOT your escape.";
             return text;
         }
-        private void ClearPreview() { pendingApproach=null;spellPreviewCells=null;spellBlockedCells=null;spellCenter=null;aimHover=null;inspectedSpell=null; pending = null; selected = null; MovementRisk = null; PreviewEscapes = false; PreviewText = "Hover to preview. Click once to pin; click the same cell again to act. Green cells: Core reachable."; hud.ResetChoices(); }
+        private void ClearPreview() { pendingApproach=null;pendingHeal=null;spellPreviewCells=null;spellBlockedCells=null;spellCenter=null;aimHover=null;inspectedSpell=null; pending = null; selected = null; MovementRisk = null; PreviewEscapes = false; PreviewText = "Hover to preview. Click once to pin; click the same cell again to act. Green cells: Core reachable."; hud.ResetChoices(); }
         private void Refresh()
         {
             reachable.Clear(); rangedReach.Clear(); RangedReachMessage=""; threats.Clear();
@@ -405,7 +426,7 @@ namespace RPG.Presentation
             grid.ShowWaypoint(HasMovePreview&&selected.HasValue?selected:null);
             hud.Refresh(State, selected.HasValue && pending != null && !State.Outcome.IsEnded, selected);
         }
-        private void Append(IEnumerable<BattleEvent> events)
+        private void Append(IEnumerable<BattleEvent> events,BattleCommand command=null)
         {
             var outcomes = new List<string>();
             foreach (var e in events)
@@ -421,7 +442,7 @@ namespace RPG.Presentation
                     : e.Kind == BattleEventKind.ConditionCleansed ? "Condition cleansed" : null;
                 if (outcome != null)
                 {
-                    outcomes.Add(who + " → " + UnitName(e.Target.Value) + ": " + outcome);
+                    outcomes.Add(who + " → " + (e.Target.HasValue?UnitName(e.Target.Value):who) + ": " + outcome);
                     line += " — " + outcome;
                 }
                 if (e.Target.HasValue) line += " → " + UnitName(e.Target.Value);
@@ -439,7 +460,8 @@ namespace RPG.Presentation
                 if (e.Outcome.HasValue) line += " — Winner " + e.Outcome.Value.VictorySide + ", Loser " + e.Outcome.Value.DefeatedSide + ", " + e.Outcome.Value.Reason;
                 AddLog(line);
             }
-            if (outcomes.Count > 0) LastAttackOutcome = string.Join("\n", outcomes);
+            var readable=CombatOutcomeText.Format(events,UnitName,command);
+            if(readable.Count>0){LastAttackOutcome=string.Join("\n",readable);combatFeed.AddRange(readable);if(combatFeed.Count>40)combatFeed.RemoveRange(0,combatFeed.Count-40);}
         }
         private void AddLog(string line) { log.Add(line); if (log.Count > 200) log.RemoveAt(0); }
     }

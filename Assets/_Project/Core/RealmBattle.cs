@@ -29,6 +29,7 @@ namespace RPG.Core
         {
             var p=PreviewEncounter(side,targetId);if(!p.Legal){return false;}
             foreach(var f in p.Attackers){f.Tempo=StrategicScenario.AfterAttackCost(f.Tempo);LowerCeilings(f);}
+            foreach(var f in p.Attackers.Concat(p.Defenders))World.Seamless?.PauseJourney(f.Formation.FormationId,"Battle/contact requires a new order.");
             World.SetRealmContact(new IncidentContact(p.Lead,p.Target,p.Attackers,p.Defenders));
             Say("Battle "+"contact"+"; all participants at start; each attacker paid Attack Cost.");return true;
         }
@@ -52,7 +53,7 @@ namespace RPG.Core
         {
             var f=Selected(side);if(!CanAct(side)||f==null||!f.Continues||f.Tempo<0)return false;
             var enemies=armies.Where(o=>o.Continues&&o.Formation.Side!=side&&World.ContactCost(f,o)>=0&&(World.Seamless==null||World.Seamless.IsVisibleEnemy(side,o.Formation.FormationId))).Select(o=>o.Node).ToArray();if(enemies.Length==0)return false;
-            f.Node=RetreatDestination(f,enemies);f.Tempo-=40;LowerCeilings(f);CancelAbsentRepairs(side);Say(f.Formation.FormationId+" Withdrawal -> "+f.Node+"; Tempo "+f.Tempo);World.Seamless?.Observe();return true;
+            World.Seamless?.PauseJourney(f.Formation.FormationId,"Withdrawal changed formation position.");f.Node=RetreatDestination(f,enemies);f.Tempo-=40;LowerCeilings(f);CancelAbsentRepairs(side);Say(f.Formation.FormationId+" Withdrawal -> "+f.Node+"; Tempo "+f.Tempo);World.Seamless?.Observe();return true;
         }
         public bool ResolveBattle(BattleState result)
         {
