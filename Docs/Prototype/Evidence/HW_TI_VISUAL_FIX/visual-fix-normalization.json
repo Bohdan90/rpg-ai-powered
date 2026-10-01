@@ -1,0 +1,55 @@
+{
+  "sourceSha256": "a6cf836cb751294f3027427a711bde796a6cfd14856f5be2124233bd908d18f9",
+  "shape": "Grip_R",
+  "baked": true,
+  "changedVertices": 623,
+  "sourceVertices": 125937,
+  "weightsUnchanged": true,
+  "bones": 24,
+  "manualSculptOperations": 0,
+  "targetHandleDiameterMeters": 0.028,
+  "lods": [
+    {
+      "name": "HW_TI_102K",
+      "triangles": 102053,
+      "vertices": 125937,
+      "bootTriangles": 13779,
+      "unweighted": 0
+    },
+    {
+      "name": "HW_TI_75K",
+      "triangles": 75000,
+      "vertices": 107596,
+      "bootTriangles": 10528,
+      "unweighted": 0
+    },
+    {
+      "name": "HW_TI_50K_UNIFORM",
+      "triangles": 49999,
+      "vertices": 85012,
+      "bootTriangles": 7088,
+      "unweighted": 0
+    },
+    {
+      "name": "HW_TI_50K_WEIGHTED",
+      "triangles": 50000,
+      "vertices": 83665,
+      "bootTriangles": 13779,
+      "unweighted": 0
+    },
+    {
+      "name": "HW_TI_25K",
+      "triangles": 25000,
+      "vertices": 61051,
+      "bootTriangles": 3200,
+      "unweighted": 0
+    }
+  ],
+  "decimateDirectionExperiment": {
+    "invertFalseBootTriangles": 61,
+    "invertTrueBootTriangles": 13779,
+    "uniformBootTriangles": 7088,
+    "sourceBootTriangles": 13779
+  },
+  "selectedInvert": true
+}

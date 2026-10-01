@@ -1,0 +1,62 @@
+{
+    "persistentPath": "/tmp/hw-ti-engine/preferences/Library/Application Support/DefaultCompany/My project",
+    "device": "Apple M4 Pro",
+    "cpu": "Apple M4 Pro",
+    "ramMiB": 49152,
+    "environment": "Unity Editor real Play Mode; wall frame time includes editor/vsync; not GPU benchmark",
+    "measurements": [
+        {
+            "characters": 18,
+            "lod": 0,
+            "triangles": 1836954,
+            "vertices": 2268126,
+            "storedSkinnedRenderers": 18,
+            "activeSkinnedRenderers": 18,
+            "materials": 2,
+            "drawCalls": 282,
+            "meanFrameMs": 13.314597129821777,
+            "p95FrameMs": 14.166581153869629,
+            "allocatedBytes": 580724410
+        },
+        {
+            "characters": 18,
+            "lod": 1,
+            "triangles": 1350000,
+            "vertices": 1958166,
+            "storedSkinnedRenderers": 18,
+            "activeSkinnedRenderers": 18,
+            "materials": 2,
+            "drawCalls": 282,
+            "meanFrameMs": 12.23750114440918,
+            "p95FrameMs": 13.155704498291016,
+            "allocatedBytes": 581624331
+        },
+        {
+            "characters": 18,
+            "lod": 2,
+            "triangles": 899982,
+            "vertices": 1384650,
+            "storedSkinnedRenderers": 18,
+            "activeSkinnedRenderers": 18,
+            "materials": 2,
+            "drawCalls": 282,
+            "meanFrameMs": 10.53973388671875,
+            "p95FrameMs": 11.193877220153809,
+            "allocatedBytes": 581983547
+        },
+        {
+            "characters": 18,
+            "lod": 3,
+            "triangles": 900000,
+            "vertices": 1265184,
+            "storedSkinnedRenderers": 18,
+            "activeSkinnedRenderers": 18,
+            "materials": 2,
+            "drawCalls": 282,
+            "meanFrameMs": 10.267472267150879,
+            "p95FrameMs": 10.759622573852539,
+            "allocatedBytes": 582810395
+        }
+    ],
+    "completed": true
+}
