@@ -372,3 +372,7 @@ Typed explicit classifier for all seven active Spells; Fire Stream/Fire Armor/Ic
 ## 2026-10-01 — authorized main delivery of Engagement Casting
 
 User requested main transfer after successful validation. Starting develop f8b8229; source feature/engagement-casting89df25d. Only overlapping append in this checkpoint required resolution; both histories retained. Game code/tests match validated source, main settings untouched. Main Unity observed outside Play Mode; no restart/party interruption. Final feature regression708Edit+94Play=802PASS,0failed/skipped remains source-run provenance, not a new main run. Protected9files/22saves unchanged; NO PUSH. Launch My project → Gate C → Combat Lab → Fire vs Ice (near contact); new battles use rules4.
+
+## 2026-10-01 — reconcile main squash ancestry
+
+Starting develop `be1a0f3`, fetched origin/main `d2145ac` (squashed Initial commit #1). A normal trial merge reported27 add/add conflicts. Verified main tree `354d03de5cccdd420ff0921ed136e03cf09babe0` exactly equals existing develop ancestor `26e0f9a`; no unique main content. Merge records main ancestry while retaining the complete current develop tree (ours strategy justified by whole-tree equality, not blind conflict suppression). Only this checkpoint changes; no game/source/config/test changes. Prior fresh708Edit+94Play=802PASS remains validation provenance; no new run claimed or necessary for unchanged game code. Existing9local protected files remain untouched. Local resolution only, NO PUSH; remote PR will reflect it after develop is published.
