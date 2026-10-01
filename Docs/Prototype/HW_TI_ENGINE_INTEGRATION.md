@@ -90,3 +90,7 @@ Body/head/gambeson remain **unit-scoped**. Skeleton/Avatar and clips are **REUSE
 ## 2026-10-01 player-review correction
 
 The preceding report is historical proof97fd3d1. Player rejected wrist penetration, wrong-side shield and open sword hand; its generic attachment assessment is **superseded**. Bounded follow-up now uses Humanoid RightHand+GripPoint, outside LeftLowerArm+ShieldMountPoint, one baked Grip_R correction (same topology/weights/24bones), one runtime skinned renderer,75k and empirically verified boot-preserving50k candidates. Raw source and this original evidence remain intact. Actual correction, new performance and validation provenance: [HW_TI_VISUAL_FIX.md](HW_TI_VISUAL_FIX.md). No main merge or PLAYER ACCEPTED claim.
+
+## Final acceptance and delivery
+
+HW_TI VISUAL ACCEPTED / MERGED TO DEVELOP. See HW_TI_VISUAL_FIX.md final integration entry and Evidence/HW_TI_MAIN_INTEGRATION. Accepted feature c75d3f0 merged normally as ae64deb; no asset regeneration or global roster replacement. Fresh post-merge11Edit+2Play PASS; prior814full PASS retained, not rerun.
