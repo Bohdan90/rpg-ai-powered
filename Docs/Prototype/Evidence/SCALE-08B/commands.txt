@@ -1,0 +1,7 @@
+All Unity runs use /private/tmp/strategic-map-ux/run-tests.sh, isolated project and CFFIXED_USER_HOME; Unity6000.6.2f1.
+Focused: EditMode TravelScale08Tests;StrategicJourneyTests -> 41PASS (105413)
+Focused: PlayMode StrategicMapUxPresentationTests;TacticalCompanionTests ->7PASS (105714)
+Focused after regression-test correction: PlayMode SpellUxPresentationTests ->15PASS (110133)
+Final full EditMode ->682PASS (110213)
+Final full PlayMode ->91PASS (110411)
+Historical within-task full EditMode682PASS (105445); first full PlayMode90PASS/1FAIL (105746), obsolete absolute journal-count assertion, corrected and rerun.

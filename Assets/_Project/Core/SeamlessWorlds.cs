@@ -75,6 +75,9 @@ namespace RPG.Core
         public static StrategicGraph MapFor(WorldId id)=>id==WorldId.Frontier?Frontier:id==WorldId.StoneValley?Valley:throw new ArgumentOutOfRangeException(nameof(id));
         public static string Name(WorldId id)=>id==WorldId.Frontier?"Frontier":"Stone Valley";
         public static readonly IReadOnlyList<PortalLink> Portals=Array.AsReadOnly(new[]{new PortalLink("West",new WorldAddress(WorldId.Frontier,24),new WorldAddress(WorldId.StoneValley,1)),new PortalLink("East",new WorldAddress(WorldId.Frontier,25),new WorldAddress(WorldId.StoneValley,7))});
+        public bool ProductionTopology {get;}
+        public bool DenseTravel {get;}
+        public StrategicGraph Map(WorldId id)=>DenseTravel?(id==WorldId.Frontier?TravelScale08.Mainland:TravelScale08.Valley):ProductionTopology&&id==WorldId.Frontier?ProductionRoads.Map:MapFor(id);
         internal readonly CrossroadsScenario world;
         private readonly WorldKnowledge west=new WorldKnowledge(),east=new WorldKnowledge();
         internal string westMessage="07: select an own army and a known local destination.",eastMessage="07: select an own army and a known local destination.";
@@ -89,10 +92,10 @@ namespace RPG.Core
         public int Revision {get;internal set;}
         public string LastMessage {get;internal set;}="07: local graph movement; only explicit portals cross worlds.";
         public WorldKnowledge Knowledge(Side side)=>side==Side.West?west:east;
-        internal SeamlessWorlds(CrossroadsScenario w,bool temporary,bool initialize=true)
+        internal SeamlessWorlds(CrossroadsScenario w,bool temporary,bool initialize=true,bool production=false,bool dense=false)
         {
-            world=w;TemporaryRoute=temporary;
-            if(initialize)foreach(var k in new[]{west,east})foreach(var n in Frontier.Nodes)k.explored.Add(new WorldAddress(WorldId.Frontier,n.Id));
+            world=w;TemporaryRoute=temporary;ProductionTopology=production;DenseTravel=dense;
+            if(initialize)foreach(var k in new[]{west,east})foreach(var n in Map(WorldId.Frontier).Nodes)k.explored.Add(new WorldAddress(WorldId.Frontier,n.Id));
         }
         public static CrossroadsScenario Create(Side first=Side.West,bool temporary=false,CombatPreset west=CombatPreset.Fire,CombatPreset east=CombatPreset.Ice,uint seed=20260930)
         {
@@ -117,7 +120,7 @@ namespace RPG.Core
             var result=new HashSet<WorldAddress>();
             var sources=world.Realm.Armies.Where(f=>f.Formation.Side==side&&f.Continues).Select(f=>f.Address).ToList();
             if(world.Foundations.City(side).Functioning)sources.Add(new WorldAddress(WorldId.Frontier,world.OwnKeep(side)));
-            foreach(var source in sources){var q=new Queue<(WorldAddress,int)>();var seen=new HashSet<WorldAddress>{source};q.Enqueue((source,0));while(q.Count>0){var (at,depth)=q.Dequeue();result.Add(at);if(depth==2)continue;foreach(int n in MapFor(at.World).Neighbors(at.Node)){var next=new WorldAddress(at.World,n);if(SightOpen(at.World,at.Node,n)&&seen.Add(next))q.Enqueue((next,depth+1));}}}
+            foreach(var source in sources){var q=new Queue<(WorldAddress,int)>();var seen=new HashSet<WorldAddress>{source};q.Enqueue((source,0));while(q.Count>0){var (at,depth)=q.Dequeue();result.Add(at);if(depth==2)continue;foreach(int n in Map(at.World).Neighbors(at.Node)){var next=new WorldAddress(at.World,n);if(SightOpen(at.World,at.Node,n)&&seen.Add(next))q.Enqueue((next,depth+1));}}}
             return result;
         }
         private static string Composition(DuelForce f)=>string.Join(" · ",f.Formation.LivingMembers.GroupBy(c=>c.Profile.Id).OrderBy(g=>g.Key).Select(g=>g.Count()+" "+g.Key));
@@ -142,7 +145,12 @@ namespace RPG.Core
                 }
                 // Reobserving an empty old position invalidates its current-looking marker only.
                 foreach(var old in k.armies.Values.ToArray())if(now.Contains(old.Address)&&!world.Realm.Armies.Any(f=>f.Continues&&f.Formation.FormationId==old.id&&f.Address==old.Address))k.armies.Remove(old.id);
-                foreach(var f in world.Realm.Armies.Where(f=>f.Formation.Side!=side&&f.Continues&&now.Contains(f.Address))){bool newContact=!knownBefore.Contains(f.Formation.FormationId)||!oldObserved.Contains(f.Address);var snapshot=Snapshot(f);k.armies[snapshot.id]=snapshot;if(newContact&&snapshot.id!=alreadyRecordedActor)Event(side,f.WorldId,snapshot.id,"Contact","Observed "+snapshot.composition,f.Node);}
+                foreach(var f in world.Realm.Armies.Where(f=>f.Formation.Side!=side&&f.Continues&&now.Contains(f.Address))){bool newContact=!knownBefore.Contains(f.Formation.FormationId)||!oldObserved.Contains(f.Address);var snapshot=Snapshot(f);k.armies[snapshot.id]=snapshot;if(newContact){foreach(var order in journeys.Values.Where(j=>world.Realm.Army(j.army)?.Formation.Side==side).ToArray())PauseJourney(order.army,"New hostile observed: choose the next action.");if(snapshot.id!=alreadyRecordedActor)Event(side,f.WorldId,snapshot.id,"Contact","Observed "+snapshot.composition,f.Node);}}
+            }
+            foreach(var order in journeys.Values.Where(j=>j.paused=="").ToArray()){
+                var f=world.Realm.Army(order.army);
+                if(f==null||!f.Continues||FormationStamp(f)!=order.formation)PauseJourney(order.army,"Formation changed; choose destination again.");
+                else if(world.Realm.Armies.Any(o=>IsVisibleEnemy(f.Formation.Side,o.Formation.FormationId)&&world.ContactCost(f,o)>=0))PauseJourney(order.army,"Hostile contact: choose the next action.");
             }
         }
         private void Step(DuelForce f,WorldAddress next)
@@ -160,19 +168,18 @@ namespace RPG.Core
             var p=new StrategicMovePreview();var f=world.Realm.Selected(side);var k=Knowledge(side);
             if(!world.Realm.CanAct(side)||f==null||!f.Continues){p.Reason="Select a continuing own army.";return p;}
             if(destination.World!=f.WorldId||k.At(destination)==KnowledgeLevel.Unexplored||destination==f.Address){p.Reason="Choose another known node in the army's world; Traverse is separate.";return p;}
-            var graph=MapFor(f.WorldId);
+            var graph=Map(f.WorldId);
             p.Path=graph.Path(f.Node,destination.Node,n=>k.explored.Contains(new WorldAddress(f.WorldId,n))&&!world.AtEnemyCity(f,n)&&(world.AtOwnCity(f)&&n==f.Node||f.WorldId==WorldId.Frontier&&n==world.OwnKeep(side)||!world.Realm.Armies.Any(o=>o!=f&&o.Continues&&o.WorldId==f.WorldId&&o.Node==n&&(o.Formation.Side==side||k.observed.Contains(o.Address)))),f.RealmProvisions==0);
             if(p.Path.Length<2){p.Reason="No known legal local route.";return p;}p.Cost=graph.PathCost(p.Path,f.RealmProvisions==0);if(p.Cost>f.Tempo)p.Reason="Insufficient Tempo: "+p.Cost+" required.";return p;
         }
         public bool Move(Side side,WorldAddress destination,int expectedRevision=-1)
         {
-            if(expectedRevision>=0&&expectedRevision!=Revision)return false;var p=PreviewMove(side,destination);if(!p.IsLegal)return false;var f=world.Realm.Selected(side);var graph=MapFor(f.WorldId);
-            westGroupFloor=west.nextSequence;eastGroupFloor=east.nextSequence;
+            if(expectedRevision>=0&&expectedRevision!=Revision)return false;var p=PreviewMove(side,destination);if(!p.IsLegal)return false;var f=world.Realm.Selected(side);var graph=Map(f.WorldId);
+            journeys.Remove(f.Formation.FormationId);westGroupFloor=west.nextSequence;eastGroupFloor=east.nextSequence;
             for(int i=1;i<p.Path.Length;i++){
-                var next=new WorldAddress(f.WorldId,p.Path[i]);if(!(next.World==WorldId.Frontier&&next.Node==world.OwnKeep(side))&&world.Realm.Armies.Any(o=>o!=f&&o.Continues&&o.Address==next)){LastMessage="Movement stopped before an obstructed local passage.";break;}
-                var visibleEnemies=world.Realm.Armies.Where(o=>IsVisibleEnemy(side,o.Formation.FormationId)).Select(o=>o.Formation.FormationId).ToHashSet();
-                f.Tempo-=graph.Cost(f.Node,next.Node,f.RealmProvisions==0);world.Realm.LowerCeilings(f);Step(f,next);Revision++;world.Realm.CancelAbsentRepairs(side);LastMessage=f.Formation.FormationId+" moved to "+f.Address+" · Tempo "+f.Tempo;
-                if(world.Realm.Armies.Any(o=>IsVisibleEnemy(side,o.Formation.FormationId)&&!visibleEnemies.Contains(o.Formation.FormationId))){LastMessage+=" · new hostile contact: remaining route cancelled.";break;}
+                var next=new WorldAddress(f.WorldId,p.Path[i]);if(!TryMovementLeg(f,next,out var stop)){LastMessage=stop;break;}
+                LastMessage=f.Formation.FormationId+" moved to "+f.Address+" · Tempo "+f.Tempo;
+                if(stop!=null){LastMessage+=" · "+stop;break;}
             }
             westGroupFloor=eastGroupFloor=int.MaxValue;Publish(side);return true;
         }
@@ -187,7 +194,7 @@ namespace RPG.Core
         public bool Traverse(Side side,string armyId,WorldAddress origin,int expectedRevision=-1)
         {
             if(expectedRevision>=0&&Revision!=expectedRevision)return false;var p=PreviewTraverse(side,armyId,origin);if(!p.Legal)return false;var f=world.Realm.Army(armyId);var link=Portals.Single(l=>l.Contains(origin));var to=link.Other(origin);
-            f.Tempo-=20;world.Realm.LowerCeilings(f);Revision++;
+            journeys.Remove(armyId);f.Tempo-=20;world.Realm.LowerCeilings(f);Revision++;
             if(world.Realm.Armies.Any(o=>o.Continues&&o.Address==to)){LastMessage="PassageBlocked · attempt cost 20 Tempo; formation remains at "+origin;Event(side,origin.World,armyId,"PassageBlocked",LastMessage,origin.Node);Publish(side);return true;}
             Knowledge(side).links.Add(link.Id);Step(f,to);world.Realm.CancelAbsentRepairs(side);LastMessage=armyId+" traversed to "+to+" · 20 Tempo; no Refresh.";Event(side,to.World,armyId,"Traverse",LastMessage,to.Node);Publish(side);return true;
         }

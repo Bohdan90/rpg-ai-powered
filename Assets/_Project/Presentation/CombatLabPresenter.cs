@@ -20,21 +20,21 @@ namespace RPG.Presentation
         public SpellId? PrimarySpell => State?.CurrentUnitId==null?null:Primary(State.FindUnit(State.CurrentUnitId.Value).Profile);
         private static SpellId? Primary(UnitProfile p)=>p.IsFireMage?SpellId.FireStream:p.IsIceMage?SpellId.IceShard:(SpellId?)null;
         private SpellId? AimSpell => inspectedSpell??SelectedSpell??(StaffSelected?null:PrimarySpell);
-        public string ConfirmActionText => HasApproachPreview?"Confirm Approach + Attack":pending is CastCommand c?"Confirm "+c.Spell:HasMovePreview?"Confirm Move":"Confirm Attack";
+        public string ConfirmActionText => HasHealApproachPreview?"Confirm Move → Heal":HasApproachPreview?"Confirm Approach + Attack":pending is CastCommand c?"Confirm "+c.Spell:HasMovePreview?"Confirm Move":"Confirm Attack";
         public string SpellDetails {
             get {
                 if(State?.CurrentUnitId==null)return "";
                 var actor=State.FindUnit(State.CurrentUnitId.Value);var spell=AimSpell;
                 if(!spell.HasValue)return StaffSelected?"Staff Strike · Physical 5 · melee range 1 · Action. Explicit alternative; no automatic fallback.":"";
                 var s=spell.Value;int limit=SpellRules.Limit(s);
-                return (!actor.ActionAvailable?"UNAVAILABLE: Action spent; remaining legal Movement is separate. Action resets on the next activation.\n":"")+(inspectedSpell.HasValue?"Inspecting (selected action unchanged): ":SelectedSpell.HasValue?"Selected: ":"Primary attack: ")+s+"\n"+TargetDescription(s)
+                return (BattleResolver.IsSpellEngagementBlocked(State,actor.Id,s)?"UNAVAILABLE: Blocked while Engaged. Disengage lawfully or select Staff.\n":"")+(!actor.ActionAvailable?"UNAVAILABLE: Action spent; remaining legal Movement is separate. Action resets on the next activation.\n":"")+(inspectedSpell.HasValue?"Inspecting (selected action unchanged): ":SelectedSpell.HasValue?"Selected: ":"Primary attack: ")+s+"\n"+TargetDescription(s)
                     +" · Action"+(SpellRules.Exertion(s)?" + Exertion":" · Spell (not Exertion)")
                     +(limit==int.MaxValue?"":"\nRemaining "+Math.Max(0,limit-SpellRules.Used(actor,s))+"/"+limit+" · resets only on global Strategic Refresh")
                     +"\n"+(!actor.ActionAvailable?"Spell targeting is hidden until Action is available.":SelectedSpell.HasValue?"Hover for exact effect; click to pin, click the same cell again to cast. Cancel clears the pin.":"Hover to preview; first click pins, second click on the same enemy casts. Empty ground remains Move; allies are inspected.")
                     +"\nAmber brackets: legal aim geometry (recipient/status checked separately). Magenta: exact effect. Red X: excluded by obstruction. Allies are named below.";
             }
         }
-        public static string TargetDescription(SpellId s)=>s==SpellId.FireArmor?"Target: Self / one friendly living unit · range 3 · 6 temporary Barrier; expires at recipient’s second next activation; no Armor repair":s==SpellId.FireStream?"Target: Direction through cell center · thin line · range 3 (diagonals included)":s==SpellId.Fireball?"Target: Ground cell, empty or occupied · center range 8 · blast radius 1":s==SpellId.IceShield?"Target: Self / friendly living unit · range 4":s==SpellId.CloseHeal?"Target: Self / adjacent friendly living unit · range 1":s==SpellId.Freeze?"Target: Hostile living unit · range 6":"Target: Hostile living unit · range 8";
+        public static string TargetDescription(SpellId s)=>s==SpellId.FireArmor?"Target: Self / one friendly living unit · range 3 · 6 temporary Barrier; expires at recipient’s second next activation; no Armor repair":s==SpellId.FireStream?"Target: Direction through cell center · SHORT LINE · range 3 · all units along the stream · FRIENDLY FIRE":s==SpellId.Fireball?"Target: Ground cell, empty or occupied · center range 8 · blast radius 1":s==SpellId.IceShield?"Target: Self / friendly living unit · range 4":s==SpellId.CloseHeal?"Target: Self / adjacent friendly living unit · range 1 · Move → Heal if reachable this activation":s==SpellId.Freeze?"Target: Hostile living unit · range 6":"LONG SINGLE TARGET · hostile living unit · range 8 · contact roll; no built-in Freeze/Slow";
         public void StartCombatLab(CombatLabMatch match,bool nearContact=true)
         {
             if(World!=null||Duel!=null)return;
@@ -81,6 +81,23 @@ namespace RPG.Presentation
         {
             var command=new CastCommand(State.CurrentUnitId.Value,spell,cell,friendly);
             var p=BattleResolver.PreviewSpell(State,command);var actor=State.FindUnit(command.Actor);
+            if(spell==SpellId.CloseHeal&&!p.IsLegal) {
+                var target=State.OccupantAt(cell);
+                if(target!=null&&target.Side==actor.Side&&actor.Position.DistanceTo(cell)>1) {
+                    pendingHeal=HealApproachPreview.Query(State,actor.Id,target.Id);
+                    if(pendingHeal!=null) {
+                        pending=pendingHeal.Movement;MovementRisk=pendingHeal.Risk;
+                        spellPreviewCells=pendingHeal.OnArrival.Cells;spellBlockedCells=pendingHeal.OnArrival.BlockedCells;spellCenter=cell;
+                        PreviewText="Move → Heal · "+UnitName(actor.Id)+" → "+UnitName(target.Id)
+                            +"\nCast cell "+Cell(pendingHeal.Movement.Path.Last())+" · Movement "+pendingHeal.Movement.Path.Count+" / "+actor.MovementRemaining
+                            +"\nPath: "+string.Join(" → ",pendingHeal.Movement.Path.Select(Cell))
+                            +"\nHP +"+Math.Min(target.Profile.MaxHp-target.Hp,pendingHeal.OnArrival.Magnitude)+" · existing cleanse · Action + Exertion · one use"
+                            +"\n"+OpportunityRiskCount+" OA risk(s); movement consequences resolve BEFORE heal revalidation."
+                            +"\nClick the same ally again to confirm. No partial movement if this plan is unavailable.";
+                        return;
+                    }
+                }
+            }
             spellPreviewCells=p.Cells.ToArray();spellBlockedCells=p.BlockedCells.ToArray();spellCenter=cell;
             // A default attack must actually hit the hovered enemy, never silently aim past it.
             bool outside=spell==SpellId.FireStream&&!p.Cells.Contains(cell);
@@ -93,11 +110,13 @@ namespace RPG.Presentation
                 +(p.Blockers.Count>0?"\nAll blockers: "+string.Join("; ",p.Blockers.Select(e=>Reason(e,spell))):"")
                 +(p.Magnitude>0?"\nMagnitude "+p.Magnitude:"\nStatus / protection effect")+" · contact "+p.ContactChance+"%";
             // Explicit direction may intentionally hit cells before the cursor obstruction; Core still validates the selected aim.
+            if(spell==SpellId.CloseHeal&&!p.IsLegal&&actor.Position.DistanceTo(cell)>1)
+                PreviewText+="\nCannot reach and heal this activation. No movement or cast committed.";
             if(select)pending=p.IsLegal&&(!outside||SelectedSpell.HasValue)?command:null;
         }
         private static string Reason(CommandError e,SpellId s)
         {
-            switch(e){case CommandError.SelfOnly:return "Legacy Self-only recipient restriction";case CommandError.OutsideSpellLine:return "Choose a direction cell other than the caster cell";case CommandError.InvalidSpellTarget:return "Wrong target — "+TargetDescription(s);case CommandError.TargetNotFound:return "A living target is required";case CommandError.NoAction:return "Action spent";case CommandError.Silenced:return "Silence blocks Spell actions (staff remains an explicit alternative)";case CommandError.Exhausted:return "Exhausted blocks this Exertion action";case CommandError.SourceBudgetSpent:return "Source budget depleted until global Strategic Refresh";case CommandError.OutOfRange:return "Out of range";case CommandError.BlockedLineOfSight:return "Line of sight blocked / sealed crossing";case CommandError.SolidCell:return "Solid cell cannot be targeted";case CommandError.FriendlyFireNotConfirmed:return "Affected allies/self — explicit Friendly Fire confirmation required";case CommandError.NoUsefulEffect:return "No missing HP or supported harmful condition to cleanse";default:return e.ToString();}
+            switch(e){case CommandError.BlockedWhileEngaged:return "Blocked while Engaged";case CommandError.SelfOnly:return "Legacy Self-only recipient restriction";case CommandError.OutsideSpellLine:return "Choose a direction cell other than the caster cell";case CommandError.InvalidSpellTarget:return "Wrong target — "+TargetDescription(s);case CommandError.TargetNotFound:return "A living target is required";case CommandError.NoAction:return "Action spent";case CommandError.Silenced:return "Silence blocks Spell actions (staff remains an explicit alternative)";case CommandError.Exhausted:return "Exhausted blocks this Exertion action";case CommandError.SourceBudgetSpent:return "Source budget depleted until global Strategic Refresh";case CommandError.OutOfRange:return "Out of range";case CommandError.BlockedLineOfSight:return "Line of sight blocked / sealed crossing";case CommandError.SolidCell:return "Solid cell cannot be targeted";case CommandError.FriendlyFireNotConfirmed:return "Affected allies/self — explicit Friendly Fire confirmation required";case CommandError.NoUsefulEffect:return "No missing HP or supported harmful condition to cleanse";default:return e.ToString();}
         }
         private void RefreshSpellEnvelope()
         {
@@ -105,9 +124,10 @@ namespace RPG.Presentation
             if(current!=aimActor||State.Round!=aimRound){ResetAim();spellPreviewCells=null;spellBlockedCells=null;spellCenter=null;aimHover=null;aimActor=current;aimRound=State.Round;}
             bool actionAvailable=id.HasValue&&State.FindUnit(id.Value).ActionAvailable;
             if(!actionAvailable){spellPreviewCells=null;spellBlockedCells=null;spellCenter=null;}
-            spellEnvelope=!State.Outcome.IsEnded&&!IsAiTurn&&actionAvailable&&AimSpell.HasValue?BattleResolver.SpellAimCells(State,id.Value,AimSpell.Value):Array.Empty<GridPosition>();
+            spellEnvelope=!State.Outcome.IsEnded&&!IsAiTurn&&actionAvailable&&AimSpell.HasValue&&!BattleResolver.IsSpellEngagementBlocked(State,id.Value,AimSpell.Value)?BattleResolver.SpellAimCells(State,id.Value,AimSpell.Value):Array.Empty<GridPosition>();
         }
-        public static string CombatStatuses(UnitState u)=>"Barrier "+u.TemporaryBarrier+(u.FireProtection?" Fire Armor":"")
+        public static string ProtectionText(UnitState u)=>"HP "+u.Hp+"/"+u.Profile.MaxHp+" | Armor "+u.Armor+"/"+u.Profile.MaxArmor+(u.TemporaryBarrier>0?" | Temporary Barrier "+u.TemporaryBarrier:"");
+        public static string CombatStatuses(UnitState u)=>""+(u.FireProtection?" Fire Armor":"")
             +(u.BurnStacks>0?" · Burn "+u.BurnStacks+" ("+u.BurnTicks+" ticks)":"")+(u.IsFrozen?" · FROZEN":"")+(u.IsExhausted?" · EXHAUSTED":"")+(u.IsSilenced?" · SILENCED":"");
     }
 }

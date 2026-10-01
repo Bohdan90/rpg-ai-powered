@@ -5,6 +5,7 @@ using System.Linq;
 namespace RPG.Core
 {
     public enum SpellId { FireStream, FireArmor, Fireball, IceShard, IceShield, Freeze, CloseHeal }
+    public enum EngagementCasting { Allowed=1, Blocked=2 }
     public enum DamageType { Physical, Fire, WaterIce }
     public sealed class CastCommand : BattleCommand
     {
@@ -27,6 +28,20 @@ namespace RPG.Core
     }
     public static class SpellRules
     {
+        // Authored delivery data: no range/shape inference and no valid zero/default value.
+        private static readonly Dictionary<SpellId,EngagementCasting> engagementCasting=new Dictionary<SpellId,EngagementCasting>{
+            {SpellId.FireStream,EngagementCasting.Allowed},{SpellId.FireArmor,EngagementCasting.Allowed},
+            {SpellId.Fireball,EngagementCasting.Blocked},{SpellId.IceShard,EngagementCasting.Blocked},
+            {SpellId.IceShield,EngagementCasting.Allowed},{SpellId.Freeze,EngagementCasting.Blocked},
+            {SpellId.CloseHeal,EngagementCasting.Allowed}};
+        static SpellRules(){ValidateData();}
+        public static EngagementCasting EngagementCastingFor(SpellId spell)
+        {
+            if(!engagementCasting.TryGetValue(spell,out var value)||!Enum.IsDefined(typeof(EngagementCasting),value))
+                throw new InvalidOperationException("Active Spell requires explicit EngagementCasting: "+spell);
+            return value;
+        }
+        public static void ValidateData(){foreach(SpellId spell in Enum.GetValues(typeof(SpellId)))EngagementCastingFor(spell);}
         public static bool Exertion(SpellId s)=>s!=SpellId.FireStream && s!=SpellId.IceShard;
         public static int Range(SpellId s,int fireRulesVersion=2)=>s==SpellId.FireArmor?(fireRulesVersion>=2?3:0):s==SpellId.FireStream?3:s==SpellId.Fireball||s==SpellId.IceShard?8:s==SpellId.Freeze?6:s==SpellId.IceShield?4:s==SpellId.CloseHeal?1:0;
         public static int Limit(SpellId s)=>s==SpellId.Fireball||s==SpellId.Freeze?2:s==SpellId.CloseHeal?3:int.MaxValue;
@@ -64,6 +79,13 @@ namespace RPG.Core
             } else result.Add(center);
             return result;
         }
+        public static bool IsSpellEngagementBlocked(BattleState state,UnitId caster,SpellId spell)
+        {
+            var actor=state.FindUnit(caster);
+            return state.FireRulesVersion>=4&&actor!=null&&actor.IsActive&&SpellRules.Has(actor.Profile,spell)
+                &&SpellRules.EngagementCastingFor(spell)==EngagementCasting.Blocked
+                &&ZoneOfControl.Sources(state,actor.Side,actor.Position).Count>0;
+        }
         private static CommandError ValidateCast(BattleState state,UnitState actor,CastCommand command)
             => CastBlockers(state,actor,command).FirstOrDefault();
         // One diagnostic/validation path. Read-only; collecting all blockers never probes execution/RNG.
@@ -72,6 +94,7 @@ namespace RPG.Core
             var errors=new List<CommandError>();
             if(!actor.ActionAvailable)errors.Add(CommandError.NoAction);
             if(actor.IsSilenced)errors.Add(CommandError.Silenced);
+            if(IsSpellEngagementBlocked(state,actor.Id,command.Spell))errors.Add(CommandError.BlockedWhileEngaged);
             if(!SpellRules.Has(actor.Profile,command.Spell))errors.Add(CommandError.AbilityUnavailable);
             if(SpellRules.Exertion(command.Spell)&&actor.IsExhausted)errors.Add(CommandError.Exhausted);
             if(SpellRules.Used(actor,command.Spell)>=SpellRules.Limit(command.Spell))errors.Add(CommandError.SourceBudgetSpent);

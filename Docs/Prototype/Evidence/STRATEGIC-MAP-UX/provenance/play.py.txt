@@ -1,0 +1,38 @@
+import json,time,pathlib,subprocess,sys
+root=pathlib.Path('/private/tmp/strategic-map-ux')
+def state():
+ f=root/'state.json'
+ for _ in range(20):
+  try:
+   if time.time()-f.stat().st_mtime>3:raise ValueError('stale')
+   return json.loads(f.read_text())
+  except (ValueError,FileNotFoundError):time.sleep(.15)
+ raise RuntimeError('No fresh observer')
+def command(c):
+ (root/'command.txt').write_text(c);time.sleep(.5)
+def mouse(*args):
+ subprocess.run([str(root/'mouse'),*map(str,args)],check=True,stdout=subprocess.DEVNULL);time.sleep(.25)
+ with (root/'results/os-input.jsonl').open('a') as f:f.write(json.dumps({'at':time.time(),'args':args})+'\n')
+def button(name):
+ s=state();b=next(b for b in s['buttons'] if b['name']==name)
+ if not (10<b['y']<s['rh']-15):
+  command('scroll:'+name);s=state();b=next(b for b in s['buttons'] if b['name']==name)
+ assert 0<b['y']<s['rh'],(name,b,s['rh'])
+ scale=s['gw']/s['rw'];mouse(s['gx']+b['x']*scale,s['gy']+45+b['y']*scale)
+def node(n):
+ command('focus:'+n);command('scroll:worlds-viewport');button('world-node-'+n)
+def snap(name):
+ (root/'results'/f'{name}.json').write_text(json.dumps(state(),indent=2))
+ subprocess.run(['/usr/sbin/screencapture','-x','-l','35761',str(root/'results'/f'{name}.png')],check=True)
+def end():
+ s=state()['world'];side=s['activeSide'];button('realm-end')
+ if state()['world']['activeSide']==side and not state()['world']['handoff']:button('realm-end')
+ assert state()['world']['handoff']
+ button('realm-continue')
+def cycle():end();end()
+def journey():
+ w=state()['world'];sid=w['activeSide'];army=w['realm']['west' if sid==0 else 'east']['selected'];return next((j for j in w['seamless']['journeys'] if j['army']==army),None)
+def army():
+ w=state()['world'];sid=w['activeSide'];aid=w['realm']['west' if sid==0 else 'east']['selected'];return next(a for a in w['realm']['armies'] if a['id']==aid)
+def go(n):node(n);button('worlds-destination')
+if __name__=='__main__':exec(sys.argv[1])

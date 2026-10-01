@@ -1,0 +1,59 @@
+{
+  "status": "TECHNICAL PASS / READY FOR PLAYER SCALE REVIEW",
+  "startingFeature": "6178e1be3351040c595e6ef8d8483eaf3af2290a",
+  "branch": "feature/strategic-map-ux",
+  "mainUnchanged": "3fa4a570413643a19ea2cf02e37d8fb186f5ef24",
+  "topology": {
+    "macroA": 60,
+    "macroB": 15,
+    "poi": 22,
+    "zones": 8,
+    "hiddenA": 453,
+    "hiddenB": 139,
+    "positionsA": 513,
+    "positionsB": 154,
+    "segmentsA": 528,
+    "segmentsB": 159,
+    "portalLinks": 2,
+    "mainKeepDepthTempo": 800,
+    "mainOuterDepthTempo": 900,
+    "valleyDepthTempo": 450,
+    "valleyRatio": 0.5625,
+    "actualNormalCrossingActivations": 10,
+    "macroLandEdges": 95
+  },
+  "gui": {
+    "S1": "PASS actual retained journey and handoffs",
+    "S2": "PASS midroad marker/progress",
+    "S3": "PASS controlled initial road contact -> actual Attack/Fight; full aftermath automated",
+    "S4": "PASS actual portal -> incremental exploration -> two branch choices across R10-R13",
+    "S5": "PASS 10 actual own activations A2->25; B depth Core measurement, no claimed mouse full B crossing",
+    "T1": "PASS actual EW14 HA12 HW10 HH9 Fire8 activation progression",
+    "fix": "PASS actual next-own land departure from portal with initial Tempo2",
+    "save": "PASS actual Save, public scene recreation/load, exact checksum, subsequent actual cycle"
+  },
+  "focused": {
+    "EditMode": 41,
+    "PlayMode": 7,
+    "failed": 0,
+    "skipped": 0,
+    "SpellUxPlayModeAfterCorrection": 15
+  },
+  "full": {
+    "EditMode": 682,
+    "PlayMode": 91,
+    "total": 773,
+    "failed": 0,
+    "skipped": 0,
+    "editXml": "tests/EditMode-20261001-110213.xml",
+    "playXml": "tests/PlayMode-20261001-110411.xml"
+  },
+  "protected": {
+    "files": 9,
+    "saveReplayFiles": 22,
+    "changed": 0
+  },
+  "push": "NOT PERFORMED",
+  "mergeToDevelop": "NOT PERFORMED",
+  "playerAcceptance": "PENDING"
+}

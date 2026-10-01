@@ -127,8 +127,10 @@ namespace RPG.Tests
             Assert.That(s.FindUnit(Actor).IsExhausted,Is.True);
             Assert.That(BattleResolver.Validate(s,new BasicAttackCommand(Actor,Target)),Is.EqualTo(CommandError.None));
             Assert.That(BattleResolver.Validate(s,new DefendCommand(Actor)),Is.EqualTo(CommandError.None));
-            Assert.That(BattleResolver.Validate(s,new CastCommand(Actor,SpellId.IceShard,new GridPosition(9,8))),Is.EqualTo(CommandError.None));
-            Assert.That(BattleResolver.Validate(s,new CastCommand(Actor,SpellId.Freeze,new GridPosition(9,8))),Is.EqualTo(CommandError.Exhausted));
+            // Keep the Exhausted assertion independent of the new Engagement blocker.
+            s.FindUnit(Target).Position=new GridPosition(10,8);
+            Assert.That(BattleResolver.Validate(s,new CastCommand(Actor,SpellId.IceShard,new GridPosition(10,8))),Is.EqualTo(CommandError.None));
+            Assert.That(BattleResolver.Validate(s,new CastCommand(Actor,SpellId.Freeze,new GridPosition(10,8))),Is.EqualTo(CommandError.Exhausted));
         }
         [Test] public void GracefulExitAfterMissIsConsumedAndSecondExitCanProvoke()
         {

@@ -13,7 +13,7 @@ namespace RPG.Presentation
         private readonly Camera camera;
         private readonly VisualElement surface;
         private readonly Label aiInfo, rangeInfo;
-        private readonly Label active, queue, preview, message, events, hover, cell;
+        private readonly Label active, queue, preview, message, events, hover, cell, combatFeed;
         private readonly Button confirm, cancel, defend, end;
         private readonly Label riskWarning, retreat, escaped, outcomeText;
         private readonly Label persistence, attackOutcome;
@@ -50,14 +50,14 @@ namespace RPG.Presentation
             surface.RegisterCallback<WheelEvent>(e => { presenter.Zoom(e.delta.y > 0 ? 1.12f : .89f); e.StopPropagation(); });
             surface.RegisterCallback<PointerMoveEvent>(e => {
                 if (presenter.State != null && Pick(surface.WorldToLocal(e.position), out var p)) { hoveredCell = p; presenter.HoverCell(p); hover.text = presenter.SelectedSpell.HasValue?"Aim cell "+BattlePresenter.Cell(p):presenter.Hover(p); }
-                else {hoveredCell=null;presenter.LeaveBoard();}
+                else {hoveredCell=null;presenter.LeaveBoard();hover.text="Hover the battlefield to inspect current protection.";}
             });
-            surface.RegisterCallback<PointerLeaveEvent>(e=>presenter.LeaveBoard());
+            surface.RegisterCallback<PointerLeaveEvent>(e=>{hoveredCell=null;presenter.LeaveBoard();hover.text="Hover the battlefield to inspect current protection.";});
             surface.RegisterCallback<PointerDownEvent>(e => {
                 if (presenter.State == null || !Pick(surface.WorldToLocal(e.position), out var p)) return;
                 if (e.button == 1) { presenter.CancelPreview(); e.StopPropagation(); return; }
                 if (e.button != 0) return;
-                Root.Focus();
+                Root.Focus();hoveredCell=p;
                 if(presenter.PinnedCell!=p)friendly.SetValueWithoutNotify(false); presenter.ClickCell(p); e.StopPropagation();
             });
 
@@ -93,10 +93,11 @@ namespace RPG.Presentation
             attackOutcome.style.color = new Color(1, .8f, .35f);
             rangeInfo = Text(panel, "", 12); rangeInfo.name="ranged-reach-info";
             rangeInfo.style.color=new Color(.3f,.85f,1f);
-            queue = Text(panel, "", 12); queue.name = "activation-queue";
-            retreat = Text(panel, "", 13); retreat.name = "retreat-info";
-            escaped = Text(panel, "", 12); escaped.name = "escaped-list";
-            hover = Text(panel, "Hover the battlefield.", 12);
+            var turnDetails=new Foldout{text="Turn order / Retreat details",value=false};panel.Add(turnDetails);turnDetails.Q<Toggle>().style.color=Color.white;
+            queue = Text(turnDetails, "", 12); queue.name = "activation-queue";
+            retreat = Text(turnDetails, "", 13); retreat.name = "retreat-info";
+            escaped = Text(turnDetails, "", 12); escaped.name = "escaped-list";
+            hover = Text(panel, "Hover the battlefield.", 12);hover.name="unit-inspection";
             cell = Text(panel, "", 12);
             preview = Text(panel, "", 14); preview.name = "command-preview";
             friendly = new Toggle("Explicitly confirm allied target");
@@ -152,8 +153,9 @@ namespace RPG.Presentation
             replayPath.labelElement.style.color=new Color(.89f,.93f,.97f);panel.Add(replayPath);
             AddButton(panel,"Export battle + session","export-replay",()=> { var path=presenter.ExportReplay();if(path!=null)replayPath.value=path; });
             AddButton(panel,"Load / verify replay file","verify-replay",()=>presenter.VerifyReplay(replayPath.value));
-            Text(panel, "RECENT CORE EVENTS", 14);
-            events = Text(panel, "", 11); events.name = "battle-events";
+            Text(panel,"COMBAT OUTCOMES",14);combatFeed=Text(panel,"",13);combatFeed.name="combat-feed";
+            var debug=new Foldout{text="Developer Core events (full detail)",value=false};panel.Add(debug);debug.Q<Toggle>().style.color=Color.white;
+            events = Text(debug, "", 11); events.name = "battle-events";
         }
 
         public void Resize(Battlefield board)
@@ -169,7 +171,7 @@ namespace RPG.Presentation
         public void Refresh(BattleState state, bool canConfirm, GridPosition? selected)
         {
             var actor = state.FindUnit(state.CurrentUnitId.Value);
-            if (hoveredCell.HasValue) hover.text = presenter.SelectedSpell.HasValue?"Aim cell "+BattlePresenter.Cell(hoveredCell.Value):presenter.Hover(hoveredCell.Value);
+            hover.text = hoveredCell.HasValue ? (presenter.SelectedSpell.HasValue?"Aim cell "+BattlePresenter.Cell(hoveredCell.Value):presenter.Hover(hoveredCell.Value)) : "Hover the battlefield to inspect current protection.";
             bool ended = state.Outcome.IsEnded;
             bool playerTurn = !presenter.IsAiTurn;
             bool connected=presenter.World!=null||presenter.Duel!=null;
@@ -183,15 +185,15 @@ namespace RPG.Presentation
             spellSelect.choices=new[]{ordinary}.Concat(SpellRules.Kit(actor.Profile).Select(s=>s.ToString())).ToList();
             spellSelect.SetValueWithoutNotify(presenter.SelectedSpell?.ToString()??ordinary);
             Root.Q<Button>("primary-attack").text=presenter.PrimarySpell.HasValue?"Primary: "+presenter.PrimarySpell+" · select, then click again":"Basic / Move";
-            Root.Q("primary-attack").SetEnabled(playerTurn&&!ended&&(!presenter.PrimarySpell.HasValue||actor.ActionAvailable));Root.Q("staff-attack").style.display=actor.Profile.IsCaster?DisplayStyle.Flex:DisplayStyle.None;Root.Q("staff-attack").SetEnabled(playerTurn&&!ended&&actor.ActionAvailable);
+            Root.Q("primary-attack").SetEnabled(playerTurn&&!ended&&(!presenter.PrimarySpell.HasValue||actor.ActionAvailable&&!BattleResolver.IsSpellEngagementBlocked(state,actor.Id,presenter.PrimarySpell.Value)));Root.Q("staff-attack").style.display=actor.Profile.IsCaster?DisplayStyle.Flex:DisplayStyle.None;Root.Q("staff-attack").SetEnabled(playerTurn&&!ended&&actor.ActionAvailable);
             Root.Q<Label>("spell-details").text=presenter.SpellDetails;
             spellSelect.SetEnabled(playerTurn&&!ended&&actor.ActionAvailable);
-            foreach(SpellId spell in Enum.GetValues(typeof(SpellId))){var b=Root.Q<Button>("spell-"+spell);b.style.display=SpellRules.Has(actor.Profile,spell)?DisplayStyle.Flex:DisplayStyle.None;b.SetEnabled(playerTurn&&!ended&&actor.ActionAvailable);}
+            foreach(SpellId spell in Enum.GetValues(typeof(SpellId))){var b=Root.Q<Button>("spell-"+spell);b.style.display=SpellRules.Has(actor.Profile,spell)?DisplayStyle.Flex:DisplayStyle.None;bool blocked=BattleResolver.IsSpellEngagementBlocked(state,actor.Id,spell);b.style.whiteSpace=WhiteSpace.Normal;b.style.minHeight=blocked?48:28;b.text=spell+(blocked?"\nBlocked while Engaged":spell==SpellId.FireArmor?" · Self / Ally":"");b.tooltip=blocked?"Blocked while Engaged":BattlePresenter.TargetDescription(spell);b.SetEnabled(playerTurn&&!ended&&actor.ActionAvailable&&!blocked);}
 
             foreach(CombatLabMatch lab in Enum.GetValues(typeof(CombatLabMatch)))Root.Q("lab-"+lab).SetEnabled(!connected);
             aiInfo.text=presenter.PlayerVsAi?presenter.AiExplanation:"Hotseat";
             rangeInfo.text=presenter.RangedReachMessage;
-            attackOutcome.text = presenter.LastAttackOutcome.Length == 0 ? "" : "LAST ATTACK RESULT\n" + presenter.LastAttackOutcome;
+            attackOutcome.text = presenter.LastAttackOutcome.Length == 0 ? "" : "LAST COMBAT RESULT\n" + presenter.LastAttackOutcome;
             attackOutcome.style.display = attackOutcome.text.Length == 0 ? DisplayStyle.None : DisplayStyle.Flex;
             rangeInfo.style.display=rangeInfo.text.Length>0?DisplayStyle.Flex:DisplayStyle.None;
             if (ended != showedOutcome) panel.schedule.Execute(() => panel.scrollOffset = Vector2.zero);
@@ -206,7 +208,7 @@ namespace RPG.Presentation
             persistenceContinue.style.display=presenter.PersistenceActive?DisplayStyle.Flex:DisplayStyle.None;
             persistenceContinue.SetEnabled(presenter.CanContinuePersistence);
             active.text = ended ? "No active turn — battle completed." : "ROUND " + state.Round + " · " + presenter.UnitName(actor.Id) + "\n" + actor.Side + (actor.OwnRetreatEdge.HasValue?" · "+actor.OwnRetreatEdge+" approach":"")
-                + " | HP " + actor.Hp + " / Armor " + actor.Armor + "\nMovement " + actor.MovementRemaining
+                + "\n" + BattlePresenter.ProtectionText(actor) + "\nMovement " + actor.MovementRemaining
                 + " | Action " + (actor.ActionAvailable ? "available" : "spent")
                 + "\nFacing " + actor.Facing + " | Defending " + (actor.IsDefending ? "yes" : "no") + " | " + BattlePresenter.OaStatus(actor);
             active.text+="\n"+presenter.ConnectedArmyName(actor.Id)+"\n"+BattlePresenter.CombatStatuses(actor);
@@ -245,6 +247,7 @@ namespace RPG.Presentation
                 if(actor.Side==Side.West)westEdge.text="West Retreat unavailable";else eastEdge.text="East Retreat unavailable";
             }
             events.text = string.Join("\n", presenter.RecentEvents);
+            combatFeed.text=string.Join("\n\n",presenter.CombatFeed);
             foreach (var label in unitLabels.Values) label.style.display = DisplayStyle.None;
             foreach (var unit in state.Units)
             {

@@ -48,7 +48,8 @@ namespace RPG.Presentation.Tests
             // Same frontal HW duel; stable seeds after the two initiative draws.
             var seeds = new uint[] { 5, 31, 1, 1, 1 };
             var armor = new[] { 16, 16, 16, 0, 4 };
-            var expected = new[] { "Failed contact", "Guard blocked", "Armor damage 12", "HP damage 12", "HP damage 8" };
+            var expected = new[] { "failed contact", "Guard — no damage", "Armor -12", "HP -12", "HP -8" };
+            var detailed = new[] { "Failed contact", "Guard blocked", "Armor damage 12", "HP damage 12", "HP damage 8" };
             for (int i = 0; i < seeds.Length; i++)
             {
                 presenter.ConfigureBattle(new[] {
@@ -64,15 +65,15 @@ namespace RPG.Presentation.Tests
                 presenter.ConfirmPreview();
                 string text = presenter.HudRoot.Q<Label>("attack-outcome").text;
                 Assert.That(text, Does.Contain(expected[i]).And.Not.Contain("Dodge"));
-                Assert.That(presenter.RecentEvents.Any(e => e.Contains(expected[i])), Is.True);
+                Assert.That(presenter.RecentEvents.Any(e => e.Contains(detailed[i])), Is.True);
                 if (i < 2)
                 {
                     Assert.That(presenter.State.FindUnit(Two).Hp, Is.EqualTo(40));
                     Assert.That(presenter.State.FindUnit(Two).Armor, Is.EqualTo(16));
-                    Assert.That(text, Does.Not.Contain("Armor damage").And.Not.Contain("HP damage"));
+                    Assert.That(text, Does.Not.Contain("Armor -").And.Not.Contain("HP -"));
                 }
-                if (i == 2) { Assert.That(presenter.State.FindUnit(Two).Hp, Is.EqualTo(40)); Assert.That(text, Does.Not.Contain("HP damage")); }
-                if (i == 4) Assert.That(text, Does.Contain("Armor damage 4 (4 → 0)").And.Contain("HP damage 8 (40 → 32)"));
+                if (i == 2) { Assert.That(presenter.State.FindUnit(Two).Hp, Is.EqualTo(40)); Assert.That(text, Does.Not.Contain("HP -")); }
+                if (i == 4) Assert.That(text, Does.Contain("Armor -4").And.Contain("HP -8"));
                 // Invalid commands and selection cannot fabricate or clear a resolved outcome.
                 var resolved = Snapshot(presenter.State);
                 presenter.Submit(new BasicAttackCommand(One, Two));

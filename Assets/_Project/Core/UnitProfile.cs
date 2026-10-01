@@ -10,11 +10,11 @@ namespace RPG.Core
         public static readonly UnitProfile ElfWarriorTI = new UnitProfile(UnitProfileId.ElfWarriorTI, 32, 6, 6, 14, 90, 10, 0, 11, 1);
 
         // Document 51 prototype adapters; original profiles retain their numbers and IDs.
-        public static readonly UnitProfile FireMageTI = new UnitProfile(UnitProfileId.FireMageTI,26,0,4,11,90,5,0,5,1);
-        public static readonly UnitProfile FireMageTII = new UnitProfile(UnitProfileId.FireMageTII,32,0,4,11,90,5,0,5,1);
-        public static readonly UnitProfile IceMageTI = new UnitProfile(UnitProfileId.IceMageTI,26,0,4,11,90,5,0,5,1);
-        public static readonly UnitProfile IceMageTII = new UnitProfile(UnitProfileId.IceMageTII,32,0,4,11,90,5,0,5,1);
-        public static readonly UnitProfile HumanHealerTI = new UnitProfile(UnitProfileId.HumanHealerTI,28,0,4,12,90,5,0,5,1);
+        public static readonly UnitProfile FireMageTI = new UnitProfile(UnitProfileId.FireMageTI,26,0,4,8,90,5,0,5,1);
+        public static readonly UnitProfile FireMageTII = new UnitProfile(UnitProfileId.FireMageTII,32,0,4,8,90,5,0,5,1);
+        public static readonly UnitProfile IceMageTI = new UnitProfile(UnitProfileId.IceMageTI,26,0,4,8,90,5,0,5,1);
+        public static readonly UnitProfile IceMageTII = new UnitProfile(UnitProfileId.IceMageTII,32,0,4,8,90,5,0,5,1);
+        public static readonly UnitProfile HumanHealerTI = new UnitProfile(UnitProfileId.HumanHealerTI,28,0,4,9,90,5,0,5,1);
         public static readonly UnitProfile ElfWarriorTII = new UnitProfile(UnitProfileId.ElfWarriorTII,38,8,6,15,90,10,0,11,1);
         public static UnitProfile Get(UnitProfileId id)
         {
@@ -30,6 +30,13 @@ namespace RPG.Core
                 case UnitProfileId.ElfWarriorTII:return ElfWarriorTII;
                 default:throw new System.ArgumentOutOfRangeException(nameof(id));
             }
+        }
+        internal static UnitProfile ReplayProfile(UnitProfileId id,int recordedInitiative)
+        {
+            var p=Get(id);int old=p.IsFireMage||p.IsIceMage?11:id==UnitProfileId.HumanHealerTI?12:p.Initiative;
+            int value=recordedInitiative==0?old:recordedInitiative;
+            if(value!=old&&value!=p.Initiative)throw new System.IO.InvalidDataException("Unsupported recorded Initiative");
+            return value==p.Initiative?p:new UnitProfile(id,p.MaxHp,p.MaxArmor,p.Movement,value,p.Accuracy,p.Dodge,p.Guard,p.BasicDamage,p.Range);
         }
         public bool IsElf => Id==UnitProfileId.ElfWarriorTI || Id==UnitProfileId.ElfWarriorTII;
         public bool IsFireMage => Id==UnitProfileId.FireMageTI || Id==UnitProfileId.FireMageTII;

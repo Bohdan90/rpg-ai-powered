@@ -1,0 +1,2045 @@
+{
+  "version": 7,
+  "refresh": 3,
+  "startingSide": 0,
+  "activeSide": 0,
+  "completed": 0,
+  "winner": -1,
+  "battleNumber": 0,
+  "seed": 20261001,
+  "handoff": false,
+  "economy": true,
+  "waystationFood": 24,
+  "scenario": "ProductionRoads-08",
+  "checksum": "nSb/n/iLidkGqvTLlb9F7jvNOm6poqZ+0B0PpvVwC3Q=",
+  "owners": [
+    -1,
+    -1,
+    -1
+  ],
+  "events": [
+    "R1 realm06-West-army-1 consumption 5; HP recovery 15%; Armor unchanged",
+    "R1 realm06-West-army-2 consumption 5; HP recovery 40%; Armor unchanged",
+    "R1 realm06-East-army-1 consumption 5; HP recovery 15%; Armor unchanged",
+    "R1 realm06-East-army-2 consumption 5; HP recovery 40%; Armor unchanged",
+    "R2 realm06-West-army-1 consumption 5; HP recovery 15%; Armor unchanged",
+    "R2 realm06-West-army-2 consumption 5; HP recovery 40%; Armor unchanged",
+    "R2 realm06-East-army-1 consumption 5; HP recovery 15%; Armor unchanged",
+    "R2 realm06-East-army-2 consumption 5; HP recovery 40%; Armor unchanged"
+  ],
+  "west": {
+    "node": 1,
+    "tempo": 10,
+    "provisions": 0,
+    "pressure": 0,
+    "gold": 360,
+    "keepFood": 134,
+    "nextRecruit": 1,
+    "pendingProfile": -1,
+    "lastRecruitRefresh": 0,
+    "pendingId": "",
+    "goldExact": "360",
+    "foodExact": "134",
+    "formation": {
+      "id": "realm06-West-army-1",
+      "side": 0,
+      "commanderless": false,
+      "rosterLocked": false,
+      "members": [
+        {
+          "id": "realm06-West-army-1-unit-1",
+          "personalXp": "0",
+          "commandXp": "0",
+          "profile": 0,
+          "hp": 40,
+          "armor": 16,
+          "status": 0,
+          "personalLevel": 1,
+          "commandLevel": 1,
+          "commandRank": 0,
+          "recoveryRemainder": 0,
+          "commander": true,
+          "fireballUsed": 0,
+          "freezeUsed": 0,
+          "closeHealUsed": 0
+        },
+        {
+          "id": "realm06-West-army-1-unit-2",
+          "personalXp": "0",
+          "commandXp": "0",
+          "profile": 0,
+          "hp": 40,
+          "armor": 16,
+          "status": 0,
+          "personalLevel": 1,
+          "commandLevel": 1,
+          "commandRank": 0,
+          "recoveryRemainder": 0,
+          "commander": false,
+          "fireballUsed": 0,
+          "freezeUsed": 0,
+          "closeHealUsed": 0
+        },
+        {
+          "id": "realm06-West-army-1-unit-3",
+          "personalXp": "0",
+          "commandXp": "0",
+          "profile": 1,
+          "hp": 28,
+          "armor": 4,
+          "status": 0,
+          "personalLevel": 1,
+          "commandLevel": 1,
+          "commandRank": 0,
+          "recoveryRemainder": 0,
+          "commander": false,
+          "fireballUsed": 0,
+          "freezeUsed": 0,
+          "closeHealUsed": 0
+        }
+      ]
+    }
+  },
+  "east": {
+    "node": 12,
+    "tempo": 100,
+    "provisions": 0,
+    "pressure": 0,
+    "gold": 360,
+    "keepFood": 134,
+    "nextRecruit": 1,
+    "pendingProfile": -1,
+    "lastRecruitRefresh": 0,
+    "pendingId": "",
+    "goldExact": "360",
+    "foodExact": "134",
+    "formation": {
+      "id": "realm06-East-army-1",
+      "side": 1,
+      "commanderless": false,
+      "rosterLocked": false,
+      "members": [
+        {
+          "id": "realm06-East-army-1-unit-1",
+          "personalXp": "0",
+          "commandXp": "0",
+          "profile": 0,
+          "hp": 40,
+          "armor": 16,
+          "status": 0,
+          "personalLevel": 1,
+          "commandLevel": 1,
+          "commandRank": 0,
+          "recoveryRemainder": 0,
+          "commander": true,
+          "fireballUsed": 0,
+          "freezeUsed": 0,
+          "closeHealUsed": 0
+        },
+        {
+          "id": "realm06-East-army-1-unit-2",
+          "personalXp": "0",
+          "commandXp": "0",
+          "profile": 0,
+          "hp": 40,
+          "armor": 16,
+          "status": 0,
+          "personalLevel": 1,
+          "commandLevel": 1,
+          "commandRank": 0,
+          "recoveryRemainder": 0,
+          "commander": false,
+          "fireballUsed": 0,
+          "freezeUsed": 0,
+          "closeHealUsed": 0
+        },
+        {
+          "id": "realm06-East-army-1-unit-3",
+          "personalXp": "0",
+          "commandXp": "0",
+          "profile": 1,
+          "hp": 28,
+          "armor": 4,
+          "status": 0,
+          "personalLevel": 1,
+          "commandLevel": 1,
+          "commandRank": 0,
+          "recoveryRemainder": 0,
+          "commander": false,
+          "fireballUsed": 0,
+          "freezeUsed": 0,
+          "closeHealUsed": 0
+        }
+      ]
+    }
+  },
+  "seamless": {
+    "production": true,
+    "journeys": [],
+    "rules": 2,
+    "northFood": 24,
+    "southFood": 24,
+    "beaconOwner": -1,
+    "revision": 21,
+    "temporary": false,
+    "message": "realm06-West-army-1 traversed to B01 \u00b7 20 Tempo; no Refresh.",
+    "westMessage": "realm06-West-army-1 traversed to B01 \u00b7 20 Tempo; no Refresh.",
+    "eastMessage": "realm06-East-army-2 consumption 5; HP recovery 40%; Armor unchanged",
+    "opaque": [],
+    "west": {
+      "explored": [
+        {
+          "world": 0,
+          "node": 1
+        },
+        {
+          "world": 0,
+          "node": 2
+        },
+        {
+          "world": 0,
+          "node": 3
+        },
+        {
+          "world": 0,
+          "node": 4
+        },
+        {
+          "world": 0,
+          "node": 5
+        },
+        {
+          "world": 0,
+          "node": 6
+        },
+        {
+          "world": 0,
+          "node": 7
+        },
+        {
+          "world": 0,
+          "node": 8
+        },
+        {
+          "world": 0,
+          "node": 9
+        },
+        {
+          "world": 0,
+          "node": 10
+        },
+        {
+          "world": 0,
+          "node": 11
+        },
+        {
+          "world": 0,
+          "node": 12
+        },
+        {
+          "world": 0,
+          "node": 13
+        },
+        {
+          "world": 0,
+          "node": 14
+        },
+        {
+          "world": 0,
+          "node": 15
+        },
+        {
+          "world": 0,
+          "node": 16
+        },
+        {
+          "world": 0,
+          "node": 17
+        },
+        {
+          "world": 0,
+          "node": 18
+        },
+        {
+          "world": 0,
+          "node": 19
+        },
+        {
+          "world": 0,
+          "node": 20
+        },
+        {
+          "world": 0,
+          "node": 21
+        },
+        {
+          "world": 0,
+          "node": 22
+        },
+        {
+          "world": 0,
+          "node": 23
+        },
+        {
+          "world": 0,
+          "node": 24
+        },
+        {
+          "world": 0,
+          "node": 25
+        },
+        {
+          "world": 0,
+          "node": 26
+        },
+        {
+          "world": 0,
+          "node": 27
+        },
+        {
+          "world": 0,
+          "node": 28
+        },
+        {
+          "world": 0,
+          "node": 29
+        },
+        {
+          "world": 0,
+          "node": 30
+        },
+        {
+          "world": 0,
+          "node": 31
+        },
+        {
+          "world": 0,
+          "node": 32
+        },
+        {
+          "world": 0,
+          "node": 33
+        },
+        {
+          "world": 0,
+          "node": 34
+        },
+        {
+          "world": 0,
+          "node": 35
+        },
+        {
+          "world": 0,
+          "node": 36
+        },
+        {
+          "world": 0,
+          "node": 37
+        },
+        {
+          "world": 0,
+          "node": 38
+        },
+        {
+          "world": 0,
+          "node": 39
+        },
+        {
+          "world": 0,
+          "node": 40
+        },
+        {
+          "world": 0,
+          "node": 41
+        },
+        {
+          "world": 0,
+          "node": 42
+        },
+        {
+          "world": 0,
+          "node": 43
+        },
+        {
+          "world": 0,
+          "node": 44
+        },
+        {
+          "world": 0,
+          "node": 45
+        },
+        {
+          "world": 0,
+          "node": 46
+        },
+        {
+          "world": 0,
+          "node": 47
+        },
+        {
+          "world": 0,
+          "node": 48
+        },
+        {
+          "world": 0,
+          "node": 49
+        },
+        {
+          "world": 0,
+          "node": 50
+        },
+        {
+          "world": 0,
+          "node": 51
+        },
+        {
+          "world": 0,
+          "node": 52
+        },
+        {
+          "world": 0,
+          "node": 53
+        },
+        {
+          "world": 0,
+          "node": 54
+        },
+        {
+          "world": 0,
+          "node": 55
+        },
+        {
+          "world": 0,
+          "node": 56
+        },
+        {
+          "world": 0,
+          "node": 57
+        },
+        {
+          "world": 0,
+          "node": 58
+        },
+        {
+          "world": 0,
+          "node": 59
+        },
+        {
+          "world": 0,
+          "node": 60
+        },
+        {
+          "world": 1,
+          "node": 1
+        },
+        {
+          "world": 1,
+          "node": 2
+        },
+        {
+          "world": 1,
+          "node": 3
+        },
+        {
+          "world": 1,
+          "node": 4
+        },
+        {
+          "world": 1,
+          "node": 5
+        }
+      ],
+      "observed": [
+        {
+          "world": 0,
+          "node": 1
+        },
+        {
+          "world": 0,
+          "node": 2
+        },
+        {
+          "world": 0,
+          "node": 3
+        },
+        {
+          "world": 0,
+          "node": 27
+        },
+        {
+          "world": 0,
+          "node": 28
+        },
+        {
+          "world": 0,
+          "node": 44
+        },
+        {
+          "world": 1,
+          "node": 1
+        },
+        {
+          "world": 1,
+          "node": 2
+        },
+        {
+          "world": 1,
+          "node": 3
+        },
+        {
+          "world": 1,
+          "node": 4
+        },
+        {
+          "world": 1,
+          "node": 5
+        }
+      ],
+      "armies": [],
+      "places": [
+        {
+          "world": 0,
+          "node": 1,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 2,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 3,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 4,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 5,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 6,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 7,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 9,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 14,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 16,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 17,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 18,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 19,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 24,
+          "owner": -1,
+          "food": -1,
+          "portalState": "Stable"
+        },
+        {
+          "world": 0,
+          "node": 27,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 28,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 29,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 30,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 31,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 32,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 35,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 36,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 37,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 38,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 39,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 40,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 41,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 42,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 43,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 44,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 46,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 54,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 56,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 1,
+          "node": 1,
+          "owner": -1,
+          "food": -1,
+          "portalState": "Stable"
+        },
+        {
+          "world": 1,
+          "node": 2,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 1,
+          "node": 3,
+          "owner": -1,
+          "food": 24,
+          "portalState": ""
+        },
+        {
+          "world": 1,
+          "node": 4,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 1,
+          "node": 5,
+          "owner": -1,
+          "food": 24,
+          "portalState": ""
+        }
+      ],
+      "links": [
+        "West"
+      ],
+      "events": [
+        {
+          "sequence": 1,
+          "refresh": 3,
+          "world": 1,
+          "actor": "realm06-West-army-1",
+          "description": "realm06-West-army-1 traversed to B01 \u00b7 20 Tempo; no Refresh.",
+          "kind": "Traverse",
+          "nodes": [
+            1
+          ]
+        }
+      ],
+      "nextSequence": 2,
+      "readThrough": 0,
+      "readByWorld": [
+        0,
+        0
+      ]
+    },
+    "east": {
+      "explored": [
+        {
+          "world": 0,
+          "node": 1
+        },
+        {
+          "world": 0,
+          "node": 2
+        },
+        {
+          "world": 0,
+          "node": 3
+        },
+        {
+          "world": 0,
+          "node": 4
+        },
+        {
+          "world": 0,
+          "node": 5
+        },
+        {
+          "world": 0,
+          "node": 6
+        },
+        {
+          "world": 0,
+          "node": 7
+        },
+        {
+          "world": 0,
+          "node": 8
+        },
+        {
+          "world": 0,
+          "node": 9
+        },
+        {
+          "world": 0,
+          "node": 10
+        },
+        {
+          "world": 0,
+          "node": 11
+        },
+        {
+          "world": 0,
+          "node": 12
+        },
+        {
+          "world": 0,
+          "node": 13
+        },
+        {
+          "world": 0,
+          "node": 14
+        },
+        {
+          "world": 0,
+          "node": 15
+        },
+        {
+          "world": 0,
+          "node": 16
+        },
+        {
+          "world": 0,
+          "node": 17
+        },
+        {
+          "world": 0,
+          "node": 18
+        },
+        {
+          "world": 0,
+          "node": 19
+        },
+        {
+          "world": 0,
+          "node": 20
+        },
+        {
+          "world": 0,
+          "node": 21
+        },
+        {
+          "world": 0,
+          "node": 22
+        },
+        {
+          "world": 0,
+          "node": 23
+        },
+        {
+          "world": 0,
+          "node": 24
+        },
+        {
+          "world": 0,
+          "node": 25
+        },
+        {
+          "world": 0,
+          "node": 26
+        },
+        {
+          "world": 0,
+          "node": 27
+        },
+        {
+          "world": 0,
+          "node": 28
+        },
+        {
+          "world": 0,
+          "node": 29
+        },
+        {
+          "world": 0,
+          "node": 30
+        },
+        {
+          "world": 0,
+          "node": 31
+        },
+        {
+          "world": 0,
+          "node": 32
+        },
+        {
+          "world": 0,
+          "node": 33
+        },
+        {
+          "world": 0,
+          "node": 34
+        },
+        {
+          "world": 0,
+          "node": 35
+        },
+        {
+          "world": 0,
+          "node": 36
+        },
+        {
+          "world": 0,
+          "node": 37
+        },
+        {
+          "world": 0,
+          "node": 38
+        },
+        {
+          "world": 0,
+          "node": 39
+        },
+        {
+          "world": 0,
+          "node": 40
+        },
+        {
+          "world": 0,
+          "node": 41
+        },
+        {
+          "world": 0,
+          "node": 42
+        },
+        {
+          "world": 0,
+          "node": 43
+        },
+        {
+          "world": 0,
+          "node": 44
+        },
+        {
+          "world": 0,
+          "node": 45
+        },
+        {
+          "world": 0,
+          "node": 46
+        },
+        {
+          "world": 0,
+          "node": 47
+        },
+        {
+          "world": 0,
+          "node": 48
+        },
+        {
+          "world": 0,
+          "node": 49
+        },
+        {
+          "world": 0,
+          "node": 50
+        },
+        {
+          "world": 0,
+          "node": 51
+        },
+        {
+          "world": 0,
+          "node": 52
+        },
+        {
+          "world": 0,
+          "node": 53
+        },
+        {
+          "world": 0,
+          "node": 54
+        },
+        {
+          "world": 0,
+          "node": 55
+        },
+        {
+          "world": 0,
+          "node": 56
+        },
+        {
+          "world": 0,
+          "node": 57
+        },
+        {
+          "world": 0,
+          "node": 58
+        },
+        {
+          "world": 0,
+          "node": 59
+        },
+        {
+          "world": 0,
+          "node": 60
+        }
+      ],
+      "observed": [
+        {
+          "world": 0,
+          "node": 10
+        },
+        {
+          "world": 0,
+          "node": 11
+        },
+        {
+          "world": 0,
+          "node": 12
+        },
+        {
+          "world": 0,
+          "node": 13
+        },
+        {
+          "world": 0,
+          "node": 22
+        },
+        {
+          "world": 0,
+          "node": 23
+        },
+        {
+          "world": 0,
+          "node": 36
+        },
+        {
+          "world": 0,
+          "node": 54
+        },
+        {
+          "world": 0,
+          "node": 55
+        },
+        {
+          "world": 0,
+          "node": 57
+        }
+      ],
+      "armies": [],
+      "places": [
+        {
+          "world": 0,
+          "node": 10,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 11,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 12,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 13,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 22,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 23,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 36,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 54,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 55,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        },
+        {
+          "world": 0,
+          "node": 57,
+          "owner": -1,
+          "food": -1,
+          "portalState": ""
+        }
+      ],
+      "links": [],
+      "events": [],
+      "nextSequence": 1,
+      "readThrough": 0,
+      "readByWorld": [
+        0,
+        0
+      ]
+    }
+  },
+  "realm": {
+    "hasLastBattle": false,
+    "lastBattle": {
+      "world": 0,
+      "number": 0,
+      "seed": 0,
+      "lead": "",
+      "target": "",
+      "advanced": "",
+      "attackingPool": "",
+      "defendingPool": "",
+      "finalTacticalHash": "",
+      "armies": [],
+      "unitIds": [],
+      "unitArmies": [],
+      "origins": [],
+      "destinations": [],
+      "tempos": [],
+      "dead": [],
+      "escaped": [],
+      "active": [],
+      "attackers": [],
+      "withdrew": []
+    },
+    "armies": [
+      {
+        "id": "realm06-West-army-1",
+        "commander": "realm06-West-army-1-unit-1",
+        "provisions": "20",
+        "side": 0,
+        "node": 1,
+        "tempo": 10,
+        "staff": 2,
+        "world": 1,
+        "units": [
+          {
+            "id": "realm06-West-army-1-unit-1",
+            "personalXp": "0",
+            "commandXp": "0",
+            "profile": 0,
+            "hp": 40,
+            "armor": 16,
+            "status": 0,
+            "personalLevel": 1,
+            "commandLevel": 1,
+            "commandRank": 0,
+            "recoveryRemainder": 0,
+            "commander": true,
+            "fireballUsed": 0,
+            "freezeUsed": 0,
+            "closeHealUsed": 0
+          },
+          {
+            "id": "realm06-West-army-1-unit-2",
+            "personalXp": "0",
+            "commandXp": "0",
+            "profile": 0,
+            "hp": 40,
+            "armor": 16,
+            "status": 0,
+            "personalLevel": 1,
+            "commandLevel": 1,
+            "commandRank": 0,
+            "recoveryRemainder": 0,
+            "commander": false,
+            "fireballUsed": 0,
+            "freezeUsed": 0,
+            "closeHealUsed": 0
+          },
+          {
+            "id": "realm06-West-army-1-unit-3",
+            "personalXp": "0",
+            "commandXp": "0",
+            "profile": 1,
+            "hp": 28,
+            "armor": 4,
+            "status": 0,
+            "personalLevel": 1,
+            "commandLevel": 1,
+            "commandRank": 0,
+            "recoveryRemainder": 0,
+            "commander": false,
+            "fireballUsed": 0,
+            "freezeUsed": 0,
+            "closeHealUsed": 0
+          }
+        ]
+      },
+      {
+        "id": "realm06-West-army-2",
+        "commander": "realm06-West-army-2-unit-1",
+        "provisions": "30",
+        "side": 0,
+        "node": 1,
+        "tempo": 100,
+        "staff": 2,
+        "world": 0,
+        "units": [
+          {
+            "id": "realm06-West-army-2-unit-1",
+            "personalXp": "20",
+            "commandXp": "0",
+            "profile": 4,
+            "hp": 32,
+            "armor": 0,
+            "status": 0,
+            "personalLevel": 3,
+            "commandLevel": 1,
+            "commandRank": 0,
+            "recoveryRemainder": 0,
+            "commander": true,
+            "fireballUsed": 0,
+            "freezeUsed": 0,
+            "closeHealUsed": 0
+          },
+          {
+            "id": "realm06-West-army-2-unit-2",
+            "personalXp": "20",
+            "commandXp": "0",
+            "profile": 8,
+            "hp": 38,
+            "armor": 8,
+            "status": 0,
+            "personalLevel": 3,
+            "commandLevel": 1,
+            "commandRank": 0,
+            "recoveryRemainder": 0,
+            "commander": false,
+            "fireballUsed": 0,
+            "freezeUsed": 0,
+            "closeHealUsed": 0
+          },
+          {
+            "id": "realm06-West-army-2-unit-3",
+            "personalXp": "0",
+            "commandXp": "0",
+            "profile": 1,
+            "hp": 28,
+            "armor": 4,
+            "status": 0,
+            "personalLevel": 1,
+            "commandLevel": 1,
+            "commandRank": 0,
+            "recoveryRemainder": 0,
+            "commander": false,
+            "fireballUsed": 0,
+            "freezeUsed": 0,
+            "closeHealUsed": 0
+          }
+        ]
+      },
+      {
+        "id": "realm06-East-army-1",
+        "commander": "realm06-East-army-1-unit-1",
+        "provisions": "20",
+        "side": 1,
+        "node": 12,
+        "tempo": 100,
+        "staff": 2,
+        "world": 0,
+        "units": [
+          {
+            "id": "realm06-East-army-1-unit-1",
+            "personalXp": "0",
+            "commandXp": "0",
+            "profile": 0,
+            "hp": 40,
+            "armor": 16,
+            "status": 0,
+            "personalLevel": 1,
+            "commandLevel": 1,
+            "commandRank": 0,
+            "recoveryRemainder": 0,
+            "commander": true,
+            "fireballUsed": 0,
+            "freezeUsed": 0,
+            "closeHealUsed": 0
+          },
+          {
+            "id": "realm06-East-army-1-unit-2",
+            "personalXp": "0",
+            "commandXp": "0",
+            "profile": 0,
+            "hp": 40,
+            "armor": 16,
+            "status": 0,
+            "personalLevel": 1,
+            "commandLevel": 1,
+            "commandRank": 0,
+            "recoveryRemainder": 0,
+            "commander": false,
+            "fireballUsed": 0,
+            "freezeUsed": 0,
+            "closeHealUsed": 0
+          },
+          {
+            "id": "realm06-East-army-1-unit-3",
+            "personalXp": "0",
+            "commandXp": "0",
+            "profile": 1,
+            "hp": 28,
+            "armor": 4,
+            "status": 0,
+            "personalLevel": 1,
+            "commandLevel": 1,
+            "commandRank": 0,
+            "recoveryRemainder": 0,
+            "commander": false,
+            "fireballUsed": 0,
+            "freezeUsed": 0,
+            "closeHealUsed": 0
+          }
+        ]
+      },
+      {
+        "id": "realm06-East-army-2",
+        "commander": "realm06-East-army-2-unit-1",
+        "provisions": "30",
+        "side": 1,
+        "node": 13,
+        "tempo": 100,
+        "staff": 2,
+        "world": 0,
+        "units": [
+          {
+            "id": "realm06-East-army-2-unit-1",
+            "personalXp": "20",
+            "commandXp": "0",
+            "profile": 6,
+            "hp": 32,
+            "armor": 0,
+            "status": 0,
+            "personalLevel": 3,
+            "commandLevel": 1,
+            "commandRank": 0,
+            "recoveryRemainder": 0,
+            "commander": true,
+            "fireballUsed": 0,
+            "freezeUsed": 0,
+            "closeHealUsed": 0
+          },
+          {
+            "id": "realm06-East-army-2-unit-2",
+            "personalXp": "20",
+            "commandXp": "0",
+            "profile": 8,
+            "hp": 38,
+            "armor": 8,
+            "status": 0,
+            "personalLevel": 3,
+            "commandLevel": 1,
+            "commandRank": 0,
+            "recoveryRemainder": 0,
+            "commander": false,
+            "fireballUsed": 0,
+            "freezeUsed": 0,
+            "closeHealUsed": 0
+          },
+          {
+            "id": "realm06-East-army-2-unit-3",
+            "personalXp": "0",
+            "commandXp": "0",
+            "profile": 1,
+            "hp": 28,
+            "armor": 4,
+            "status": 0,
+            "personalLevel": 1,
+            "commandLevel": 1,
+            "commandRank": 0,
+            "recoveryRemainder": 0,
+            "commander": false,
+            "fireballUsed": 0,
+            "freezeUsed": 0,
+            "closeHealUsed": 0
+          }
+        ]
+      }
+    ],
+    "west": {
+      "hasCommission": false,
+      "hasRecruit": false,
+      "reserve": [],
+      "commissionQueue": [],
+      "commission": {
+        "kind": "",
+        "unit": "",
+        "destination": "",
+        "started": 0,
+        "profile": 0,
+        "ids": [],
+        "amounts": []
+      },
+      "recruit": {
+        "kind": "",
+        "unit": "",
+        "destination": "",
+        "started": 0,
+        "profile": 0,
+        "ids": [],
+        "amounts": []
+      },
+      "services": [],
+      "nextArmy": 3,
+      "nextRecruit": 1,
+      "lastRecruit": 0,
+      "cityStaff": 0,
+      "selected": "realm06-West-army-1"
+    },
+    "east": {
+      "hasCommission": false,
+      "hasRecruit": false,
+      "reserve": [],
+      "commissionQueue": [],
+      "commission": {
+        "kind": "",
+        "unit": "",
+        "destination": "",
+        "started": 0,
+        "profile": 0,
+        "ids": [],
+        "amounts": []
+      },
+      "recruit": {
+        "kind": "",
+        "unit": "",
+        "destination": "",
+        "started": 0,
+        "profile": 0,
+        "ids": [],
+        "amounts": []
+      },
+      "services": [],
+      "nextArmy": 3,
+      "nextRecruit": 1,
+      "lastRecruit": 0,
+      "cityStaff": 0,
+      "selected": "realm06-East-army-1"
+    },
+    "cycles": [
+      {
+        "id": "realm06-East-army-1-unit-1",
+        "ceiling": 100,
+        "deprivation": 0,
+        "born": 0
+      },
+      {
+        "id": "realm06-East-army-1-unit-2",
+        "ceiling": 100,
+        "deprivation": 0,
+        "born": 0
+      },
+      {
+        "id": "realm06-East-army-1-unit-3",
+        "ceiling": 100,
+        "deprivation": 0,
+        "born": 0
+      },
+      {
+        "id": "realm06-East-army-2-unit-1",
+        "ceiling": 100,
+        "deprivation": 0,
+        "born": 0
+      },
+      {
+        "id": "realm06-East-army-2-unit-2",
+        "ceiling": 100,
+        "deprivation": 0,
+        "born": 0
+      },
+      {
+        "id": "realm06-East-army-2-unit-3",
+        "ceiling": 100,
+        "deprivation": 0,
+        "born": 0
+      },
+      {
+        "id": "realm06-West-army-1-unit-1",
+        "ceiling": 10,
+        "deprivation": 0,
+        "born": 0
+      },
+      {
+        "id": "realm06-West-army-1-unit-2",
+        "ceiling": 10,
+        "deprivation": 0,
+        "born": 0
+      },
+      {
+        "id": "realm06-West-army-1-unit-3",
+        "ceiling": 10,
+        "deprivation": 0,
+        "born": 0
+      },
+      {
+        "id": "realm06-West-army-2-unit-1",
+        "ceiling": 100,
+        "deprivation": 0,
+        "born": 0
+      },
+      {
+        "id": "realm06-West-army-2-unit-2",
+        "ceiling": 100,
+        "deprivation": 0,
+        "born": 0
+      },
+      {
+        "id": "realm06-West-army-2-unit-3",
+        "ceiling": 100,
+        "deprivation": 0,
+        "born": 0
+      }
+    ],
+    "familiarity": [],
+    "appliedBattle": 0,
+    "message": "realm06-East-army-2 consumption 5; HP recovery 40%; Armor unchanged"
+  },
+  "incident": {
+    "enabled": false,
+    "worldPhase": false,
+    "ravaged": false,
+    "cycleEligible": false,
+    "continuityBroken": false,
+    "rewardPaid": false,
+    "phase": 0,
+    "whiteout": 0,
+    "cursor": 0,
+    "contract": 0,
+    "holdCycles": 0,
+    "appliedBattle": 0,
+    "id": "",
+    "claimant": "",
+    "holdReason": "",
+    "actorOrder": [],
+    "raiders": []
+  },
+  "foundations": {
+    "combined": true,
+    "realmMode": true,
+    "locations": [
+      {
+        "node": 1,
+        "parent": 0,
+        "controller": 0,
+        "development": 2,
+        "tower": 2,
+        "functioning": true,
+        "forge": false,
+        "institute": false,
+        "depot": false,
+        "assay": false,
+        "hasActive": false,
+        "stock": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "regional": "40",
+        "condition": "1",
+        "queue": [],
+        "active": {
+          "kind": 0,
+          "started": 0,
+          "steps": 0,
+          "paused": false
+        }
+      },
+      {
+        "node": 13,
+        "parent": 0,
+        "controller": 1,
+        "development": 2,
+        "tower": 2,
+        "functioning": true,
+        "forge": false,
+        "institute": false,
+        "depot": false,
+        "assay": false,
+        "hasActive": false,
+        "stock": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "regional": "40",
+        "condition": "1",
+        "queue": [],
+        "active": {
+          "kind": 0,
+          "started": 0,
+          "steps": 0,
+          "paused": false
+        }
+      },
+      {
+        "node": 14,
+        "parent": 1,
+        "controller": 0,
+        "development": 1,
+        "tower": 0,
+        "functioning": true,
+        "forge": false,
+        "institute": false,
+        "depot": false,
+        "assay": false,
+        "hasActive": false,
+        "stock": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "regional": "0",
+        "condition": "1",
+        "queue": [],
+        "active": {
+          "kind": 0,
+          "started": 0,
+          "steps": 0,
+          "paused": false
+        }
+      },
+      {
+        "node": 15,
+        "parent": 13,
+        "controller": 1,
+        "development": 1,
+        "tower": 0,
+        "functioning": true,
+        "forge": false,
+        "institute": false,
+        "depot": false,
+        "assay": false,
+        "hasActive": false,
+        "stock": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "regional": "0",
+        "condition": "1",
+        "queue": [],
+        "active": {
+          "kind": 0,
+          "started": 0,
+          "steps": 0,
+          "paused": false
+        }
+      },
+      {
+        "node": 16,
+        "parent": 14,
+        "controller": 0,
+        "development": 1,
+        "tower": 0,
+        "functioning": true,
+        "forge": false,
+        "institute": false,
+        "depot": false,
+        "assay": false,
+        "hasActive": false,
+        "stock": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "regional": "0",
+        "condition": "1",
+        "queue": [],
+        "active": {
+          "kind": 0,
+          "started": 0,
+          "steps": 0,
+          "paused": false
+        }
+      },
+      {
+        "node": 17,
+        "parent": 14,
+        "controller": 0,
+        "development": 1,
+        "tower": 0,
+        "functioning": true,
+        "forge": false,
+        "institute": false,
+        "depot": false,
+        "assay": false,
+        "hasActive": false,
+        "stock": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "regional": "0",
+        "condition": "1",
+        "queue": [],
+        "active": {
+          "kind": 0,
+          "started": 0,
+          "steps": 0,
+          "paused": false
+        }
+      },
+      {
+        "node": 18,
+        "parent": 14,
+        "controller": 0,
+        "development": 1,
+        "tower": 0,
+        "functioning": true,
+        "forge": false,
+        "institute": false,
+        "depot": false,
+        "assay": false,
+        "hasActive": false,
+        "stock": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "regional": "0",
+        "condition": "1",
+        "queue": [],
+        "active": {
+          "kind": 0,
+          "started": 0,
+          "steps": 0,
+          "paused": false
+        }
+      },
+      {
+        "node": 19,
+        "parent": 14,
+        "controller": 0,
+        "development": 1,
+        "tower": 0,
+        "functioning": true,
+        "forge": false,
+        "institute": false,
+        "depot": false,
+        "assay": false,
+        "hasActive": false,
+        "stock": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "regional": "0",
+        "condition": "1",
+        "queue": [],
+        "active": {
+          "kind": 0,
+          "started": 0,
+          "steps": 0,
+          "paused": false
+        }
+      },
+      {
+        "node": 20,
+        "parent": 15,
+        "controller": 1,
+        "development": 1,
+        "tower": 0,
+        "functioning": true,
+        "forge": false,
+        "institute": false,
+        "depot": false,
+        "assay": false,
+        "hasActive": false,
+        "stock": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "regional": "0",
+        "condition": "1",
+        "queue": [],
+        "active": {
+          "kind": 0,
+          "started": 0,
+          "steps": 0,
+          "paused": false
+        }
+      },
+      {
+        "node": 21,
+        "parent": 15,
+        "controller": 1,
+        "development": 1,
+        "tower": 0,
+        "functioning": true,
+        "forge": false,
+        "institute": false,
+        "depot": false,
+        "assay": false,
+        "hasActive": false,
+        "stock": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "regional": "0",
+        "condition": "1",
+        "queue": [],
+        "active": {
+          "kind": 0,
+          "started": 0,
+          "steps": 0,
+          "paused": false
+        }
+      },
+      {
+        "node": 22,
+        "parent": 15,
+        "controller": 1,
+        "development": 1,
+        "tower": 0,
+        "functioning": true,
+        "forge": false,
+        "institute": false,
+        "depot": false,
+        "assay": false,
+        "hasActive": false,
+        "stock": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "regional": "0",
+        "condition": "1",
+        "queue": [],
+        "active": {
+          "kind": 0,
+          "started": 0,
+          "steps": 0,
+          "paused": false
+        }
+      },
+      {
+        "node": 23,
+        "parent": 15,
+        "controller": 1,
+        "development": 1,
+        "tower": 0,
+        "functioning": true,
+        "forge": false,
+        "institute": false,
+        "depot": false,
+        "assay": false,
+        "hasActive": false,
+        "stock": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "regional": "0",
+        "condition": "1",
+        "queue": [],
+        "active": {
+          "kind": 0,
+          "started": 0,
+          "steps": 0,
+          "paused": false
+        }
+      }
+    ],
+    "west": {
+      "wood": "42",
+      "iron": "28",
+      "preset": 0,
+      "active": -1,
+      "started": 0,
+      "paused": false,
+      "queue": [],
+      "research": [
+        {
+          "tech": 0,
+          "work": "0",
+          "paid": false,
+          "cities": [],
+          "contributions": []
+        },
+        {
+          "tech": 1,
+          "work": "0",
+          "paid": false,
+          "cities": [],
+          "contributions": []
+        },
+        {
+          "tech": 2,
+          "work": "0",
+          "paid": false,
+          "cities": [],
+          "contributions": []
+        },
+        {
+          "tech": 3,
+          "work": "0",
+          "paid": false,
+          "cities": [],
+          "contributions": []
+        },
+        {
+          "tech": 4,
+          "work": "6",
+          "paid": true,
+          "cities": [
+            1
+          ],
+          "contributions": [
+            "6"
+          ]
+        }
+      ],
+      "repairStarted": 0,
+      "trainingStarted": 0,
+      "repairIds": [],
+      "repairs": [],
+      "trainee": ""
+    },
+    "east": {
+      "wood": "42",
+      "iron": "28",
+      "preset": 1,
+      "active": -1,
+      "started": 0,
+      "paused": false,
+      "queue": [],
+      "research": [
+        {
+          "tech": 0,
+          "work": "0",
+          "paid": false,
+          "cities": [],
+          "contributions": []
+        },
+        {
+          "tech": 1,
+          "work": "0",
+          "paid": false,
+          "cities": [],
+          "contributions": []
+        },
+        {
+          "tech": 2,
+          "work": "0",
+          "paid": false,
+          "cities": [],
+          "contributions": []
+        },
+        {
+          "tech": 3,
+          "work": "0",
+          "paid": false,
+          "cities": [],
+          "contributions": []
+        },
+        {
+          "tech": 4,
+          "work": "6",
+          "paid": true,
+          "cities": [
+            13
+          ],
+          "contributions": [
+            "6"
+          ]
+        }
+      ],
+      "repairStarted": 0,
+      "trainingStarted": 0,
+      "repairIds": [],
+      "repairs": [],
+      "trainee": ""
+    }
+  }
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "activation": 1,
+    "node": 22404,
+    "tempo": 0,
+    "provisions": "30"
+  },
+  {
+    "activation": 2,
+    "node": 42404,
+    "tempo": 0,
+    "provisions": "25"
+  },
+  {
+    "activation": 3,
+    "node": 42506,
+    "tempo": 0,
+    "provisions": "20"
+  },
+  {
+    "activation": 4,
+    "node": 61702,
+    "tempo": 0,
+    "provisions": "15"
+  },
+  {
+    "activation": 5,
+    "node": 7,
+    "tempo": 50,
+    "provisions": "10"
+  }
+]

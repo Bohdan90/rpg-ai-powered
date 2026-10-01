@@ -1,0 +1,38 @@
+{
+  "head": "26e0f9a0f76c8bf68df286a15a1bf6451a8de1fc",
+  "protected": {
+    "Assets/_Project/Scenes/TacticalGraybox.unity": "0d82a731e511437de1f67ad8462466e69ab92bc4639cd61ecce2ba5969f6dde5",
+    "ProjectSettings/EditorBuildSettings.asset": "234ccdd1644015aa6f409ea0a8333799b74916b4e53d704e1808ba118f62bb42",
+    "Assets/_Project/Core/PersistenceSliceScenario.cs.meta": "71ad2b3274d69761c60172412013a16aa712bc4536bba714f1d9be1992d4e0cd",
+    "Assets/_Project/Core/PersistentFormation.cs.meta": "4bfbdf09836e7124b71619fc2bbbc1dac91a5a258225370f1f986b9e6d9dd83a",
+    "Assets/_Project/Tests/PersistenceProgressionTests.cs.meta": "ebdf1b8120bd73bce2cb09f5b7a7b431f22ed4ba02a9b9212d7125a9b5f0f55d",
+    "Assets/_Project/Tests/PersistenceSliceScenarioTests.cs.meta": "34faf48d4c86524b140ea2e0548a30b699cfdb095edc124b9d25361440980039",
+    "Assets/_Project/Tests/PersistentFormationTests.cs.meta": "17ce0000f4f7f54cc49c80b4e8de48c9788b39d25d01669ea79fe988cdc71fcc",
+    "Assets/_Project/Tests/PlayMode/PersistenceSlicePresentationTests.cs.meta": "29a14910c547cca76dadcb2b89f3a310a868d71db3a9aed95fc589838127ab38",
+    "ProjectSettings/ProjectSettings.asset": "f1b5e3c6f27a4b7a694d5fc1437554fc18f5922cbbe7478e15d42443c19200ed"
+  },
+  "saves": {
+    "TestResults.xml": "14fd7ae5a86c1f19d3b3c9db629ce32c2b3c245e7bd47171059f067fa6aba82e",
+    "Mission01/manual.json": "c712d29bfd9e880f97e2fc9b52552278643d1958428e36591018855e870d2a79",
+    "CrossroadsIncident04/manual.json": "b695fa9eafadfcaf8c88e5de2ac49cc3d2a2f102c6dd3a5ee63cef0f464c88c4",
+    "Crossroads/manual.json": "383aefdd738b165cc809d8c54efca62e72317b0dbfac9614abfdb140218163ba",
+    "GateC/Replays/gate-c-20260922-032530-c3847147.session.json": "787c1b482e9fd1924ec7f965b112c62e5f65c616285f8068175d8ad15f1db722",
+    "GateC/Replays/gate-c-20260922-020314-eabcec83.jsonl": "2890f04c93a5898130f63a79c9081786e312554fb490f049d9e5ae1149589674",
+    "GateC/Replays/gate-c-20260922-020314-eabcec83.session.json": "9f9425d6cbbd5acfeb1145ddf4ee5e813e53c8f9e51b939eb1c1216c09eec48c",
+    "GateC/Replays/gate-c-20260922-024107-b19d430d.jsonl": "3bba6e1fe325173ea1c0967dad230d11d59632d4f509faf4dbcb8f28103590b7",
+    "GateC/Replays/gate-c-20260922-023151-dea1e357.jsonl": "c4e36b954a10c90ec260af5d69386b3c27a46631a94604eca19294bc7dff03b5",
+    "GateC/Replays/gate-c-20260922-032621-11d23a26.jsonl": "31dea2a2b5b86efe0b29e4f67339f46074f8d87f77e1db3ce81d184859c70565",
+    "GateC/Replays/gate-c-20260922-023151-dea1e357.session.json": "085082e960c197feb94f941efbb710c6cc70abbd2c4f819282d90376aa6dbc8b",
+    "GateC/Replays/gate-c-20260922-032530-c3847147.jsonl": "c8aff9cbb7b93635d11a52d9a7d92e77ca93f171260fe01d002741d53df51c43",
+    "GateC/Replays/gate-c-20260922-020245-09c6e629.session.json": "eb2f5cc632f4475b039df3cd84680114b3c1947437aac64d117a86fb75a8a871",
+    "GateC/Replays/gate-c-20260922-020245-09c6e629.jsonl": "20ff367dde1e6e339c3e2a005f062c7020a8d80d283f29751b8be263e27a2753",
+    "GateC/Replays/gate-c-20260922-020259-14865776.jsonl": "818cfc15c9f95a3124c2a98d23efd5414ac3108e0f2dc261f683c084898e4c16",
+    "GateC/Replays/gate-c-20260922-024209-d3cb4ed3.jsonl": "668288a2d19ab3cf80098199720e83bd97cc0f5f70668151956ec6c1280d3165",
+    "GateC/Replays/gate-c-20260922-024209-d3cb4ed3.session.json": "1663442399e3f7618f17fe5aa77a28b476102c04ca08ccd6d6ef4b33b1b9f6b6",
+    "GateC/Replays/gate-c-20260922-020259-14865776.session.json": "92228feef256ae5fff742bdf0e2fd9fda83e73ebd188cb14dfb2a7f38cab7305",
+    "GateC/Replays/gate-c-20260922-020332-07d6855a.session.json": "5c6efb7743905c31551bec9547ee317fe6527ab048feb1dafb384f294bd5dda6",
+    "GateC/Replays/gate-c-20260922-032621-11d23a26.session.json": "5ef3f19cfcbaea05afb0bf79357dcad39028a4cf9104a9a25bcc42ee8d0c54bb",
+    "GateC/Replays/gate-c-20260922-020332-07d6855a.jsonl": "7a0c1d6fab83926b87c1a8ab6935e15707c95b82f36dab7d9d34dd10a758d66e",
+    "GateC/Replays/gate-c-20260922-024107-b19d430d.session.json": "3884f5fa186e825ad51f69fd642b9fadf1ec93fcc0a39525fa002fa6adfb789d"
+  }
+}

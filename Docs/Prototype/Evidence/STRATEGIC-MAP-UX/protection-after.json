@@ -1,0 +1,39 @@
+{
+  "mainHead": "26e0f9a0f76c8bf68df286a15a1bf6451a8de1fc",
+  "mainStatus": " M Assets/_Project/Scenes/TacticalGraybox.unity\n M ProjectSettings/EditorBuildSettings.asset\n?? Assets/_Project/Core/PersistenceSliceScenario.cs.meta\n?? Assets/_Project/Core/PersistentFormation.cs.meta\n?? Assets/_Project/Tests/PersistenceProgressionTests.cs.meta\n?? Assets/_Project/Tests/PersistenceSliceScenarioTests.cs.meta\n?? Assets/_Project/Tests/PersistentFormationTests.cs.meta\n?? Assets/_Project/Tests/PlayMode/PersistenceSlicePresentationTests.cs.meta\n",
+  "protected": {
+    "Assets/_Project/Scenes/TacticalGraybox.unity": true,
+    "ProjectSettings/EditorBuildSettings.asset": true,
+    "Assets/_Project/Core/PersistenceSliceScenario.cs.meta": true,
+    "Assets/_Project/Core/PersistentFormation.cs.meta": true,
+    "Assets/_Project/Tests/PersistenceProgressionTests.cs.meta": true,
+    "Assets/_Project/Tests/PersistenceSliceScenarioTests.cs.meta": true,
+    "Assets/_Project/Tests/PersistentFormationTests.cs.meta": true,
+    "Assets/_Project/Tests/PlayMode/PersistenceSlicePresentationTests.cs.meta": true,
+    "ProjectSettings/ProjectSettings.asset": true
+  },
+  "saves": {
+    "TestResults.xml": true,
+    "Mission01/manual.json": true,
+    "CrossroadsIncident04/manual.json": true,
+    "Crossroads/manual.json": true,
+    "GateC/Replays/gate-c-20260922-032530-c3847147.session.json": true,
+    "GateC/Replays/gate-c-20260922-020314-eabcec83.jsonl": true,
+    "GateC/Replays/gate-c-20260922-020314-eabcec83.session.json": true,
+    "GateC/Replays/gate-c-20260922-024107-b19d430d.jsonl": true,
+    "GateC/Replays/gate-c-20260922-023151-dea1e357.jsonl": true,
+    "GateC/Replays/gate-c-20260922-032621-11d23a26.jsonl": true,
+    "GateC/Replays/gate-c-20260922-023151-dea1e357.session.json": true,
+    "GateC/Replays/gate-c-20260922-032530-c3847147.jsonl": true,
+    "GateC/Replays/gate-c-20260922-020245-09c6e629.session.json": true,
+    "GateC/Replays/gate-c-20260922-020245-09c6e629.jsonl": true,
+    "GateC/Replays/gate-c-20260922-020259-14865776.jsonl": true,
+    "GateC/Replays/gate-c-20260922-024209-d3cb4ed3.jsonl": true,
+    "GateC/Replays/gate-c-20260922-024209-d3cb4ed3.session.json": true,
+    "GateC/Replays/gate-c-20260922-020259-14865776.session.json": true,
+    "GateC/Replays/gate-c-20260922-020332-07d6855a.session.json": true,
+    "GateC/Replays/gate-c-20260922-032621-11d23a26.session.json": true,
+    "GateC/Replays/gate-c-20260922-020332-07d6855a.jsonl": true,
+    "GateC/Replays/gate-c-20260922-024107-b19d430d.session.json": true
+  }
+}

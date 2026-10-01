@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="38" result="Passed" total="38" passed="38" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.1505454">
+  <test-suite type="TestSuite" id="1000" name="Strategic-Map-UX" fullname="Strategic-Map-UX" runstate="Runnable" testcasecount="708" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.150545" total="38" passed="38" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1848" name="RPG.Tests.dll" fullname="/Users/bohdanskrypka/UnityProjects/Convergence/Strategic-Map-UX/Library/ScriptAssemblies/RPG.Tests.dll" runstate="Runnable" testcasecount="708" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.136676" total="38" passed="38" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="83081" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1849" name="RPG" fullname="RPG" runstate="Runnable" testcasecount="708" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.134199" total="38" passed="38" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1852" name="Tests" fullname="RPG.Tests" runstate="Runnable" testcasecount="658" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.131569" total="38" passed="38" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestFixture" id="1199" name="CombatVarietyAcceptanceTests" fullname="RPG.Tests.CombatVarietyAcceptanceTests" classname="RPG.Tests.CombatVarietyAcceptanceTests" runstate="Runnable" testcasecount="16" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.061364" total="16" passed="16" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1203" name="BurnDeathSkipsDeadActivationAndPreservesArmor" fullname="RPG.Tests.CombatVarietyAcceptanceTests.BurnDeathSkipsDeadActivationAndPreservesArmor" methodname="BurnDeathSkipsDeadActivationAndPreservesArmor" classname="RPG.Tests.CombatVarietyAcceptanceTests" runstate="Runnable" seed="61562446" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.016460" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1202" name="BurnReapplicationAtCapRefreshesTicksWithoutImmediateTick" fullname="RPG.Tests.CombatVarietyAcceptanceTests.BurnReapplicationAtCapRefreshesTicksWithoutImmediateTick" methodname="BurnReapplicationAtCapRefreshesTicksWithoutImmediateTick" classname="RPG.Tests.CombatVarietyAcceptanceTests" runstate="Runnable" seed="1268954953" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.008041" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1212" name="CloseHealBudgetAndDamagedArmorCarryThroughTwoResolvedBattlesWithoutRefresh" fullname="RPG.Tests.CombatVarietyAcceptanceTests.CloseHealBudgetAndDamagedArmorCarryThroughTwoResolvedBattlesWithoutRefresh" methodname="CloseHealBudgetAndDamagedArmorCarryThroughTwoResolvedBattlesWithoutRefresh" classname="RPG.Tests.CombatVarietyAcceptanceTests" runstate="Runnable" seed="1229013629" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.009617" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1214" name="EveryKitActionHasLegalAiCandidatesWithoutStateOrRngMutation" fullname="RPG.Tests.CombatVarietyAcceptanceTests.EveryKitActionHasLegalAiCandidatesWithoutStateOrRngMutation" methodname="EveryKitActionHasLegalAiCandidatesWithoutStateOrRngMutation" classname="RPG.Tests.CombatVarietyAcceptanceTests" runstate="Runnable" seed="2045324895" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.006682" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1215" name="ExhaustionAllowsOrdinaryStaffDefendAndSpellButBlocksExertion" fullname="RPG.Tests.CombatVarietyAcceptanceTests.ExhaustionAllowsOrdinaryStaffDefendAndSpellButBlocksExertion" methodname="ExhaustionAllowsOrdinaryStaffDefendAndSpellButBlocksExertion" classname="RPG.Tests.CombatVarietyAcceptanceTests" runstate="Runnable" seed="998852118" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.000384" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1201" name="FailedDirectedContactDoesNotBreakFreezeOrSpendAnotherRoll" fullname="RPG.Tests.CombatVarietyAcceptanceTests.FailedDirectedContactDoesNotBreakFreezeOrSpendAnotherRoll" methodname="FailedDirectedContactDoesNotBreakFreezeOrSpendAnotherRoll" classname="RPG.Tests.CombatVarietyAcceptanceTests" runstate="Runnable" seed="2048036566" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.000298" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1204" name="FireArmorRetaliatesOnceAfterPhysicalHitEvenWithoutBarrierAndDoesNotRecurse" fullname="RPG.Tests.CombatVarietyAcceptanceTests.FireArmorRetaliatesOnceAfterPhysicalHitEvenWithoutBarrierAndDoesNotRecurse" methodname="FireArmorRetaliatesOnceAfterPhysicalHitEvenWithoutBarrierAndDoesNotRecurse" classname="RPG.Tests.CombatVarietyAcceptanceTests" runstate="Runnable" seed="1610667206" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.000921" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1205" name="FireballCannotPropagateThroughSealedCorner" fullname="RPG.Tests.CombatVarietyAcceptanceTests.FireballCannotPropagateThroughSealedCorner" methodname="FireballCannotPropagateThroughSealedCorner" classname="RPG.Tests.CombatVarietyAcceptanceTests" runstate="Runnable" seed="317039524" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.000445" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1200" name="FreezeActuallyDeniesActivationThenExpiresWithoutBonusTurn" fullname="RPG.Tests.CombatVarietyAcceptanceTests.FreezeActuallyDeniesActivationThenExpiresWithoutBonusTurn" methodname="FreezeActuallyDeniesActivationThenExpiresWithoutBonusTurn" classname="RPG.Tests.CombatVarietyAcceptanceTests" runstate="Runnable" seed="1050664931" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.000288" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1211" name="FullHpCleanseUsesOneBudgetAndLeavesArmorAndOtherConditions" fullname="RPG.Tests.CombatVarietyAcceptanceTests.FullHpCleanseUsesOneBudgetAndLeavesArmorAndOtherConditions" methodname="FullHpCleanseUsesOneBudgetAndLeavesArmorAndOtherConditions" classname="RPG.Tests.CombatVarietyAcceptanceTests" runstate="Runnable" seed="1909143644" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.000152" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1216" name="GracefulExitAfterMissIsConsumedAndSecondExitCanProvoke" fullname="RPG.Tests.CombatVarietyAcceptanceTests.GracefulExitAfterMissIsConsumedAndSecondExitCanProvoke" methodname="GracefulExitAfterMissIsConsumedAndSecondExitCanProvoke" classname="RPG.Tests.CombatVarietyAcceptanceTests" runstate="Runnable" seed="1286524856" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.001193" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1210" name="HealRejectsFullDeadHostileAndEmptyTargetsWithoutMutation" fullname="RPG.Tests.CombatVarietyAcceptanceTests.HealRejectsFullDeadHostileAndEmptyTargetsWithoutMutation" methodname="HealRejectsFullDeadHostileAndEmptyTargetsWithoutMutation" classname="RPG.Tests.CombatVarietyAcceptanceTests" runstate="Runnable" seed="843474948" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.000429" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1209" name="TierTwoScalesOnlyDirectMagnitude" fullname="RPG.Tests.CombatVarietyAcceptanceTests.TierTwoScalesOnlyDirectMagnitude" classname="RPG.Tests.CombatVarietyAcceptanceTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.001403" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1206" name="TierTwoScalesOnlyDirectMagnitude(FireStream,11)" fullname="RPG.Tests.CombatVarietyAcceptanceTests.TierTwoScalesOnlyDirectMagnitude(FireStream,11)" methodname="TierTwoScalesOnlyDirectMagnitude" classname="RPG.Tests.CombatVarietyAcceptanceTests" runstate="Runnable" seed="796162968" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.000107" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1207" name="TierTwoScalesOnlyDirectMagnitude(Fireball,16)" fullname="RPG.Tests.CombatVarietyAcceptanceTests.TierTwoScalesOnlyDirectMagnitude(Fireball,16)" methodname="TierTwoScalesOnlyDirectMagnitude" classname="RPG.Tests.CombatVarietyAcceptanceTests" runstate="Runnable" seed="1989480834" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.000023" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1208" name="TierTwoScalesOnlyDirectMagnitude(IceShard,13)" fullname="RPG.Tests.CombatVarietyAcceptanceTests.TierTwoScalesOnlyDirectMagnitude(IceShard,13)" methodname="TierTwoScalesOnlyDirectMagnitude" classname="RPG.Tests.CombatVarietyAcceptanceTests" runstate="Runnable" seed="2044469885" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.000023" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-case id="1213" name="TrainingPromotionItselfKeepsIdentityXpAndCurrentPools" fullname="RPG.Tests.CombatVarietyAcceptanceTests.TrainingPromotionItselfKeepsIdentityXpAndCurrentPools" methodname="TrainingPromotionItselfKeepsIdentityXpAndCurrentPools" classname="RPG.Tests.CombatVarietyAcceptanceTests" runstate="Runnable" seed="192267276" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.000690" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1217" name="CombatVarietyPersistenceTests" fullname="RPG.Tests.CombatVarietyPersistenceTests" classname="RPG.Tests.CombatVarietyPersistenceTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.014292" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1222" name="ConfirmedAreaCanCauseActualMutualEliminationAndReplay" fullname="RPG.Tests.CombatVarietyPersistenceTests.ConfirmedAreaCanCauseActualMutualEliminationAndReplay" methodname="ConfirmedAreaCanCauseActualMutualEliminationAndReplay" classname="RPG.Tests.CombatVarietyPersistenceTests" runstate="Runnable" seed="1159643884" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.004182" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1219" name="DualHitStopsAfterLethalFirstAndOaRemainsSingleHit" fullname="RPG.Tests.CombatVarietyPersistenceTests.DualHitStopsAfterLethalFirstAndOaRemainsSingleHit" methodname="DualHitStopsAfterLethalFirstAndOaRemainsSingleHit" classname="RPG.Tests.CombatVarietyPersistenceTests" runstate="Runnable" seed="965636772" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.000439" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1221" name="FreezeMissStillCommitsBudgetAndExertionWithoutSecondRoll" fullname="RPG.Tests.CombatVarietyPersistenceTests.FreezeMissStillCommitsBudgetAndExertionWithoutSecondRoll" methodname="FreezeMissStillCommitsBudgetAndExertionWithoutSecondRoll" classname="RPG.Tests.CombatVarietyPersistenceTests" runstate="Runnable" seed="1933278923" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.000362" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1220" name="ShieldReplacementClearsFireRetaliationAndDoesNotStack" fullname="RPG.Tests.CombatVarietyPersistenceTests.ShieldReplacementClearsFireRetaliationAndDoesNotStack" methodname="ShieldReplacementClearsFireRetaliationAndDoesNotStack" classname="RPG.Tests.CombatVarietyPersistenceTests" runstate="Runnable" seed="1977662332" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.000187" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1218" name="TwoActualBattlesNoRefreshCarryIdentityDamageAndSourceUseWithoutTemporaryEffects" fullname="RPG.Tests.CombatVarietyPersistenceTests.TwoActualBattlesNoRefreshCarryIdentityDamageAndSourceUseWithoutTemporaryEffects" methodname="TwoActualBattlesNoRefreshCarryIdentityDamageAndSourceUseWithoutTemporaryEffects" classname="RPG.Tests.CombatVarietyPersistenceTests" runstate="Runnable" seed="314053991" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.008405" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1339" name="EngagementCastingTests" fullname="RPG.Tests.EngagementCastingTests" classname="RPG.Tests.EngagementCastingTests" runstate="Runnable" testcasecount="17" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.039014" total="17" passed="17" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1352" name="AdjacentArcherWithoutMeleeZocDoesNotBlock" fullname="RPG.Tests.EngagementCastingTests.AdjacentArcherWithoutMeleeZocDoesNotBlock" methodname="AdjacentArcherWithoutMeleeZocDoesNotBlock" classname="RPG.Tests.EngagementCastingTests" runstate="Runnable" seed="550841059" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.000742" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1357" name="AiFiltersBlockedSpellsThroughCoreAndStillHasAllowedShield" fullname="RPG.Tests.EngagementCastingTests.AiFiltersBlockedSpellsThroughCoreAndStillHasAllowedShield" methodname="AiFiltersBlockedSpellsThroughCoreAndStillHasAllowedShield" classname="RPG.Tests.EngagementCastingTests" runstate="Runnable" seed="158238137" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.029187" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1347" name="ExplicitAssignmentsGovernPreviewAndCommit" fullname="RPG.Tests.EngagementCastingTests.ExplicitAssignmentsGovernPreviewAndCommit" classname="RPG.Tests.EngagementCastingTests" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.004653" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1340" name="ExplicitAssignmentsGovernPreviewAndCommit(FireStream,True)" fullname="RPG.Tests.EngagementCastingTests.ExplicitAssignmentsGovernPreviewAndCommit(FireStream,True)" methodname="ExplicitAssignmentsGovernPreviewAndCommit" classname="RPG.Tests.EngagementCastingTests" runstate="Runnable" seed="585701615" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.000623" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1341" name="ExplicitAssignmentsGovernPreviewAndCommit(FireArmor,True)" fullname="RPG.Tests.EngagementCastingTests.ExplicitAssignmentsGovernPreviewAndCommit(FireArmor,True)" methodname="ExplicitAssignmentsGovernPreviewAndCommit" classname="RPG.Tests.EngagementCastingTests" runstate="Runnable" seed="1723481155" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.000103" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1342" name="ExplicitAssignmentsGovernPreviewAndCommit(Fireball,False)" fullname="RPG.Tests.EngagementCastingTests.ExplicitAssignmentsGovernPreviewAndCommit(Fireball,False)" methodname="ExplicitAssignmentsGovernPreviewAndCommit" classname="RPG.Tests.EngagementCastingTests" runstate="Runnable" seed="1966386493" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.000636" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1343" name="ExplicitAssignmentsGovernPreviewAndCommit(IceShard,False)" fullname="RPG.Tests.EngagementCastingTests.ExplicitAssignmentsGovernPreviewAndCommit(IceShard,False)" methodname="ExplicitAssignmentsGovernPreviewAndCommit" classname="RPG.Tests.EngagementCastingTests" runstate="Runnable" seed="1613683650" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.000109" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1344" name="ExplicitAssignmentsGovernPreviewAndCommit(IceShield,True)" fullname="RPG.Tests.EngagementCastingTests.ExplicitAssignmentsGovernPreviewAndCommit(IceShield,True)" methodname="ExplicitAssignmentsGovernPreviewAndCommit" classname="RPG.Tests.EngagementCastingTests" runstate="Runnable" seed="120796087" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.000087" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1345" name="ExplicitAssignmentsGovernPreviewAndCommit(Freeze,False)" fullname="RPG.Tests.EngagementCastingTests.ExplicitAssignmentsGovernPreviewAndCommit(Freeze,False)" methodname="ExplicitAssignmentsGovernPreviewAndCommit" classname="RPG.Tests.EngagementCastingTests" runstate="Runnable" seed="622965203" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.000099" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1346" name="ExplicitAssignmentsGovernPreviewAndCommit(CloseHeal,True)" fullname="RPG.Tests.EngagementCastingTests.ExplicitAssignmentsGovernPreviewAndCommit(CloseHeal,True)" methodname="ExplicitAssignmentsGovernPreviewAndCommit" classname="RPG.Tests.EngagementCastingTests" runstate="Runnable" seed="829126798" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.000084" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-case id="1358" name="HistoricalRulesThreeRemainReplayableWithoutNewEngagementLock" fullname="RPG.Tests.EngagementCastingTests.HistoricalRulesThreeRemainReplayableWithoutNewEngagementLock" methodname="HistoricalRulesThreeRemainReplayableWithoutNewEngagementLock" classname="RPG.Tests.EngagementCastingTests" runstate="Runnable" seed="1510582748" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.000306" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1355" name="LawfulDisengagementRestoresCastAndJournalReplays" fullname="RPG.Tests.EngagementCastingTests.LawfulDisengagementRestoresCastAndJournalReplays" methodname="LawfulDisengagementRestoresCastAndJournalReplays" classname="RPG.Tests.EngagementCastingTests" runstate="Runnable" seed="185356988" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.000774" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1348" name="MandatoryDataIsExhaustiveAndUnknownSpellNeverGetsDefault" fullname="RPG.Tests.EngagementCastingTests.MandatoryDataIsExhaustiveAndUnknownSpellNeverGetsDefault" methodname="MandatoryDataIsExhaustiveAndUnknownSpellNeverGetsDefault" classname="RPG.Tests.EngagementCastingTests" runstate="Runnable" seed="2007711091" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.000497" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1354" name="MultipleEngagersAndSpentOaStillBlock" fullname="RPG.Tests.EngagementCastingTests.MultipleEngagersAndSpentOaStillBlock" methodname="MultipleEngagersAndSpentOaStillBlock" classname="RPG.Tests.EngagementCastingTests" runstate="Runnable" seed="72296172" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.000157" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1356" name="OtherBlockersRemainIndependentAndInvalidCommandsPure" fullname="RPG.Tests.EngagementCastingTests.OtherBlockersRemainIndependentAndInvalidCommandsPure" methodname="OtherBlockersRemainIndependentAndInvalidCommandsPure" classname="RPG.Tests.EngagementCastingTests" runstate="Runnable" seed="696890432" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.000487" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1353" name="SealedCornerAdjacencyIsNotEngagement" fullname="RPG.Tests.EngagementCastingTests.SealedCornerAdjacencyIsNotEngagement" methodname="SealedCornerAdjacencyIsNotEngagement" classname="RPG.Tests.EngagementCastingTests" runstate="Runnable" seed="1454164381" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.000106" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1351" name="StaffRemainsLegal" fullname="RPG.Tests.EngagementCastingTests.StaffRemainsLegal" classname="RPG.Tests.EngagementCastingTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.000665" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1349" name="StaffRemainsLegal(FireMageTII)" fullname="RPG.Tests.EngagementCastingTests.StaffRemainsLegal(FireMageTII)" methodname="StaffRemainsLegal" classname="RPG.Tests.EngagementCastingTests" runstate="Runnable" seed="1264428365" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.000112" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1350" name="StaffRemainsLegal(IceMageTII)" fullname="RPG.Tests.EngagementCastingTests.StaffRemainsLegal(IceMageTII)" methodname="StaffRemainsLegal" classname="RPG.Tests.EngagementCastingTests" runstate="Runnable" seed="1271134233" result="Passed" start-time="2026-10-01 17:06:53Z" end-time="2026-10-01 17:06:53Z" duration="0.000034" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: /tmp/strategic-map-ux/test-preferences/Library/Application Support/RPGPrototypeIsolated/Strategic-Map-UX/TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

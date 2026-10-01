@@ -298,3 +298,81 @@ User explicitly requested all completed feature work in the main project. Delive
 Validation provenance: source gameplay `1d101cf`, full post-GUI **628 EditMode +84 PlayMode =712 PASS;0failed;0skipped**, recorded in `Evidence/54/tests/EditMode-20260930-222651.xml` and `PlayMode-20260930-222844.xml`. These are the completed feature runs, not a new main test run. S1–S6 controlled GUI evidence is in `Evidence/54/manual-followup/`; integrated player acceptance remains pending. No gameplay changes were introduced for delivery.
 
 Main launch after Unity finishes import: **Gate C → Seamless Worlds 07 → West starts** (East and school variants also available). Open the ordinary **My project**; the isolated launcher is not needed. No forced editor restart and NO PUSH. This delivery supersedes earlier main-pending status; historical entries retain their provenance.
+
+
+## 2026-10-01 — Production Roads 08 + bounded tactical UX companion
+
+Implementation `b526beb892fdc466b3c8d392e3d0a92322b05551` on `feature/strategic-map-ux`, worktree `Convergence/Strategic-Map-UX`, from live main `26e0f9a`. Main remains unchanged; NO MERGE / NO PUSH. One responsible writer completed map safe checkpoint, then authorized companion. No Meshy/provider or 3D work.
+
+07/current navigation now supports known retained destinations, affordable legs, next-own-handoff continuation and explicit interruption/cancel; no hidden reroute, opponent movement, future Tempo or auto-portal. Contextual Traverse Portal advertises destination/Unknown and20-Tempo attempt before confirmation. Separate **Production Roads08**:8 geographic zones,67 nodes,83Land+2Portal links,22POIs; mainland75edges/60nodes/cycleRank16; only articulationA59/bridgeA59–A25 is the deliberate portal spur. Existing01–07 layouts unchanged. Launch isolated project → **Gate C → Production Roads08 → West starts** (menu spelling: Production Roads 08).
+
+Tactical companion: explicit Temporary Barrier alongside HP/Armor, current Fire3-line vs Ice8-single-target descriptions, selected Close Heal two-click Move→revalidate→Cast, no unreachable partial movement, concise actor/target/action/layer/Condition outcomes; detailed telemetry retained. Fixed null-target Barrier-expiry log, stale inspection and mismatched legacy fixture names. No combat/source-budget/routing retune. Ward/Persistent Barrier do not exist in current Core/profile: N/A, not fabricated. Launch **Gate C → Combat Lab → Support vs Fire (near contact)** or Fire vs Ice.
+
+Fresh final combined **663 EditMode +91 PlayMode =754 PASS;0failed;0skipped**, exact source/config fingerprint and XML/logs under `Evidence/STRATEGIC-MAP-UX/validation-manifest.json`. Focused map42+4; companion13Edit,44expandedPlay,11final-changed-areaPlay (overlap, not additive). G1–G4 and T1–T4 real OS-input controlled GUI evidence retained. Save/recreate/load helpers explicitly distinguished from mouse actions. Last text-only inspection/feed corrections validated automatically after screenshots. No PLAYER ACCEPTED or final balance verdict.
+
+Reports: `STRATEGIC_MAP_UX_AND_PRODUCTION_TOPOLOGY.md`, `TACTICAL_UX_COMPANION.md`. GUI/input/fixtures and coverage under corresponding Evidence directories. Main9 protected paths +22baseline save/replay files byte-identical; isolated prefs/player-data roots. Feature local AppUI build-setting dependency and6legacy .meta remain uncommitted. Do not copy isolated PlayerSettings wholesale to main. STOP for coordinator/player review; no 3D/Meshy/Air/Earth or next package.
+
+
+## 2026-10-01 — authorized main delivery: map and tactical UX
+
+User requested delivery to `My project/develop`. Starting main `26e0f9a`; validated feature `feature/strategic-map-ux@6178e1b` (gameplay commit `b526beb`). Integration preserves main PlayerSettings/company/product/defines and existing local scene/build settings/six metadata files. Gameplay, tests and evidence are identical to the validated feature; no new gameplay changes.
+
+Validation provenance: completed feature full **663 EditMode +91 PlayMode =754 PASS;0 failed/skipped**, XML in `Evidence/STRATEGIC-MAP-UX/tests/EditMode-20261001-092207.xml` and `PlayMode-20261001-092438.xml`. G1–G4 and T1–T4 evidence/limitations remain in the two reports. This delivery does not claim a fresh main regression or new GUI pass.
+
+Main launch after import: **Gate C → Production Roads 08 → West starts** (or East); tactical changes also apply in **Gate C → Combat Lab → Support vs Fire (near contact)** and existing encounters. Open ordinary My project; isolated launcher is unnecessary. Existing 07 remains available. No forced Unity restart, save migration or push. Earlier feature-only/main-pending entries are superseded by this delivery; player acceptance remains pending.
+
+
+## 2026-10-01 — Strategic Travel Scale 08B + Mage Initiative
+
+Continued existing feature/strategic-map-ux from6178e1b, same Strategic-Map-UX checkout. Live main is3fa4a57 after the user's earlier authorized delivery (Drive26e0f9a was stale); this new package is NOT merged/pushed. New Production Roads08 menu sessions use version8dense graph, legacy version7saves retain old08geometry; 01–07 preserved.
+
+Mainland60macro nodes/75roads/16cycles unchanged, expanded to513positions/528segments. B expanded to15macro nodes/20roads/6cycles,154positions/159segments. Total75macro nodes,22POIs,8zones,592hidden anchors,667logical positions,687Land segments+2Portal links. Authored-distance subdivision:ceil(3×length),minimum2steps,10Tempo/step; no globalTempo/economy tuning. Exact positions support sight/contact/battle/persistent destinations/save. UI hides ordinary anchors, shows own army/progress and currently observed exploration-frontier endpoints. Main shortestKeepdepth800Tempo; outerAshdepth900; B450 (56.25%/50%). Actual normalA2→25run10activations,Tempo22/Prov0atarrival.
+
+HOM Fire/Ice TI/TII Initiative8; HH9; HW10/HA12/EW TI14 unchanged (EW TII15unchanged). Replay snapshots record Initiative; absent field restores historical11HOM/12HH to preserve recorded rules/hashes. No other stats/cast budgets changed. Fixed reproduced portal-origin wait bug: explicit land departure with insufficientTempo resumes nextownactivation, arrival still pauses and traversal remains explicit20Tempo.
+
+Focused41Edit+7Play and15SpellUxPlay after correcting obsolete absolute journal-count assertion. Fresh final **682EditMode+91PlayMode=773PASS;0failed/skipped**, exact final inputs/XML/logs in Evidence/SCALE-08B. GUI S1–S5/T1 complete within report's explicit scope:10activationjourney,midroadstop,controlledactualroadAttack/Fight,multi-turnBexploration/branches,explicitportal,realinitiativeorder. Full road battle/aftermath automated, not mouse-completed claim. Save button + public recreate/load identical hash, actual continuation. Final portal-wait fix rechecked through real clicks.
+
+Report: STRATEGIC_TRAVEL_SCALE_08B.md; evidence/manifests in Evidence/SCALE-08B.9protected main paths+22baseline save/replay files byte-identical. Feature's existing EditorBuildSettings+6meta remain uncommitted. Mainunchanged3fa4a57; isolatedsave/preferencesroots preserved. TechnicalPASS/ready for PLAYER SCALE REVIEW, not PLAYER ACCEPTED. Long expedition becomesHungry; two-hopBexploration is incremental; fitlabelsneedzoom. NO PUSH/NO MERGE. STOP before3D/Meshy/nextpackage.
+
+
+## 2026-10-01 — authorized main delivery of Travel Scale 08B
+
+User explicitly requested this completed package in the main project, superseding the prior feature-only delivery restriction. Starting main `3fa4a57`; source feature `3ad2b301bf7ea74a6e6e362581722ce8bf8c7fb2`. Merge preserves both checkpoint histories and main PlayerSettings; game source/tests/assets match the validated feature. No gameplay changes for delivery. Protected local scene/settings/six metadata and22baseline save/replay files retained; no namespace migration or forced Unity restart.
+
+Validation provenance: source final **682 EditMode +91 PlayMode =773 PASS;0failed/skipped**, in `Evidence/SCALE-08B/tests/EditMode-20261001-110213.xml` and `PlayMode-20261001-110411.xml`. These remain feature-run results, not a new main regression. GUI scope/limitations and topology measures remain in `STRATEGIC_TRAVEL_SCALE_08B.md`. Player acceptance is pending.
+
+Main launch after import: **Gate C → Production Roads 08 → West starts** (orEast), start a new session for08B. Old version7saves intentionally keep the old coarse08map. Current tactical profiles use HOM Fire/Ice8 and HH9. NO PUSH. This entry supersedes earlier statements that08B is not in main.
+## 2026-10-01 — Final 08B override: explicit Continue Travel only
+
+Starting feature/strategic-map-ux@3ad2b30, same Strategic-Map-UX worktree. Live main/develop is224ba73 after earlier user-authorized integration; stale26e0f9a/3fa4a57 references above are historical. This correction remains feature-only; NO MERGE / NO PUSH. Latest Drive48§43/46FINAL OVERRIDE/53§20 read. No weighted OnEdge refactor started.
+
+Already implemented scale/hidden positions/fog/contact/save/replay and Initiative8/8/9 verified and preserved. New-session travel rules3: Set Destination queues intent, explicit Continue Travel spends current affordable legs through multiple hidden nodes/junctions, no movement on End Side Turn or own activation start. Full route/affordable path/expected-stop ring and budget/cost shown; existing interruptions and explicit20Tempo portal retained. Save schema8 supports rules3 exact cursor/position; older rules1/2 load with original hashes and historical behavior. Begin a NEW Production Roads08session for this manual-travel review.
+
+Fresh focused50Edit+3Play; full **691EditMode+92PlayMode=783PASS;0failed/skipped** after removing temporary observer; same final source/config fingerprint across suites. Initial synthetic UI-submit test harness failure corrected, independent real mouse delivery PASS. Road battle/replay/after-result and new save/continuation deterministic. Source and test provenance: Evidence/SCALE-08B-FINAL/validation-manifest.json and coverage.json.
+
+GUI G1–G8/T1 PASS within labelled scope: actual queue stationary→10legs perContinue, stationary handoffs, junction crossing, exact saved-node reload, controlled road contact→tactical entry, explicit portal. OrdinaryA2→25takes10activations; controlled known-B1→7takes5,ratio50%; no resource/Tempo override during journeys. G5 complete aftermath is automated, not mouse-completed. Recreate/load uses public helper after actual Save. Initiative actualEW14→HA12→HW10→HH9→HOM8; Ice8 automated.
+
+Unchanged8zones/75macro nodes/22POIs/95macro roads,592hidden positions,667total/687segments+2portals,cycles16A/6B. ShortestcostA800/outer900,B450; old deliberateportalspurs only.100baselineTempo crosses10segments (7Hungry). No new balance or acceptance claim. Report STRATEGIC_TRAVEL_SCALE_08B.md appended rather than rewriting prior evidence.
+
+Launch isolated Strategic-Map-UX → Gate C → Production Roads08 → West starts → destination → Set/Change Destination → Continue Travel. Main Unity left running,9protected files/22saves byte-identical, own validation editor closed normally. Existing local EditorBuildSettings+6untrackedmeta preserved. Lower developer route text still lists raw IDs; production HUD work deferred. TECHNICAL PASS / READY FOR PLAYER SCALE REVIEW, not PLAYER ACCEPTED. STOP; no3D/Meshy/nextpackage.
+
+
+## 2026-10-01 — authorized main delivery of explicit Continue Travel
+
+User explicitly requested transfer and local fixation, superseding the prior no-merge instruction. Starting main/develop224ba735807a2dcbae5f1c794f88e10f158c2f96; source feature5a45bbbe32f65bbafc17d861b256cf9c61ef4e45. Delivery merges both checkpoint histories, retaining main project settings. Core/Presentation/tests are byte-identical to validated feature; no new gameplay code or save migration.
+
+Validation: source **691EditMode+92PlayMode=783PASS;0failed/skipped**, final XMLs in Evidence/SCALE-08B-FINAL (EditMode20261001-115448,PlayMode20261001-115714), focused50+3 and documented GUI G1–G8/T1. No new full run solely for this source-identical delivery; not presented as main-run evidence.
+
+Main launch after import: **My project → Gate C → Production Roads08 → West starts → Set/Change Destination → Continue Travel**. Start a NEW session for rules3; older saved rules1/2 intentionally retain historic movement behavior. Protected nine local files and22saved files preserved, namespaces unchanged, no forced Unity restart. NO PUSH. This entry supersedes feature-only status above; no PLAYER ACCEPTED claim.
+
+## 2026-10-01 — Engagement Casting
+
+Typed explicit classifier for all seven active Spells; Fire Stream/Fire Armor/Ice Shield/Close Heal Allowed, Fireball/Ice Shard/Freeze Blocked by authoritative hostile melee ZoC. Readable UI reason, shared resolver/AI filtering, invalid previews/attempts pure. New battles rules4, legacy1–3 replay preserved. No combat tuning. Fresh full **708 EditMode +94 PlayMode =802 PASS, 0 failed/skipped**; focused73Core/17Play, final UI2 and adjusted-fixture38 checks. Real controlled mouse GUI Fire/Ice engagement, lawful OA/disengage and restored Ice Shard PASS. Nine protected main files and22saves/replays unchanged. Source feature/engagement-casting from5a45bbb (mainf8b8229 code-equivalent); user subsequently authorized main transfer. Detailed evidence/provenance: [ENGAGEMENT_CASTING.md](ENGAGEMENT_CASTING.md). TECHNICAL PASS; no PLAYER ACCEPTED, NO PUSH.
+
+## 2026-10-01 — authorized main delivery of Engagement Casting
+
+User requested main transfer after successful validation. Starting develop f8b8229; source feature/engagement-casting89df25d. Only overlapping append in this checkpoint required resolution; both histories retained. Game code/tests match validated source, main settings untouched. Main Unity observed outside Play Mode; no restart/party interruption. Final feature regression708Edit+94Play=802PASS,0failed/skipped remains source-run provenance, not a new main run. Protected9files/22saves unchanged; NO PUSH. Launch My project → Gate C → Combat Lab → Fire vs Ice (near contact); new battles use rules4.
+
+## 2026-10-01 — reconcile main squash ancestry
+
+Starting develop `be1a0f3`, fetched origin/main `d2145ac` (squashed Initial commit #1). A normal trial merge reported27 add/add conflicts. Verified main tree `354d03de5cccdd420ff0921ed136e03cf09babe0` exactly equals existing develop ancestor `26e0f9a`; no unique main content. Merge records main ancestry while retaining the complete current develop tree (ours strategy justified by whole-tree equality, not blind conflict suppression). Only this checkpoint changes; no game/source/config/test changes. Prior fresh708Edit+94Play=802PASS remains validation provenance; no new run claimed or necessary for unchanged game code. Existing9local protected files remain untouched. Local resolution only, NO PUSH; remote PR will reflect it after develop is published.

@@ -39,8 +39,8 @@ namespace RPG.Presentation.Tests
         [UnityTest] public IEnumerator GroundMovementFriendlyInspectionSpecialCancelAndStaffStaySeparate()
         {
             yield return Open();P.ConfigureBattle(new[]{U(1,UnitProfile.IceMageTII,Side.West,8,8),U(2,UnitProfile.HumanWarriorTI,Side.East,9,8),U(3,UnitProfile.HumanWarriorTI,Side.West,8,9)},new Battlefield(23,17),2);Actor(UnitProfile.IceMageTII);
-            string hash=BattleStateHash.Compute(P.State);P.ClickCell(new GridPosition(8,9));P.ConfirmPreview();Assert.That(BattleStateHash.Compute(P.State),Is.EqualTo(hash));P.ClickCell(new GridPosition(7,8));Assert.That(P.HasMovePreview,Is.True);P.CancelPreview();
-            P.SelectSpell(SpellId.Freeze);P.HoverCell(new GridPosition(9,8));P.CancelPreview();Assert.That(P.PrimarySpell,Is.EqualTo(SpellId.IceShard));Assert.That(P.SelectedSpell,Is.Null);P.SelectStaff();P.ClickCell(new GridPosition(9,8));Assert.That(P.Journal.Records.Count,Is.Zero);P.ConfirmPreview();Assert.That(P.Journal.Records.Last().command.kind,Is.EqualTo(nameof(BasicAttackCommand)));
+            int before=P.Journal.Records.Count;string hash=BattleStateHash.Compute(P.State);P.ClickCell(new GridPosition(8,9));P.ConfirmPreview();Assert.That(BattleStateHash.Compute(P.State),Is.EqualTo(hash));P.ClickCell(new GridPosition(7,8));Assert.That(P.HasMovePreview,Is.True);P.CancelPreview();
+            P.SelectSpell(SpellId.Freeze);P.HoverCell(new GridPosition(9,8));P.CancelPreview();Assert.That(P.PrimarySpell,Is.EqualTo(SpellId.IceShard));Assert.That(P.SelectedSpell,Is.Null);P.SelectStaff();P.ClickCell(new GridPosition(9,8));Assert.That(P.Journal.Records.Count,Is.EqualTo(before));P.ConfirmPreview();Assert.That(P.Journal.Records.Count,Is.EqualTo(before+1));Assert.That(P.Journal.Records.Last().command.kind,Is.EqualTo(nameof(BasicAttackCommand)));
             P.EndActivation(null);Assert.That(P.StaffSelected,Is.False);Assert.That(P.SelectedSpell,Is.Null);
         }
         [UnityTest] public IEnumerator HoverCameraCancelAndFriendlyFireNeverMutateAndTargetingClearsOnHandoff()
@@ -82,7 +82,7 @@ namespace RPG.Presentation.Tests
         {
             yield return Open();
             foreach(var profile in new[]{UnitProfile.FireMageTI,UnitProfile.IceMageTI,UnitProfile.HumanWarriorTI,UnitProfile.HumanArcherTI}) {
-                var a=profile.IsArcher?new GridPosition(11,8):new GridPosition(9,8);var b=profile.IsArcher?new GridPosition(10,10):new GridPosition(8,9);
+                var a=profile.IsArcher||profile.IsIceMage?new GridPosition(11,8):new GridPosition(9,8);var b=profile.IsArcher||profile.IsIceMage?new GridPosition(10,10):new GridPosition(8,9);
                 P.ConfigureBattle(new[]{U(1,profile,Side.West,8,8),U(2,UnitProfile.ElfWarriorTI,Side.East,a.X,a.Y),U(3,UnitProfile.ElfWarriorTI,Side.East,b.X,b.Y)},new Battlefield(23,17),2);Actor(profile);int n=P.Journal.Records.Count;string hash=BattleStateHash.Compute(P.State);
                 P.HoverCell(a);Assert.That(P.SpellFootprint,Is.Not.Empty);P.LeaveBoard();Assert.That(P.SpellFootprint,Is.Empty);
                 P.ClickCell(a);var footprint=P.SpellFootprint.ToArray();P.HoverCell(b);P.LeaveBoard();P.InspectSpell(SpellId.FireArmor);Assert.That(P.SpellFootprint,Is.EqualTo(footprint));Assert.That(P.PinnedCell,Is.EqualTo(a));
@@ -134,7 +134,7 @@ namespace RPG.Presentation.Tests
             yield return Open();P.ConfigureBattle(new[]{new UnitState(new UnitId(1),Side.West,UnitProfile.HumanHealerTI,new GridPosition(8,8),Facing.East,hp:10),U(2,UnitProfile.HumanWarriorTI,Side.East,17,8)},new Battlefield(23,17),2);Actor(UnitProfile.HumanHealerTI);
             var cell=new GridPosition(8,8);P.SelectSpell(SpellId.CloseHeal);string hash=BattleStateHash.Compute(P.State);P.ClickCell(cell);
             Assert.That(BattleStateHash.Compute(P.State),Is.EqualTo(hash));Assert.That(P.SpellFootprint,Does.Contain(cell));P.ClickCell(cell);
-            var u=P.State.FindUnit(new UnitId(1));Assert.That(u.Hp,Is.EqualTo(24));Assert.That(u.CloseHealUsed,Is.EqualTo(1));Assert.That(u.ActionAvailable,Is.False);Assert.That(u.CanMove,Is.True);Assert.That(P.LastAttackOutcome,Does.Contain("HP healed +14"));
+            var u=P.State.FindUnit(new UnitId(1));Assert.That(u.Hp,Is.EqualTo(24));Assert.That(u.CloseHealUsed,Is.EqualTo(1));Assert.That(u.ActionAvailable,Is.False);Assert.That(u.CanMove,Is.True);Assert.That(P.LastAttackOutcome,Does.Contain("Close Heal").And.Contain("HP +14"));
             Assert.That(ReplayVerification.Verify(P.Journal.Header,P.Journal.Records,P.Journal.Footer()).Matches,Is.True);
         }
         [UnityTest] public IEnumerator ChangedStateRequiresFreshConfirmationAndFocusLossCancels()

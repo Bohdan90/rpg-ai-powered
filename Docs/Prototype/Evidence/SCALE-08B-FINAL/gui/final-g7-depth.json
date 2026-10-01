@@ -1,0 +1,55 @@
+[
+  {
+    "activation": 2,
+    "node": 315106,
+    "tempo": 0
+  },
+  {
+    "activation": 3,
+    "node": 415202,
+    "tempo": 0,
+    "provisions": "20"
+  },
+  {
+    "activation": 4,
+    "node": 95202,
+    "tempo": 0,
+    "provisions": "15"
+  },
+  {
+    "activation": 5,
+    "node": 96608,
+    "tempo": 0,
+    "provisions": "10"
+  },
+  {
+    "activation": 6,
+    "node": 536902,
+    "tempo": 0,
+    "provisions": "5"
+  },
+  {
+    "activation": 7,
+    "node": 536909,
+    "tempo": 9,
+    "provisions": "0"
+  },
+  {
+    "activation": 8,
+    "node": 536916,
+    "tempo": 9,
+    "provisions": "0"
+  },
+  {
+    "activation": 9,
+    "node": 256906,
+    "tempo": 9,
+    "provisions": "0"
+  },
+  {
+    "activation": 10,
+    "node": 25,
+    "tempo": 22,
+    "provisions": "0"
+  }
+]

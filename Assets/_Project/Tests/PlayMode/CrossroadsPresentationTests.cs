@@ -46,7 +46,11 @@ namespace RPG.Presentation.Tests
             Assert.That(p.State.Outcome.IsEnded,Is.True);Assert.That(ReplayVerification.Verify(p.Journal.Header,p.Journal.Records,p.Journal.Footer()).Matches,Is.True);
             p.ReturnToWorld();Assert.That(s.East.Node,Is.EqualTo(7));Assert.That(s.West.Formation.LivingMembers.All(c=>c.Status==PersistentCharacterStatus.EscapedSafe),Is.True);
             Assert.That(s.East.Formation.Members.Select(c=>c.CharacterId),Is.EqualTo(ids));Assert.That(p.SaveDuel(path),Is.True);
-            Assert.That(p.HudRoot.Q("duel-world").style.display.value,Is.EqualTo(DisplayStyle.Flex));LogAssert.NoUnexpectedReceived();
+            Assert.That(p.HudRoot.Q("duel-world").style.display.value,Is.EqualTo(DisplayStyle.Flex));
+            Assert.That(p.CombatFeed,Is.Not.Empty,"The completed escape generated readable outcomes.");
+            p.StartDuel();s=p.Duel;s.Move(Side.West,7);s.EndActivation(Side.West);s.ContinueHandoff(Side.East);s.Move(Side.East,11);s.Attack(Side.East);p.DuelChanged();
+            Assert.That(p.CombatFeed,Is.Empty,"New connected battle must not show the previous battle's outcomes.");
+            LogAssert.NoUnexpectedReceived();
         }
         [UnityTest] public IEnumerator EconomicPendingSaveRecreateCompletesOnceAndRecruitEntersBattle()
         {

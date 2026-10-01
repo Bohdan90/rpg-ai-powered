@@ -1,0 +1,13 @@
+{
+  "implementationCommit": "b526beb892fdc466b3c8d392e3d0a92322b05551",
+  "fullCombined": "../STRATEGIC-MAP-UX/validation-manifest.json",
+  "focused": [
+    "tests/EditMode-20261001-004829.xml",
+    "tests/PlayMode-20261001-084215.xml",
+    "tests/PlayMode-20261001-084958.xml"
+  ],
+  "manual": "gui-summary.json",
+  "coverage": "coverage.md",
+  "Ward": "N/A \u2014 no implemented pool/source/profile; no new mechanic added",
+  "guiFinalTextOnlyCleanup": "Post-screenshot null-hover reset, connected-feed clear and retaliation caption validated automatically; no repeated GUI PASS claimed."
+}

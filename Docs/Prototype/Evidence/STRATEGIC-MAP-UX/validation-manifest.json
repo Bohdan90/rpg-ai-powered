@@ -1,0 +1,61 @@
+{
+  "startingHead": "26e0f9a0f76c8bf68df286a15a1bf6451a8de1fc",
+  "implementationCommit": "b526beb892fdc466b3c8d392e3d0a92322b05551",
+  "branch": "feature/strategic-map-ux",
+  "worktree": "/Users/bohdanskrypka/UnityProjects/Convergence/Strategic-Map-UX",
+  "main": "My project/develop @26e0f9a (unchanged)",
+  "unity": "6000.6.2f1",
+  "scope": "Production Roads08/navigation + Tactical UX Companion",
+  "provenance": "Fresh final combined suites ran on this exact source/config working tree before its implementation commit; subsequent evidence commit changes docs only.",
+  "sourceFingerprint": "combined-final-inputs.json",
+  "full": [
+    {
+      "scope": "EditMode",
+      "passed": 663,
+      "failed": 0,
+      "skipped": 0,
+      "startedUtc": "2026-10-01 13:22:13Z",
+      "endedUtc": "2026-10-01 13:23:30Z",
+      "xml": "tests/EditMode-20261001-092207.xml",
+      "command": "bash /private/tmp/strategic-map-ux/run-tests.sh EditMode"
+    },
+    {
+      "scope": "PlayMode",
+      "passed": 91,
+      "failed": 0,
+      "skipped": 0,
+      "startedUtc": "2026-10-01 13:24:44Z",
+      "endedUtc": "2026-10-01 13:26:44Z",
+      "xml": "tests/PlayMode-20261001-092438.xml",
+      "command": "bash /private/tmp/strategic-map-ux/run-tests.sh PlayMode"
+    }
+  ],
+  "focusedMap": {
+    "EditMode": 42,
+    "PlayMode": 4,
+    "files": [
+      "tests/EditMode-20261001-003034.xml",
+      "tests/PlayMode-20261001-003355.xml"
+    ]
+  },
+  "focusedTactical": {
+    "EditMode": 13,
+    "expandedPlayMode": 44,
+    "finalChangedAreaPlayMode": 11,
+    "note": "Scopes overlap; do not sum them as unique tests."
+  },
+  "guiMap": "gui-summary.json",
+  "guiTactical": "../TACTICAL-UX-COMPANION/gui-summary.json",
+  "protection": "protection-after.json",
+  "unrelatedFeatureRemaining": [
+    "ProjectSettings/EditorBuildSettings.asset",
+    "Assets/_Project/Core/PersistenceSliceScenario.cs.meta",
+    "Assets/_Project/Core/PersistentFormation.cs.meta",
+    "Assets/_Project/Tests/PersistenceProgressionTests.cs.meta",
+    "Assets/_Project/Tests/PersistenceSliceScenarioTests.cs.meta",
+    "Assets/_Project/Tests/PersistentFormationTests.cs.meta",
+    "Assets/_Project/Tests/PlayMode/PersistenceSlicePresentationTests.cs.meta"
+  ],
+  "push": "NOT PERFORMED",
+  "playerAccepted": "PENDING"
+}
