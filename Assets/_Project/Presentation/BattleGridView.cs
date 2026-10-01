@@ -14,6 +14,7 @@ namespace RPG.Presentation
         private Renderer[,] tiles;
         private readonly Dictionary<UnitId, Token> units = new Dictionary<UnitId, Token>();
         private readonly LineRenderer pathLine;
+        private readonly LineRenderer waypoint;
         private LineRenderer[,] zocBorders;
         private LineRenderer[,] rangeMarks, spellMarks, blockedMarks;
         public int SpellEnvelopeVisualCount { get; private set; }
@@ -37,6 +38,14 @@ namespace RPG.Presentation
             pathLine.widthMultiplier = .045f; pathLine.useWorldSpace = true;
             Tint(pathLine, new Color(1, .77f, .23f));
             pathLine.positionCount = 0;
+            waypoint=Line("Pinned destination — confirm move",.055f);waypoint.gameObject.SetActive(false);Tint(waypoint,new Color(1,.85f,.2f));
+        }
+
+        public void ShowWaypoint(GridPosition? cell)
+        {
+            waypoint.gameObject.SetActive(cell.HasValue);if(!cell.HasValue)return;
+            var p=World(cell.Value)+Vector3.up*.5f;waypoint.positionCount=5;
+            waypoint.SetPositions(new[]{p+Vector3.forward*.45f,p+Vector3.right*.45f,p-Vector3.forward*.45f,p-Vector3.right*.45f,p+Vector3.forward*.45f});
         }
 
         public void Resize(Battlefield board)

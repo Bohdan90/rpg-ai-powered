@@ -63,7 +63,7 @@ namespace RPG.Presentation.Tests
                 var root=Object.FindAnyObjectByType<UIDocument>().rootVisualElement;
                 Assert.That(root.Q<Button>("spell-FireStream").enabledSelf,Is.False);Assert.That(root.Q<Button>("staff-attack").enabledSelf,Is.False);Assert.That(root.Q<Button>("primary-attack").enabledSelf,Is.False);
                 P.ClickCell(cell);P.ConfirmPreview();Assert.That(P.Journal.Records.Count,Is.EqualTo(count));Assert.That(BattleStateHash.Compute(P.State),Is.EqualTo(hash));
-                P.CancelPreview();P.ClickCell(new GridPosition(7,8));Assert.That(P.HasMovePreview,Is.False,"Mage movement still obeys the existing Action rule");Assert.That(BattleStateHash.Compute(P.State),Is.EqualTo(hash));P.CancelPreview();
+                P.CancelPreview();P.ClickCell(new GridPosition(7,8));Assert.That(P.HasMovePreview,Is.True,"Rules3 retain the caster remaining Movement independently of Action");Assert.That(BattleStateHash.Compute(P.State),Is.EqualTo(hash));P.CancelPreview();
                 P.EndActivation(null);Actor(UnitProfile.FireMageTII);Assert.That(P.SpellEnvelope,Is.Not.Empty);Assert.That(root.Q<Button>("spell-FireStream").enabledSelf,Is.True);
                 Assert.That(ReplayVerification.Verify(P.Journal.Header,P.Journal.Records,P.Journal.Footer()).Matches,Is.True);
             }
@@ -129,10 +129,26 @@ namespace RPG.Presentation.Tests
             }
             Assert.That(found,Is.True,"Fixture must exercise a real lethal OA, not an injected outcome");
         }
+        [UnityTest] public IEnumerator HealerSelfTargetUsesTwoClicksActualHealingAndOneSourceUse()
+        {
+            yield return Open();P.ConfigureBattle(new[]{new UnitState(new UnitId(1),Side.West,UnitProfile.HumanHealerTI,new GridPosition(8,8),Facing.East,hp:10),U(2,UnitProfile.HumanWarriorTI,Side.East,17,8)},new Battlefield(23,17),2);Actor(UnitProfile.HumanHealerTI);
+            var cell=new GridPosition(8,8);P.SelectSpell(SpellId.CloseHeal);string hash=BattleStateHash.Compute(P.State);P.ClickCell(cell);
+            Assert.That(BattleStateHash.Compute(P.State),Is.EqualTo(hash));Assert.That(P.SpellFootprint,Does.Contain(cell));P.ClickCell(cell);
+            var u=P.State.FindUnit(new UnitId(1));Assert.That(u.Hp,Is.EqualTo(24));Assert.That(u.CloseHealUsed,Is.EqualTo(1));Assert.That(u.ActionAvailable,Is.False);Assert.That(u.CanMove,Is.True);Assert.That(P.LastAttackOutcome,Does.Contain("HP healed +14"));
+            Assert.That(ReplayVerification.Verify(P.Journal.Header,P.Journal.Records,P.Journal.Footer()).Matches,Is.True);
+        }
+        [UnityTest] public IEnumerator ChangedStateRequiresFreshConfirmationAndFocusLossCancels()
+        {
+            yield return Open();P.ConfigureBattle(new[]{U(1,UnitProfile.HumanWarriorTI,Side.West,8,8),U(2,UnitProfile.HumanWarriorTI,Side.East,17,8)},new Battlefield(23,17),2);Actor(UnitProfile.HumanWarriorTI);
+            var actor=P.State.CurrentUnitId.Value;var from=P.State.FindUnit(actor).Position;var to=new GridPosition(from.X,from.Y+1);P.ClickCell(to);
+            var enemy=P.State.Units.First(u=>u.Id!=actor);typeof(UnitState).GetProperty(nameof(UnitState.OpportunityAttackAvailable)).SetValue(enemy,false);
+            string hash=BattleStateHash.Compute(P.State);P.ConfirmPreview();Assert.That(BattleStateHash.Compute(P.State),Is.EqualTo(hash));Assert.That(P.PreviewText,Does.Contain("State changed"));
+            P.SendMessage("OnApplicationFocus",false);Assert.That(P.PinnedCell,Is.Null);Assert.That(BattleStateHash.Compute(P.State),Is.EqualTo(hash));P.ConfirmPreview();Assert.That(BattleStateHash.Compute(P.State),Is.EqualTo(hash));
+        }
         [Test] public void RetainedV1ReplayFilesStillUseRecordedRules()
         {
             int count=0;
-            foreach(var folder in new[]{"Docs/Prototype/Evidence/5051/manual-complete","Docs/Prototype/Evidence/SPELL-UX-01"})
+            foreach(var folder in new[]{"Docs/Prototype/Evidence/5051/manual-complete","Docs/Prototype/Evidence/SPELL-UX-01","Docs/Prototype/Evidence/FIRE-TARGETING-02","Docs/Prototype/Evidence/52/replays"})
             foreach(var path in System.IO.Directory.GetFiles(folder,"gate-c-*.jsonl",System.IO.SearchOption.AllDirectories)) {
                 var result=ReplayFiles.Verify(path);Assert.That(result.Matches,Is.True,path+": "+result.Message);count++;
             }

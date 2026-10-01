@@ -18,10 +18,11 @@ namespace RPG.Core
         public RealmEncounterPreview PreviewEncounter(Side side,string targetId)
         {
             var p=new RealmEncounterPreview{Lead=Selected(side),Target=Army(targetId)};
-            if(!CanAct(side)||p.Lead==null||!p.Lead.Continues||p.Lead.Tempo<0||p.Target==null||!p.Target.Continues||p.Target.Formation.Side==side||p.Target.Node==World.OwnKeep(p.Target.Formation.Side)||World.Graph.Cost(p.Lead.Node,p.Target.Node)<0){p.Reason="Legal hostile contact, nonnegative lead Tempo and an unprotected Battle Target required.";return p;}
-            p.Attackers=armies.Where(f=>f.Continues&&f.Formation.Side==side&&f.Tempo>=0&&World.Graph.Cost(f.Node,p.Target.Node)>=0).OrderBy(f=>f.Formation.FormationId,StringComparer.Ordinal).ToArray();
-            p.Defenders=armies.Where(f=>f.Continues&&f.Formation.Side!=side&&(f==p.Target||World.Graph.Cost(f.Node,p.Target.Node)>=0)).OrderBy(f=>f.Formation.FormationId,StringComparer.Ordinal).ToArray();
-            try{p.Deployments=DuelEncounter.DeploymentPlan(World.Graph,p.Lead,p.Target,p.Attackers.Concat(p.Defenders),SizeExperimentFixture.Board(SizeExperimentMap.Field_23x17_Full_9v9));}
+            if(World.Seamless!=null&&!World.Seamless.IsVisibleEnemy(side,targetId)){p.Reason="No currently observed hostile target.";return p;}
+            if(!CanAct(side)||p.Lead==null||!p.Lead.Continues||p.Lead.Tempo<0||p.Target==null||!p.Target.Continues||p.Target.Formation.Side==side||World.AtOwnCity(p.Target)||World.ContactCost(p.Lead,p.Target)<0){p.Reason="Legal hostile contact, nonnegative lead Tempo and an unprotected Battle Target required.";return p;}
+            p.Attackers=armies.Where(f=>f.Continues&&f.Formation.Side==side&&f.Tempo>=0&&World.ContactCost(f,p.Target)>=0).OrderBy(f=>f.Formation.FormationId,StringComparer.Ordinal).ToArray();
+            p.Defenders=armies.Where(f=>f.Continues&&f.Formation.Side!=side&&(f==p.Target||World.ContactCost(f,p.Target)>=0)).OrderBy(f=>f.Formation.FormationId,StringComparer.Ordinal).ToArray();
+            try{p.Deployments=DuelEncounter.DeploymentPlan(World.GraphFor(p.Target.WorldId),p.Lead,p.Target,p.Attackers.Concat(p.Defenders),SizeExperimentFixture.Board(SizeExperimentMap.Field_23x17_Full_9v9));}
             catch(InvalidOperationException e){p.Reason=e.Message;}return p;
         }
         public bool Attack(Side side,string targetId)
@@ -39,19 +40,19 @@ namespace RPG.Core
                 p.Target.Node=RetreatDestination(p.Target,p.Attackers.Select(f=>f.Node));p.Target.Tempo-=40;LowerCeilings(p.Target);CancelAbsentRepairs(side);
                 Say(p.Target.Formation.FormationId+" pre-battle Withdrawal -> "+p.Target.Node+"; Tempo "+p.Target.Tempo);
             }else World.SetRealmEncounter(p.Lead,p.Target,p.Attackers,p.Defenders);
-            World.SetRealmContact(null);return true;
+            World.SetRealmContact(null);World.Seamless?.Observe();return true;
         }
         public int RetreatDestination(DuelForce force,IEnumerable<int> enemyNodes)
         {
-            var enemies=enemyNodes.ToArray();int origin=force.Node;
-            return World.Graph.Nodes.Where(n=>n.Id!=origin&&n.Id!=World.OwnKeep(CrossroadsScenario.Other(force.Formation.Side))&&World.Graph.Hops(origin,n.Id)<=2&&!armies.Any(o=>o!=force&&o.Continues&&o.Node==n.Id))
-                .OrderByDescending(n=>enemies.Min(e=>World.Graph.Hops(n.Id,e))).ThenBy(n=>World.Graph.PathCost(World.Graph.Path(origin,n.Id))).ThenBy(n=>n.Id).Select(n=>n.Id).DefaultIfEmpty(origin).First();
+            var enemies=enemyNodes.ToArray();int origin=force.Node;var graph=World.GraphFor(force.WorldId);
+            return graph.Nodes.Where(n=>n.Id!=origin&&!World.AtEnemyCity(force,n.Id)&&graph.Hops(origin,n.Id)<=2&&!armies.Any(o=>o!=force&&o.Continues&&o.WorldId==force.WorldId&&o.Node==n.Id))
+                .OrderByDescending(n=>enemies.Min(e=>graph.Hops(n.Id,e))).ThenBy(n=>graph.PathCost(graph.Path(origin,n.Id))).ThenBy(n=>n.Id).Select(n=>n.Id).DefaultIfEmpty(origin).First();
         }
         public bool Withdraw(Side side)
         {
             var f=Selected(side);if(!CanAct(side)||f==null||!f.Continues||f.Tempo<0)return false;
-            var enemies=armies.Where(o=>o.Continues&&o.Formation.Side!=side&&World.Graph.Cost(f.Node,o.Node)>=0).Select(o=>o.Node).ToArray();if(enemies.Length==0)return false;
-            f.Node=RetreatDestination(f,enemies);f.Tempo-=40;LowerCeilings(f);CancelAbsentRepairs(side);Say(f.Formation.FormationId+" Withdrawal -> "+f.Node+"; Tempo "+f.Tempo);return true;
+            var enemies=armies.Where(o=>o.Continues&&o.Formation.Side!=side&&World.ContactCost(f,o)>=0&&(World.Seamless==null||World.Seamless.IsVisibleEnemy(side,o.Formation.FormationId))).Select(o=>o.Node).ToArray();if(enemies.Length==0)return false;
+            f.Node=RetreatDestination(f,enemies);f.Tempo-=40;LowerCeilings(f);CancelAbsentRepairs(side);Say(f.Formation.FormationId+" Withdrawal -> "+f.Node+"; Tempo "+f.Tempo);World.Seamless?.Observe();return true;
         }
         public bool ResolveBattle(BattleState result)
         {
@@ -69,15 +70,17 @@ namespace RPG.Core
                 CancelAbsentRepairs(f.Formation.Side);
             }
             int target=e.Origins[e.Target.Formation.FormationId];
-            if(result.Outcome.VictorySide==Side.West&&e.Lead.Continues&&!withdrawn.Contains(e.Lead)&&!armies.Any(f=>f.Continues&&f.Node==target)) {
+            if(result.Outcome.VictorySide==Side.West&&e.Lead.Continues&&!withdrawn.Contains(e.Lead)&&!armies.Any(f=>f.Continues&&f.WorldId==e.Target.WorldId&&f.Node==target)) {
                 e.Lead.Node=target;lines.Add("Original Lead advances: "+e.Lead.Formation.FormationId);
             }
             var people=e.Ids.OrderBy(k=>k.Key.Value).ToArray();
-            LastBattle=new RealmBattleHistory{number=e.Number,seed=result.InitialSeed,lead=e.Lead.Formation.FormationId,target=e.Target.Formation.FormationId,advanced=e.Lead.Node==target&&e.Origins[e.Lead.Formation.FormationId]!=target?e.Lead.Formation.FormationId:"",attackingPool=CityFoundationData.Number(xp.West.Pool),defendingPool=CityFoundationData.Number(xp.East.Pool),finalTacticalHash=BattleStateHash.Compute(result),
+            LastBattle=new RealmBattleHistory{world=(int)e.WorldId,number=e.Number,seed=result.InitialSeed,lead=e.Lead.Formation.FormationId,target=e.Target.Formation.FormationId,advanced=e.Lead.Node==target&&e.Origins[e.Lead.Formation.FormationId]!=target?e.Lead.Formation.FormationId:"",attackingPool=CityFoundationData.Number(xp.West.Pool),defendingPool=CityFoundationData.Number(xp.East.Pool),finalTacticalHash=BattleStateHash.Compute(result),
                 armies=e.Participants.Select(f=>f.Formation.FormationId).ToArray(),origins=e.Participants.Select(f=>e.Origins[f.Formation.FormationId]).ToArray(),destinations=e.Participants.Select(f=>f.Node).ToArray(),tempos=e.Participants.Select(f=>f.Tempo).ToArray(),attackers=e.Participants.Select(f=>e.TacticalSides[f.Formation.FormationId]==Side.West).ToArray(),withdrew=e.Participants.Select(f=>withdrawn.Contains(f)).ToArray(),
                 dead=e.Participants.Select(f=>result.Units.Count(u=>u.Status==UnitStatus.Dead&&f.Formation.Members.Any(c=>c.CharacterId==e.Ids[u.Id]))).ToArray(),escaped=e.Participants.Select(f=>result.Units.Count(u=>u.Status==UnitStatus.Escaped&&f.Formation.Members.Any(c=>c.CharacterId==e.Ids[u.Id]))).ToArray(),active=e.Participants.Select(f=>result.Units.Count(u=>u.IsActive&&f.Formation.Members.Any(c=>c.CharacterId==e.Ids[u.Id]))).ToArray(),
                 unitIds=people.Select(k=>k.Value).ToArray(),unitArmies=people.Select(k=>e.Participants.Single(f=>f.Formation.Members.Any(c=>c.CharacterId==k.Value)).Formation.FormationId).ToArray()};
-            AppliedBattle=e.Number;World.ClearRealmEncounter();EnsureSelection(Side.West);EnsureSelection(Side.East);CheckVictory();Say(string.Join("\n",lines)+"\nOne coalition XP pool; same IDs/HP/Armor/budgets; no Refresh.");return true;
+            AppliedBattle=e.Number;World.ClearRealmEncounter();World.Seamless?.Observe();EnsureSelection(Side.West);EnsureSelection(Side.East);CheckVictory();Say(string.Join("\n",lines)+"\nOne coalition XP pool; same IDs/HP/Armor/budgets; no Refresh.");
+            if(World.Seamless!=null)foreach(var side in new[]{Side.West,Side.East})World.Seamless.SetSideMessage(side,"Battle resolved in "+SeamlessWorlds.Name(e.WorldId)+"; no Refresh.\n"+string.Join("\n",e.Participants.Where(f=>f.Formation.Side==side).Select(f=>f.Formation.FormationId+" @"+f.Address+" · living "+f.Formation.LivingMembers.Count()+" · Tempo "+f.Tempo)));
+            return true;
         }
     }
 }

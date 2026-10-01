@@ -9,6 +9,8 @@ namespace RPG.Core
     {
         public PersistentFormation Formation { get; internal set; }
         public int Node { get; internal set; }
+        public WorldId WorldId { get; internal set; }=WorldId.Frontier;
+        public WorldAddress Address => new WorldAddress(WorldId,Node);
         public int Tempo { get; internal set; }=100;
         public int Provisions { get; internal set; }=30;
         public decimal RealmProvisions { get; internal set; }
@@ -68,8 +70,13 @@ namespace RPG.Core
                 new StrategicEdge(8,10,20),new StrategicEdge(7,11,35),new StrategicEdge(9,11,20),new StrategicEdge(10,11,20),new StrategicEdge(11,12,20),new StrategicEdge(12,13,20)});
         public const int MaxProvisions=30, PressureTarget=8;
         public RealmOperations Realm { get; internal set; }
+        public SeamlessWorlds Seamless { get; internal set; }
+        public StrategicGraph GraphFor(WorldId id)=>Seamless==null?Graph:SeamlessWorlds.MapFor(id);
+        public bool AtOwnCity(DuelForce f)=>f.WorldId==WorldId.Frontier&&f.Node==OwnKeep(f.Formation.Side);
+        public bool AtEnemyCity(DuelForce f,int node)=>f.WorldId==WorldId.Frontier&&node==OwnKeep(Other(f.Formation.Side));
+        public int ContactCost(DuelForce a,DuelForce b)=>a.WorldId==b.WorldId?GraphFor(a.WorldId).Cost(a.Node,b.Node):-1;
         public CityFoundations Foundations { get; internal set; }
-        public StrategicGraph Graph => Foundations!=null?CityFoundations.Map:Incident==null?Map:IncidentState.Map;
+        public StrategicGraph Graph => Seamless!=null?SeamlessWorlds.Frontier:Foundations!=null?CityFoundations.Map:Incident==null?Map:IncidentState.Map;
         public int TargetPressure => Foundations!=null?24:Incident==null?PressureTarget:16;
         public IncidentState Incident { get; private set; }
         public IEnumerable<DuelForce> AllForces => Realm!=null?Realm.Armies:new[]{West,East}.Concat(Incident==null?Enumerable.Empty<DuelForce>():Incident.Raiders.Select(r=>r.Force));

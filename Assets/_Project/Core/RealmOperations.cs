@@ -101,6 +101,7 @@ namespace RPG.Core
         internal void LowerCeilings(DuelForce f) {foreach(var c in f.Formation.LivingMembers)cycles[c.CharacterId].Ceiling=Math.Min(cycles[c.CharacterId].Ceiling,f.Tempo);}
         public StrategicMovePreview PreviewMove(Side side,int destination)
         {
+            if(World.Seamless!=null)return World.Seamless.PreviewMove(side,new WorldAddress(Selected(side)?.WorldId??WorldId.Frontier,destination));
             var p=new StrategicMovePreview();var f=Selected(side);
             if(!CanAct(side)||f==null||!f.Continues){p.Reason="Select a continuing own army.";return p;}
             if(World.Graph.Node(destination)==null||destination==f.Node){p.Reason="Choose another graph node.";return p;}
@@ -109,8 +110,8 @@ namespace RPG.Core
             if(p.Cost>f.Tempo)p.Reason="Insufficient Tempo: "+p.Cost+" required.";return p;
         }
         public bool Move(Side side,int destination)
-        {var p=PreviewMove(side,destination);if(!p.IsLegal)return false;var f=Selected(side);f.Tempo-=p.Cost;LowerCeilings(f);f.Node=destination;CancelAbsentRepairs(side);Say(f.Formation.FormationId+" moves to "+destination+"; Tempo "+f.Tempo);return true;}
-        private void Say(string message){LastMessage=message;World.RealmLog(message);}
+        {if(World.Seamless!=null)return World.Seamless.Move(side,new WorldAddress(Selected(side)?.WorldId??WorldId.Frontier,destination));var p=PreviewMove(side,destination);if(!p.IsLegal)return false;var f=Selected(side);f.Tempo-=p.Cost;LowerCeilings(f);f.Node=destination;CancelAbsentRepairs(side);Say(f.Formation.FormationId+" moves to "+destination+"; Tempo "+f.Tempo);return true;}
+        private void Say(string message,Side? owner=null){LastMessage=message;World.RealmLog(message);World.Seamless?.SetSideMessage(owner??World.ActiveSide,message);World.Seamless?.Observe();}
         public bool EndSide(Side side)
         {if(!CanAct(side))return false;World.EndRealmSide(side);return true;}
         public string TransferServiceBlocker(Side side,IEnumerable<string> ids)
@@ -119,21 +120,21 @@ namespace RPG.Core
             return state.Commission!=null&&set.Contains(state.Commission.Unit)||state.CommissionQueue.Any(set.Contains)||state.Services.Any(o=>set.Contains(o.Unit??"")||o.Quotes.Keys.Any(set.Contains))?"Cancel the conflicting personal service/Commission explicitly before transfer (paid fees are not refunded).":null;
         }
         private IEnumerable<PersistentCharacter> Container(Side side,string id)=>id=="Reserve"?SideState(side).Reserve:Army(id)?.Formation.Members??Enumerable.Empty<PersistentCharacter>();
-        private bool LocalContainer(Side side,string id)=>id=="Reserve"||Army(id)?.Formation.Side==side&&Army(id).Node==World.OwnKeep(side);
+        private bool LocalContainer(Side side,string id)=>id=="Reserve"||Army(id)?.Formation.Side==side&&World.AtOwnCity(Army(id));
         public RealmTransferPreview PreviewTransfer(Side side,string from,string to,IEnumerable<string> requested)
         {
             var p=new RealmTransferPreview();var ids=requested?.ToArray();var sender=Army(from);var receiver=Army(to);
             if(!CanAct(side)||from==to||ids==null||ids.Length==0||ids.Distinct().Count()!=ids.Length){p.Reason="Choose distinct own source/recipient and real unit IDs.";return p;}
             bool city=LocalContainer(side,from)&&LocalContainer(side,to);
             if(from!="Reserve"&&(sender==null||sender.Formation.Side!=side)||to!="Reserve"&&(receiver==null||receiver.Formation.Side!=side)){p.Reason="Unknown own container.";return p;}
-            if(!city&&(sender==null||receiver==null||World.Graph.Cost(sender.Node,receiver.Node)<0)){p.Reason="Physical contact or the same own City required.";return p;}
+            if(!city&&(sender==null||receiver==null||World.ContactCost(sender,receiver)<0)){p.Reason="Physical contact or the same own City required.";return p;}
             var members=Container(side,from);var moved=members.Where(c=>ids.Contains(c.CharacterId)).ToArray();
             if(moved.Length!=ids.Length||moved.Any(c=>c.Status==PersistentCharacterStatus.Dead)){p.Reason="Only present living characters may transfer.";return p;}
             if(sender?.Formation.Commander!=null&&moved.Contains(sender.Formation.Commander)){p.Reason="Assigned Commander: use City disband/reassign first.";return p;}
             if(receiver!=null&&(receiver.Formation.Commanderless||receiver.Formation.Commander==null)){p.Reason="Commanderless recipient: assign an existing officer at City first.";return p;}
             p.Reason=TransferServiceBlocker(side,ids);if(p.Reason!=null)return p;
             if(receiver!=null){p.UsedCapacity=Load(receiver.Formation.Commander,receiver.Formation.Members.Concat(moved));if(p.UsedCapacity>Capacity(receiver)){p.Reason="Receiving Command Capacity exceeded; select a smaller subset.";return p;}}
-            p.Cost=city?0:World.Graph.Cost(sender.Node,receiver.Node);
+            p.Cost=city?0:World.ContactCost(sender,receiver);
             if(!city&&(sender.Tempo<p.Cost||receiver.Tempo<p.Cost)){p.Reason="Both armies need the full nonnegative field handover edge cost.";return p;}
             p.ResultTempo=Math.Min(sender?.Tempo??100,receiver?.Tempo??100);foreach(var c in moved)p.ResultTempo=Math.Min(p.ResultTempo,cycles[c.CharacterId].Ceiling);p.ResultTempo-=p.Cost;
             decimal pool=(sender?.RealmProvisions??0)+(receiver?.RealmProvisions??0);
@@ -176,7 +177,7 @@ namespace RPG.Core
         private void ActivateCommission(Side side)
         {
             var s=SideState(side);if(s.Commission!=null||s.CommissionQueue.Count==0)return;var id=s.CommissionQueue[0];if(CommissionBlocker(side,id)!=null||World.Force(side).Gold<200)return;
-            World.Force(side).Gold-=200;s.Commission=new RealmService{Kind="Commission",Unit=id,Started=World.Refresh};s.CommissionQueue.RemoveAt(0);Say("Commission paid 200 Gold for "+id+"; full subsequent Refresh required.");
+            World.Force(side).Gold-=200;s.Commission=new RealmService{Kind="Commission",Unit=id,Started=World.Refresh};s.CommissionQueue.RemoveAt(0);Say("Commission paid 200 Gold for "+id+"; full subsequent Refresh required.",side);
         }
         public bool CancelCommission(Side side,string id)
         {if(!CanAct(side))return false;var s=SideState(side);if(s.Commission?.Unit==id){s.Commission=null;ActivateCommission(side);return true;}bool removed=s.CommissionQueue.Remove(id);if(removed)ActivateCommission(side);return removed;}
@@ -197,14 +198,14 @@ namespace RPG.Core
         }
         public bool Disband(Side side,string id)
         {
-            var f=Army(id);if(!CanAct(side)||f==null||f.Formation.Side!=side||f.Node!=World.OwnKeep(side)||!f.Continues||TransferServiceBlocker(side,f.Formation.LivingMembers.Select(c=>c.CharacterId))!=null||World.Force(side).KeepFood+f.RealmProvisions>180)return false;
+            var f=Army(id);if(!CanAct(side)||f==null||f.Formation.Side!=side||!World.AtOwnCity(f)||!f.Continues||TransferServiceBlocker(side,f.Formation.LivingMembers.Select(c=>c.CharacterId))!=null||World.Force(side).KeepFood+f.RealmProvisions>180)return false;
             LowerCeilings(f);SideState(side).Reserve.AddRange(f.Formation.LivingMembers);f.Formation.ReplaceMembers(f.Formation.Members.Where(c=>c.Status==PersistentCharacterStatus.Dead).ToArray(),null);
             World.Force(side).KeepFood+=f.RealmProvisions;f.RealmProvisions=0;RetireEmpty(f,side,null);Say("City disband: IDs/debt preserved; pending staff meal moved to City, no reset.");return true;
         }
         public bool AssignCommander(Side side,string armyId,string officerId)
         {
             var f=Army(armyId);var c=SideState(side).Reserve.SingleOrDefault(u=>u.CharacterId==officerId);
-            if(!CanAct(side)||f==null||!f.Continues||f.Formation.Side!=side||f.Node!=World.OwnKeep(side)||!f.Formation.Commanderless||c==null||!c.IsCommander||c.Status==PersistentCharacterStatus.Dead||TransferServiceBlocker(side,new[]{officerId})!=null||Load(c,f.Formation.Members)>32+6*(int)c.CommandRank)return false;
+            if(!CanAct(side)||f==null||!f.Continues||f.Formation.Side!=side||!World.AtOwnCity(f)||!f.Formation.Commanderless||c==null||!c.IsCommander||c.Status==PersistentCharacterStatus.Dead||TransferServiceBlocker(side,new[]{officerId})!=null||Load(c,f.Formation.Members)>32+6*(int)c.CommandRank)return false;
             SideState(side).Reserve.Remove(c);f.Formation.ReplaceMembers(f.Formation.Members.Concat(new[]{c}).ToArray(),officerId);f.Tempo=Math.Min(f.Tempo,cycles[c.CharacterId].Ceiling);LowerCeilings(f);Say("Real officer "+officerId+" assigned; old dead Commander remains dead history.");return true;
         }
     }
@@ -213,15 +214,15 @@ namespace RPG.Core
         internal void RealmLog(string message)=>Log(message);
         internal void EndRealmSide(Side side)
         {
-            foreach(var f in Realm.Armies.Where(a=>a.Continues&&a.Formation.Side==side)) {int n=f.Node;if(n>=6&&n<=8)owners[n-6]=side;Foundations.Capture(n,side);}
+            foreach(var f in Realm.Armies.Where(a=>a.Continues&&a.Formation.Side==side)) {int n=f.Node;if(f.WorldId!=WorldId.Frontier){Seamless?.Claim(f);continue;}if(n>=6&&n<=8)owners[n-6]=side;Foundations.Capture(n,side);}
             CompletedActivations++;
             if(CompletedActivations==2) {
-                Foundations.RefreshEconomy(this);Realm.FinishRefresh();
+                Foundations.RefreshEconomy(this);Realm.FinishRefresh();Seamless?.FinishRefresh();
                 foreach(var owner in owners)if(owner.HasValue)Force(owner.Value).Pressure++;
                 if(Owner(6).HasValue)Force(Owner(6).Value).Gold+=75;
                 Refresh++;CompletedActivations=0;ActiveSide=StartingSide;Realm.CheckVictory();
             }else ActiveSide=Other(StartingSide);
-            HandoffPending=!Winner.HasValue&&!IsDraw;
+            HandoffPending=!Winner.HasValue&&!IsDraw;Seamless?.Observe();
         }
         internal void SetRealmWinner(Side? side)=>Winner=side;
         internal void SetRealmEncounter(DuelForce lead,DuelForce target,DuelForce[] attackers,DuelForce[] defenders)

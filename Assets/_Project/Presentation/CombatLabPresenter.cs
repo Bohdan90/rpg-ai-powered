@@ -27,7 +27,7 @@ namespace RPG.Presentation
                 var actor=State.FindUnit(State.CurrentUnitId.Value);var spell=AimSpell;
                 if(!spell.HasValue)return StaffSelected?"Staff Strike · Physical 5 · melee range 1 · Action. Explicit alternative; no automatic fallback.":"";
                 var s=spell.Value;int limit=SpellRules.Limit(s);
-                return (!actor.ActionAvailable?"UNAVAILABLE: Action spent — end activation; Action resets on the next activation.\n":"")+(inspectedSpell.HasValue?"Inspecting (selected action unchanged): ":SelectedSpell.HasValue?"Selected: ":"Primary attack: ")+s+"\n"+TargetDescription(s)
+                return (!actor.ActionAvailable?"UNAVAILABLE: Action spent; remaining legal Movement is separate. Action resets on the next activation.\n":"")+(inspectedSpell.HasValue?"Inspecting (selected action unchanged): ":SelectedSpell.HasValue?"Selected: ":"Primary attack: ")+s+"\n"+TargetDescription(s)
                     +" · Action"+(SpellRules.Exertion(s)?" + Exertion":" · Spell (not Exertion)")
                     +(limit==int.MaxValue?"":"\nRemaining "+Math.Max(0,limit-SpellRules.Used(actor,s))+"/"+limit+" · resets only on global Strategic Refresh")
                     +"\n"+(!actor.ActionAvailable?"Spell targeting is hidden until Action is available.":SelectedSpell.HasValue?"Hover for exact effect; click to pin, click the same cell again to cast. Cancel clears the pin.":"Hover to preview; first click pins, second click on the same enemy casts. Empty ground remains Move; allies are inspected.")

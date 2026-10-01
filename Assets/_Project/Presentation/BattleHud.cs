@@ -33,13 +33,14 @@ namespace RPG.Presentation
         {
             this.presenter = presenter; this.camera = camera;
             Root = document.rootVisualElement; Root.name = "graybox-root";
+            Root.focusable=true;Root.RegisterCallback<KeyDownEvent>(e=>{if(e.keyCode==KeyCode.Escape){presenter.CancelPreview();e.StopPropagation();}});
             Root.style.flexDirection = FlexDirection.Row; Root.style.flexGrow = 1;
             surface = new VisualElement { name = "board-input" };
             surface.style.width = Length.Percent(70); surface.style.height = Length.Percent(100);
             surface.style.overflow = Overflow.Hidden; Root.Add(surface);
             var title = Text(surface, "GATE C / HOTSEAT", 22); title.style.position = Position.Absolute;
             title.name="battle-title"; title.style.left = 20; title.style.top = 16; title.pickingMode = PickingMode.Ignore;
-            var legend = Text(surface, "BLUE West · ORANGE East · GOLD active\nGreen: reachable · Gold: path · Red segment: OA risk\nSword + shield: HW/EW · Bow: HA · * Commander\nWhite arrow: facing · Red border: ZoC ready · Gray: spent\nHover: preview · Click: pin · Same cell again: execute\nWheel: zoom · Right-click: center view", 13);
+            var legend = Text(surface, "BLUE West · ORANGE East · GOLD active\nGreen: reachable · Gold: path · Red segment: OA risk\nSword + shield: HW/EW · Bow: HA · * Commander\nWhite arrow: facing · Red border: ZoC ready · Gray: spent\nHover: preview · Click: pin · Same cell again: execute\nWheel: zoom · Right-click / Escape: cancel", 13);
             legend.style.position = Position.Absolute; legend.style.left = 20; legend.style.bottom = 16; legend.pickingMode = PickingMode.Ignore;
             westEdge = Text(surface, "West Retreat", 13); eastEdge = Text(surface, "East Retreat", 13);
             westEdge.style.position = eastEdge.style.position = Position.Absolute;
@@ -54,8 +55,9 @@ namespace RPG.Presentation
             surface.RegisterCallback<PointerLeaveEvent>(e=>presenter.LeaveBoard());
             surface.RegisterCallback<PointerDownEvent>(e => {
                 if (presenter.State == null || !Pick(surface.WorldToLocal(e.position), out var p)) return;
-                if (e.button == 1) { presenter.CenterView(p); e.StopPropagation(); return; }
+                if (e.button == 1) { presenter.CancelPreview(); e.StopPropagation(); return; }
                 if (e.button != 0) return;
+                Root.Focus();
                 if(presenter.PinnedCell!=p)friendly.SetValueWithoutNotify(false); presenter.ClickCell(p); e.StopPropagation();
             });
 

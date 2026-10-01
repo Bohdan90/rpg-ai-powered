@@ -18,6 +18,7 @@ namespace RPG.Core
         public UnitStatus Status { get; internal set; }
         public bool IsActive => Status == UnitStatus.Active;
         public bool ActionAvailable { get; internal set; }
+        public bool PostSpellMovement { get; internal set; }
         public bool OpportunityAttackAvailable { get; internal set; }
         public int MovementRemaining { get; internal set; }
         // Historical spend, distinct from MovementRemaining (Defend/End also clear remaining).
@@ -65,7 +66,7 @@ namespace RPG.Core
         public int CloseHealUsed { get; internal set; }
         public UnitId? GracefulExitTarget { get; internal set; }
         // Existing profiles keep their action/movement commitment. New EW II has the explicit exit kit.
-        public bool CanMove => !IsFrozen && (ActionAvailable || Profile.HasGracefulExit);
+        public bool CanMove => !IsFrozen && (ActionAvailable || PostSpellMovement || Profile.HasGracefulExit);
         internal UnitState Copy() => (UnitState)MemberwiseClone();
     }
 }

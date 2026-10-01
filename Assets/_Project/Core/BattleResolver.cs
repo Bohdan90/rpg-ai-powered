@@ -5,9 +5,9 @@ namespace RPG.Core
 {
     public static partial class BattleResolver
     {
-        public static BattleResult StartBattle(IEnumerable<UnitState> units, uint seed, Battlefield battlefield = null, int fireRulesVersion = 2)
+        public static BattleResult StartBattle(IEnumerable<UnitState> units, uint seed, Battlefield battlefield = null, int fireRulesVersion = 3)
         {
-            if(fireRulesVersion!=1&&fireRulesVersion!=2)throw new ArgumentOutOfRangeException(nameof(fireRulesVersion));
+            if(fireRulesVersion<1||fireRulesVersion>3)throw new ArgumentOutOfRangeException(nameof(fireRulesVersion));
             var state = new BattleState(units, seed, battlefield){FireRulesVersion=fireRulesVersion};
             var events = new List<BattleEvent> { new BattleEvent(BattleEventKind.BattleStarted, 0) };
             StartNextActivation(state, events);
@@ -39,7 +39,7 @@ namespace RPG.Core
                     ? CommandError.InvalidFacing : CommandError.None;
             if (actor.IsFrozen) return CommandError.Frozen;
             if (command is CastCommand cast) return ValidateCast(state,actor,cast);
-            if (command is MoveCommand mobile && actor.Profile.HasGracefulExit) return MovementRules.ValidatePath(state, actor, mobile);
+            if (command is MoveCommand mobile && (actor.Profile.HasGracefulExit || actor.PostSpellMovement)) return MovementRules.ValidatePath(state, actor, mobile);
             if (!(command is BasicAttackCommand) && !(command is DefendCommand) && !(command is MoveCommand)) return CommandError.InvalidCommand;
             if (!actor.ActionAvailable) return CommandError.NoAction;
             if (command is MoveCommand move) return MovementRules.ValidatePath(state, actor, move);
@@ -296,6 +296,7 @@ namespace RPG.Core
         {
             int before = actor.MovementRemaining;
             actor.MovementRemaining = 0;
+            actor.PostSpellMovement = false;
             if (before > 0) events.Add(new BattleEvent(BattleEventKind.MovementConsumed, state.Round, actor.Id, amount: before, before: before, after: 0));
         }
         private static void SetFacing(BattleState state, UnitState actor, Facing facing, List<BattleEvent> events)
@@ -329,6 +330,7 @@ namespace RPG.Core
                 }
                 StartStatuses(state,unit,events);
                 if (!unit.IsActive) { EvaluateOutcome(state,events); if(state.Outcome.IsEnded)return; continue; }
+                unit.PostSpellMovement = false;
                 unit.ActionAvailable = !unit.IsFrozen;
                 unit.OpportunityAttackAvailable = unit.Profile.HasMeleeBasic && !unit.IsFrozen;
                 unit.MovementRemaining = unit.IsFrozen ? 0 : unit.Profile.Movement;

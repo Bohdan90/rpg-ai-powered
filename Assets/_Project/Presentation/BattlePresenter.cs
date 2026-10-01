@@ -153,6 +153,9 @@ namespace RPG.Presentation
             var result=ReplayFiles.Verify(path);Message=result.Message;AddLog(Message);Refresh();return result;
         }
         private BattleCommand pending;
+        private string pendingStateHash;
+        private bool pendingFriendly;
+        private void OnApplicationFocus(bool focused){if(!focused&&hud!=null&&State!=null){CancelPreview();SeamlessMap?.CancelInputs();}}
         private MeleeApproachPreview pendingApproach;
         public bool HasApproachPreview => pendingApproach!=null;
         private GridPosition? selected;
@@ -245,6 +248,7 @@ namespace RPG.Presentation
         public void ConfirmPreview()
         {
             if(IsAiTurn||!selected.HasValue||pending==null)return;
+            if(pendingStateHash!=BattleStateHash.Compute(State)){var cell=selected.Value;PreviewCell(cell,pendingFriendly,true);PreviewText+="\nState changed — review the new preview and confirm again.";ShowViews();return;}
             var approach=pendingApproach;
             if(approach==null){Submit(pending);return;}
             var moved=Submit(approach.Movement);
@@ -259,6 +263,7 @@ namespace RPG.Presentation
         private void PreviewCell(GridPosition cell, bool friendlyConfirmed, bool pin)
         {
             if (State.Outcome.IsEnded || IsAiTurn) return;
+            pendingStateHash=BattleStateHash.Compute(State);pendingFriendly=friendlyConfirmed;
             selected = pin ? cell : (GridPosition?)null; aimHover=cell; pending = null; pendingApproach=null; MovementRisk = null; PreviewEscapes = false; spellPreviewCells=null;spellBlockedCells=null;spellCenter=null;
             var actor = State.FindUnit(State.CurrentUnitId.Value); var target = State.OccupantAt(cell);
             if(PreviewSelectedSpell(cell,friendlyConfirmed))return;
@@ -397,6 +402,7 @@ namespace RPG.Presentation
         {
             RefreshSpellEnvelope();
             grid.Refresh(State, reachable, (pending as MoveCommand)?.Path, threats, MovementRisk, rangedReach,inspectedSpell.HasValue?null:spellPreviewCells,spellEnvelope,inspectedSpell.HasValue?null:spellBlockedCells,inspectedSpell.HasValue?null:spellCenter);
+            grid.ShowWaypoint(HasMovePreview&&selected.HasValue?selected:null);
             hud.Refresh(State, selected.HasValue && pending != null && !State.Outcome.IsEnded, selected);
         }
         private void Append(IEnumerable<BattleEvent> events)
@@ -409,7 +415,10 @@ namespace RPG.Presentation
                 string outcome = e.Kind == BattleEventKind.AttackMissed ? "Failed contact — no damage"
                     : e.Kind == BattleEventKind.GuardSucceeded ? "Guard blocked — no damage"
                     : e.Kind == BattleEventKind.ArmorLost ? "Armor damage " + e.Amount + " (" + e.Before + " → " + e.After + ")"
-                    : e.Kind == BattleEventKind.HpLost ? "HP damage " + e.Amount + " (" + e.Before + " → " + e.After + ")" : null;
+                    : e.Kind == BattleEventKind.HpLost ? "HP damage " + e.Amount + " (" + e.Before + " → " + e.After + ")"
+                    : e.Kind == BattleEventKind.HpHealed ? "HP healed +"+(e.After-e.Before)+" ("+e.Before+" → "+e.After+")"
+                    : e.Kind == BattleEventKind.BarrierChanged ? "Barrier "+e.Before+" → "+e.After
+                    : e.Kind == BattleEventKind.ConditionCleansed ? "Condition cleansed" : null;
                 if (outcome != null)
                 {
                     outcomes.Add(who + " → " + UnitName(e.Target.Value) + ": " + outcome);

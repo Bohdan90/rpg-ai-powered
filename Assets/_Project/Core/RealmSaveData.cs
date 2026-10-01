@@ -6,14 +6,14 @@ namespace RPG.Core
 {
     [Serializable] public sealed class RealmArmyData
     {
-        public string id,commander,provisions;public int side,node,tempo,staff;public StrategicSaveCharacter[] units;
-        internal static RealmArmyData Capture(RealmOperations r,DuelForce f)=>new RealmArmyData{id=f.Formation.FormationId,side=(int)f.Formation.Side,commander=f.Formation.AssignedCommanderId??"",node=f.Node,tempo=f.Tempo,staff=r.staffDue[f.Formation.FormationId],provisions=CityFoundationData.Number(f.RealmProvisions),units=f.Formation.Members.Select(StrategicSaveCharacter.Capture).ToArray()};
-        internal DuelForce Restore()
+        public string id,commander,provisions;public int side,node,tempo,staff,world;public StrategicSaveCharacter[] units;
+        internal static RealmArmyData Capture(RealmOperations r,DuelForce f)=>new RealmArmyData{id=f.Formation.FormationId,side=(int)f.Formation.Side,commander=f.Formation.AssignedCommanderId??"",world=(int)f.WorldId,node=f.Node,tempo=f.Tempo,staff=r.staffDue[f.Formation.FormationId],provisions=CityFoundationData.Number(f.RealmProvisions),units=f.Formation.Members.Select(StrategicSaveCharacter.Capture).ToArray()};
+        internal DuelForce Restore(CrossroadsScenario w)
         {
-            StrategicSaveData.Require(CrossroadsScenario.ValidSide((Side)side)&&id!=null&&id.StartsWith("realm06-"+(Side)side+"-army-",StringComparison.Ordinal)&&commander!=null&&CityFoundations.Map.Node(node)!=null&&node!=((Side)side==Side.West?13:1)&&tempo>=-40&&tempo<=100&&staff>=0&&staff<=100000,"Invalid 06 army.");
+            StrategicSaveData.Require(CrossroadsScenario.ValidSide((Side)side)&&id!=null&&id.StartsWith("realm06-"+(Side)side+"-army-",StringComparison.Ordinal)&&commander!=null&&(world==0||world==1&&w.Seamless!=null)&&w.GraphFor((WorldId)world).Node(node)!=null&&(world!=0||node!=((Side)side==Side.West?13:1))&&tempo>=-40&&tempo<=100&&staff>=0&&staff<=100000,"Invalid 06 army.");
             var members=RealmSaveData.Characters(units);
             StrategicSaveData.Require(commander==""||members.Any(c=>c.CharacterId==commander&&c.IsCommander),"Invalid assigned Commander.");
-            return new DuelForce((Side)side){Formation=new PersistentFormation(id,(Side)side,members,commander==""?null:commander,true),Node=node,Tempo=tempo,Provisions=0,RealmProvisions=CityFoundationData.Decimal(provisions)};
+            return new DuelForce((Side)side){Formation=new PersistentFormation(id,(Side)side,members,commander==""?null:commander,true),WorldId=(WorldId)world,Node=node,Tempo=tempo,Provisions=0,RealmProvisions=CityFoundationData.Decimal(provisions)};
         }
         internal void Write(BinaryWriter w){w.Write(id);w.Write(side);w.Write(commander);w.Write(node);w.Write(tempo);w.Write(staff);w.Write(provisions);w.Write(units.Length);foreach(var c in units)c.Write(w);}
     }
@@ -55,13 +55,13 @@ namespace RPG.Core
         {
             StrategicSaveData.Require(armies!=null&&armies.Length>=4&&armies.Length<=10000&&armies.All(f=>f!=null)&&armies.Select(f=>f.id).Distinct().Count()==armies.Length&&west!=null&&east!=null&&cycles!=null&&cycles.All(c=>c!=null)&&familiarity!=null&&message!=null&&appliedBattle>=0,"Invalid 06 collections.");
             var r=new RealmOperations(w, w.Foundations.West.Preset,w.Foundations.East.Preset,false){West=west.Restore(w.Refresh),East=east.Restore(w.Refresh),AppliedBattle=appliedBattle,LastMessage=message};
-            foreach(var a in armies){var f=a.Restore();r.armies.Add(f);r.staffDue[a.id]=a.staff;}
+            foreach(var a in armies){var f=a.Restore(w);r.armies.Add(f);r.staffDue[a.id]=a.staff;}
             var chars=r.Characters(Side.West).Concat(r.Characters(Side.East)).ToArray();
             StrategicSaveData.Require(chars.Select(c=>c.CharacterId).Distinct().Count()==chars.Length,"One UnitId appears in multiple physical locations.");
             StrategicSaveData.Require(cycles.Length==chars.Length&&cycles.Select(c=>c.id).Distinct().Count()==cycles.Length&&cycles.All(c=>chars.Any(u=>u.CharacterId==c.id)&&c.ceiling>=-40&&c.ceiling<=100&&c.deprivation>=0&&c.deprivation<=w.Refresh&&c.born>=0&&c.born<=w.Refresh),"Invalid anti-relay / nutrition ledger.");
             foreach(var c in cycles)r.cycles.Add(c.id,new RealmUnitCycle{Ceiling=c.ceiling,Deprivation=c.deprivation,BornRefresh=c.born});
             foreach(var f in familiarity){StrategicSaveData.Require(f!=null&&f.key!=null&&f.load>=6&&f.load<=9&&!r.familiarity.ContainsKey(f.key),"Invalid familiarity.");r.familiarity.Add(f.key,(CommandFamiliarity)f.load);}
-            StrategicSaveData.Require(r.Armies.Where(f=>f.Continues&&f.Node!=w.OwnKeep(f.Formation.Side)).GroupBy(f=>f.Node).All(g=>g.Count()==1),"Overlapping field formations.");
+            StrategicSaveData.Require(r.Armies.Where(f=>f.Continues&&!w.AtOwnCity(f)).GroupBy(f=>f.Address).All(g=>g.Count()==1),"Overlapping field formations.");
             foreach(var side in new[]{Side.West,Side.East}) {
                 var s=r.SideState(side);StrategicSaveData.Require(r.Army(s.Selected)?.Formation.Side==side,"Invalid selected army.");
                 StrategicSaveData.Require(r.Armies.Where(a=>a.Formation.Side==side).All(a=>int.TryParse(a.Formation.FormationId.Substring(("realm06-"+side+"-army-").Length),out int n)&&n>0&&n<s.NextArmy),"Reused army identity counter.");
@@ -79,8 +79,8 @@ namespace RPG.Core
             if(hasLastBattle){StrategicSaveData.Require(lastBattle!=null,"Missing aftermath");lastBattle.Validate(r,appliedBattle);r.LastBattle=lastBattle.Copy();}
             return r;
         }
-        internal void Write(BinaryWriter w)
-        {w.Write(armies.Length);foreach(var a in armies)a.Write(w);west.Write(w);east.Write(w);w.Write(cycles.Length);foreach(var c in cycles){w.Write(c.id);w.Write(c.ceiling);w.Write(c.deprivation);w.Write(c.born);}w.Write(familiarity.Length);foreach(var f in familiarity){w.Write(f.key);w.Write(f.load);}w.Write(appliedBattle);w.Write(message);if(hasLastBattle)lastBattle.Write(w);}
+        internal void Write(BinaryWriter w,bool worlds=false)
+        {w.Write(armies.Length);foreach(var a in armies){a.Write(w);if(worlds)w.Write(a.world);}west.Write(w);east.Write(w);w.Write(cycles.Length);foreach(var c in cycles){w.Write(c.id);w.Write(c.ceiling);w.Write(c.deprivation);w.Write(c.born);}w.Write(familiarity.Length);foreach(var f in familiarity){w.Write(f.key);w.Write(f.load);}w.Write(appliedBattle);w.Write(message);if(hasLastBattle){lastBattle.Write(w);if(worlds)w.Write(lastBattle.world);}}
     }
     public sealed partial class RealmOperations
     {

@@ -131,6 +131,7 @@ namespace RPG.Core
         {
             var preview=PreviewSpell(state,command);
             ConsumeAction(state,actor,events);
+            if(state.FireRulesVersion>=3)actor.PostSpellMovement=true;
             if(SpellRules.Exertion(command.Spell)) {actor.ExhaustedActivations=2;events.Add(new BattleEvent(BattleEventKind.ExhaustionChanged,state.Round,actor.Id,after:2));}
             if(command.Spell==SpellId.Fireball)actor.FireballUsed++;
             if(command.Spell==SpellId.Freeze)actor.FreezeUsed++;

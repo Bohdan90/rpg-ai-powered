@@ -8,10 +8,12 @@ namespace RPG.Core
     {
         public DuelForce Lead {get;} public DuelForce Target {get;}
         internal DuelForce[] Attackers {get;} internal DuelForce[] Defenders {get;}
+        public IReadOnlyList<DuelForce> CommittedForces=>Array.AsReadOnly(Attackers.Concat(Defenders).ToArray());
         internal IncidentContact(DuelForce lead,DuelForce target,DuelForce[] attackers,DuelForce[] defenders){Lead=lead;Target=target;Attackers=attackers;Defenders=defenders;}
     }
     public sealed partial class DuelEncounter
     {
+        public WorldId WorldId {get;private set;}=WorldId.Frontier;
         public IReadOnlyList<DuelForce> Participants { get; }
         public IReadOnlyDictionary<string,Side> TacticalSides { get; }
         public IReadOnlyDictionary<string,int> Origins { get; }
@@ -30,7 +32,7 @@ namespace RPG.Core
             AiSide=world.Incident!=null&&world.Incident.Raiders.Any(r=>r.Force==lead)?Side.West:Side.East;
             WestOrigin=lead.Node;EastOrigin=target.Node;
             var board=SizeExperimentFixture.Board(SizeExperimentMap.Field_23x17_Full_9v9);
-            var deployments=DeploymentPlan(world.Graph,lead,target,Participants,board);
+            WorldId=target.WorldId;var deployments=DeploymentPlan(world.GraphFor(target.WorldId),lead,target,Participants,board);
             Ids=deployments.ToDictionary(d=>d.UnitId,d=>d.CharacterId);
             Battle=PersistentBattle.Start(attackers.Select(f=>f.Formation).ToArray(),defenders.Select(f=>f.Formation).ToArray(),deployments,seed,board);
         }

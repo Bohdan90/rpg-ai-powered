@@ -138,3 +138,10 @@ The historical v1 self-only/eight-direction restrictions above are superseded fo
 Fresh focused77 EditMode+6 PlayMode PASS; full558 EditMode+70 PlayMode=628 PASS,0 failed/skipped. Config/XML: [FIRE_TARGETING_02.md](FIRE_TARGETING_02.md), [manifest](Evidence/FIRE-TARGETING-02/validation-manifest.json). Real short separate-window targeting/recipient/Burn/expiry and05B battle→physicalEscape→sameRefresh→save/recreate/load PASS; original full N/V runs were not repeated.24 retained v1 replay files still verify. Source rounding example and exact isolated launch path are in the report. Feature not yet delivered to main; player targeting acceptance PENDING. No push; stop for coordinator review.
 
 Delivery update: FIRE-TARGETING-02 gameplay7ae088c is now fast-forwarded into `My project/develop` with explicit user permission to end the old party. Main Lab off-axis attack/UI smoke passed;628 PASS retains its original pre-integration provenance. Nine unrelated files and campaign saves preserved. No push. The feature-only limitation above is superseded.
+
+
+## 2026-09-30 delta — TACTICAL-INPUT-03 with isolated Seamless Worlds07
+
+Existing two-click attacks/warrior and Bow approach preserved from actual main20c7f76. Completed the remaining post-spell Movement correction under recorded rules3, plus stale/focus/cancel guards, outlined waypoint and actual heal/Barrier outcome summary. HH self targeting was already canonical and implemented; new Presentation test verifies two-click self heal and one source use. No spell damage/range/kit/economy retune. Rules1/2 hashes and32 actual stored journals remain verified.
+
+Fresh combined07 regression628 EditMode+84 PlayMode=712PASS,0failed/0skipped; exact source/provenance in `Evidence/54/validation-manifest.json`. This is feature-only, not a main delivery. Short INPUT03 GUI/connected smoke NOT RUN due independent runtime input delivery; no repeat of old N/V claimed. See `TACTICAL_INPUT_03.md` and `SEAMLESS_WORLDS_07.md`. NO PUSH.

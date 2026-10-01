@@ -11,6 +11,7 @@ namespace RPG.Presentation
         public VisualElement Root { get; }
         private readonly BattlePresenter p;
         private readonly RealmHud realmHud;
+        public SeamlessMapView SeamlessView=>realmHud?.SeamlessView;
         private readonly VisualElement map,handoff,content;
         private readonly Label status,roster,preview,history,pass,saveStatus;
         private readonly Button move,attack,withdraw,end,accept,recruitWarrior,recruitArcher;
