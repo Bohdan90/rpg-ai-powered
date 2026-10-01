@@ -52,7 +52,6 @@ namespace RPG.Core
             string stop=null;
             if(!f.Continues||FormationStamp(f)!=j.formation||f.WorldId!=(WorldId)j.world||j.next<1||j.next>=j.route.Length||j.route[j.next-1]!=f.Node)stop="Formation changed; choose destination again.";
             else if(world.PendingContact!=null||world.Encounter!=null)stop="Encounter requires a decision.";
-            else if(world.Refresh!=j.issuedRefresh&&Portals.Any(p=>p.Contains(f.Address)))stop="Portal anchor: explicit Traverse Portal required.";
             if(stop!=null){PauseJourney(j.army,stop);LastMessage=stop;Publish(side);return;}
             westGroupFloor=west.nextSequence;eastGroupFloor=east.nextSequence;
             while(j.next<j.route.Length){

@@ -320,3 +320,25 @@ User requested delivery to `My project/develop`. Starting main `26e0f9a`; valida
 Validation provenance: completed feature full **663 EditMode +91 PlayMode =754 PASS;0 failed/skipped**, XML in `Evidence/STRATEGIC-MAP-UX/tests/EditMode-20261001-092207.xml` and `PlayMode-20261001-092438.xml`. G1–G4 and T1–T4 evidence/limitations remain in the two reports. This delivery does not claim a fresh main regression or new GUI pass.
 
 Main launch after import: **Gate C → Production Roads 08 → West starts** (or East); tactical changes also apply in **Gate C → Combat Lab → Support vs Fire (near contact)** and existing encounters. Open ordinary My project; isolated launcher is unnecessary. Existing 07 remains available. No forced Unity restart, save migration or push. Earlier feature-only/main-pending entries are superseded by this delivery; player acceptance remains pending.
+
+
+## 2026-10-01 — Strategic Travel Scale 08B + Mage Initiative
+
+Continued existing feature/strategic-map-ux from6178e1b, same Strategic-Map-UX checkout. Live main is3fa4a57 after the user's earlier authorized delivery (Drive26e0f9a was stale); this new package is NOT merged/pushed. New Production Roads08 menu sessions use version8dense graph, legacy version7saves retain old08geometry; 01–07 preserved.
+
+Mainland60macro nodes/75roads/16cycles unchanged, expanded to513positions/528segments. B expanded to15macro nodes/20roads/6cycles,154positions/159segments. Total75macro nodes,22POIs,8zones,592hidden anchors,667logical positions,687Land segments+2Portal links. Authored-distance subdivision:ceil(3×length),minimum2steps,10Tempo/step; no globalTempo/economy tuning. Exact positions support sight/contact/battle/persistent destinations/save. UI hides ordinary anchors, shows own army/progress and currently observed exploration-frontier endpoints. Main shortestKeepdepth800Tempo; outerAshdepth900; B450 (56.25%/50%). Actual normalA2→25run10activations,Tempo22/Prov0atarrival.
+
+HOM Fire/Ice TI/TII Initiative8; HH9; HW10/HA12/EW TI14 unchanged (EW TII15unchanged). Replay snapshots record Initiative; absent field restores historical11HOM/12HH to preserve recorded rules/hashes. No other stats/cast budgets changed. Fixed reproduced portal-origin wait bug: explicit land departure with insufficientTempo resumes nextownactivation, arrival still pauses and traversal remains explicit20Tempo.
+
+Focused41Edit+7Play and15SpellUxPlay after correcting obsolete absolute journal-count assertion. Fresh final **682EditMode+91PlayMode=773PASS;0failed/skipped**, exact final inputs/XML/logs in Evidence/SCALE-08B. GUI S1–S5/T1 complete within report's explicit scope:10activationjourney,midroadstop,controlledactualroadAttack/Fight,multi-turnBexploration/branches,explicitportal,realinitiativeorder. Full road battle/aftermath automated, not mouse-completed claim. Save button + public recreate/load identical hash, actual continuation. Final portal-wait fix rechecked through real clicks.
+
+Report: STRATEGIC_TRAVEL_SCALE_08B.md; evidence/manifests in Evidence/SCALE-08B.9protected main paths+22baseline save/replay files byte-identical. Feature's existing EditorBuildSettings+6meta remain uncommitted. Mainunchanged3fa4a57; isolatedsave/preferencesroots preserved. TechnicalPASS/ready for PLAYER SCALE REVIEW, not PLAYER ACCEPTED. Long expedition becomesHungry; two-hopBexploration is incremental; fitlabelsneedzoom. NO PUSH/NO MERGE. STOP before3D/Meshy/nextpackage.
+
+
+## 2026-10-01 — authorized main delivery of Travel Scale 08B
+
+User explicitly requested this completed package in the main project, superseding the prior feature-only delivery restriction. Starting main `3fa4a57`; source feature `3ad2b301bf7ea74a6e6e362581722ce8bf8c7fb2`. Merge preserves both checkpoint histories and main PlayerSettings; game source/tests/assets match the validated feature. No gameplay changes for delivery. Protected local scene/settings/six metadata and22baseline save/replay files retained; no namespace migration or forced Unity restart.
+
+Validation provenance: source final **682 EditMode +91 PlayMode =773 PASS;0failed/skipped**, in `Evidence/SCALE-08B/tests/EditMode-20261001-110213.xml` and `PlayMode-20261001-110411.xml`. These remain feature-run results, not a new main regression. GUI scope/limitations and topology measures remain in `STRATEGIC_TRAVEL_SCALE_08B.md`. Player acceptance is pending.
+
+Main launch after import: **Gate C → Production Roads 08 → West starts** (orEast), start a new session for08B. Old version7saves intentionally keep the old coarse08map. Current tactical profiles use HOM Fire/Ice8 and HH9. NO PUSH. This entry supersedes earlier statements that08B is not in main.
