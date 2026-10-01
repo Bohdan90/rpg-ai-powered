@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="3" result="Passed" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-10-01 15:50:27Z" end-time="2026-10-01 15:50:28Z" duration="0.9147922">
+  <test-suite type="TestSuite" id="1122" name="Strategic-Map-UX" fullname="Strategic-Map-UX" runstate="Runnable" testcasecount="92" result="Passed" start-time="2026-10-01 15:50:27Z" end-time="2026-10-01 15:50:28Z" duration="0.914792" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <test-suite type="Assembly" id="1237" name="RPG.Presentation.Tests.dll" fullname="/Users/bohdanskrypka/UnityProjects/Convergence/Strategic-Map-UX/Library/ScriptAssemblies/RPG.Presentation.Tests.dll" runstate="Runnable" testcasecount="92" result="Passed" start-time="2026-10-01 15:50:27Z" end-time="2026-10-01 15:50:28Z" duration="0.910355" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="74500" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <test-suite type="TestSuite" id="1238" name="RPG" fullname="RPG" runstate="Runnable" testcasecount="92" result="Passed" start-time="2026-10-01 15:50:27Z" end-time="2026-10-01 15:50:28Z" duration="0.904351" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1239" name="Presentation" fullname="RPG.Presentation" runstate="Runnable" testcasecount="92" result="Passed" start-time="2026-10-01 15:50:27Z" end-time="2026-10-01 15:50:28Z" duration="0.903600" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1240" name="Tests" fullname="RPG.Presentation.Tests" runstate="Runnable" testcasecount="92" result="Passed" start-time="2026-10-01 15:50:27Z" end-time="2026-10-01 15:50:28Z" duration="0.903012" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1208" name="StrategicMapUxPresentationTests" fullname="RPG.Presentation.Tests.StrategicMapUxPresentationTests" classname="RPG.Presentation.Tests.StrategicMapUxPresentationTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-10-01 15:50:27Z" end-time="2026-10-01 15:50:28Z" duration="0.901657" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1210" name="ExplicitContinueButtonForecastAndTurnBoundariesMatchCore" fullname="RPG.Presentation.Tests.StrategicMapUxPresentationTests.ExplicitContinueButtonForecastAndTurnBoundariesMatchCore" methodname="ExplicitContinueButtonForecastAndTurnBoundariesMatchCore" classname="RPG.Presentation.Tests.StrategicMapUxPresentationTests" runstate="Runnable" seed="1726244007" result="Passed" start-time="2026-10-01 15:50:27Z" end-time="2026-10-01 15:50:27Z" duration="0.504235" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1209" name="PortalPrimaryActionIsContextualAndRequiresSeparateConfirmation" fullname="RPG.Presentation.Tests.StrategicMapUxPresentationTests.PortalPrimaryActionIsContextualAndRequiresSeparateConfirmation" methodname="PortalPrimaryActionIsContextualAndRequiresSeparateConfirmation" classname="RPG.Presentation.Tests.StrategicMapUxPresentationTests" runstate="Runnable" seed="1494171320" result="Passed" start-time="2026-10-01 15:50:27Z" end-time="2026-10-01 15:50:28Z" duration="0.107832" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1211" name="ProductionViewHidesTechnicalAnchorsShowsRetainedJourneyAndRoundTrips" fullname="RPG.Presentation.Tests.StrategicMapUxPresentationTests.ProductionViewHidesTechnicalAnchorsShowsRetainedJourneyAndRoundTrips" methodname="ProductionViewHidesTechnicalAnchorsShowsRetainedJourneyAndRoundTrips" classname="RPG.Presentation.Tests.StrategicMapUxPresentationTests" runstate="Runnable" seed="101009878" result="Passed" start-time="2026-10-01 15:50:28Z" end-time="2026-10-01 15:50:28Z" duration="0.284120" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: /tmp/strategic-map-ux/test-preferences/Library/Application Support/RPGPrototypeIsolated/Strategic-Map-UX/TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

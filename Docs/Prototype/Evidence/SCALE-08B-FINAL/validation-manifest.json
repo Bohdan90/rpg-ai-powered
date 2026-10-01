@@ -1,0 +1,92 @@
+{
+  "task": "Strategic Scale 08B final override: explicit Continue Travel",
+  "base_feature": "3ad2b301bf7ea74a6e6e362581722ce8bf8c7fb2",
+  "main_preserved": "224ba735807a2dcbae5f1c794f88e10f158c2f96",
+  "rules": 3,
+  "legacy_rules": "1/2 retained for original-save compatibility; new sessions use3",
+  "focused": {
+    "EditMode": {
+      "passed": 50,
+      "failed": 0,
+      "skipped": 0,
+      "xml": "tests/EditMode-20261001-114843.xml"
+    },
+    "PlayMode": {
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "xml": "tests/PlayMode-20261001-115020.xml"
+    }
+  },
+  "initial_test_harness_failure": {
+    "xml": "tests/PlayMode-20261001-114941.xml",
+    "reason": "Synthetic NavigationSubmit did not deliver click. Bound handler tested directly; real GUI OS clicks independently proven."
+  },
+  "full": {
+    "EditMode": {
+      "passed": 691,
+      "failed": 0,
+      "skipped": 0,
+      "xml": "tests/EditMode-20261001-115448.xml"
+    },
+    "PlayMode": {
+      "passed": 92,
+      "failed": 0,
+      "skipped": 0,
+      "xml": "tests/PlayMode-20261001-115714.xml"
+    }
+  },
+  "gui": {
+    "G1": "PASS; see report for controlled-fixture scope",
+    "G2": "PASS; see report for controlled-fixture scope",
+    "G3": "PASS; see report for controlled-fixture scope",
+    "G4": "PASS; see report for controlled-fixture scope",
+    "G5": "PASS; see report for controlled-fixture scope",
+    "G6": "PASS; see report for controlled-fixture scope",
+    "G7": "PASS; see report for controlled-fixture scope",
+    "G8": "PASS; see report for controlled-fixture scope",
+    "T1": "PASS; see report for controlled-fixture scope"
+  },
+  "scope_limits": [
+    "G5 GUI opens real battle; complete aftermath/replay automated",
+    "G8 authored known-B map to isolate travel depth, not full fog exploration",
+    "Save is mouse input; recreate/load uses public helper",
+    "Legacy saved travel rules2 keep historical movement semantics"
+  ],
+  "scale": {
+    "macro_A": 60,
+    "macro_B": 15,
+    "POIs": 22,
+    "zones": 8,
+    "macro_roads": 95,
+    "hidden_positions": 592,
+    "logical_positions": 667,
+    "land_segments": 687,
+    "portal_links": 2,
+    "cycles_A": 16,
+    "cycles_B": 6,
+    "A_normal_activations": 10,
+    "B_controlled_activations": 5,
+    "actual_activation_ratio": 0.5,
+    "A_keep_cost": 800,
+    "A_outer_cost": 900,
+    "B_cost": 450
+  },
+  "safety": {
+    "protected": 9,
+    "save_replay": 22,
+    "changed": 0,
+    "main_editor": "not controlled or restarted",
+    "own_observer": "removed before full suites",
+    "push": false,
+    "merge": false
+  },
+  "commands": [
+    "bash /private/tmp/strategic-map-ux/run-tests.sh EditMode ExplicitTravelTests|TravelScale08Tests|StrategicJourneyTests",
+    "bash /private/tmp/strategic-map-ux/run-tests.sh PlayMode StrategicMapUxPresentationTests",
+    "bash /private/tmp/strategic-map-ux/run-tests.sh EditMode",
+    "bash /private/tmp/strategic-map-ux/run-tests.sh PlayMode"
+  ],
+  "status": "TECHNICAL PASS / READY FOR PLAYER SCALE REVIEW",
+  "source_inputs_identical_across_full_suites": true
+}

@@ -1,0 +1,14 @@
+[
+  "Assets/_Project/Core/SeamlessSaveData.cs",
+  "Assets/_Project/Core/StrategicJourney.cs",
+  "Assets/_Project/Core/TravelScale08.cs",
+  "Assets/_Project/Presentation/RealmHud.cs",
+  "Assets/_Project/Presentation/SeamlessMapView.cs",
+  "Assets/_Project/Tests/PlayMode/StrategicMapUxPresentationTests.cs",
+  "Assets/_Project/Tests/StrategicJourneyTests.cs",
+  "Assets/_Project/Tests/TravelScale08Tests.cs",
+  "Docs/Prototype/GATE_C_WORKING_CHECKPOINT.md",
+  "Docs/Prototype/STRATEGIC_TRAVEL_SCALE_08B.md",
+  "Assets/_Project/Tests/ExplicitTravelTests.cs",
+  "Assets/_Project/Tests/ExplicitTravelTests.cs.meta"
+]

@@ -15,7 +15,7 @@ namespace RPG.Presentation
         public float ValleyRotation {get;set;}
         public bool ValleyVisible {get;set;}=true;
         private readonly BattlePresenter p;private readonly Action<WorldAddress> select;private readonly Action changed;
-        private readonly Label info,journeyInfo;private readonly Button traverse,setDestination,cancelDestination;private readonly VisualElement viewport,events,tools;
+        private readonly Label info,journeyInfo;private readonly Button traverse,setDestination,cancelDestination,continueTravel;private readonly VisualElement viewport,events,tools;
         private readonly Dictionary<WorldAddress,Button> buttons=new Dictionary<WorldAddress,Button>();
         private readonly Dictionary<Side,(Vector2,float)> views=new Dictionary<Side,(Vector2,float)>();
         private Vector2 pan=new Vector2(30,10),lastPointer,dragStart;private float zoom=.55f;
@@ -31,6 +31,7 @@ namespace RPG.Presentation
             Add(tools,"Focus known counterpart","worlds-counterpart",()=>{var f=p.Duel.Realm.Selected(p.Duel.ActiveSide);var l=SeamlessWorlds.Portals.FirstOrDefault(x=>x.Contains(f.Address));if(l!=null&&p.Duel.Seamless.Knowledge(p.Duel.ActiveSide).KnowsLink(l.Id))Focus(l.Other(f.Address));});
             traverse=Add(tools,"Traverse Portal · preview 20 Tempo attempt","worlds-traverse",Traverse);traverse.style.backgroundColor=new Color(.45f,.25f,.65f);traverse.style.fontSize=18;
             setDestination=Add(tools,"Set / Change Destination","worlds-destination",()=>{if(Selected.HasValue&&p.Duel.Seamless.SetDestination(p.Duel.ActiveSide,Selected.Value))changed();});
+            continueTravel=Add(tools,"Continue Travel","worlds-continue-travel",ContinueTravel);
             cancelDestination=Add(tools,"Cancel Destination","worlds-cancel-destination",()=>{var f=p.Duel.Realm.Selected(p.Duel.ActiveSide);if(f!=null&&p.Duel.Seamless.CancelDestination(p.Duel.ActiveSide,f.Formation.FormationId))changed();});
             journeyInfo=new Label{name="worlds-journey"};journeyInfo.style.whiteSpace=WhiteSpace.Normal;journeyInfo.style.color=Color.white;Root.Add(journeyInfo);
             info=new Label();info.style.whiteSpace=WhiteSpace.Normal;info.style.color=Color.white;Root.Add(info);
@@ -58,6 +59,7 @@ namespace RPG.Presentation
         }
         private void Transform(){Canvas.transform.position=pan;Canvas.transform.scale=new Vector3(zoom,zoom,1);if(viewer.HasValue)views[viewer.Value]=(pan,zoom);Canvas.MarkDirtyRepaint();}
         public void CancelInputs(){confirmPortal=null;dragging=false;if(viewport.HasPointerCapture(pointer))viewport.ReleasePointer(pointer);}
+        private void ContinueTravel(){if(p.Duel.Seamless.ContinueTravel(p.Duel.ActiveSide))changed();}
         private void Traverse()
         {
             var w=p.Duel;var f=w.Realm.Selected(w.ActiveSide);if(f==null)return;var q=w.Seamless.PreviewTraverse(w.ActiveSide,f.Formation.FormationId,f.Address);
@@ -93,9 +95,11 @@ namespace RPG.Presentation
             traverse.text=confirmPortal==null?"Traverse Portal · preview 20 Tempo attempt":"Confirm Traverse Portal · spend 20 Tempo";
             var journey=selected==null?null:s.Journey(selected.Formation.FormationId);
             cancelDestination.SetEnabled(journey!=null&&w.CanAct(side));
+            var continuation=s.PreviewContinueTravel(side);continueTravel.SetEnabled(continuation.IsLegal);continueTravel.tooltip=continuation.Reason??"Spend current Tempo on the saved route.";
             var plan=Selected.HasValue?s.PreviewJourney(side,Selected.Value):null;setDestination.SetEnabled(plan?.IsLegal==true);
             string Describe(WorldAddress a)=>w.GraphFor(a.World).Node(a.Node).Name+" ("+a+")";
-            journeyInfo.text=journey==null?"Select a known destination. Teal: reachable now; gold: later own activations.":"Destination: "+Describe(journey.Destination)+" · "+(journey.paused!=""?"PAUSED: "+journey.paused:"retained; continues next own activation")+"\nRoad progress: "+(journey.next-1)+"/"+(journey.route.Length-1)+" segments · remaining "+w.GraphFor((WorldId)journey.world).PathCost(journey.route.Skip(Math.Max(0,journey.next-1)).ToArray(),selected.RealmProvisions==0)+" Tempo"+" · Cancel Destination / select another POI to change.";
+            journeyInfo.text=journey==null?"Select a known destination. Teal: reachable now; gold: later own activations.":"Destination: "+Describe(journey.Destination)+" · "+(journey.paused!=""?"PAUSED: "+journey.paused:"queued; use Continue Travel. End Turn does not move")+"\nRoad progress: "+(journey.next-1)+"/"+(journey.route.Length-1)+" segments · remaining "+w.GraphFor((WorldId)journey.world).PathCost(journey.route.Skip(Math.Max(0,journey.next-1)).ToArray(),selected.RealmProvisions==0)+" Tempo"+" · Cancel Destination / select another POI to change.";
+            if(journey!=null)journeyInfo.text+="\nContinue Travel: budget "+selected.Tempo+" Tempo · cost "+continuation.Cost+" · expected stop "+Describe(new WorldAddress(selected.WorldId,continuation.Path.LastOrDefault()==0?selected.Node:continuation.Path.Last()))+" · "+(continuation.Reason??"Teal route; discoveries/contact may stop earlier.");
             if(plan?.IsLegal==true&&(journey==null||Selected.Value!=journey.Destination))journeyInfo.text+="\nSelected: "+Describe(Selected.Value)+" · total "+plan.Cost+" Tempo · "+s.ReachableLegs(selected,plan.Path)+" legs reachable now.";
             if(confirmPortal==null&&observation==null){var f=w.Realm.Selected(side);var q=f==null?null:s.PreviewTraverse(side,f.Formation.FormationId,f.Address);info.text="Pan: drag · zoom: wheel · roads cross only at marked junctions. "+(q==null?"":q.Legal?"Portal: "+q.Destination+" · "+q.RouteState+" · attempt20 even if blocked.":atPortal?q.Reason:"Select a POI or crossroads to plan travel.");}
             events.Clear();foreach(var id in k.Worlds){var captured=id;int count=k.History.Count(e=>e.world==(int)id&&e.sequence>s.ReadThrough(side,id));Add(events,SeamlessWorlds.Name(id)+" · "+count+" unread · focus","world-focus-"+id,()=>Focus(k.KnownNodes.First(a=>a.World==captured)));}
@@ -117,7 +121,8 @@ namespace RPG.Presentation
             var f=p.Duel.Realm.Selected(viewer.Value);var s=p.Duel.Seamless;var journey=f==null?null:s.Journey(f.Formation.FormationId);
             var plan=Selected.HasValue?s.PreviewJourney(viewer.Value,Selected.Value):null;
             bool saved=journey!=null&&(!Selected.HasValue||Selected.Value==journey.Destination);var route=saved?journey.route:plan?.IsLegal==true?plan.Path:null;int start=saved?journey.next:1;var routeWorld=saved?(WorldId)journey.world:Selected?.World??WorldId.Frontier;
-            if(f!=null&&route!=null&&(routeWorld!=WorldId.StoneValley||ValleyVisible)){int reachable=saved&&journey.paused!=""?0:s.ReachableLegs(f,route,start);for(int i=start;i<route.Length;i++){var a=new WorldAddress(routeWorld,route[i-1]);var b=new WorldAddress(routeWorld,route[i]);if(k.At(a)==KnowledgeLevel.Unexplored||k.At(b)==KnowledgeLevel.Unexplored)continue;pen.lineWidth=7;pen.strokeColor=i<start+reachable?new Color(.15f,1f,.85f):new Color(1f,.72f,.12f);pen.BeginPath();pen.MoveTo(Position(a));pen.LineTo(Position(b));pen.Stroke();}}
+            if(f!=null&&route!=null&&(routeWorld!=WorldId.StoneValley||ValleyVisible)){int reachable=saved?Math.Max(0,s.PreviewContinueTravel(viewer.Value).Path.Length-1):s.ReachableLegs(f,route,start);for(int i=start;i<route.Length;i++){var a=new WorldAddress(routeWorld,route[i-1]);var b=new WorldAddress(routeWorld,route[i]);if(k.At(a)==KnowledgeLevel.Unexplored||k.At(b)==KnowledgeLevel.Unexplored)continue;pen.lineWidth=7;pen.strokeColor=i<start+reachable?new Color(.15f,1f,.85f):new Color(1f,.72f,.12f);pen.BeginPath();pen.MoveTo(Position(a));pen.LineTo(Position(b));pen.Stroke();}}
+            if(saved&&f!=null){var forecast=s.PreviewContinueTravel(viewer.Value);if(forecast.Path.Length>1){pen.lineWidth=4;pen.strokeColor=Color.cyan;pen.BeginPath();pen.Arc(Position(new WorldAddress(f.WorldId,forecast.Path.Last())),22,0,360);pen.Stroke();}}
             pen.lineWidth=2;pen.strokeColor=new Color(.55f,.3f,.8f);foreach(var link in SeamlessWorlds.Portals.Where(l=>k.KnowsLink(l.Id)&&buttons.ContainsKey(l.A)&&buttons.ContainsKey(l.B))){pen.BeginPath();pen.MoveTo(Position(link.A));pen.LineTo(Position(link.B));pen.Stroke();}
             if(observation!=null&&((WorldId)observation.world!=WorldId.StoneValley||ValleyVisible)){pen.lineWidth=6;pen.strokeColor=Color.yellow;foreach(int n in observation.nodes.Take(observationStep+1)){var pos=Position(new WorldAddress((WorldId)observation.world,n));pen.BeginPath();pen.Arc(pos,48,0,360);pen.Stroke();}for(int i=1;i<=observationStep;i++){pen.BeginPath();pen.MoveTo(Position(new WorldAddress((WorldId)observation.world,observation.nodes[i-1])));pen.LineTo(Position(new WorldAddress((WorldId)observation.world,observation.nodes[i])));pen.Stroke();}}
         }

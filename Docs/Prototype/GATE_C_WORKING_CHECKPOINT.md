@@ -342,3 +342,25 @@ User explicitly requested this completed package in the main project, supersedin
 Validation provenance: source final **682 EditMode +91 PlayMode =773 PASS;0failed/skipped**, in `Evidence/SCALE-08B/tests/EditMode-20261001-110213.xml` and `PlayMode-20261001-110411.xml`. These remain feature-run results, not a new main regression. GUI scope/limitations and topology measures remain in `STRATEGIC_TRAVEL_SCALE_08B.md`. Player acceptance is pending.
 
 Main launch after import: **Gate C → Production Roads 08 → West starts** (orEast), start a new session for08B. Old version7saves intentionally keep the old coarse08map. Current tactical profiles use HOM Fire/Ice8 and HH9. NO PUSH. This entry supersedes earlier statements that08B is not in main.
+## 2026-10-01 — Final 08B override: explicit Continue Travel only
+
+Starting feature/strategic-map-ux@3ad2b30, same Strategic-Map-UX worktree. Live main/develop is224ba73 after earlier user-authorized integration; stale26e0f9a/3fa4a57 references above are historical. This correction remains feature-only; NO MERGE / NO PUSH. Latest Drive48§43/46FINAL OVERRIDE/53§20 read. No weighted OnEdge refactor started.
+
+Already implemented scale/hidden positions/fog/contact/save/replay and Initiative8/8/9 verified and preserved. New-session travel rules3: Set Destination queues intent, explicit Continue Travel spends current affordable legs through multiple hidden nodes/junctions, no movement on End Side Turn or own activation start. Full route/affordable path/expected-stop ring and budget/cost shown; existing interruptions and explicit20Tempo portal retained. Save schema8 supports rules3 exact cursor/position; older rules1/2 load with original hashes and historical behavior. Begin a NEW Production Roads08session for this manual-travel review.
+
+Fresh focused50Edit+3Play; full **691EditMode+92PlayMode=783PASS;0failed/skipped** after removing temporary observer; same final source/config fingerprint across suites. Initial synthetic UI-submit test harness failure corrected, independent real mouse delivery PASS. Road battle/replay/after-result and new save/continuation deterministic. Source and test provenance: Evidence/SCALE-08B-FINAL/validation-manifest.json and coverage.json.
+
+GUI G1–G8/T1 PASS within labelled scope: actual queue stationary→10legs perContinue, stationary handoffs, junction crossing, exact saved-node reload, controlled road contact→tactical entry, explicit portal. OrdinaryA2→25takes10activations; controlled known-B1→7takes5,ratio50%; no resource/Tempo override during journeys. G5 complete aftermath is automated, not mouse-completed. Recreate/load uses public helper after actual Save. Initiative actualEW14→HA12→HW10→HH9→HOM8; Ice8 automated.
+
+Unchanged8zones/75macro nodes/22POIs/95macro roads,592hidden positions,667total/687segments+2portals,cycles16A/6B. ShortestcostA800/outer900,B450; old deliberateportalspurs only.100baselineTempo crosses10segments (7Hungry). No new balance or acceptance claim. Report STRATEGIC_TRAVEL_SCALE_08B.md appended rather than rewriting prior evidence.
+
+Launch isolated Strategic-Map-UX → Gate C → Production Roads08 → West starts → destination → Set/Change Destination → Continue Travel. Main Unity left running,9protected files/22saves byte-identical, own validation editor closed normally. Existing local EditorBuildSettings+6untrackedmeta preserved. Lower developer route text still lists raw IDs; production HUD work deferred. TECHNICAL PASS / READY FOR PLAYER SCALE REVIEW, not PLAYER ACCEPTED. STOP; no3D/Meshy/nextpackage.
+
+
+## 2026-10-01 — authorized main delivery of explicit Continue Travel
+
+User explicitly requested transfer and local fixation, superseding the prior no-merge instruction. Starting main/develop224ba735807a2dcbae5f1c794f88e10f158c2f96; source feature5a45bbbe32f65bbafc17d861b256cf9c61ef4e45. Delivery merges both checkpoint histories, retaining main project settings. Core/Presentation/tests are byte-identical to validated feature; no new gameplay code or save migration.
+
+Validation: source **691EditMode+92PlayMode=783PASS;0failed/skipped**, final XMLs in Evidence/SCALE-08B-FINAL (EditMode20261001-115448,PlayMode20261001-115714), focused50+3 and documented GUI G1–G8/T1. No new full run solely for this source-identical delivery; not presented as main-run evidence.
+
+Main launch after import: **My project → Gate C → Production Roads08 → West starts → Set/Change Destination → Continue Travel**. Start a NEW session for rules3; older saved rules1/2 intentionally retain historic movement behavior. Protected nine local files and22saved files preserved, namespaces unchanged, no forced Unity restart. NO PUSH. This entry supersedes feature-only status above; no PLAYER ACCEPTED claim.
